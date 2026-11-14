@@ -163,3 +163,23 @@
   .hb__track--img { height: auto; }
   .hb__slide--img { padding: 0; }
 }
+
+/* desktop / phone banner sets: only one is shown */
+.hb--mob { display: none; }
+@media (max-width: 760px) {
+  .hb--desk { display: none; }
+  .hb--mob { display: block; }
+}
+@media (max-width: 760px) {
+  .hb--mob .hb__track--img { border-radius: 8px; }
+}
+
+/* gender tiles: real product photos on white cards */
+.gtile__bottles { inset: 12% 8% 10%; align-items: center; gap: 4%; }
+.gtile__bottle {
+  width: 29%; aspect-ratio: 1; opacity: 1; display: grid; place-items: center; padding: 6%;
+  background: #fff; border-radius: 8px; box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
+}
+.gtile__bottle:nth-child(2) { width: 33%; translate: 0 -6%; }
+.gtile__bottle img { width: 100%; height: 100%; object-fit: contain; }
+.gtile__label { top: auto; bottom: 7%; translate: -50% 0; }

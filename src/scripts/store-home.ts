@@ -101,8 +101,7 @@ function initTabs(root: HTMLElement) {
 
 function init() {
   teardown();
-  const slider = document.querySelector<HTMLElement>("[data-slider]");
-  if (slider) initSlider(slider);
+  document.querySelectorAll<HTMLElement>("[data-slider]").forEach(initSlider);
   const tabs = document.querySelector<HTMLElement>("[data-tabs]");
   if (tabs) initTabs(tabs);
 }

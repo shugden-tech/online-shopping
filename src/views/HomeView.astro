@@ -7,7 +7,7 @@ import Icon from "../components/Icon.astro";
 import settings from "../data/settings.json";
 import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
-import { NOTES, NOTE_GROUPS, getProducts, initialOf, type Product } from "../lib/products";
+import { NOTES, NOTE_GROUPS, getProducts, initialOf, photosOf, type Product } from "../lib/products";
 import { bannerImages, familyStrips, noteImages } from "../lib/images";
 import "../styles/home.css";
 
@@ -43,58 +43,83 @@ const slides = [
 ];
 
 // Owner's banner pictures (src/assets/thumbnail/) replace the illustrated slides when present.
-const banners = bannerImages;
-const bannerRatio = banners[0] ? `${banners[0].image.width} / ${banners[0].image.height}` : "";
-const slideCount = banners.length || slides.length;
+// Files named "mobile …" are the tall phone versions; the rest are the wide desktop ones.
+const deskBanners = bannerImages.filter((b) => !/^mobile/i.test(b.name));
+const mobBanners = bannerImages.filter((b) => /^mobile/i.test(b.name));
+const bannerSets = [
+  { key: "desk", items: deskBanners.length ? deskBanners : mobBanners, only: mobBanners.length && deskBanners.length ? "hb--desk" : "" },
+  { key: "mob", items: deskBanners.length && mobBanners.length ? mobBanners : [], only: "hb--mob" },
+].filter((set) => set.items.length > 0);
+const ratio = (b: (typeof bannerImages)[number]) => `${b.image.width} / ${b.image.height}`;
 
+/** A few random products of a gender that have a real photo (picked again on every build). */
+const shuffle = <T,>(list: T[]) => list.map((v) => [Math.random(), v] as const).sort((a, b) => a[0] - b[0]).map(([, v]) => v);
 const genderTiles = (["women", "men", "unisex"] as const).map((g) => ({
-  g, label: tr.genders[g], href: `${shop}?gender=${g}`, bottles: trio(ofGender(g)),
+  g, label: tr.genders[g], href: `${shop}?gender=${g}`,
+  picks: shuffle(ofGender(g).filter((p) => photosOf(p).length > 0)).slice(0, 3).map((p) => ({ p, photo: photosOf(p, 480)[0]! })),
 }));
 
 const brands = [...new Set(products.map((p) => p.brand))];
 const infoIcons = ["bag", "check", "briefcase"] as const;
 ---
 <Base locale={locale} title={tr.site.name}>
-  <!-- 1 · banner slider -->
-  <section class="wrap hb" aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
-    <div class:list={["hb__track", { "hb__track--img": banners.length > 0 }]} style={bannerRatio ? `aspect-ratio:${bannerRatio}` : undefined}>
-      {banners.length > 0 && <h1 class="sr-only">{s.slides[0]!.title}</h1>}
-      {banners.map((b, i) => (
-        <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0 }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${banners.length}`} aria-hidden={i === 0 ? undefined : "true"}>
-          <a class="hb__link" href={shop} tabindex={i === 0 ? undefined : -1}>
-            <Image
-              src={b.image} alt={b.name.replace(/^\d+[-_ ]*/, "").replace(/[-_]+/g, " ")}
-              widths={[640, 960, 1320, 1920, 2640]} sizes="(min-width: 1320px) 1320px, 100vw"
-              loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__img"
-            />
-          </a>
-        </div>
-      ))}
-      {banners.length === 0 && slides.map((sl, i) => (
-        <div class:list={["hb__slide", { "is-on": i === 0 }]} data-slide style={`--a:${sl.bg.split(",")[0]};--b:${sl.bg.split(",")[1]}`} aria-roledescription="slide" aria-label={`${i + 1} / ${slides.length}`} aria-hidden={i === 0 ? undefined : "true"}>
-          <Image src={sl.img} alt="" widths={[640, 1280, 1920]} sizes="(min-width: 1320px) 1320px, 100vw" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__bg" />
-          <div class="hb__text">
-            <p class="hb__eyebrow">{sl.eyebrow}</p>
-            {i === 0 ? <h1 class="hb__title">{sl.title}</h1> : <h2 class="hb__title">{sl.title}</h2>}
-            <p class="hb__sub">{sl.text}</p>
-            <a class="btn btn--light" href={sl.href} tabindex={i === 0 ? undefined : -1}>{sl.cta}</a>
+  <!-- 1 · banner slider: the owner's pictures (desktop + phone sets), else the illustrated slides -->
+  {bannerSets.length > 0 && <h1 class="sr-only">{s.slides[0]!.title}</h1>}
+  {bannerSets.map((set) => (
+    <section class:list={["wrap hb", set.only]} aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
+      <div class="hb__track hb__track--img" style={`aspect-ratio:${ratio(set.items[0]!)}`}>
+        {set.items.map((b, i) => (
+          <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0 }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${set.items.length}`} aria-hidden={i === 0 ? undefined : "true"}>
+            <a class="hb__link" href={shop} tabindex={i === 0 ? undefined : -1}>
+              <Image
+                src={b.image} alt={`${tr.site.name} — ${i + 1}`}
+                widths={set.key === "mob" ? [480, 760, 1145] : [640, 960, 1320, 1852]}
+                sizes={set.key === "mob" ? "100vw" : "(min-width: 1320px) 1320px, 100vw"}
+                loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__img"
+              />
+            </a>
           </div>
-          <div class="hb__bottles" aria-hidden="true">
-            {sl.bottles.map((p) => (
-              <div class="hb__bottle"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} /></div>
-            ))}
+        ))}
+      </div>
+      <button class="hb__arrow hb__arrow--prev" type="button" data-prev aria-label={tr.common.prev}><Icon name="chevron" size={22} /></button>
+      <button class="hb__arrow hb__arrow--next" type="button" data-next aria-label={tr.common.next}><Icon name="chevron" size={22} /></button>
+      <div class="hb__dots">
+        {set.items.map((_, i) => (
+          <button type="button" data-dot={i} aria-label={`${i + 1} / ${set.items.length}`} aria-current={i === 0 ? "true" : undefined}></button>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  {bannerSets.length === 0 && (
+    <section class="wrap hb" aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
+      <div class="hb__track">
+        {slides.map((sl, i) => (
+          <div class:list={["hb__slide", { "is-on": i === 0 }]} data-slide style={`--a:${sl.bg.split(",")[0]};--b:${sl.bg.split(",")[1]}`} aria-roledescription="slide" aria-label={`${i + 1} / ${slides.length}`} aria-hidden={i === 0 ? undefined : "true"}>
+            <Image src={sl.img} alt="" widths={[640, 1280, 1920]} sizes="(min-width: 1320px) 1320px, 100vw" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__bg" />
+            <div class="hb__text">
+              <p class="hb__eyebrow">{sl.eyebrow}</p>
+              {i === 0 ? <h1 class="hb__title">{sl.title}</h1> : <h2 class="hb__title">{sl.title}</h2>}
+              <p class="hb__sub">{sl.text}</p>
+              <a class="btn btn--light" href={sl.href} tabindex={i === 0 ? undefined : -1}>{sl.cta}</a>
+            </div>
+            <div class="hb__bottles" aria-hidden="true">
+              {sl.bottles.map((p) => (
+                <div class="hb__bottle"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} /></div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-    <button class="hb__arrow hb__arrow--prev" type="button" data-prev aria-label={tr.common.prev}><Icon name="chevron" size={22} /></button>
-    <button class="hb__arrow hb__arrow--next" type="button" data-next aria-label={tr.common.next}><Icon name="chevron" size={22} /></button>
-    <div class="hb__dots">
-      {Array.from({ length: slideCount }, (_, i) => (
-        <button type="button" data-dot={i} aria-label={`${i + 1} / ${slideCount}`} aria-current={i === 0 ? "true" : undefined}></button>
-      ))}
-    </div>
-  </section>
+        ))}
+      </div>
+      <button class="hb__arrow hb__arrow--prev" type="button" data-prev aria-label={tr.common.prev}><Icon name="chevron" size={22} /></button>
+      <button class="hb__arrow hb__arrow--next" type="button" data-next aria-label={tr.common.next}><Icon name="chevron" size={22} /></button>
+      <div class="hb__dots">
+        {slides.map((_, i) => (
+          <button type="button" data-dot={i} aria-label={`${i + 1} / ${slides.length}`} aria-current={i === 0 ? "true" : undefined}></button>
+        ))}
+      </div>
+    </section>
+  )}
 
   <!-- 2 · two promo tiles -->
   <section class="wrap promo">
@@ -132,8 +157,11 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
     {genderTiles.map((t) => (
       <a class={`gtile gtile--${t.g}`} href={t.href}>
         <span class="gtile__bottles" aria-hidden="true">
-          {t.bottles.map((p) => (
-            <span class="gtile__bottle"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} sizes="120px" /></span>
+          {t.picks.map(({ p, photo }) => (
+            <span class="gtile__bottle">
+              <img src={photo.src} srcset={photo.srcset} sizes="140px" alt="" width="480" height="480" loading="lazy" decoding="async" onerror="this.parentNode.remove()" />
+              <span class="sr-only">{p.brand} {p.name}</span>
+            </span>
           ))}
         </span>
         <span class="gtile__label">{t.label}</span>
