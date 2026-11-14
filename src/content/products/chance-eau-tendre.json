@@ -1,0 +1,55 @@
+{
+  "slug": "chance-eau-tendre",
+  "brand": "Chanel",
+  "name": "Chance Eau Tendre",
+  "concentration": "EDT",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "grapefruit",
+      "quince"
+    ],
+    "heart": [
+      "jasmine",
+      "rose"
+    ],
+    "base": [
+      "musk",
+      "cedar",
+      "iris"
+    ]
+  },
+  "description": {
+    "mn": "Бэрсүүт жүрж, айвын шүүслэг эхлэл, зөөлөн цагаан заар. Хөнгөн, цэвэрхэн, өдөр бүр хэрэглэсэн ч уйдаадаггүй.",
+    "en": "Juicy grapefruit and quince over soft white musk. Light and clean — one you never tire of wearing every day."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 18000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 74000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "round",
+  "isNew": true,
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ]
+}

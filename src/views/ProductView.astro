@@ -1,0 +1,178 @@
+---
+import Base from "../layouts/Base.astro";
+import BottleArt from "../components/BottleArt.astro";
+import ProductCard from "../components/ProductCard.astro";
+import NotesPyramid from "../components/NotesPyramid.astro";
+import Icon from "../components/Icon.astro";
+import AddToCart from "../islands/AddToCart.tsx";
+import { getDict, route, productPath, fill, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { SEASONS, OCCASIONS } from "../lib/taxonomy";
+import { cartBase, fromPrice, getProducts, initialOf, similarTo, sortedSizes, type Product } from "../lib/products";
+import "../styles/product.css";
+
+interface Props { locale: Locale; product: Product }
+const { locale, product: p } = Astro.props;
+const tr = getDict(locale);
+const all = await getProducts();
+const similar = similarTo(p, all, 4);
+const sizes = sortedSizes(p);
+const base = await cartBase(p);
+const site = Astro.site ?? new URL("https://genzst.mn");
+const url = new URL(productPath(locale, p.slug), site).href;
+const title = `${p.name} — ${p.brand}`;
+const description = fill(tr.product.metaDescription, {
+  brand: p.brand, name: p.name, conc: p.concentration, family: tr.families[p.family],
+  price: fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }),
+});
+
+const seasonIcon = { spring: "flower", summer: "sun", autumn: "leaf", winter: "snow" } as const;
+const occasionIcon = { day: "sun", night: "moon", office: "briefcase", date: "heart" } as const;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: `${p.brand} ${p.name} ${p.concentration} (decant)`,
+  description: p.description[locale],
+  sku: p.slug,
+  category: tr.families[p.family],
+  brand: { "@type": "Brand", name: p.brand },
+  image: new URL("/og.jpg", site).href,
+  url,
+  offers: {
+    "@type": "AggregateOffer",
+    priceCurrency: "MNT",
+    lowPrice: Math.min(...p.sizes.map((s) => s.price)),
+    highPrice: Math.max(...p.sizes.map((s) => s.price)),
+    offerCount: p.sizes.length,
+    availability: p.sizes.some((s) => s.inStock) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    offers: sizes.map((s) => ({
+      "@type": "Offer",
+      name: `${s.ml} ml`,
+      sku: `${p.slug}-${s.ml}ml`,
+      price: s.price,
+      priceCurrency: "MNT",
+      availability: s.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      url,
+    })),
+  },
+};
+---
+<Base locale={locale} title={title} description={description} current="shop" ogType="product">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")} />
+
+  <article class="pdp" style={`--tint:var(--fam-${p.family})`}>
+    <div class="wrap pdp__top page-top">
+      <div class="pdp__stage">
+        <div class="pdp__glow" aria-hidden="true"></div>
+        <div class="pdp__float">
+          <BottleArt
+            shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image}
+            label={`${p.brand} ${p.name}`} eager sizes="(min-width: 900px) 40vw, 80vw"
+          />
+        </div>
+        <p class="pdp__stage-cap t-small" aria-hidden="true">{p.concentration} · {sizes.map((s) => s.ml).join(" / ")} {tr.common.ml}</p>
+      </div>
+
+      <div class="pdp__info">
+        <nav class="pdp__crumbs" aria-label="Breadcrumb">
+          <a href={route("shop", locale)}>{tr.product.back}</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${route("shop", locale)}?family=${p.family}`}>{tr.families[p.family]}</a>
+        </nav>
+
+        <p class="t-title t-gold pdp__brand">{p.brand}</p>
+        <h1 class="pdp__name">{p.name}</h1>
+
+        <ul class="pdp__meta">
+          <li>{p.concentration}</li>
+          <li>{tr.genders[p.gender]}</li>
+          <li><a class="chip chip--fam" href={`${route("shop", locale)}?family=${p.family}`}>{tr.families[p.family]}</a></li>
+          {p.isNew && <li><span class="chip is-on">{tr.common.new}</span></li>}
+        </ul>
+
+        <p class="t-body pdp__desc">{p.description[locale]}</p>
+
+        <AddToCart
+          client:load
+          locale={locale}
+          base={base}
+          sizes={sizes}
+          labels={{
+            chooseSize: tr.product.chooseSize, ml: tr.common.ml, qty: tr.common.qty, add: tr.common.add,
+            soldOut: tr.common.soldOut, allSoldOut: tr.product.allSoldOut,
+            decrease: tr.product.decrease, increase: tr.product.increase, total: tr.product.total,
+          }}
+        />
+
+        <p class="pdp__note t-small t-dim">{tr.product.decantNote} {tr.product.deliveryHint}</p>
+
+        <dl class="pdp__specs">
+          <div>
+            <dt>{tr.product.intensity}</dt>
+            <dd>
+              <span class="pdp__dots" role="img" aria-label={`${fill(tr.product.intensityOf, { n: p.intensity })} — ${tr.product.intensityLevels[p.intensity - 1]}`}>
+                {[1, 2, 3, 4, 5].map((n) => <i class:list={{ on: n <= p.intensity }}></i>)}
+              </span>
+              <span class="pdp__spec-text" aria-hidden="true">{tr.product.intensityLevels[p.intensity - 1]}</span>
+            </dd>
+          </div>
+          <div>
+            <dt>{tr.product.season}</dt>
+            <dd>
+              <ul class="pdp__icons">
+                {SEASONS.map((s) => {
+                  const on = p.season.includes(s);
+                  return (
+                    <li class:list={{ on }} aria-hidden={on ? undefined : "true"}>
+                      <Icon name={seasonIcon[s]} size={20} />
+                      <span>{tr.seasons[s]}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt>{tr.product.occasion}</dt>
+            <dd>
+              <ul class="pdp__icons">
+                {OCCASIONS.map((o) => {
+                  const on = p.occasion.includes(o);
+                  return (
+                    <li class:list={{ on }} aria-hidden={on ? undefined : "true"}>
+                      <Icon name={occasionIcon[o]} size={20} />
+                      <span>{tr.occasions[o]}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <section class="wrap section pdp__pyramid" aria-labelledby="pyr-title">
+      <header class="sec-head sec-head--center">
+        <p class="t-title">{tr.product.pyramid}</p>
+        <h2 class="t-h2" id="pyr-title">{tr.product.pyramidSub}</h2>
+      </header>
+      <NotesPyramid product={p} locale={locale} />
+    </section>
+
+    <section class="wrap pdp__similar" aria-labelledby="sim-title">
+      <header class="sec-head">
+        <p class="t-title">{tr.product.similarSub}</p>
+        <h2 class="t-h2" id="sim-title">{tr.product.similar}</h2>
+      </header>
+      <ul class="pdp__grid">
+        {similar.map((s, i) => (
+          <li data-reveal style={`--delay:${i * 80}ms`}>
+            <ProductCard product={s} locale={locale} level={3} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  </article>
+</Base>

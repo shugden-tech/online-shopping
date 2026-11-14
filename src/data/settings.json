@@ -1,0 +1,54 @@
+{
+  "_readme": "Owner-editable shop settings. Everything tagged [[TODO owner]] in a _todo field is a placeholder that must be replaced before launch.",
+
+  "delivery": {
+    "_todo": "[[TODO owner]] confirm the delivery fee and the free-delivery threshold (MNT).",
+    "fee": 5000,
+    "freeThreshold": 100000
+  },
+
+  "payment": {
+    "_todo": "[[TODO owner]] replace the bank, account number and recipient with the real ones.",
+    "bank": {
+      "name": { "mn": "Хаан банк", "en": "Khan Bank" },
+      "accountNumber": "0000 0000 00",
+      "accountName": { "mn": "genzst (жишээ)", "en": "genzst (sample)" }
+    },
+    "bankNote": {
+      "mn": "Гүйлгээний утга дээр захиалгын дугаараа заавал бичээрэй.",
+      "en": "Please write your order number in the transfer description."
+    },
+    "qpayNote": {
+      "mn": "Бид таны утас руу QPay нэхэмжлэх илгээнэ. Банкны аппаараа уншуулаад төлөөрэй.",
+      "en": "We will send a QPay invoice to your phone. Pay it from your banking app."
+    }
+  },
+
+  "contact": {
+    "_todo": "[[TODO owner]] replace the phone number, hours and social links.",
+    "phone": "+976 0000 0000",
+    "hours": { "mn": "Даваа–Бямба · 11:00–19:00", "en": "Mon–Sat · 11:00–19:00" },
+    "social": {
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "telegram": "https://t.me/"
+    }
+  },
+
+  "turnstile": {
+    "_todo": "[[TODO owner]] replace with the real Turnstile site key. This is Cloudflare's always-pass TEST key.",
+    "siteKey": "1x00000000000000000000AA"
+  },
+
+  "districts": [
+    { "id": "bayangol", "mn": "Баянгол", "en": "Bayangol" },
+    { "id": "bayanzurkh", "mn": "Баянзүрх", "en": "Bayanzurkh" },
+    { "id": "songinokhairkhan", "mn": "Сонгинохайрхан", "en": "Songinokhairkhan" },
+    { "id": "sukhbaatar", "mn": "Сүхбаатар", "en": "Sukhbaatar" },
+    { "id": "khan-uul", "mn": "Хан-Уул", "en": "Khan-Uul" },
+    { "id": "chingeltei", "mn": "Чингэлтэй", "en": "Chingeltei" },
+    { "id": "nalaikh", "mn": "Налайх", "en": "Nalaikh" },
+    { "id": "baganuur", "mn": "Багануур", "en": "Baganuur" },
+    { "id": "bagakhangai", "mn": "Багахангай", "en": "Bagakhangai" }
+  ]
+}

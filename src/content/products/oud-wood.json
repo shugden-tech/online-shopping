@@ -1,0 +1,56 @@
+{
+  "slug": "oud-wood",
+  "brand": "Tom Ford",
+  "name": "Oud Wood",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "cardamom",
+      "pepper"
+    ],
+    "heart": [
+      "oud",
+      "sandalwood"
+    ],
+    "base": [
+      "vanilla",
+      "amber",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Агар модыг хамгийн зөөлөн, боловсон байдлаар нь харуулсан үнэр. Кардамон, зандан, ванилийн дулаан нь агар модны утаалаг гүнийг намжаана.",
+    "en": "Oud at its smoothest and most polished. Cardamom, sandalwood and a touch of vanilla soften the smoky depth of the wood."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 36000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 82000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 155000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "square",
+  "featured": true,
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "office",
+    "night",
+    "date"
+  ]
+}

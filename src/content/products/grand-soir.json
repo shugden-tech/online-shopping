@@ -1,0 +1,53 @@
+{
+  "slug": "grand-soir",
+  "brand": "Maison Francis Kurkdjian",
+  "name": "Grand Soir",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "labdanum"
+    ],
+    "heart": [
+      "benzoin",
+      "tonka"
+    ],
+    "base": [
+      "amber",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Лабданум, бензой, ваниль нийлсэн зузаан, зөгийн бал шиг хув. Өвлийн үдэш ноолууран ороолт шиг биеийг дулаахан ороодог.",
+    "en": "A dense, honeyed amber of labdanum, benzoin and vanilla. On a winter evening it wraps around you like a cashmere scarf."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 38000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 88000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 165000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "tall",
+  "isNew": true,
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ]
+}

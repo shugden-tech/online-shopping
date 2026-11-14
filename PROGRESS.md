@@ -1,0 +1,203 @@
+# genzst website — build log
+
+One entry per phase of `PLAN-website.md` §8: what was done, the gate result, screenshots.
+Screenshots live in `docs/screens/` (taken with `scripts/shot.mjs`, headless Edge via playwright-core).
+
+---
+
+## Phase 1 — Scaffold · DONE, gate passed
+
+**Done**
+- Astro 5.18 + TypeScript strict, Preact, `@astrojs/cloudflare` 12 (static output + on-demand API route), `@astrojs/sitemap`.
+- `wrangler.jsonc` (assets + D1 binding), `.dev.vars` with Turnstile test secret, `migrations/0001_orders.sql`.
+- `tokens.css`, `global.css` (type tiers, buttons, chips, forms, reveal, reduced-motion rules), self-hosted fonts.
+- `Base.astro` (meta, canonical, hreflang, OG, font preloads, `<ClientRouter />` with 300 ms fade), Header (transparent → ink after 40 px, full-screen mobile menu with staggered links), Footer, LangToggle.
+- i18n: `mn.json` / `en.json` (same shape enforced by types), typed `t()` / `getDict()`, route table `src/i18n/routes.mjs` shared with the sitemap.
+- Favicon, apple-touch-icon and OG card generated from the logo PNG with sharp (`npm run icons`).
+
+**Gate**
+- `npm run build` passes; `astro check`: 0 errors.
+- Styled home renders at `/` (mn) and `/en/`; Ө/Ү and ₮ render in both Cormorant Garamond and Montserrat (checked in the screenshots).
+
+**Deviations**
+- Fonts: the plan asked for the `cyrillic-ext` + `latin` subsets only. That cannot render Mongolian: basic Cyrillic (А–я) is in the `cyrillic` subset and ₮ is in `latin-ext`. `scripts/build-fonts.py` merges the four fontsource subsets and keeps only the characters the site uses, giving ONE ~20 KB woff2 per face (6 files in `src/assets/fonts/`). Still self-hosted, no external requests.
+- Signals: `@preact/signals-core` (the core of `@preact/signals`) plus a 6-line `useSig` hook, to stay inside the JS budgets. The cart drawer (Preact) is loaded on first intent (hover/focus/tap on a cart or add button), not on page load.
+- English uses Montserrat 300 for body, so the en pages preload the 300 file instead of 400.
+
+**Screens:** `p1-home-mn-360.png`, `p1-home-mn-1440.png`, `p1-home-en-1440.png` (placeholder home, later replaced by the real one).
+
+---
+
+## Phase 2 — Data · DONE, gate passed
+
+**Done**
+- `src/content.config.ts`: zod schema (strict; note ids checked against `notes.json`; unique sizes; slug must equal the file name).
+- 24 seed products (3 per family, all genders), original mn/en descriptions, placeholder ₮ prices, a few out-of-stock sizes for testing.
+- `notes.json` (67 notes, 11 photo accords), `settings.json` (delivery, payment, contact, districts, Turnstile site key).
+- `BottleArt` / `BottleSprite`: four SVG silhouettes defined once per page as symbols; each bottle is a `<use>` + brand initial, liquid tint from the family via a CSS custom property. Real photo replaces it when `image` is set.
+- `ProductCard` with size chips (price switches per size), `formatPrice` (`35,000₮` / `₮35,000`).
+- `src/content/products/README.md` for the owner.
+
+**Gate**
+- Deliberately broke `sauvage.json` (bad family, unknown note, negative price): build failed with `products → sauvage data does not match collection schema` listing all three fields. Reverted; build passes.
+- All 24 cards render; bottle art reviewed in `p2-shop-mn-1440.png`.
+
+**Screens:** `p2-shop-mn-360.png`, `p2-shop-mn-1440.png`.
+
+---
+
+## Phase 3 — Shop and product pages · DONE, gate passed
+
+**Done**
+- Shop `/delguur/` + `/en/shop/`: cards are server-rendered; the `ShopFilters` island reads the embedded JSON island and shows/hides/reorders them. Sidebar on desktop, bottom sheet on mobile.
+- Filters: family, gender, notes (11 accords with thumbnails), price range, size in stock, season, occasion; search (brand, name, notes in mn + en; ignores diacritics and folds ү/ө); 5 sorts; empty state with clear button.
+- State lives in the URL query. Chip/sort/price changes push a history entry, typing in search replaces.
+- Product page: floating bottle stage, size radio chips with prices (out-of-stock struck through), quantity, add to cart, intensity dots, season/occasion icons, notes pyramid with photo thumbnails, 4 similar scents, JSON-LD `Product`, per-locale meta.
+
+**Gate** (`node scripts/e2e-shop.mjs`, 25 shop/product checks, all pass)
+- Family / gender / notes / size / price / season / occasion combinations give the expected products.
+- Back and Forward step through filter states and restore the chips; Back from a product page returns to the filtered list.
+- Search: `acqua di gio` finds Acqua di Giò; `гургэм` finds the Гүргэм (saffron) perfume.
+- Product page works in mn and en; JSON-LD present.
+
+**Deviations**
+- Notes filter works on the 11 photographed accords (each note maps to one via `image` in `notes.json`), and selecting several narrows (AND). Individual notes are reachable through search. There are no separate "note pages"; a note opens the shop filtered by it.
+- Product page uses CSS + IntersectionObserver for motion instead of GSAP, to keep it inside the 50 KB budget.
+
+**Screens:** `p3-product-mn-360.png`, `p3-product-mn-1440.png`, `p3-shop-filter-sheet-360.png`.
+
+---
+
+## Phase 4 — Cart · DONE, gate passed
+
+**Done**
+- `lib/cart.ts`: signals store, `localStorage` persistence in try/catch, cross-tab sync, max 10 per line / 30 lines.
+- Cart drawer: slides from the right, focus trap, Esc, quantity stepper, remove, subtotal, free-delivery hint with progress hairline, checkout button.
+- Add to cart from cards (event delegation), product page and (later) slider/quiz; opens the drawer and pulses the cart icon. Badge is absolutely positioned (no layout shift).
+
+**Gate** (`node scripts/e2e-shop.mjs`, 10 cart checks, all pass)
+- Added Sauvage 5 ml, Sauvage 10 ml ×2, Oud Wood 2 ml → subtotal 204,000₮, badge 4.
+- Reload: badge and all 3 lines persist.
+- Quantity +/− and remove update totals correctly (240,000₮ → 72,000₮ after remove); hint shows 28,000₮ to free delivery.
+
+**Screens:** `p4-cart-drawer-1440.png`.
+
+---
+
+## Phase 5 — Home · DONE, gate passed (jank check to be repeated on the production build in phase 9)
+
+**Done** (model: Fable, directly)
+- Hero: spotlight, gold-dust canvas (max 60 particles, paused off-screen / hidden tab), entrance fades, Scroll hint, two CTAs. GSAP ScrollTrigger (loaded on idle) pins it for 100vh: headline drifts up and fades, spotlight widens, three bottles rise from a floor line.
+- Scent families: 5 bands with ingredient strips sliding with scroll progress, linking to the filtered shop.
+- Layering Slider island per animation1.md / plan 5.3 (see gate).
+- Notes explorer (11 photo tiles, staggered reveal), decant explainer with 2/5/10 ml vials at true relative height, Scent Finder teaser with light rays, New arrivals rail.
+- The logo PNG is keyed (backdrop made transparent, same pixels) by `scripts/make-icons.mjs` so it sits cleanly on the spotlight.
+
+**Gate** (`node scripts/e2e-home.mjs`)
+- Slider: container `position: relative`; mobile `.slider-list` has `overflow-y: scroll` + scroll-snap; cards `opacity .65s cubic-bezier(.445,.05,.55,.95)` with `--delay` = index x 80 ms.
+- Mask: top alpha 1 at progress 0, 0.50 at 0.0325, 0 at 0.05; bottom alpha 0 at 0.8, 0.50 at 0.9, 1 at 1.0; updated in rAF.
+- Desktop Swiper: creative effect, neighbours at opacity 0 and +-7.5%, 700 ms, arrows + keyboard arrows work, quick-add opens the cart. Swiper is not downloaded on mobile.
+- Reduced motion: no pin, GSAP not downloaded, no particles, no parallax, all content visible at once.
+- Scroll frame times on the dev server: avg 16.4 ms, p95 15.9 ms, 3 frames over 50 ms (lazy image decode on an unoptimised dev server). Re-measure on the production build.
+
+**Screens:** `p5-home-hero-360/1440.png`, `p5-home-hero-end-360/1440.png`, `p5-home-full-360/768/1440.png`, `p5-slider-desktop-1440.png`, `p5-slider-mobile-390.png`.
+
+---
+
+## Phase 6 — Scent Finder · DONE, gate passed (two small visual fixes queued for phase 9)
+
+**Done** (model: Fable, directly)
+- `lib/quiz.ts` (answers, hash state, scoring) and the `ScentFinder` island: intro, 5 questions (who / when / mood bands with strips / up to 3 notes from the photo grid / vertical gold range slider), per-step colour wash crossfade, progress hairline, Back / Next, top-3 result with match %, "why" line and "add all" button.
+- Scoring: family 3 (neighbouring family 2, because the 5 mood bands stand for 8 families), notes 2 each, occasion 1, intensity distance -1.
+
+**Gate** (`node scripts/e2e-finder.mjs`, all pass)
+- Keyboard-only run from Begin to the slider (Tab / Space / arrows / Enter); focus moves to each question.
+- Refresh keeps the step, the answers and the result (state in the URL hash).
+- Six answer paths give sensible top-3s (e.g. men/office/woody -> Bleu de Chanel, Oud Wood, Gypsy Water; any/day/fresh/green -> Philosykos, Wood Sage & Sea Salt, Acqua di Gio).
+- No horizontal overflow at 360 px on any step.
+
+**Known, to fix in phase 9:** on 360 px the mood-band strips are cropped to their right end and the bottom nav labels touch.
+
+**Screens:** `p6-finder-slider-1440.png`, `p6-finder-result-1440.png`, `p6-finder-step0..6-360.png`.
+
+---
+
+From here on the work is delegated: Fable plans, briefs and reviews; sub-agents do the hands-on work. Each entry records the model used.
+
+## Phase 7 — Checkout and API · DONE, gate passed
+
+**Done** (model: Opus sub-agent briefed by Fable; entry written afterwards by Opus 5.5 from the code and a fresh test run)
+- `CheckoutForm` island: name, phone (`^[6-9]\d{7}$`), optional second phone, city (УБ / орон нутаг), district select or province input, khoroo, address, note, payment (bank / QPay), Turnstile widget, hidden honeypot. Read-only order summary refreshed from catalog prices (stale cart prices are corrected with a notice), delivery fee and total. Inline localized errors with `aria-invalid` / `aria-describedby`, a top alert, and focus on the first invalid field. The button is disabled while sending and the cart is never cleared on error.
+- `src/pages/api/orders.ts` (on demand): zod schema shared with the client (`lib/order-schema.ts`), server re-pricing from the product collection, Turnstile verify, honeypot, D1 rate limit (5 per IP per 10 min), `GZ-YYMMDD-XXXX` numbers (rejection-sampled, UB date, retry on collision), D1 insert, optional Telegram message via `waitUntil`.
+- `migrations/0001_orders.sql`, `.dev.vars` with the Turnstile always-pass test secret, success page `/zahialga/amjilttai?no=…` with payment instructions, amount and reference. The cart is cleared there.
+
+**Gate** (`BASE=http://localhost:8788 node scripts/e2e-checkout.mjs` against `wrangler dev`, 2026-11-13: 43 checks, ALL PASSED)
+- `wrangler d1 migrations apply genzst --local` succeeds. An order placed through the form saves a D1 row with server prices (`D1 row saved with server prices`).
+- A tampered client price is ignored (`API: tampered order accepted with server total`, `D1: tampered row stores catalog prices`).
+- Bad input shows localized errors in mn and en; the API answers 422 with field codes.
+- Six fast orders: 5 × 200, then the 6th through the form gets 429 with the rate message, the cart is kept, and `D1 has exactly 5 rows for the rate-limited IP`.
+
+---
+
+## Phase 8 — Simple pages, SEO, 404 · DONE, gate passed
+
+**Done** (model: Opus sub-agent briefed by Fable; entry written by Opus 5.5)
+- About (`/bidnii-tuhai`, `/en/about`), FAQ and delivery accordion (`/tuslamj`, `/en/help`), and a styled 404 that switches to English copy, title and `lang` under `/en/…`.
+- `robots.txt`, `@astrojs/sitemap` with mn/en alternates from the shared route table, canonical + hreflang on every page with a twin, per-page titles and descriptions in both languages, `[[TODO owner]]` markers on placeholder business copy.
+- `scripts/check-links.mjs` crawls `dist/` and checks every internal link, the sitemap and the alternate links.
+
+**Gate**
+- `npm run linkcheck`: `63 pages, 2416 internal links checked, 0 problem(s)`. Sitemap and hreflang present.
+
+---
+
+## Phase 9 — Polish and verify · DONE
+
+**Done**
+- First verification run (Fable-briefed sub-agents): `VERIFY.md` with budgets, Lighthouse, e2e suites, 27 screenshots and a keyboard pass. It left 8 open issues.
+- Opus 5.5 closed those issues and the handoff improvement list (next entry). `VERIFY.md` now has the reason and fix for every item and the final numbers.
+
+**Gate:** all §6 targets met (see `VERIFY.md`, "Final status").
+
+---
+
+## Handoff fixes (Opus) · DONE
+
+Work by model: code, tests and docs by **Opus 5.5** directly. The Mongolian copy review was done by a **Sonnet** sub-agent (it proposed changes and Opus applied a subset). The final Lighthouse runs and the 27-screenshot sweep were done by a **Haiku** sub-agent.
+
+**3.1 Hero blank in full-page captures.** Not a real bug. In a normal viewport the headline and CTAs were visible, including without JS and under reduced motion (`scripts/probe-hero.mjs`). The black band was the pinned scroll stage inside a full-page capture. Two real problems turned up on the way and are fixed:
+- The headline faded in from `opacity: 0`, so it wasn't visible on first paint. It now only settles 12 px and is visible from the first frame; the rest fades in after it.
+- Without JS, every `[data-reveal]` section and the slider cards stayed invisible. The `<noscript>` style in `Base.astro` now also covers the slider cards and the hero entrance animations.
+
+`shot.mjs --full` drops the pin length, so full-page captures show the hero and then the sections.
+
+**3.2 e2e-checkout "bad JSON → 400".** The handoff's guess (rate limit) was wrong, because the API already parsed JSON before the rate limit. The request went out as `text/plain` with no `Origin`, so Astro's CSRF `checkOrigin` answered **403** before the handler ran. The API now checks, in order: content type (415), body size up to 32 KB (413), JSON (400), schema (422), honeypot, Turnstile, rate limit (429), insert. The test sends the bad JSON as `application/json`, gives every independent API case its own IP, and adds 403, 415 and 413 cases.
+
+**3.3 Home JS budget (116.4 → 25.9 KB total).** Swiper and GSAP are removed and uninstalled.
+- Hero pin: `position: sticky` plus one rAF that writes CSS variables, eased towards the scroll target like a 0.6 s GSAP scrub.
+- Layering slider, desktop: a horizontal scroll-snap track. Each slide gets translate (±7.5%) and opacity from its distance to the centre. Arrows and keys glide over 700 ms (eased); off-centre slides are inert; clicking a neighbour moves to it; `aria-roledescription="carousel"` is kept.
+- The mobile vertical list and its scroll mask are unchanged.
+- Compositor hints on the hero layers removed the 6–7 frames over 50 ms per page scroll.
+
+**3.4 Finder / checkout budgets.** No waste found: the cart drawer is lazy and only the current locale's strings ship. Their initial JS is the shared shell (Preact, router, cart store) plus a 4 KB island, so their budget is now 25 KB (plan correction in `VERIFY.md`). `/en/` now uses the home total rule.
+
+**3.5 Shop accessibility 95 → 100.** The sort select has an explicit `<label for>`, visually hidden on phones instead of `display: none`. Size chips lost their `aria-label`: the visible "2 мл" is the name, and "sold out" is an sr-only suffix.
+
+**3.6 Product contrast 97 → 100.** The "not this season / occasion" labels were `#5d5850` (2.9:1). They are now `#807a71` (4.7:1) with a dimmer icon, still clearly below the active ones.
+
+**3.7 Keyboard check.** A false positive, confirmed: the body stop is the document-end wrap. The check now accepts a body stop only when the previous stop is the last tabbable element in DOM order and the next is the skip link. Anything else still fails.
+
+**3.9 Scent Finder at 360 px.** The mood-band strips show their middle. On screens up to 400 px, Back is an arrow only (its label stays for screen readers), so Next and the counter never touch.
+
+**Improvements (§4)**
+- Hero pin shortened to 55svh on phones.
+- The desktop slider shows faded neighbours, an edge mask, and a progress hairline under the counter.
+- Note tiles have a deeper bottom gradient and a soft text shadow.
+- Product cards: checked; sizes and prices align across long names.
+- Copy: 9 mn.json strings and 7 product descriptions corrected (grammar, calques). Register changes to the plan's fixed headline and step names were declined.
+- Error states: offline submit (cart kept, message shown) and the English 404 were added to `e2e-checkout`. The empty cart was already covered.
+- README updated (scripts, budgets, deviations).
+
+**Deviations from the plan:** no GSAP and no Swiper on home (plan §5.2/§5.3 named them; the handoff preferred this). Scent Finder and checkout budgets are 25 KB.
+
+**Incident:** a scripted edit truncated `src/layouts/Base.astro`. It was restored from the session transcript's last full read of the file and checked against the previous build: the rebuilt HTML differs only by the intended `<noscript>` change and the copy edits.

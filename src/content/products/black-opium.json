@@ -1,0 +1,54 @@
+{
+  "slug": "black-opium",
+  "brand": "Yves Saint Laurent",
+  "name": "Black Opium",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "pear",
+      "pink-pepper"
+    ],
+    "heart": [
+      "coffee",
+      "jasmine"
+    ],
+    "base": [
+      "vanilla",
+      "patchouli",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Хар кофе, ваниль, цагаан цэцэгс. Чихэрлэг атлаа бараан аястай, үдшийн цагаар хамгийн сайхан нээгддэг.",
+    "en": "Black coffee, vanilla and white flowers. Sweet but dark, and at its best after sunset."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 17000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 38000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 70000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "square",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ]
+}

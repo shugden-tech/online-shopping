@@ -1,0 +1,63 @@
+{
+  "slug": "bleu-de-chanel",
+  "brand": "Chanel",
+  "name": "Bleu de Chanel",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "grapefruit",
+      "lemon",
+      "mint"
+    ],
+    "heart": [
+      "ginger",
+      "jasmine"
+    ],
+    "base": [
+      "incense",
+      "cedar",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Бэрсүүт жүржийн сэргэг эхлэл аажмаар хүж, хуш модны цэвэр гүн рүү шилждэг. Ажил, уулзалт, оройн хоол гээд хаана ч зохицдог найдвартай сонголт.",
+    "en": "A brisk grapefruit opening settles into clean incense and cedar. Office, meeting or dinner — it is the dependable choice that fits everywhere."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 18000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 42000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 78000,
+      "inStock": true
+    },
+    {
+      "ml": 30,
+      "price": 195000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "square",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "office",
+    "date"
+  ]
+}

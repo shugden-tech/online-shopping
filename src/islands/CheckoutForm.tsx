@@ -1,0 +1,580 @@
+import { useEffect, useRef, useState } from "preact/hooks";
+import type { JSX } from "preact";
+import { navigate } from "astro:transitions/client";
+import { cartItems, cartOpen, deliveryFor, type CartItem } from "../lib/cart";
+import { useSig } from "../lib/use-signal";
+import { formatPrice } from "../lib/price";
+import { Bottle, initialOf } from "./Bottle";
+import {
+  FIELD_ORDER, validateOrderForm, type FieldErrorKey, type FormErrors, type OrderField, type OrderFormValues,
+} from "../lib/order-validate";
+import type { Dict, Locale } from "../i18n/lite";
+
+type Tr = Dict["checkout"];
+/** `{ [slug]: { [ml]: [price, inStock] } }` from the product collection at build time. */
+export type PriceCatalog = Record<string, Record<string, [number, boolean]>>;
+
+export interface CheckoutFormProps {
+  locale: Locale;
+  tr: Tr;
+  ml: string;
+  districts: { id: string; label: string }[];
+  catalog: PriceCatalog;
+  delivery: { fee: number; freeThreshold: number };
+  siteKey: string;
+  shopHref: string;
+  successHref: string;
+}
+
+type FormError = "rate" | "items" | "server" | "network" | "empty" | "fix";
+
+/* ---------- Turnstile: load the script once per page session ---------- */
+interface TurnstileApi {
+  render(el: HTMLElement, opts: Record<string, unknown>): string;
+  reset(id: string): void;
+  remove(id: string): void;
+}
+declare global {
+  interface Window { turnstile?: TurnstileApi }
+}
+let tsLoading: Promise<TurnstileApi> | null = null;
+function loadTurnstile(): Promise<TurnstileApi> {
+  if (window.turnstile) return Promise.resolve(window.turnstile);
+  tsLoading ??= new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+    s.async = true;
+    s.defer = true;
+    s.onload = () => (window.turnstile ? resolve(window.turnstile) : reject(new Error("turnstile missing")));
+    s.onerror = () => {
+      tsLoading = null;
+      reject(new Error("turnstile failed to load"));
+    };
+    document.head.appendChild(s);
+  });
+  return tsLoading;
+}
+
+const EMPTY: OrderFormValues = {
+  name: "", phone: "", phone2: "", city: "ub", district: "", khoroo: "", address: "", note: "", payment: "bank",
+};
+
+export default function CheckoutForm(props: CheckoutFormProps) {
+  const { locale, tr, ml, districts, catalog, delivery, siteKey, shopHref, successHref } = props;
+  const items = useSig(cartItems);
+  const [mounted, setMounted] = useState(false);
+  const [priceChanged, setPriceChanged] = useState(false);
+  const [values, setValues] = useState<OrderFormValues>(EMPTY);
+  const [province, setProvince] = useState("");
+  const [ubDistrict, setUbDistrict] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [formError, setFormError] = useState<FormError | null>(null);
+  const [sending, setSending] = useState(false);
+  const [token, setToken] = useState("");
+  const tsBox = useRef<HTMLDivElement>(null);
+  const tsId = useRef<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const alertRef = useRef<HTMLDivElement>(null);
+  const money = (n: number) => formatPrice(n, locale);
+
+  /* refresh stale cart snapshot prices from the catalog */
+  useEffect(() => {
+    setMounted(true);
+    let changed = false;
+    const next = cartItems.value.map((i) => {
+      const entry = catalog[i.slug]?.[String(i.ml)];
+      if (entry && entry[0] !== i.price) {
+        changed = true;
+        return { ...i, price: entry[0] };
+      }
+      return i;
+    });
+    if (changed) {
+      cartItems.value = next;
+      setPriceChanged(true);
+    }
+  }, []);
+
+  const empty = mounted && items.length === 0;
+  const unavailable = mounted && items.some((i) => !catalog[i.slug]?.[String(i.ml)]?.[1]);
+
+  /* Turnstile widget: render explicitly, clean up on unmount (view transitions swap the page) */
+  useEffect(() => {
+    if (!mounted || empty) return;
+    let cancelled = false;
+    loadTurnstile()
+      .then((ts) => {
+        if (cancelled || !tsBox.current || tsId.current) return;
+        tsId.current = ts.render(tsBox.current, {
+          sitekey: siteKey,
+          theme: "dark",
+          // Turnstile has no Mongolian; "mn" logs a warning and falls back to en-us anyway
+          language: locale === "en" ? "en" : "auto",
+          callback: (t: string) => {
+            setToken(t);
+            setErrors((e) => (e.turnstile ? { ...e, turnstile: undefined } : e));
+          },
+          "expired-callback": () => setToken(""),
+          "error-callback": () => {
+            setToken("");
+          },
+        });
+      })
+      .catch((err) => console.warn(err));
+    return () => {
+      cancelled = true;
+      if (tsId.current && window.turnstile) {
+        try {
+          window.turnstile.remove(tsId.current);
+        } catch {
+          /* already gone */
+        }
+      }
+      tsId.current = null;
+    };
+  }, [mounted, empty]);
+
+  const resetTurnstile = () => {
+    setToken("");
+    if (tsId.current && window.turnstile) {
+      try {
+        window.turnstile.reset(tsId.current);
+      } catch {
+        /* ignore */
+      }
+    }
+  };
+
+  const subtotal = items.reduce((n, i) => n + i.price * i.qty, 0);
+  const fee = deliveryFor(subtotal, delivery.fee, delivery.freeThreshold);
+  const total = subtotal + fee;
+
+  const set = (field: OrderField) => (e: JSX.TargetedEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const v = e.currentTarget.value;
+    setValues((s) => ({ ...s, [field]: v }));
+    if (errors[field]) setErrors((x) => ({ ...x, [field]: undefined }));
+  };
+
+  const current = (): OrderFormValues => ({
+    ...values,
+    district: values.city === "ub" ? ubDistrict : province,
+  });
+
+  const focusFirst = (errs: FormErrors) => {
+    const first = FIELD_ORDER.find((f) => errs[f]);
+    if (!first) return;
+    requestAnimationFrame(() => {
+      const el = formRef.current?.querySelector<HTMLElement>(`[data-field="${first}"]`);
+      el?.focus();
+      el?.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+  };
+
+  const showFormError = (k: FormError) => {
+    setFormError(k);
+    requestAnimationFrame(() => alertRef.current?.scrollIntoView({ block: "center", behavior: "smooth" }));
+  };
+
+  async function onSubmit(e: Event) {
+    e.preventDefault();
+    if (sending) return;
+    if (empty) return showFormError("empty");
+    if (unavailable) return showFormError("items");
+    const v = current();
+    const errs = validateOrderForm(v);
+    if (!token) errs.turnstile = "turnstileMissing";
+    if (Object.values(errs).some(Boolean)) {
+      setErrors(errs);
+      setFormError("fix");
+      focusFirst(errs);
+      return;
+    }
+    setErrors({});
+    setFormError(null);
+    setSending(true);
+    const website = (formRef.current?.elements.namedItem("website") as HTMLInputElement | null)?.value ?? "";
+    const payload = {
+      ...v,
+      locale,
+      items: cartItems.value.map((i) => ({ slug: i.slug, ml: i.ml, qty: i.qty })),
+      turnstileToken: token,
+      website,
+    };
+    let res: Response;
+    try {
+      res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      setSending(false);
+      resetTurnstile();
+      return showFormError("network");
+    }
+    let data: { ok?: boolean; orderNo?: string; total?: number; errors?: Record<string, string> } = {};
+    try {
+      data = await res.json();
+    } catch {
+      /* non-JSON error page */
+    }
+    if (res.ok && data.ok && data.orderNo) {
+      // the success page clears the cart; keep it until we know the order is stored
+      const url = `${successHref}?no=${encodeURIComponent(data.orderNo)}&t=${encodeURIComponent(String(data.total ?? total))}`;
+      try {
+        await navigate(url);
+      } catch {
+        location.assign(url);
+      }
+      return;
+    }
+    setSending(false);
+    resetTurnstile();
+    const se = data.errors ?? {};
+    const fieldErrs: FormErrors = {};
+    for (const f of FIELD_ORDER) if (se[f]) fieldErrs[f] = se[f] as FieldErrorKey;
+    setErrors(fieldErrs);
+    const form = se.form as FormError | undefined;
+    if (res.status === 429 || form === "rate") showFormError("rate");
+    else if (form === "items") showFormError("items");
+    else if (Object.keys(fieldErrs).length) {
+      setFormError("fix");
+      focusFirst(fieldErrs);
+    } else showFormError("server");
+  }
+
+  /* ---------- small render helpers ---------- */
+  const errId = (f: string) => `co-${f}-err`;
+  const fieldProps = (f: OrderField | "turnstile") => ({
+    id: `co-${f}`,
+    "data-field": f,
+    "aria-invalid": errors[f] ? ("true" as const) : undefined,
+    "aria-describedby": errors[f] ? errId(f) : undefined,
+  });
+  const Err = ({ f }: { f: OrderField | "turnstile" }) =>
+    errors[f] ? (
+      <p class="field-error" id={errId(f)}>
+        {tr.errors[errors[f]!]}
+      </p>
+    ) : null;
+  const inv = (f: OrderField | "turnstile") => (errors[f] ? "" : undefined);
+  const optional = <span class="co__opt">({tr.optional})</span>;
+
+  /* ---------- order summary ---------- */
+  const summary = (
+    <aside class="co__summary" aria-labelledby="co-sum-title">
+      <div class="co__sum-head">
+        <h2 class="t-title" id="co-sum-title">{tr.summary}</h2>
+        {mounted && items.length > 0 && (
+          <button
+            type="button"
+            class="co__edit text-link"
+            data-cart-open
+            onClick={() => (cartOpen.value = true)}
+          >
+            {tr.editCart}
+          </button>
+        )}
+      </div>
+      {!mounted ? (
+        <div class="co__skel" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      ) : (
+        <>
+          {priceChanged && (
+            <p class="co__notice t-small" role="status">
+              {tr.priceChanged}
+            </p>
+          )}
+          <ul class="co__lines">
+            {items.map((i: CartItem) => {
+              const ok = catalog[i.slug]?.[String(i.ml)]?.[1];
+              return (
+                <li class="co__line" key={`${i.slug}-${i.ml}`} data-unavailable={ok ? undefined : ""}>
+                  <div class="co__thumb">
+                    <Bottle shape={i.shape} family={i.family} initial={initialOf(i.brand)} img={i.img} />
+                    <span class="co__qty" aria-hidden="true">{i.qty}</span>
+                  </div>
+                  <div class="co__line-text">
+                    <p class="co__brand">{i.brand}</p>
+                    <p class="co__name">{i.name}</p>
+                    <p class="co__meta">
+                      {i.ml} {ml} × {i.qty}
+                    </p>
+                  </div>
+                  <p class="co__line-sum">{money(i.price * i.qty)}</p>
+                </li>
+              );
+            })}
+          </ul>
+          <dl class="co__totals">
+            <div>
+              <dt>{tr.subtotal}</dt>
+              <dd>{money(subtotal)}</dd>
+            </div>
+            <div>
+              <dt>{tr.delivery}</dt>
+              <dd class={fee === 0 ? "t-gold" : undefined}>{fee === 0 ? tr.free : money(fee)}</dd>
+            </div>
+            <div class="co__total">
+              <dt>{tr.total}</dt>
+              <dd data-total>{money(total)}</dd>
+            </div>
+          </dl>
+        </>
+      )}
+    </aside>
+  );
+
+  if (empty) {
+    return (
+      <div class="co__empty">
+        <p class="t-h3">{tr.emptyCart}</p>
+        <a class="btn btn--gold" href={shopHref}>
+          {tr.emptyCta}
+        </a>
+      </div>
+    );
+  }
+
+  const isUb = values.city === "ub";
+
+  return (
+    <div class="co__grid">
+      {summary}
+
+      <form class="co__form" ref={formRef} noValidate onSubmit={onSubmit} aria-busy={sending ? "true" : undefined}>
+        <div class="co__alert" ref={alertRef} role="alert" aria-live="assertive">
+          {formError && <p>{tr.errors[formError]}</p>}
+        </div>
+
+        <fieldset class="co__set">
+          <legend class="t-title">{tr.contact}</legend>
+          <div class="field" data-invalid={inv("name")}>
+            <label for="co-name">{tr.name}</label>
+            <input
+              {...fieldProps("name")}
+              class="input"
+              name="name"
+              autocomplete="name"
+              placeholder={tr.namePh}
+              maxLength={80}
+              value={values.name}
+              onInput={set("name")}
+              required
+            />
+            <Err f="name" />
+          </div>
+          <div class="co__row">
+            <div class="field" data-invalid={inv("phone")}>
+              <label for="co-phone">{tr.phone}</label>
+              <input
+                {...fieldProps("phone")}
+                class="input"
+                name="phone"
+                type="tel"
+                inputMode="numeric"
+                autocomplete="tel-national"
+                maxLength={8}
+                placeholder={tr.phonePh}
+                value={values.phone}
+                onInput={set("phone")}
+                required
+              />
+              <Err f="phone" />
+            </div>
+            <div class="field" data-invalid={inv("phone2")}>
+              <label for="co-phone2">
+                {tr.phone2} {optional}
+              </label>
+              <input
+                {...fieldProps("phone2")}
+                class="input"
+                name="phone2"
+                type="tel"
+                inputMode="numeric"
+                autocomplete="off"
+                maxLength={8}
+                value={values.phone2}
+                onInput={set("phone2")}
+              />
+              <Err f="phone2" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="co__set">
+          <legend class="t-title">{tr.deliverySection}</legend>
+          <div class="field">
+            <span class="label" id="co-city-label">{tr.city}</span>
+            <div class="co__cities" role="radiogroup" aria-labelledby="co-city-label">
+              {(["ub", "countryside"] as const).map((c, n) => (
+                <label class="co__city">
+                  <input
+                    type="radio"
+                    name="city"
+                    value={c}
+                    data-field={n === 0 ? "city" : undefined}
+                    checked={values.city === c}
+                    onChange={() => {
+                      setValues((s) => ({ ...s, city: c }));
+                      setErrors((x) => ({ ...x, district: undefined, city: undefined }));
+                    }}
+                  />
+                  <span class="chip">{tr[c]}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {isUb ? (
+            <div class="co__row">
+              <div class="field" data-invalid={inv("district")}>
+                <label for="co-district">{tr.district}</label>
+                <select
+                  {...fieldProps("district")}
+                  class="select"
+                  name="district"
+                  value={ubDistrict}
+                  onChange={(e) => {
+                    setUbDistrict(e.currentTarget.value);
+                    setErrors((x) => ({ ...x, district: undefined }));
+                  }}
+                  required
+                >
+                  <option value="">{tr.districtSelect}</option>
+                  {districts.map((d) => (
+                    <option value={d.id}>{d.label}</option>
+                  ))}
+                </select>
+                <Err f="district" />
+              </div>
+              <div class="field" data-invalid={inv("khoroo")}>
+                <label for="co-khoroo">
+                  {tr.khoroo} {optional}
+                </label>
+                <input
+                  {...fieldProps("khoroo")}
+                  class="input"
+                  name="khoroo"
+                  maxLength={40}
+                  placeholder={tr.khorooPh}
+                  value={values.khoroo}
+                  onInput={set("khoroo")}
+                />
+                <Err f="khoroo" />
+              </div>
+            </div>
+          ) : (
+            <div class="field" data-invalid={inv("district")}>
+              <label for="co-district">{tr.province}</label>
+              <input
+                {...fieldProps("district")}
+                class="input"
+                name="province"
+                maxLength={80}
+                autocomplete="address-level1"
+                placeholder={tr.provincePh}
+                value={province}
+                onInput={(e) => {
+                  setProvince(e.currentTarget.value);
+                  setErrors((x) => ({ ...x, district: undefined }));
+                }}
+                required
+              />
+              <Err f="district" />
+              <p class="co__hint t-small">{tr.countrysideNote}</p>
+            </div>
+          )}
+
+          <div class="field" data-invalid={inv("address")}>
+            <label for="co-address">{tr.address}</label>
+            <textarea
+              {...fieldProps("address")}
+              class="textarea"
+              name="address"
+              rows={3}
+              maxLength={300}
+              autocomplete="street-address"
+              placeholder={isUb ? tr.addressPh : tr.addressPhCountry}
+              value={values.address}
+              onInput={set("address")}
+              required
+            />
+            <Err f="address" />
+          </div>
+          <div class="field" data-invalid={inv("note")}>
+            <label for="co-note">
+              {tr.note} {optional}
+            </label>
+            <textarea
+              {...fieldProps("note")}
+              class="textarea co__note"
+              name="note"
+              rows={2}
+              maxLength={300}
+              placeholder={tr.notePh}
+              value={values.note}
+              onInput={set("note")}
+            />
+            <Err f="note" />
+          </div>
+        </fieldset>
+
+        <fieldset class="co__set" aria-describedby={errors.payment ? errId("payment") : undefined}>
+          <legend class="t-title">{tr.payment}</legend>
+          <div class="co__pays">
+            {(["bank", "qpay"] as const).map((p, n) => (
+              <label class="co__pay">
+                <input
+                  type="radio"
+                  name="payment"
+                  value={p}
+                  data-field={n === 0 ? "payment" : undefined}
+                  checked={values.payment === p}
+                  onChange={() => {
+                    setValues((s) => ({ ...s, payment: p }));
+                    setErrors((x) => ({ ...x, payment: undefined }));
+                  }}
+                />
+                <span class="co__pay-box">
+                  <span class="co__pay-dot" aria-hidden="true"></span>
+                  <span class="co__pay-name">{tr[p]}</span>
+                  <span class="co__pay-hint">{p === "bank" ? tr.bankHint : tr.qpayHint}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+          <Err f="payment" />
+          <p class="co__hint t-small">{tr.paymentNote}</p>
+        </fieldset>
+
+        {/* honeypot: hidden from people and assistive tech; bots tend to fill it */}
+        <div class="co__hp" aria-hidden="true">
+          <label for="co-website">{tr.website}</label>
+          <input id="co-website" name="website" type="text" tabIndex={-1} autocomplete="off" />
+        </div>
+
+        <div class="co__verify" data-invalid={inv("turnstile")}>
+          <p class="sr-only">{tr.verify}</p>
+          <div
+            class="co__ts"
+            ref={tsBox}
+            data-field="turnstile"
+            tabIndex={-1}
+            aria-describedby={errors.turnstile ? errId("turnstile") : undefined}
+          ></div>
+          <Err f="turnstile" />
+        </div>
+
+        <button type="submit" class="btn btn--gold btn--block co__submit" disabled={sending || !mounted}>
+          <span>{sending ? tr.sending : tr.submit}</span>
+          {mounted && !sending && <span class="co__submit-sum">{money(total)}</span>}
+        </button>
+      </form>
+    </div>
+  );
+}

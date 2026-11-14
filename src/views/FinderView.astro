@@ -1,0 +1,59 @@
+---
+import { getImage } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import ScentFinder from "../islands/ScentFinder.tsx";
+import { getDict, route, fill, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { NOTES, NOTE_GROUPS, defaultSize, fromPrice, getProducts, isSoldOut, noteGroups, thumbOf } from "../lib/products";
+import { familyStrips, noteImages } from "../lib/images";
+import { MOODS, type QuizProduct } from "../lib/quiz";
+import "../styles/finder.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+
+const products: QuizProduct[] = await Promise.all(
+  (await getProducts()).map(async (p) => {
+    const size = defaultSize(p);
+    const img = await thumbOf(p, 320);
+    return {
+      slug: p.slug, brand: p.brand, name: p.name, family: p.family, gender: p.gender,
+      groups: noteGroups(p), occasion: p.occasion, intensity: p.intensity, shape: p.bottleShape,
+      ...(img ? { img } : {}),
+      featured: Boolean(p.featured), addMl: size.ml, addPrice: size.price, soldOut: isSoldOut(p),
+      from: fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }),
+    };
+  }),
+);
+
+const moods = await Promise.all(
+  MOODS.map(async (id) => {
+    const src = familyStrips[id]!;
+    const img = await getImage({ src, format: "avif", quality: 60 });
+    return { id, strip: img.src, w: Math.round((src.width / src.height) * 110), h: 110 };
+  }),
+);
+
+const notes = await Promise.all(
+  NOTE_GROUPS.map(async (id) => ({
+    id: id as string,
+    label: NOTES[id]![locale],
+    img: (await getImage({ src: noteImages[id]!, width: 240, height: 300, fit: "cover", format: "webp", quality: 60 })).src,
+  })),
+);
+---
+<Base locale={locale} title={tr.finder.title} description={tr.finder.metaDescription} current="finder" overlayHeader bare>
+  <ScentFinder
+    client:load
+    tr={tr.finder}
+    families={tr.families}
+    familyLines={tr.familyLines}
+    intensityLevels={tr.product.intensityLevels}
+    viewLabel={tr.common.view}
+    productBase={route("shop", locale)}
+    moods={moods}
+    notes={notes}
+    products={products}
+  />
+</Base>

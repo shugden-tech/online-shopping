@@ -1,0 +1,105 @@
+---
+import Base from "../layouts/Base.astro";
+import { getDict, route, type Locale } from "../i18n";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+
+const paragraphs = [tr.about.p1, tr.about.p2, tr.about.p3];
+const values = [
+  { num: "01", title: tr.about.v1, text: tr.about.v1Text },
+  { num: "02", title: tr.about.v2, text: tr.about.v2Text },
+  { num: "03", title: tr.about.v3, text: tr.about.v3Text },
+];
+---
+<Base locale={locale} title={tr.about.title} description={tr.about.metaDescription} current="about">
+  <section class="wrap page-top about">
+    <header class="about__head">
+      <p class="t-title t-gold" data-reveal>{tr.about.eyebrow}</p>
+      <h1 class="t-head" data-reveal style="--delay:80ms">{tr.about.heading}</h1>
+    </header>
+
+    <div class="about__grid">
+      <div class="about__story" data-reveal>
+        {paragraphs.map((p) => <p class="t-body">{p}</p>)}
+      </div>
+
+      <div class="about__values" data-reveal style="--delay:120ms">
+        <h2 class="t-title t-gold">{tr.about.valuesTitle}</h2>
+        <ol class="about__list">
+          {values.map((v) => (
+            <li class="about__item">
+              <span class="about__num">{v.num}</span>
+              <div class="about__item-body">
+                <h3 class="t-h3">{v.title}</h3>
+                <p class="t-body t-dim">{v.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="about__cta" data-reveal>
+      <a class="btn btn--gold" href={route("shop", locale)}>{tr.about.cta}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about { padding-bottom: var(--section); }
+
+  .about__head {
+    display: grid;
+    gap: 22px;
+    margin-bottom: clamp(56px, 8vw, 110px);
+  }
+  .about__head h1 { max-width: 16ch; }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+    gap: clamp(48px, 7vw, 104px);
+    align-items: start;
+  }
+
+  .about__story {
+    display: grid;
+    gap: 24px;
+    max-width: 46ch;
+    padding-left: clamp(20px, 3vw, 36px);
+    border-left: 1px solid var(--gold);
+  }
+
+  .about__values { display: grid; gap: 28px; }
+
+  .about__list { border-top: 1px solid var(--line-soft); }
+  .about__item {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 20px;
+    padding-block: 28px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .about__num {
+    font-family: var(--font-head);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 34px;
+    line-height: 1;
+    color: var(--gold);
+    padding-top: 2px;
+  }
+  .about__item-body { display: grid; gap: 8px; }
+
+  .about__cta { margin-top: clamp(56px, 7vw, 96px); }
+
+  @media (max-width: 860px) {
+    .about__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 420px) {
+    .about__item { grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
+    .about__num { font-size: 28px; }
+  }
+</style>

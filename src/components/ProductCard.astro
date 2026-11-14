@@ -1,0 +1,149 @@
+---
+import BottleArt from "./BottleArt.astro";
+import { getDict, productPath, fill, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { cartBase, defaultSize, initialOf, isSoldOut, sortedSizes, type Product } from "../lib/products";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  /** Heading level for the product name. */
+  level?: 2 | 3;
+  eager?: boolean;
+  class?: string;
+}
+const { product: p, locale, level = 3, eager = false, class: cls } = Astro.props;
+const tr = getDict(locale);
+const href = productPath(locale, p.slug);
+const sizes = sortedSizes(p);
+const start = defaultSize(p);
+const soldOut = isSoldOut(p);
+const base = await cartBase(p);
+const H = `h${level}` as "h2" | "h3";
+const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`;
+---
+<article class:list={["pcard", cls]} data-card data-slug={p.slug} style={`--tint:var(--fam-${p.family})`}>
+  <a class="pcard__media" href={href} tabindex="-1" aria-hidden="true">
+    <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} eager={eager} />
+  </a>
+  {p.isNew && !soldOut && <span class="pcard__flag">{tr.common.new}</span>}
+  {soldOut && <span class="pcard__flag pcard__flag--out">{tr.common.soldOut}</span>}
+
+  <div class="pcard__body">
+    <p class="pcard__brand">{p.brand}</p>
+    <H class="pcard__name"><a href={href}>{p.name}</a></H>
+    <p class="pcard__meta">
+      <span class="pcard__fam">{tr.families[p.family]}</span>
+      <span aria-hidden="true">·</span>
+      <span>{p.concentration}</span>
+    </p>
+
+    <div class="pcard__sizes" role="group" aria-label={tr.common.size}>
+      {sizes.map((s) => (
+        <button
+          type="button"
+          class="pcard__size"
+          data-size-chip
+          data-ml={s.ml}
+          data-price={s.price}
+          data-price-label={formatPrice(s.price, locale)}
+          aria-pressed={s.ml === start.ml && s.inStock ? "true" : "false"}
+          disabled={!s.inStock}
+        >
+          {s.ml}<small>{" "}{tr.common.ml}</small>{!s.inStock && <span class="sr-only"> — {tr.common.soldOut}</span>}
+        </button>
+      ))}
+    </div>
+
+    <div class="pcard__foot">
+      <p class="pcard__price" data-card-price aria-live="polite">{formatPrice(start.price, locale)}</p>
+      <button
+        type="button"
+        class="pcard__add"
+        data-add
+        data-item={JSON.stringify(base)}
+        data-ml={start.ml}
+        data-price={start.price}
+        data-label-tpl={addLabel(0).replace(" 0 ", " {ml} ")}
+        aria-label={addLabel(start.ml)}
+        disabled={soldOut}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+        <span>{soldOut ? tr.common.soldOut : tr.common.addShort}</span>
+      </button>
+    </div>
+  </div>
+</article>
+
+<style>
+  .pcard {
+    position: relative; display: flex; flex-direction: column; min-width: 0;
+    background: var(--ink-2); border: 1px solid var(--line-soft); border-radius: var(--radius);
+    transition: border-color .45s var(--ease-sine), background-color .45s var(--ease-sine);
+  }
+  .pcard:hover, .pcard:focus-within { border-color: var(--line); background: #141311; }
+
+  .pcard__media {
+    position: relative; display: grid; place-items: center; aspect-ratio: 4 / 4.400; padding: 9% 22% 4%;
+    background:
+      radial-gradient(60% 46% at 50% 58%, color-mix(in srgb, var(--tint) 20%, transparent), transparent 100%),
+      linear-gradient(180deg, rgba(255, 255, 255, .025), transparent 40%);
+    overflow: hidden;
+  }
+  .pcard__media :global(.bottle) { transition: transform .9s var(--ease-out); will-change: transform; }
+  .pcard:hover .pcard__media :global(.bottle) { transform: translateY(-6px) scale(1.02); }
+  .pcard__media :global(.bottle-photo) { position: absolute; inset: 0; object-fit: cover; }
+
+  .pcard__flag {
+    position: absolute; top: 12px; left: 12px; z-index: 1; padding: 4px 9px;
+    border: 1px solid var(--gold); color: var(--gold-soft);
+    font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; line-height: 1.4;
+    background: rgba(7, 7, 7, .6);
+  }
+  .pcard__flag--out { border-color: var(--line-soft); color: var(--text-dim); }
+
+  .pcard__body { display: flex; flex-direction: column; flex: 1; padding: 14px 16px 16px; border-top: 1px solid var(--line-soft); }
+  .pcard__brand {
+    font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim); line-height: 1.5;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pcard__name { font-family: var(--font-head); font-weight: 500; font-size: clamp(19px, .6vw + 17px, 24px); line-height: 1.15; margin-top: 3px; }
+  .pcard__name a { display: block; transition: color .3s; }
+  .pcard__name a:hover { color: var(--gold-soft); }
+  .pcard__meta { display: flex; align-items: center; gap: 7px; margin-top: 6px; font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+  .pcard__fam { display: inline-flex; align-items: center; gap: 7px; }
+  .pcard__fam::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--tint); }
+
+  .pcard__sizes { display: flex; gap: 6px; margin-top: auto; padding-top: 14px; }
+  .pcard__size {
+    position: relative; flex: 1; max-width: 64px; min-height: 40px; display: inline-flex; align-items: baseline; justify-content: center; gap: 2px;
+    padding-top: 10px; border: 1px solid var(--line-soft); border-radius: var(--radius);
+    font-size: 13px; font-weight: 500; color: var(--text); transition: border-color .3s, color .3s, background-color .3s;
+  }
+  .pcard__size::before { content: ""; position: absolute; inset: -3px 0; } /* 44px+ tap height */
+  .pcard__size small { font-size: 10px; font-weight: 400; color: var(--text-dim); }
+  .pcard__size:hover:not(:disabled) { border-color: var(--gold); }
+  .pcard__size[aria-pressed="true"] { border-color: var(--gold); background: rgba(204, 158, 72, .14); color: var(--gold-soft); }
+  .pcard__size:disabled { color: #6f6a62; text-decoration: line-through; cursor: not-allowed; border-style: dashed; }
+
+  .pcard__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+  .pcard__price { font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pcard__add {
+    display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 2px 0 10px; margin-right: -2px;
+    font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--gold);
+    transition: color .3s;
+  }
+  .pcard__add:hover:not(:disabled) { color: var(--gold-soft); }
+  .pcard__add svg { transition: transform .5s var(--ease-out); }
+  .pcard__add:hover:not(:disabled) svg { transform: rotate(90deg); }
+  .pcard__add:disabled { color: #6f6a62; cursor: not-allowed; }
+  .pcard__add:disabled svg { display: none; }
+
+  @media (max-width: 480px) {
+    .pcard__body { padding: 12px 12px 12px; }
+    .pcard__size { min-height: 38px; padding-top: 9px; }
+    .pcard__add { letter-spacing: .08em; padding-left: 4px; }
+    .pcard__add svg { display: none; }
+    .pcard__price { font-size: 14px; }
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+import { getImage } from "astro:assets";
+import { getDict, route, type Locale } from "../i18n";
+import { NOTES, type Product } from "../lib/products";
+import { noteImages } from "../lib/images";
+
+interface Props { product: Product; locale: Locale }
+const { product: p, locale } = Astro.props;
+const tr = getDict(locale);
+const shop = route("shop", locale);
+
+const chip = async (id: string) => {
+  const info = NOTES[id]!;
+  const group = info.image;
+  const img = group && noteImages[group]
+    ? (await getImage({ src: noteImages[group]!, width: 64, height: 64, fit: "cover", format: "webp" })).src
+    : undefined;
+  return {
+    id,
+    label: info[locale],
+    img,
+    href: group ? `${shop}?notes=${group}` : `${shop}?q=${encodeURIComponent(info[locale])}`,
+  };
+};
+
+const tiers = [
+  { key: "top", label: tr.product.top, hint: tr.product.topHint, notes: await Promise.all(p.notes.top.map(chip)) },
+  { key: "heart", label: tr.product.heart, hint: tr.product.heartHint, notes: await Promise.all(p.notes.heart.map(chip)) },
+  { key: "base", label: tr.product.base, hint: tr.product.baseHint, notes: await Promise.all(p.notes.base.map(chip)) },
+];
+---
+<div class="pyr">
+  {tiers.map((tier, i) => (
+    <div class={`pyr__tier pyr__tier--${tier.key}`} data-reveal style={`--delay:${i * 120}ms`}>
+      <div class="pyr__label">
+        <span class="pyr__num" aria-hidden="true">0{i + 1}</span>
+        <h3 class="t-title">{tier.label}</h3>
+        <p class="t-small t-dim">{tier.hint}</p>
+      </div>
+      <ul class="pyr__chips">
+        {tier.notes.map((n) => (
+          <li>
+            <a class:list={["chip", "pyr__chip", { "chip--img": n.img }]} href={n.href}>
+              {n.img && <img src={n.img} alt="" width="32" height="32" loading="lazy" decoding="async" />}
+              {n.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
+<style>
+  .pyr { display: grid; gap: 0; max-width: 980px; margin-inline: auto; }
+  .pyr__tier {
+    display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 16px 32px;
+    padding: 26px clamp(16px, 3vw, 36px); margin-inline: auto; width: 100%;
+    border: 1px solid var(--line); border-bottom-width: 0;
+    background: linear-gradient(180deg, rgba(204, 158, 72, .05), transparent);
+  }
+  /* the pyramid: each tier is wider than the one above */
+  .pyr__tier--top { max-width: 68%; }
+  .pyr__tier--heart { max-width: 84%; }
+  .pyr__tier--base { max-width: 100%; border-bottom-width: 1px; }
+  .pyr__label { display: grid; gap: 2px; }
+  .pyr__num { font-family: var(--font-head); font-style: italic; font-size: 20px; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .pyr__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pyr__chip { min-height: 44px; font-size: 13px; }
+  .pyr__chip.chip--img { padding-left: 6px; }
+  .pyr__chip img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+
+  @media (max-width: 760px) {
+    .pyr__tier { grid-template-columns: 1fr; padding: 20px 16px; }
+    .pyr__tier--top { max-width: 84%; }
+    .pyr__tier--heart { max-width: 92%; }
+  }
+</style>

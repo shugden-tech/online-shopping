@@ -1,0 +1,55 @@
+{
+  "slug": "tobacco-vanille",
+  "brand": "Tom Ford",
+  "name": "Tobacco Vanille",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "tobacco",
+      "cinnamon"
+    ],
+    "heart": [
+      "vanilla",
+      "tonka",
+      "cacao"
+    ],
+    "base": [
+      "dried-fruits",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Тамхины навч, ваниль, какао, хатаасан жимс. Зузаан, чихэрлэг, тансаг: өвлийн хамгийн хүйтэн өдөр ч дулаацуулна. Маш хүчтэй тул ганц шүршихэд л хангалттай.",
+    "en": "Tobacco leaf, vanilla, cacao and dried fruit. Thick, sweet and opulent — it warms even the coldest winter day. Very strong: one spray is enough."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 38000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 86000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 160000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "square",
+  "featured": true,
+  "intensity": 5,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ]
+}

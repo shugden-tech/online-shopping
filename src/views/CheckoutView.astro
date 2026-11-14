@@ -1,0 +1,40 @@
+---
+import Base from "../layouts/Base.astro";
+import CheckoutForm, { type PriceCatalog } from "../islands/CheckoutForm.tsx";
+import settings from "../data/settings.json";
+import { getDict, route, type Locale } from "../i18n";
+import { getProducts } from "../lib/products";
+import "../styles/checkout.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+
+// compact price catalog so the island can refresh stale cart snapshot prices
+const catalog: PriceCatalog = {};
+for (const p of await getProducts()) {
+  catalog[p.slug] = Object.fromEntries(p.sizes.map((s) => [String(s.ml), [s.price, s.inStock] as [number, boolean]]));
+}
+---
+<Base locale={locale} title={tr.checkout.title} description={tr.checkout.metaDescription} noindex>
+  <section class="wrap page-top co">
+    <header class="co__head">
+      <p class="t-title t-gold">genzst</p>
+      <h1 class="t-head">{tr.checkout.title}</h1>
+      <p class="t-body t-dim">{tr.checkout.sub}</p>
+    </header>
+
+    <CheckoutForm
+      client:load
+      locale={locale}
+      tr={tr.checkout}
+      ml={tr.common.ml}
+      districts={settings.districts.map((d) => ({ id: d.id, label: d[locale] }))}
+      catalog={catalog}
+      delivery={{ fee: settings.delivery.fee, freeThreshold: settings.delivery.freeThreshold }}
+      siteKey={settings.turnstile.siteKey}
+      shopHref={route("shop", locale)}
+      successHref={route("success", locale)}
+    />
+  </section>
+</Base>

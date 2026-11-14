@@ -1,0 +1,154 @@
+---
+import Base from "../layouts/Base.astro";
+import settings from "../data/settings.json";
+import { getDict, route, type Locale } from "../i18n";
+import "../styles/checkout.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+const s = tr.success;
+const pay = settings.payment;
+---
+<Base locale={locale} title={s.title} description={s.call} noindex>
+  <section
+    class="wrap page-top ok"
+    data-success
+    data-locale={locale}
+    data-copy={s.copy}
+    data-copied={s.copied}
+  >
+    <div class="ok__card" data-ok-found hidden>
+      <p class="t-title t-gold ok__eyebrow">{s.eyebrow}</p>
+      <h1 class="t-h2 ok__heading">{s.heading}</h1>
+
+      <div class="ok__no">
+        <p class="ok__label">{s.orderNo}</p>
+        <p class="t-head ok__no-value" data-order-no></p>
+      </div>
+      <p class="t-body ok__call">{s.call}</p>
+
+      <div class="ok__pay" aria-labelledby="ok-pay-title">
+        <h2 class="t-title" id="ok-pay-title">{s.payTitle}</h2>
+        <dl class="ok__rows">
+          <div data-amount-row>
+            <dt>{s.amount}</dt>
+            <dd>
+              <span class="ok__amount" data-amount></span>
+              <button type="button" class="ok__copy" data-copy-value="">{s.copy}</button>
+            </dd>
+          </div>
+          <div>
+            <dt>{s.bank}</dt>
+            <dd><span>{pay.bank.name[locale]}</span></dd>
+          </div>
+          <div>
+            <dt>{s.account}</dt>
+            <dd>
+              <span class="ok__mono">{pay.bank.accountNumber}</span>
+              <button type="button" class="ok__copy" data-copy-value={pay.bank.accountNumber.replace(/\s+/g, "")}>{s.copy}</button>
+            </dd>
+          </div>
+          <div>
+            <dt>{s.accountName}</dt>
+            <dd><span>{pay.bank.accountName[locale]}</span></dd>
+          </div>
+          <div>
+            <dt>{s.reference}</dt>
+            <dd>
+              <span class="ok__mono" data-reference></span>
+              <button type="button" class="ok__copy" data-copy-value="" data-copy-ref>{s.copy}</button>
+            </dd>
+          </div>
+        </dl>
+        <p class="t-small ok__note">{pay.bankNote[locale]}</p>
+        <p class="t-small t-dim ok__note">{pay.qpayNote[locale]}</p>
+      </div>
+    </div>
+
+    <div class="ok__card ok__missing" data-ok-missing hidden>
+      <p class="t-title t-gold ok__eyebrow">{s.eyebrow}</p>
+      <p class="t-h3">{s.missing}</p>
+    </div>
+
+    <noscript>
+      <div class="ok__card"><p class="t-h3">{s.call}</p></div>
+    </noscript>
+
+    <nav class="ok__links">
+      <a class="btn btn--gold" href={route("shop", locale)}>{s.shop}</a>
+      <a class="btn" href={route("home", locale)}>{s.home}</a>
+    </nav>
+  </section>
+</Base>
+
+<script>
+  import { clearCart } from "../lib/cart";
+  import { formatPrice } from "../lib/price";
+
+  const NO_RE = /^GZ-\d{6}-[A-Z2-9]{4}$/;
+
+  async function copy(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      ta.remove();
+      return ok;
+    }
+  }
+
+  function init() {
+    const root = document.querySelector<HTMLElement>("[data-success]");
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = "1";
+    const locale = root.dataset.locale === "en" ? "en" : "mn";
+    const q = new URLSearchParams(location.search);
+    const no = (q.get("no") ?? "").trim().toUpperCase();
+    const tRaw = (q.get("t") ?? "").trim();
+    const total = /^\d{1,9}$/.test(tRaw) ? Number(tRaw) : NaN;
+
+    if (!NO_RE.test(no)) {
+      root.querySelector<HTMLElement>("[data-ok-missing]")!.hidden = false;
+      return;
+    }
+    // the order is stored: empty the cart
+    clearCart();
+
+    root.querySelector<HTMLElement>("[data-ok-found]")!.hidden = false;
+    root.querySelector("[data-order-no]")!.textContent = no;
+    root.querySelector("[data-reference]")!.textContent = no;
+    root.querySelector<HTMLElement>("[data-copy-ref]")!.dataset.copyValue = no;
+    const amountRow = root.querySelector<HTMLElement>("[data-amount-row]")!;
+    if (Number.isFinite(total) && total > 0) {
+      root.querySelector("[data-amount]")!.textContent = formatPrice(total, locale);
+      amountRow.querySelector<HTMLElement>("[data-copy-value]")!.dataset.copyValue = String(total);
+    } else {
+      amountRow.hidden = true;
+    }
+
+    root.querySelectorAll<HTMLButtonElement>("[data-copy-value]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const value = btn.dataset.copyValue ?? "";
+        if (!value) return;
+        const ok = await copy(value);
+        if (!ok) return;
+        btn.textContent = root.dataset.copied ?? "";
+        btn.dataset.done = "";
+        window.setTimeout(() => {
+          btn.textContent = root.dataset.copy ?? "";
+          delete btn.dataset.done;
+        }, 1800);
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", init);
+</script>

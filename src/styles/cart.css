@@ -1,0 +1,52 @@
+/* Cart drawer (islands/CartDrawer.tsx) + the shared quantity stepper */
+html[data-cart-open] { overflow: hidden; }
+
+.cd { position: fixed; inset: 0; z-index: 100; pointer-events: none; visibility: hidden; transition: visibility 0s linear .5s; }
+.cd[data-open] { pointer-events: auto; visibility: visible; transition-delay: 0s; }
+.cd__scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, .62); opacity: 0; transition: opacity .5s var(--ease-sine); }
+.cd[data-open] .cd__scrim { opacity: 1; }
+
+.cd__panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(440px, 100vw);
+  display: flex; flex-direction: column;
+  background: var(--ink-2); border-left: 1px solid var(--line);
+  transform: translateX(100%); transition: transform .55s var(--ease-out);
+  overscroll-behavior: contain;
+}
+.cd[data-open] .cd__panel { transform: none; }
+
+.cd__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 22px 16px 14px 24px; border-bottom: 1px solid var(--line); }
+.cd__title { font-family: var(--font-head); font-weight: 300; font-size: 30px; line-height: 1.1; }
+.cd__count { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; }
+.cd__close { width: 44px; height: 44px; display: grid; place-items: center; color: var(--text); transition: color .3s, transform .5s var(--ease-out); }
+.cd__close:hover { color: var(--gold); transform: rotate(90deg); }
+
+.cd__empty { flex: 1; display: grid; place-content: center; justify-items: center; gap: 10px; padding: 32px 24px; text-align: center; }
+.cd__empty-art { width: 92px; opacity: .5; margin-bottom: 8px; }
+.cd__empty-title { font-family: var(--font-head); font-size: 26px; font-weight: 300; }
+.cd__empty-sub { color: var(--text-dim); font-size: 14px; max-width: 28ch; margin-bottom: 14px; }
+
+.cd__list { flex: 1; overflow-y: auto; padding: 0 24px; overscroll-behavior: contain; }
+.cd__item { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line-soft); }
+.cd__thumb { display: block; width: 64px; background: radial-gradient(circle at 50% 55%, rgba(204, 158, 72, .1), transparent 70%); }
+.cd__brand { font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--text-dim); line-height: 1.4; }
+.cd__name { display: inline-block; font-family: var(--font-head); font-size: 20px; font-weight: 500; line-height: 1.2; margin-top: 2px; }
+.cd__name:hover { color: var(--gold-soft); }
+.cd__size { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+.cd__row { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+.cd__line { font-size: 14px; font-weight: 500; white-space: nowrap; padding-top: 18px; }
+.cd__remove { min-height: 44px; padding: 0 4px; font-size: 12px; color: var(--text-dim); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line); transition: color .3s; }
+.cd__remove:hover { color: var(--danger-text); }
+
+
+.cd__foot { padding: 18px 24px calc(18px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--ink-2); display: grid; gap: 12px; }
+.cd__free p { font-size: 12px; color: var(--text-dim); letter-spacing: .02em; }
+.cd__free[data-reached] p { color: var(--gold-soft); }
+.cd__bar { height: 1px; background: var(--line-soft); margin-top: 8px; overflow: hidden; }
+.cd__bar i { display: block; height: 100%; background: var(--gold); transform-origin: left; transition: transform .6s var(--ease-out); }
+.cd__sum { display: flex; align-items: baseline; justify-content: space-between; }
+.cd__sum span { font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim); }
+.cd__sum strong { font-family: var(--font-head); font-size: 30px; font-weight: 500; line-height: 1; }
+.cd__note { font-size: 12px; color: var(--text-dim); margin-top: -6px; }
+.cd__continue { min-height: 44px; font-size: 12px; color: var(--text-dim); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line); }
+.cd__continue:hover { color: var(--text); }

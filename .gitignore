@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.dev.vars
+.env
+
+# Over GitHub 100 MB limit; kept on the original computer only
+decantx/products_full.json

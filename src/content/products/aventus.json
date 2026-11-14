@@ -1,0 +1,59 @@
+{
+  "slug": "aventus",
+  "brand": "Creed",
+  "name": "Aventus",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "chypre",
+  "notes": {
+    "top": [
+      "pineapple",
+      "bergamot",
+      "blackcurrant"
+    ],
+    "heart": [
+      "birch",
+      "jasmine",
+      "patchouli"
+    ],
+    "base": [
+      "musk",
+      "oakmoss",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Хан боргоцой, үхрийн нүдний шүүслэг эхлэл, утаатай хус мод, царсны хөвд, заар. Жимсний сэргэг байдал нь модлог суурьтай нийлсэн, өөртөө итгэлтэй үнэр.",
+    "en": "Juicy pineapple and blackcurrant open onto smoky birch, oakmoss and musk. Fruity and confident, with a mossy, woody finish."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 40000,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 92000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 175000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": true,
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn"
+  ],
+  "occasion": [
+    "day",
+    "office",
+    "night"
+  ]
+}

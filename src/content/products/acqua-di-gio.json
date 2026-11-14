@@ -1,0 +1,55 @@
+{
+  "slug": "acqua-di-gio",
+  "brand": "Giorgio Armani",
+  "name": "Acqua di Giò",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "fresh",
+  "notes": {
+    "top": [
+      "bergamot",
+      "neroli",
+      "marine"
+    ],
+    "heart": [
+      "jasmine",
+      "rosemary"
+    ],
+    "base": [
+      "cedar",
+      "musk",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Далайн сэвшээ, бергамот, нероли дээр зөөлөн заар, хуш мод нэмэгддэг. Цэвэр, тунгалаг, зуны өдөрт зохицсон сонголт.",
+    "en": "Marine breeze, bergamot and neroli over soft musk and cedar. Clean, transparent and made for warm days."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 15000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 33000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 60000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "round",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ]
+}

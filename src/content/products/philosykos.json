@@ -1,0 +1,51 @@
+{
+  "slug": "philosykos",
+  "brand": "Diptyque",
+  "name": "Philosykos",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "fresh",
+  "notes": {
+    "top": [
+      "fig-leaf"
+    ],
+    "heart": [
+      "fig",
+      "coconut"
+    ],
+    "base": [
+      "cedar",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Инжирийн мод бүхлээрээ: ногоон навч, сүүн шүүс, наранд халсан мөчир. Зуны сүүдэрт сууж буй мэт амгалан.",
+    "en": "The whole fig tree: green leaves, milky sap and sun-warmed wood. As calm as sitting in summer shade."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 24000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 100000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "tall",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "slug": "colonia",
+  "brand": "Acqua di Parma",
+  "name": "Colonia",
+  "concentration": "Cologne",
+  "gender": "unisex",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "lemon",
+      "orange",
+      "bergamot"
+    ],
+    "heart": [
+      "lavender",
+      "rosemary",
+      "rose"
+    ],
+    "base": [
+      "vetiver",
+      "sandalwood",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Итали маягийн сонгодог одеколон: нимбэг, бергамот, лаванда. Дөнгөж индүүдсэн цагаан цамц шиг цэвэр, цэгцтэй.",
+    "en": "The classic Italian cologne: lemon, bergamot and lavender. As crisp and orderly as a freshly pressed white shirt."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 20000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 82000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ]
+}

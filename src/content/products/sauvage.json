@@ -1,0 +1,62 @@
+{
+  "slug": "sauvage",
+  "brand": "Dior",
+  "name": "Sauvage",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "bergamot",
+      "pepper"
+    ],
+    "heart": [
+      "lavender",
+      "geranium"
+    ],
+    "base": [
+      "ambroxan",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Бергамот, хар чинжүү, амброксаны хурц, цэвэрхэн цохилт. Лаванда, хуш модоор тэнцвэржсэн, сэргэг, зоригтой, амархан танигдах үнэр.",
+    "en": "A sharp, clean hit of bergamot, pepper and ambroxan, steadied by lavender and cedar. Fresh, bold and easy to recognise."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 16000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 36000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 66000,
+      "inStock": true
+    },
+    {
+      "ml": 30,
+      "price": 165000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": true,
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "office",
+    "night"
+  ]
+}

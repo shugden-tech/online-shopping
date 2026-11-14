@@ -1,0 +1,56 @@
+{
+  "slug": "eros",
+  "brand": "Versace",
+  "name": "Eros",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "mint",
+      "green-apple",
+      "lemon"
+    ],
+    "heart": [
+      "tonka",
+      "geranium"
+    ],
+    "base": [
+      "vanilla",
+      "cedar",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Гаа, ногоон алим, ваниль. Сэрүүнээр эхэлж, чихэрлэг дулаанаар төгсдөг, үдэшлэгт зориулсан тод үнэр.",
+    "en": "Mint, green apple and vanilla. It opens cool, ends sweet and warm, and is loud enough for a night out."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 14000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 30000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "square",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter",
+    "spring"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ]
+}

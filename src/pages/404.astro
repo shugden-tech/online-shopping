@@ -1,0 +1,100 @@
+---
+import Base from "../layouts/Base.astro";
+import { getDict, route } from "../i18n";
+
+const mn = getDict("mn");
+const en = getDict("en");
+const enTitle = `${en.notFound.title} · ${en.site.titleSuffix}`;
+---
+<Base locale="mn" title={mn.notFound.title} noindex>
+  <section class="nf">
+    <div class="nf__inner">
+      <p class="nf__code" aria-hidden="true">{mn.notFound.code}</p>
+
+      <div class="nf__body" data-404="mn">
+        <h1 class="t-h2">{mn.notFound.heading}</h1>
+        <p class="nf__text t-body t-dim">{mn.notFound.text}</p>
+        <div class="nf__actions">
+          <a class="btn btn--gold" href={route("home", "mn")}>{mn.notFound.home}</a>
+          <a class="btn" href={route("shop", "mn")}>{mn.notFound.shop}</a>
+        </div>
+      </div>
+
+      <div class="nf__body" data-404="en" hidden>
+        <h1 class="t-h2">{en.notFound.heading}</h1>
+        <p class="nf__text t-body t-dim">{en.notFound.text}</p>
+        <div class="nf__actions">
+          <a class="btn btn--gold" href={route("home", "en")}>{en.notFound.home}</a>
+          <a class="btn" href={route("shop", "en")}>{en.notFound.shop}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline define:vars={{ enTitle }}>
+  (function () {
+    var p = location.pathname;
+    if (p !== "/en" && p.indexOf("/en/") !== 0) return;
+    var mn = document.querySelector('[data-404="mn"]');
+    var en = document.querySelector('[data-404="en"]');
+    if (mn) mn.hidden = true;
+    if (en) en.hidden = false;
+    document.documentElement.lang = "en";
+    document.title = enTitle;
+  })();
+</script>
+
+<style>
+  .nf {
+    min-height: 70svh;
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+    padding: calc(var(--header-h) + 40px) var(--gutter) clamp(64px, 10vw, 120px);
+    text-align: center;
+  }
+
+  .nf__inner {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .nf__code {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    transform: translate(-50%, -58%);
+    font-family: var(--font-head);
+    font-weight: 300;
+    font-size: clamp(160px, 38vw, 340px);
+    line-height: 1;
+    color: var(--gold);
+    opacity: .1;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .nf__body {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    gap: 22px;
+  }
+
+  .nf__text { max-width: 44ch; }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 12px;
+  }
+</style>

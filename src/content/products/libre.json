@@ -1,0 +1,57 @@
+{
+  "slug": "libre",
+  "brand": "Yves Saint Laurent",
+  "name": "Libre",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "lavender",
+      "mandarin"
+    ],
+    "heart": [
+      "orange-blossom",
+      "jasmine"
+    ],
+    "base": [
+      "vanilla",
+      "musk",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Лавандын сэрүүн, жүржийн цэцгийн дулаан хоёр зэрэгцэн оршино. Зоригтой атлаа зөөлөн, төгсгөлдөө ваниль болж намждаг.",
+    "en": "Cool lavender and warm orange blossom held side by side. Bold yet soft, and it dries down into vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 17000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 38000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 70000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "tall",
+  "featured": true,
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter",
+    "spring"
+  ],
+  "occasion": [
+    "day",
+    "date",
+    "night"
+  ]
+}

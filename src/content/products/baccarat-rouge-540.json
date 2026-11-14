@@ -1,0 +1,55 @@
+{
+  "slug": "baccarat-rouge-540",
+  "brand": "Maison Francis Kurkdjian",
+  "name": "Baccarat Rouge 540",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "saffron",
+      "jasmine"
+    ],
+    "heart": [
+      "amber",
+      "ambergris"
+    ],
+    "base": [
+      "fir-resin",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Гүргэм, хув, гацуурын давирхай хайлж, шатсан чихэр мэт гэрэлтэж, хөнгөн боловч нягт дулааныг төрүүлнэ. Та гарсны дараа ч өрөөнд удаан үлддэг.",
+    "en": "Saffron, amber and fir resin melt into a glowing, almost burnt-sugar warmth that feels airy and dense at once. It lingers in a room long after you have left it."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 42000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 98000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 185000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "round",
+  "featured": true,
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter",
+    "spring"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ]
+}

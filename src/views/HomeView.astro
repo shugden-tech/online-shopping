@@ -1,0 +1,237 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import BottleArt from "../components/BottleArt.astro";
+import FamilyBand from "../components/FamilyBand.astro";
+import NoteTile from "../components/NoteTile.astro";
+import ProductCard from "../components/ProductCard.astro";
+import LayeringSlider, { type Slide } from "../islands/LayeringSlider.tsx";
+import logo from "../assets/brand/logo.png";
+import { getDict, route, productPath, fill, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { NOTES, NOTE_GROUPS, cartBase, defaultSize, fromPrice, getProducts, initialOf, isSoldOut } from "../lib/products";
+import { BAND_FAMILIES, familyStrips, noteImages } from "../lib/images";
+import "../styles/home.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+const h = tr.home;
+const other: Locale = locale === "mn" ? "en" : "mn";
+const shop = route("shop", locale);
+const products = await getProducts();
+
+const featured = products.filter((p) => p.featured).slice(0, 8);
+const fresh = products.filter((p) => p.isNew).slice(0, 8);
+// three featured bottles with different liquid colours for the hero's second beat
+const distinct = featured.filter((p, i) => featured.findIndex((o) => o.family === p.family) === i);
+const heroBottles = [distinct[1], distinct[0], distinct[2]].filter((p) => p !== undefined);
+
+const slides: Slide[] = await Promise.all(
+  featured.map(async (p) => {
+    const size = defaultSize(p);
+    return {
+      href: productPath(locale, p.slug),
+      base: await cartBase(p),
+      familyLabel: tr.families[p.family],
+      fromLabel: fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }),
+      addMl: size.ml,
+      addPrice: size.price,
+      addLabel: fill(tr.common.addSize, { ml: size.ml }),
+      soldOut: isSoldOut(p),
+    };
+  }),
+);
+
+const steps = [
+  { n: "01", title: h.how.step1, text: h.how.step1Text },
+  { n: "02", title: h.how.step2, text: h.how.step2Text },
+  { n: "03", title: h.how.step3, text: h.how.step3Text },
+];
+// real-world proportions of typical 2 / 5 / 10 ml glass atomisers (height × diameter, mm)
+const vials = [
+  { ml: 2, mm: 46, dia: 10, note: h.how.vial2 },
+  { ml: 5, mm: 70, dia: 13, note: h.how.vial5 },
+  { ml: 10, mm: 95, dia: 15, note: h.how.vial10 },
+];
+const PX = 3.3; // px per mm
+---
+<Base locale={locale} title={tr.site.name} overlayHeader>
+  <!-- 1 · hero -->
+  <section class="hero" data-hero aria-labelledby="hero-title">
+    <div class="hero__pin">
+      <div class="hero__spot" aria-hidden="true"></div>
+      <canvas class="hero__dust" aria-hidden="true"></canvas>
+
+      <div class="hero__content">
+        <Image src={logo} alt="" width={112} height={112} densities={[1, 2]} loading="eager" fetchpriority="high" class="hero__logo" />
+        <p class="hero__word t-title">{h.hero.eyebrow}</p>
+        <h1 class="hero__title t-head" id="hero-title">{h.hero.headline}</h1>
+        <p class="hero__sub">{h.hero.sub}</p>
+        <div class="hero__cta">
+          <a class="btn btn--gold" href={shop}>{h.hero.ctaShop}</a>
+          <a class="btn" href={route("finder", locale)}>{h.hero.ctaFinder}</a>
+        </div>
+      </div>
+
+      <div class="hero__bottles" aria-hidden="true">
+        {heroBottles.map((p, i) => (
+          <div class={`hero__bottle hero__bottle--${i}`} style={`--tint:var(--fam-${p.family})`}>
+            <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} />
+          </div>
+        ))}
+        <div class="hero__floor"></div>
+        <p class="hero__sizes t-title">2 · 5 · 10 {tr.common.ml}</p>
+      </div>
+
+      <p class="hero__scroll" aria-hidden="true"><span>{h.hero.scroll}</span><i></i></p>
+    </div>
+  </section>
+
+  <!-- 2 · scent families -->
+  <section class="section fam" aria-labelledby="fam-title">
+    <header class="wrap sec-head">
+      <p class="t-title" data-reveal>{h.families.eyebrow}</p>
+      <h2 class="t-h2" id="fam-title" data-reveal style="--delay:80ms">{h.families.title}</h2>
+    </header>
+    <div class="fam__bands">
+      {BAND_FAMILIES.map((f, i) => (
+        <FamilyBand
+          family={f}
+          name={tr.families[f]}
+          line={tr.familyLines[f]}
+          href={`${shop}?family=${f}`}
+          cta={h.families.cta}
+          strip={familyStrips[f]!}
+          index={i}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- 3 · featured: the layering slider -->
+  <section class="section feat" aria-labelledby="feat-title">
+    <header class="wrap sec-head sec-head--center">
+      <p class="t-title" data-reveal>{h.slider.eyebrow}</p>
+      <h2 class="t-h2" id="feat-title" data-reveal style="--delay:80ms">{h.slider.title}</h2>
+    </header>
+    <div class="wrap">
+      <LayeringSlider
+        client:visible={{ rootMargin: "300px" }}
+        slides={slides}
+        labels={{
+          region: h.slider.label, prev: tr.common.prev, next: tr.common.next,
+          view: tr.common.view, hint: h.slider.hint, soldOut: tr.common.soldOut,
+        }}
+      />
+    </div>
+  </section>
+
+  <!-- 4 · notes explorer -->
+  <section class="section wrap notes" aria-labelledby="notes-title">
+    <header class="sec-head">
+      <p class="t-title" data-reveal>{h.notes.eyebrow}</p>
+      <h2 class="t-h2" id="notes-title" data-reveal style="--delay:80ms">{h.notes.title}</h2>
+      <p class="t-body t-dim" data-reveal style="--delay:160ms">{h.notes.sub}</p>
+    </header>
+    <div class="notes__grid">
+      {NOTE_GROUPS.map((g, i) => (
+        <NoteTile
+          image={noteImages[g]!}
+          name={NOTES[g]![locale]}
+          alt={NOTES[g]![other]}
+          altLang={other}
+          href={`${shop}?notes=${g}`}
+          index={i}
+          wide={i === 0}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- 5 · how decants work -->
+  <section class="section how" aria-labelledby="how-title">
+    <div class="wrap how__in">
+      <div class="how__copy">
+        <header class="sec-head">
+          <p class="t-title" data-reveal>{h.how.eyebrow}</p>
+          <h2 class="t-h2" id="how-title" data-reveal style="--delay:80ms">{h.how.title}</h2>
+          <p class="t-body t-dim" data-reveal style="--delay:160ms">{h.how.intro}</p>
+        </header>
+        <ol class="how__steps">
+          {steps.map((s, i) => (
+            <li data-reveal style={`--delay:${i * 120}ms`}>
+              <span class="how__n" aria-hidden="true">{s.n}</span>
+              <h3 class="t-h3">{s.title}</h3>
+              <p class="t-dim">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <figure class="how__vials" data-reveal aria-label={h.how.vialsLabel}>
+        <div class="how__row">
+          {vials.map((v) => {
+            const bodyH = v.mm * PX * 0.7;
+            const capH = v.mm * PX * 0.3;
+            const w = v.dia * PX;
+            const totalH = bodyH + capH;
+            return (
+              <div class="how__vial">
+                <svg width={w + 8} height={totalH + 4} viewBox={`0 0 ${w + 8} ${totalH + 4}`} aria-hidden="true">
+                  <rect x={4 + w * 0.14} y="1" width={w * 0.72} height={capH * 0.72} rx="1.500" fill="url(#gz-gold)" />
+                  <rect x={4 + w * 0.3} y={capH * 0.72} width={w * 0.4} height={capH * 0.28 + 2} fill="url(#gz-gold)" opacity=".75" />
+                  <rect x="4" y={capH} width={w} height={bodyH} rx={w * 0.22} fill="url(#gz-glass)" stroke="#fff" stroke-opacity=".34" />
+                  <rect x={4 + 2.500} y={capH + bodyH * 0.16} width={w - 5} height={bodyH * 0.84 - 2.500} rx={w * 0.16} fill="#CC9E48" opacity=".9" />
+                  <rect x={4 + 2.500} y={capH + bodyH * 0.16} width={w - 5} height={bodyH * 0.84 - 2.500} rx={w * 0.16} fill="url(#gz-shade)" />
+                  <rect x={4 + w * 0.2} y={capH + 6} width="1.600" height={bodyH - 14} rx=".8" fill="#fff" opacity=".35" />
+                </svg>
+                <figcaption>
+                  <b>{v.ml} <small>{tr.common.ml}</small></b>
+                  <span>{v.note}</span>
+                </figcaption>
+              </div>
+            );
+          })}
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 6 · scent finder teaser -->
+  <section class="teaser" aria-labelledby="teaser-title">
+    <div class="teaser__rays" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="wrap teaser__in">
+      <p class="t-title t-gold" data-reveal>{h.teaser.eyebrow}</p>
+      <h2 class="t-head" id="teaser-title" data-reveal style="--delay:80ms">{h.teaser.title}</h2>
+      <p class="t-body t-dim" data-reveal style="--delay:160ms">{h.teaser.sub}</p>
+      <a class="btn btn--gold" href={route("finder", locale)} data-reveal style="--delay:240ms">
+        {h.teaser.cta}
+        <svg viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1.200" aria-hidden="true"><path d="M0 5h21M17 1l4 4-4 4" /></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- 7 · new arrivals -->
+  <section class="section newin" aria-labelledby="new-title">
+    <header class="wrap sec-head newin__head">
+      <p class="t-title" data-reveal>{h.new.eyebrow}</p>
+      <h2 class="t-h2" id="new-title" data-reveal style="--delay:80ms">{h.new.title}</h2>
+      <a class="link-arrow" href={`${shop}?sort=newest`}>
+        {tr.common.viewAll}
+        <svg viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M0 5h21M17 1l4 4-4 4" /></svg>
+      </a>
+    </header>
+    <ul class="newin__rail" tabindex="0" aria-labelledby="new-title">
+      {fresh.map((p, i) => (
+        <li data-reveal style={`--delay:${i * 80}ms`}>
+          <ProductCard product={p} locale={locale} level={3} />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <script>
+    import "../scripts/home";
+  </script>
+</Base>

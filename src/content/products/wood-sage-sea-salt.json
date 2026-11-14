@@ -1,0 +1,53 @@
+{
+  "slug": "wood-sage-sea-salt",
+  "brand": "Jo Malone London",
+  "name": "Wood Sage & Sea Salt",
+  "concentration": "Cologne",
+  "gender": "unisex",
+  "family": "fresh",
+  "notes": {
+    "top": [
+      "ambrette",
+      "grapefruit"
+    ],
+    "heart": [
+      "sea-salt"
+    ],
+    "base": [
+      "sage",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Салхитай далайн эрэг: давс, мэргэн өвс, давалгаанд туугдсан мод. Чихэрлэг ч биш, цэцэгсийн ч биш, зүгээр л цэвэр агаар.",
+    "en": "A windswept shoreline: salt, sage and driftwood. Not sweet, not floral — just clean air."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 22000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 50000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 92000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ]
+}

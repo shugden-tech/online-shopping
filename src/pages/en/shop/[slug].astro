@@ -1,0 +1,10 @@
+---
+import ProductView from "../../../views/ProductView.astro";
+import { getProducts } from "../../../lib/products";
+
+export async function getStaticPaths() {
+  return (await getProducts()).map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+const { product } = Astro.props;
+---
+<ProductView locale="en" product={product} />

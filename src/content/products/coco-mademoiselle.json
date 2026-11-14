@@ -1,0 +1,59 @@
+{
+  "slug": "coco-mademoiselle",
+  "brand": "Chanel",
+  "name": "Coco Mademoiselle",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "chypre",
+  "notes": {
+    "top": [
+      "orange",
+      "bergamot"
+    ],
+    "heart": [
+      "rose",
+      "jasmine"
+    ],
+    "base": [
+      "patchouli",
+      "vetiver",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Жүржийн гялалзсан эхлэл, сарнайн зүрх, пачулийн гүн суурь. Өөртөө итгэлтэй, дэгжин: албан уулзалтаас оройн болзоо хүртэл зохино.",
+    "en": "A sparkling orange opening, rose at the heart and deep patchouli beneath. Confident and elegant, from a meeting to a late dinner."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 18000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 42000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 78000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": true,
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "office",
+    "date",
+    "night"
+  ]
+}

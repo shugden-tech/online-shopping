@@ -1,0 +1,58 @@
+{
+  "slug": "gypsy-water",
+  "brand": "Byredo",
+  "name": "Gypsy Water",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "bergamot",
+      "lemon",
+      "juniper",
+      "pepper"
+    ],
+    "heart": [
+      "incense",
+      "pine",
+      "iris"
+    ],
+    "base": [
+      "amber",
+      "vanilla",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Арц, нарсны шилмүүс, хүж, ванилийн зөөлөн утаа. Ойн захад асаасан түүдэг галын дурсамж шиг намуухан, арьсанд ойр үнэр.",
+    "en": "Juniper, pine needles, incense and a soft vanilla smoke. Quiet and close to the skin, like the memory of a campfire at the forest's edge."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 34000,
+      "inStock": true
+    },
+    {
+      "ml": 5,
+      "price": 78000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 148000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "round",
+  "isNew": true,
+  "intensity": 2,
+  "season": [
+    "spring",
+    "autumn"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ]
+}
