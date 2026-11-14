@@ -24,7 +24,7 @@ effect(() => {
   const p = cartPulse.value;
   if (p === pulseSeen) return;
   pulseSeen = p;
-  doc.querySelectorAll<HTMLElement>("[data-cart-open]").forEach((el) => {
+  doc.querySelectorAll<HTMLElement>("[data-cart-open]:not(html)").forEach((el) => {
     el.classList.remove("is-pulse");
     void el.offsetWidth; // restart the animation
     el.classList.add("is-pulse");
@@ -105,7 +105,7 @@ doc.addEventListener("click", (e) => {
   }
   if (menuOpen() && target.closest("#mobile-menu a")) setMenu(false);
 
-  const opener = target.closest("[data-cart-open]");
+  const opener = target.closest("[data-cart-open]:not(html)");
   if (opener) {
     if (menuOpen()) setMenu(false);
     cartOpen.value = true;
