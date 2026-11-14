@@ -2,7 +2,7 @@
 import BottleArt from "./BottleArt.astro";
 import { getDict, productPath, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
-import { cartBase, defaultSize, initialOf, isSoldOut, photosOf, sortedSizes, type Product } from "../lib/products";
+import { cartBase, decantSizes, defaultSize, fullBottle, initialOf, isSoldOut, photosOf, type Product } from "../lib/products";
 
 interface Props {
   product: Product;
@@ -15,8 +15,13 @@ interface Props {
 const { product: p, locale, level = 3, eager = false, class: cls } = Astro.props;
 const tr = getDict(locale);
 const href = productPath(locale, p.slug);
-const sizes = sortedSizes(p);
+const full = fullBottle(p);
+const decants = decantSizes(p);
 const start = defaultSize(p);
+// The main button buys the full bottle when the shop sells it; otherwise the smallest decant in stock.
+const main_ = full ?? start;
+const mainOk = main_.inStock;
+const firstDecant = decants.find((d) => d.inStock) ?? decants[0];
 const soldOut = isSoldOut(p);
 const base = await cartBase(p);
 const H = `h${level}` as "h2" | "h3";
@@ -26,6 +31,7 @@ const [main, alt] = photos;
 const altText = (kind: "front" | "back") => `${p.brand} ${p.name} — ${kind === "front" ? tr.common.photoFront : tr.common.photoBack}`;
 const imgSizes = "(min-width: 1100px) 280px, (min-width: 700px) 30vw, 46vw";
 const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`;
+const item = JSON.stringify(base);
 ---
 <article class:list={["pcard", cls]} data-card data-slug={p.slug} style={`--tint:var(--fam-${p.family})`}>
   <a class="pcard__media" href={href} tabindex="-1" aria-hidden="true">
@@ -62,40 +68,60 @@ const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`
       <span>{p.concentration}</span>
     </p>
 
-    <p class="pcard__price" data-card-price aria-live="polite">{formatPrice(start.price, locale)}</p>
-
-    <div class="pcard__sizes" role="group" aria-label={tr.common.size}>
-      {sizes.map((s) => (
-        <button
-          type="button"
-          class="pcard__size"
-          data-size-chip
-          data-ml={s.ml}
-          data-price={s.price}
-          data-price-label={formatPrice(s.price, locale)}
-          aria-pressed={s.ml === start.ml && s.inStock ? "true" : "false"}
-          disabled={!s.inStock}
-        >
-          {s.ml}<small>{" "}{tr.common.ml}</small>{!s.inStock && <span class="sr-only"> — {tr.common.soldOut}</span>}
-        </button>
-      ))}
-    </div>
+    {full ? (
+      <p class="pcard__price">
+        <span class="pcard__price-k">{tr.store.fullBottle} · {full.ml} {tr.common.ml}</span>
+        {formatPrice(full.price, locale)}
+      </p>
+    ) : (
+      <p class="pcard__price">
+        {firstDecant && <span class="pcard__price-k">{tr.store.decantsShort} · {firstDecant.ml} {tr.common.ml}</span>}
+        {formatPrice(start.price, locale)}
+      </p>
+    )}
 
     <div class="pcard__foot">
       <button
         type="button"
         class="pcard__add"
         data-add
-        data-item={JSON.stringify(base)}
-        data-ml={start.ml}
-        data-price={start.price}
-        data-label-tpl={addLabel(0).replace(" 0 ", " {ml} ")}
-        aria-label={addLabel(start.ml)}
-        disabled={soldOut}
+        data-item={item}
+        data-ml={main_.ml}
+        data-price={main_.price}
+        aria-label={full ? `${p.name}: ${tr.store.addFull}` : addLabel(main_.ml)}
+        disabled={!mainOk}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12.5H6L5 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></svg>
-        <span>{soldOut ? tr.common.soldOut : tr.common.add}</span>
+        <span>{mainOk ? tr.common.add : tr.common.soldOut}</span>
       </button>
+
+      {decants.length > 0 && (
+        <div class="pcard__dec" data-decants>
+          <button type="button" class="pcard__dec-btn" data-decant-toggle aria-expanded="false" aria-label={tr.store.decants} title={tr.store.decants}>
+            <svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
+              <rect x="6" y="1" width="6" height="4" rx="1" /><path d="M7 5v2M11 5v2" /><rect x="3.5" y="7" width="11" height="14" rx="2.5" /><path d="M3.5 13h11" />
+            </svg>
+            <span class="pcard__dec-n">{decants.map((d) => d.ml).join("·")}</span>
+          </button>
+          <div class="pcard__dec-opts" role="group" aria-label={tr.store.decants}>
+            {decants.map((d) => (
+              <button
+                type="button"
+                class="pcard__dec-opt"
+                data-add
+                data-item={item}
+                data-ml={d.ml}
+                data-price={d.price}
+                aria-label={`${p.name}: ${fill(tr.store.addDecant, { ml: d.ml })}`}
+                disabled={!d.inStock}
+              >
+                <b>{d.ml}<small> {tr.common.ml}</small></b>
+                <span>{d.inStock ? formatPrice(d.price, locale) : tr.common.soldOut}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   </div>
 </article>
@@ -159,23 +185,13 @@ const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`
   .pcard__fam { display: inline-flex; align-items: center; gap: 6px; }
   .pcard__fam::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--tint); }
 
-  .pcard__price { margin-top: 8px; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pcard__price { margin-top: 8px; margin-bottom: 12px; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pcard__price-k { display: block; font-size: 11.5px; font-weight: 500; color: var(--text-dim); letter-spacing: .03em; }
 
-  .pcard__sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 10px; }
-  .pcard__size {
-    position: relative; flex: 1; max-width: 64px; min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 2px;
-    border: 1px solid var(--line); border-radius: 4px; background: #fff;
-    font-size: 13px; font-weight: 500; color: var(--text); transition: border-color .2s, color .2s, background-color .2s;
-  }
-  .pcard__size::before { content: ""; position: absolute; inset: -4px 0; } /* 44px tap height */
-  .pcard__size small { font-size: 11px; font-weight: 400; color: inherit; opacity: .75; }
-  .pcard__size:hover:not(:disabled) { border-color: var(--black); }
-  .pcard__size[aria-pressed="true"] { border-color: var(--black); background: var(--black); color: #fff; }
-  .pcard__size:disabled { color: #b0ada7; text-decoration: line-through; cursor: not-allowed; border-style: dashed; }
-
-  .pcard__foot { margin-top: 12px; }
+  /* main button + the small square sample picker that opens over it */
+  .pcard__foot { position: relative; display: flex; gap: 8px; margin-top: auto; }
   .pcard__add {
-    width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 12px;
+    flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 12px;
     border-radius: 6px; background: var(--black); color: #fff;
     font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
     transition: background-color .2s, transform .15s;
@@ -185,10 +201,44 @@ const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`
   .pcard__add:disabled { background: #e4e2de; color: #8f8c86; cursor: not-allowed; }
   .pcard__add:disabled svg { display: none; }
 
+  .pcard__dec {
+    position: absolute; top: 0; right: 0; z-index: 2; display: flex; justify-content: flex-end;
+    width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 6px; background: #fff; overflow: hidden;
+    transition: width .32s var(--ease-out), border-color .2s, box-shadow .32s;
+  }
+  .pcard__foot:has(.pcard__dec) .pcard__add { margin-right: 52px; }
+  .pcard__dec-btn {
+    flex: none; width: 42px; height: 42px; display: grid; place-items: center; align-content: center; gap: 1px; color: var(--text);
+  }
+  .pcard__dec-btn svg { width: 15px; height: 18px; }
+  .pcard__dec-n { font-size: 8.5px; font-weight: 600; line-height: 1; color: var(--text-dim); }
+  .pcard__dec-btn { order: 2; }
+  .pcard__dec-opts { flex: 1; display: flex; gap: 4px; padding: 4px 0 4px 4px; min-width: 0; opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s linear .2s; }
+  .pcard__dec-opt {
+    flex: 1; min-width: 0; display: grid; place-items: center; align-content: center; gap: 1px; border-radius: 4px; background: var(--soft);
+    font-size: 11px; line-height: 1.1; color: var(--text-dim); white-space: nowrap; transition: background-color .15s, color .15s;
+  }
+  .pcard__dec-opt b { font-size: 13px; font-weight: 700; color: var(--text); }
+  .pcard__dec-opt b small { font-size: 10px; font-weight: 500; }
+  .pcard__dec-opt:hover:not(:disabled), .pcard__dec-opt:focus-visible { background: var(--black); color: #fff; }
+  .pcard__dec-opt:hover:not(:disabled) b, .pcard__dec-opt:focus-visible b { color: #fff; }
+  .pcard__dec-opt:disabled { opacity: .45; text-decoration: line-through; cursor: not-allowed; }
+
+  /* open: on hover (mouse), on keyboard focus, or after a tap (.is-open, set by shell.ts) */
+  @media (hover: hover) and (pointer: fine) {
+    .pcard__dec:hover { width: 100%; }
+  }
+  .pcard__dec:focus-within, .pcard__dec.is-open { width: 100%; }
+  .pcard__dec:hover, .pcard__dec:focus-within, .pcard__dec.is-open { border-color: var(--black); box-shadow: 0 8px 22px rgba(0, 0, 0, .12); }
+  @media (hover: hover) and (pointer: fine) {
+    .pcard__dec:hover .pcard__dec-opts { opacity: 1; visibility: visible; transition-delay: .08s, 0s; }
+  }
+  .pcard__dec:focus-within .pcard__dec-opts, .pcard__dec.is-open .pcard__dec-opts { opacity: 1; visibility: visible; transition-delay: .08s, 0s; }
+
   @media (max-width: 480px) {
     .pcard__name { font-size: 14px; }
-    .pcard__size { min-width: 0; padding: 0 2px; }
-    .pcard__add { font-size: 11.5px; letter-spacing: .04em; }
+    .pcard__add { font-size: 11.5px; letter-spacing: .04em; padding: 0 6px; }
     .pcard__add svg { display: none; }
+    .pcard__dec-opt span { font-size: 10px; }
   }
 </style>

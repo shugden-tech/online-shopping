@@ -10,11 +10,20 @@ const noteId = z.string().refine((id) => id in notes, (id) => ({
 // A tier may be empty: imported perfumes do not always list every tier (or any notes at all).
 const noteList = z.array(noteId).max(8);
 
-const size = z.object({
-  ml: z.union([z.literal(2), z.literal(5), z.literal(10), z.literal(30)]),
-  price: z.number().int().positive().max(5_000_000), // MNT
-  inStock: z.boolean(),
-});
+// A decant (2 / 5 / 10 / 30 ml), or the full retail bottle marked `"full": true` (15–500 ml).
+const DECANT_ML = [2, 5, 10, 30];
+const size = z
+  .object({
+    ml: z.number().int().min(1).max(500),
+    price: z.number().int().positive().max(5_000_000), // MNT
+    inStock: z.boolean(),
+    full: z.boolean().optional(),
+  })
+  .refine((s) => (s.full ? s.ml >= 15 : DECANT_ML.includes(s.ml)), (s) => ({
+    message: s.full
+      ? `A full bottle must be at least 15 ml (got ${s.ml}).`
+      : `Decant size must be one of ${DECANT_ML.join(", ")} ml (got ${s.ml}). For a full bottle add "full": true.`,
+  }));
 
 const products = defineCollection({
   loader: glob({ pattern: "*.json", base: "./src/content/products" }),
@@ -32,7 +41,8 @@ const products = defineCollection({
         sizes: z
           .array(size)
           .min(1)
-          .refine((s) => new Set(s.map((x) => x.ml)).size === s.length, "each size (ml) may appear only once"),
+          .refine((s) => new Set(s.map((x) => x.ml)).size === s.length, "each size (ml) may appear only once")
+          .refine((s) => s.filter((x) => x.full).length <= 1, "only one size may be the full bottle"),
         bottleShape: z.enum(SHAPES),
         image: image().optional(), // e.g. "./photos/baccarat-rouge-540.jpg" (relative to the JSON file)
         // Remote product photos, linked by scripts/link-product-images.mjs. `front` is the bottle,

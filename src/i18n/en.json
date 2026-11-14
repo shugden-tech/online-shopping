@@ -483,6 +483,12 @@
         "t": "Payment",
         "d": "Bank transfer or QPay"
       }
-    ]
+    ],
+    "fullBottle": "Full bottle",
+    "addFull": "Add full bottle",
+    "decants": "Choose a sample",
+    "decantsShort": "Sample",
+    "fromDecant": "Samples from {price}",
+    "addDecant": "Add {ml} ml sample"
   }
 }

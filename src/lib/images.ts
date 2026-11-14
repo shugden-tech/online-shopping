@@ -13,6 +13,15 @@ const byName = (files: Record<string, { default: ImageMetadata }>) => {
   return out;
 };
 
+/**
+ * Home banner pictures: every image in src/assets/thumbnail/, in file-name order (name them 01-…, 02-… to
+ * choose the order). When the folder is empty the home page falls back to the illustrated slides.
+ */
+const bannerFiles = import.meta.glob<{ default: ImageMetadata }>("../assets/thumbnail/*.{jpg,jpeg,png,webp,avif}", { eager: true });
+export const bannerImages: Array<{ name: string; image: ImageMetadata }> = Object.entries(bannerFiles)
+  .sort(([a], [b]) => a.localeCompare(b, "en", { numeric: true }))
+  .map(([path, mod]) => ({ name: path.split("/").pop()!.replace(/\.\w+$/, ""), image: mod.default }));
+
 /** Note photo by accord id, e.g. noteImages["white-flowers"]. */
 export const noteImages = byName(noteFiles);
 

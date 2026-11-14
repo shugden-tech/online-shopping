@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import logo from "../assets/brand/logo.png";
+import mark from "../assets/brand/logo-mark.png";
+import wordmark from "../assets/brand/wordmark.png";
 import Icon from "./Icon.astro";
 import LangToggle from "./LangToggle.astro";
 import settings from "../data/settings.json";
@@ -45,8 +46,8 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
     </button>
 
     <a class="hdr__brand" href={route("home", locale)} aria-label={tr.nav.home}>
-      <Image src={logo} alt="" width={40} height={40} densities={[1, 2]} loading="eager" class="hdr__logo" />
-      <span class="hdr__word" aria-hidden="true">genzst</span>
+      <Image src={mark} alt="" height={46} densities={[1, 2]} loading="eager" class="hdr__logo" />
+      <Image src={wordmark} alt="" height={34} densities={[1, 2]} loading="eager" class="hdr__word" />
     </a>
 
     <form class="hdr__search" action={shop} method="get" role="search">
@@ -98,8 +99,8 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
 
   .hdr__top { display: flex; align-items: center; gap: 24px; height: 72px; }
   .hdr__brand { display: inline-flex; align-items: center; gap: 10px; flex: none; min-height: 44px; }
-  .hdr__logo { width: 40px; height: 40px; border-radius: 50%; background: #070707; }
-  .hdr__word { font-family: var(--font-head); font-weight: 600; font-size: 28px; letter-spacing: .16em; line-height: 1; padding-bottom: 3px; }
+  .hdr__logo { width: auto; height: 46px; }
+  .hdr__word { width: auto; height: 34px; }
 
   .hdr__search {
     flex: 1; max-width: 560px; margin-inline: auto; display: flex; align-items: center; gap: 10px;
@@ -173,8 +174,8 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
     .hdr__top { flex-wrap: wrap; height: auto; gap: 4px 8px; padding-block: 8px 10px; }
     .hdr__burger { display: inline-flex; }
     .hdr__brand { margin-right: auto; }
-    .hdr__word { font-size: 22px; }
-    .hdr__logo { width: 34px; height: 34px; }
+    .hdr__word { height: 28px; }
+    .hdr__logo { height: 38px; }
     .hdr__search { order: 5; flex-basis: 100%; max-width: none; height: 42px; }
     .hdr__lang, .hdr__cart-label { display: none; }
     .hdr__cart { padding: 0 10px; }

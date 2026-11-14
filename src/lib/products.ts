@@ -51,6 +51,12 @@ export const noteLabel = (id: string, locale: Locale): string => NOTES[id]?.[loc
 
 export const sortedSizes = (p: Product) => [...p.sizes].sort((a, b) => a.ml - b.ml);
 
+/** The full retail bottle (`"full": true` in the product file), if the shop sells one. */
+export const fullBottle = (p: Product) => p.sizes.find((s) => s.full);
+
+/** Decant sizes only (2 / 5 / 10 / 30 ml), smallest first. */
+export const decantSizes = (p: Product) => sortedSizes(p).filter((s) => !s.full);
+
 /** The size a card starts on: the smallest one in stock (or simply the smallest). */
 export function defaultSize(p: Product) {
   const s = sortedSizes(p);

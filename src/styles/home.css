@@ -152,3 +152,14 @@
 @media (prefers-reduced-motion: reduce) {
   .brands__track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; }
 }
+
+/* owner banner pictures (src/assets/thumbnail/): the track takes the picture's own proportions */
+.hb__track--img { height: auto; background: var(--soft); }
+.hb__slide--img { display: block; padding: 0; background: none; }
+.hb__slide--img::before { content: none; }
+.hb__link { display: block; width: 100%; height: 100%; }
+.hb__img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 760px) {
+  .hb__track--img { height: auto; }
+  .hb__slide--img { padding: 0; }
+}

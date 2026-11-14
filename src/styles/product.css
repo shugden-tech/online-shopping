@@ -69,6 +69,7 @@
 }
 .atc__ml { font-family: var(--font-head); font-size: 30px; font-weight: 500; line-height: 1; }
 .atc__ml small { font-family: var(--font-sans); font-size: 11px; font-weight: 400; color: var(--text-dim); margin-left: 3px; letter-spacing: .06em; }
+.atc__full { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
 .atc__price { font-size: 13px; font-weight: 500; color: var(--text-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .atc__chip:hover .atc__chip-box { border-color: var(--line); }
 .atc__chip input:checked + .atc__chip-box { border-color: var(--gold); background: rgba(204, 158, 72, .12); }

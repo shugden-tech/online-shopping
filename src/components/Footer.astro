@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import logo from "../assets/brand/logo.png";
+import mark from "../assets/brand/logo-mark.png";
+import wordmark from "../assets/brand/wordmark.png";
 import Icon from "./Icon.astro";
 import settings from "../data/settings.json";
 import { getDict, route, pick, type Locale } from "../i18n";
@@ -22,8 +23,8 @@ const socials = [
     <div class="ftr__top">
       <div class="ftr__brand">
         <a href={route("home", locale)} class="ftr__logo" aria-label={tr.nav.home}>
-          <Image src={logo} alt="" width={64} height={64} densities={[1, 2]} loading="lazy" />
-          <span aria-hidden="true">genzst</span>
+          <Image src={mark} alt="" height={60} densities={[1, 2]} loading="lazy" class="ftr__mark" />
+          <Image src={wordmark} alt="" height={40} densities={[1, 2]} loading="lazy" class="ftr__word" />
         </a>
         <p class="ftr__line">{tr.footer.line}</p>
       </div>
@@ -74,8 +75,8 @@ const socials = [
   .ftr { border-top: 1px solid var(--line); background: var(--ink); padding-top: clamp(48px, 7vw, 88px); margin-top: auto; }
   .ftr__top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: clamp(28px, 4vw, 64px); }
   .ftr__logo { display: inline-flex; align-items: center; gap: 12px; }
-  .ftr__logo img { width: 64px; height: 64px; }
-  .ftr__logo span { font-family: var(--font-head); font-weight: 500; font-size: 30px; letter-spacing: .14em; line-height: 1; padding-bottom: 4px; }
+  .ftr__mark { width: auto; height: 60px; }
+  .ftr__word { width: auto; height: 40px; }
   .ftr__line { margin-top: 16px; color: var(--text-dim); max-width: 34ch; font-size: 14px; }
   .ftr__col h2 { color: var(--gold); margin-bottom: 14px; font-size: 11px; }
   .ftr__col li { font-size: 14px; color: var(--text-dim); }

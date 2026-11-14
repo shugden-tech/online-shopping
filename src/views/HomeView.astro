@@ -8,7 +8,7 @@ import settings from "../data/settings.json";
 import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
 import { NOTES, NOTE_GROUPS, getProducts, initialOf, type Product } from "../lib/products";
-import { familyStrips, noteImages } from "../lib/images";
+import { bannerImages, familyStrips, noteImages } from "../lib/images";
 import "../styles/home.css";
 
 interface Props { locale: Locale }
@@ -42,6 +42,11 @@ const slides = [
   { ...s.slides[2]!, href: route("finder", locale), img: familyStrips.woody!, bg: "#2a2233,#6b5f70", bottles: trio([...byFeatured].reverse()) },
 ];
 
+// Owner's banner pictures (src/assets/thumbnail/) replace the illustrated slides when present.
+const banners = bannerImages;
+const bannerRatio = banners[0] ? `${banners[0].image.width} / ${banners[0].image.height}` : "";
+const slideCount = banners.length || slides.length;
+
 const genderTiles = (["women", "men", "unisex"] as const).map((g) => ({
   g, label: tr.genders[g], href: `${shop}?gender=${g}`, bottles: trio(ofGender(g)),
 }));
@@ -52,8 +57,20 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
 <Base locale={locale} title={tr.site.name}>
   <!-- 1 · banner slider -->
   <section class="wrap hb" aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
-    <div class="hb__track">
-      {slides.map((sl, i) => (
+    <div class:list={["hb__track", { "hb__track--img": banners.length > 0 }]} style={bannerRatio ? `aspect-ratio:${bannerRatio}` : undefined}>
+      {banners.length > 0 && <h1 class="sr-only">{s.slides[0]!.title}</h1>}
+      {banners.map((b, i) => (
+        <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0 }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${banners.length}`} aria-hidden={i === 0 ? undefined : "true"}>
+          <a class="hb__link" href={shop} tabindex={i === 0 ? undefined : -1}>
+            <Image
+              src={b.image} alt={b.name.replace(/^\d+[-_ ]*/, "").replace(/[-_]+/g, " ")}
+              widths={[640, 960, 1320, 1920, 2640]} sizes="(min-width: 1320px) 1320px, 100vw"
+              loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__img"
+            />
+          </a>
+        </div>
+      ))}
+      {banners.length === 0 && slides.map((sl, i) => (
         <div class:list={["hb__slide", { "is-on": i === 0 }]} data-slide style={`--a:${sl.bg.split(",")[0]};--b:${sl.bg.split(",")[1]}`} aria-roledescription="slide" aria-label={`${i + 1} / ${slides.length}`} aria-hidden={i === 0 ? undefined : "true"}>
           <Image src={sl.img} alt="" widths={[640, 1280, 1920]} sizes="(min-width: 1320px) 1320px, 100vw" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__bg" />
           <div class="hb__text">
@@ -73,8 +90,8 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
     <button class="hb__arrow hb__arrow--prev" type="button" data-prev aria-label={tr.common.prev}><Icon name="chevron" size={22} /></button>
     <button class="hb__arrow hb__arrow--next" type="button" data-next aria-label={tr.common.next}><Icon name="chevron" size={22} /></button>
     <div class="hb__dots">
-      {slides.map((_, i) => (
-        <button type="button" data-dot={i} aria-label={`${i + 1} / ${slides.length}`} aria-current={i === 0 ? "true" : undefined}></button>
+      {Array.from({ length: slideCount }, (_, i) => (
+        <button type="button" data-dot={i} aria-label={`${i + 1} / ${slideCount}`} aria-current={i === 0 ? "true" : undefined}></button>
       ))}
     </div>
   </section>

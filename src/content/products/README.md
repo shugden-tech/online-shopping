@@ -36,3 +36,14 @@ Each perfume is **one JSON file** in this folder. The file name is the product's
 
 Prices are always re-read from these files on the server when an order is placed, so the
 price a customer pays is the price written here at the time of the last deploy.
+
+## Full bottle
+
+To sell the full retail bottle, add it to `sizes` with `"full": true` (15–500 ml, one per product):
+
+```json
+{ "ml": 100, "price": 250000, "inStock": true, "full": true }
+```
+
+The product card's main **Add to cart** button then adds the full bottle, and the decants (5 / 10 ml) move into
+the small square picker next to it. Without a full bottle the main button adds the smallest decant in stock.

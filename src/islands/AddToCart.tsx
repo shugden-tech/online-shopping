@@ -3,13 +3,13 @@ import { addItem, MAX_QTY, type CartItem } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import type { Locale } from "../i18n/lite";
 
-interface Size { ml: number; price: number; inStock: boolean }
+interface Size { ml: number; price: number; inStock: boolean; full?: boolean }
 interface Props {
   locale: Locale;
   base: Omit<CartItem, "qty" | "ml" | "price">;
   sizes: Size[];
   labels: {
-    chooseSize: string; ml: string; qty: string; add: string; soldOut: string; allSoldOut: string;
+    chooseSize: string; ml: string; qty: string; add: string; soldOut: string; allSoldOut: string; fullBottle: string;
     decrease: string; increase: string; total: string;
   };
 }
@@ -43,6 +43,7 @@ export default function AddToCart({ locale, base, sizes, labels }: Props) {
                   {s.ml}
                   <small>{labels.ml}</small>
                 </span>
+                {s.full && <span class="atc__full">{labels.fullBottle}</span>}
                 <span class="atc__price">{s.inStock ? money(s.price) : labels.soldOut}</span>
               </span>
             </label>

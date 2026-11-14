@@ -82,6 +82,23 @@ doc.addEventListener("click", (e) => {
   const target = e.target as HTMLElement | null;
   if (!target?.closest) return;
 
+  // sample picker on a product card: a tap opens / closes it (mouse users get it on hover via CSS)
+  const decToggle = target.closest<HTMLElement>("[data-decant-toggle]");
+  const openDec = doc.querySelectorAll<HTMLElement>("[data-decants].is-open");
+  openDec.forEach((box) => {
+    if (box.contains(target) && !target.closest("[data-add]") && !decToggle) return;
+    box.classList.remove("is-open");
+    box.querySelector("[data-decant-toggle]")?.setAttribute("aria-expanded", "false");
+  });
+  if (decToggle) {
+    const box = decToggle.closest<HTMLElement>("[data-decants]");
+    if (box && ![...openDec].includes(box)) {
+      box.classList.add("is-open");
+      decToggle.setAttribute("aria-expanded", "true");
+    }
+    return;
+  }
+
   if (target.closest("[data-menu-toggle]")) {
     setMenu(!menuOpen());
     return;
