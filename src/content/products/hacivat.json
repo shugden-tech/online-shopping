@@ -53,5 +53,9 @@
   "occasion": [
     "day",
     "night"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/e9aa82ca-dfd6-439e-84e4-34385ce113df.jpg?v=1684437914",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/files/nishane-hacivat---2_1024x1024.png?v=1728253997"
+  }
 }

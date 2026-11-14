@@ -8,7 +8,7 @@ import AddToCart from "../islands/AddToCart.tsx";
 import { getDict, route, productPath, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
 import { SEASONS, OCCASIONS } from "../lib/taxonomy";
-import { cartBase, fromPrice, getProducts, initialOf, similarTo, sortedSizes, type Product } from "../lib/products";
+import { cartBase, fromPrice, getProducts, initialOf, photosOf, similarTo, sortedSizes, type Product } from "../lib/products";
 import "../styles/product.css";
 
 interface Props { locale: Locale; product: Product }
@@ -18,6 +18,9 @@ const all = await getProducts();
 const similar = similarTo(p, all, 4);
 const sizes = sortedSizes(p);
 const base = await cartBase(p);
+// Gallery: the owner's own photo (`image`) wins; otherwise linked remote photos, front first, then back.
+const photos = p.image ? [] : photosOf(p);
+const photoAlt = (kind: "front" | "back") => `${p.brand} ${p.name} — ${kind === "front" ? tr.common.photoFront : tr.common.photoBack}`;
 const site = Astro.site ?? new URL("https://genzst.mn");
 const url = new URL(productPath(locale, p.slug), site).href;
 const title = `${p.name} — ${p.brand}`;
@@ -63,16 +66,45 @@ const jsonLd = {
 
   <article class="pdp" style={`--tint:var(--fam-${p.family})`}>
     <div class="wrap pdp__top page-top">
-      <div class="pdp__stage">
-        <div class="pdp__glow" aria-hidden="true"></div>
-        <div class="pdp__float">
-          <BottleArt
-            shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image}
-            label={`${p.brand} ${p.name}`} eager sizes="(min-width: 900px) 40vw, 80vw"
-          />
+      {photos.length ? (
+        <div class="pdp__stage pdp__stage--photos" data-gallery>
+          <div class="pdp__slides" data-slides tabindex="0" aria-label={`${p.brand} ${p.name}`}>
+            {photos.map((ph, i) => (
+              <figure class="pdp__slide" data-slide={i}>
+                <img
+                  src={ph.src} srcset={ph.srcset} sizes={ph.srcset ? "(min-width: 860px) 46vw, 92vw" : undefined}
+                  alt={photoAlt(ph.kind)} width="1200" height="1200" decoding="async"
+                  loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined}
+                  onerror="this.closest('[data-slide]').dataset.err=''; this.closest('[data-gallery]').dispatchEvent(new Event('gz:photoerror'))"
+                />
+              </figure>
+            ))}
+          </div>
+          {photos.length > 1 && (
+            <div class="pdp__thumbs" role="group" aria-label={tr.common.photoFront + " / " + tr.common.photoBack}>
+              {photos.map((ph, i) => (
+                <button type="button" class="pdp__thumb" data-thumb={i} aria-pressed={i === 0 ? "true" : "false"} aria-label={photoAlt(ph.kind)}>
+                  <img src={ph.srcset ? ph.src.replace(/width=\d+/, "width=240") : ph.src} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          )}
+          <div class="pdp__float pdp__fallback" hidden>
+            <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} label={`${p.brand} ${p.name}`} />
+          </div>
         </div>
-        <p class="pdp__stage-cap t-small" aria-hidden="true">{p.concentration} · {sizes.map((s) => s.ml).join(" / ")} {tr.common.ml}</p>
-      </div>
+      ) : (
+        <div class="pdp__stage">
+          <div class="pdp__glow" aria-hidden="true"></div>
+          <div class="pdp__float">
+            <BottleArt
+              shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image}
+              label={`${p.brand} ${p.name}`} eager sizes="(min-width: 900px) 40vw, 80vw"
+            />
+          </div>
+          <p class="pdp__stage-cap t-small" aria-hidden="true">{p.concentration} · {sizes.map((s) => s.ml).join(" / ")} {tr.common.ml}</p>
+        </div>
+      )}
 
       <div class="pdp__info">
         <nav class="pdp__crumbs" aria-label="Breadcrumb">
@@ -176,3 +208,39 @@ const jsonLd = {
     </section>
   </article>
 </Base>
+
+<script>
+  // Product photo gallery: thumbnails scroll the snap strip; a photo that fails to load is dropped,
+  // and if none are left the illustrated bottle is shown instead.
+  for (const g of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
+    const strip = g.querySelector<HTMLElement>("[data-slides]")!;
+    const slides = () => [...g.querySelectorAll<HTMLElement>("[data-slide]")];
+    const thumbs = () => [...g.querySelectorAll<HTMLButtonElement>("[data-thumb]")];
+    const mark = (i: number) => thumbs().forEach((t) => t.setAttribute("aria-pressed", String(+t.dataset.thumb! === i)));
+    const tidy = () => {
+      for (const s of slides()) {
+        if (s.dataset.err === undefined) continue;
+        g.querySelector(`[data-thumb="${s.dataset.slide}"]`)?.remove();
+        s.remove();
+      }
+      if (thumbs().length < 2) g.querySelector(".pdp__thumbs")?.remove();
+      if (!slides().length) { strip.remove(); g.querySelector<HTMLElement>(".pdp__fallback")!.hidden = false; }
+    };
+    g.addEventListener("gz:photoerror", tidy);
+    tidy(); // errors that happened before this script ran
+    g.addEventListener("click", (e) => {
+      const t = (e.target as Element).closest<HTMLButtonElement>("[data-thumb]");
+      if (!t) return;
+      const s = g.querySelector<HTMLElement>(`[data-slide="${t.dataset.thumb}"]`);
+      if (!s) return;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      strip.scrollTo({ left: s.offsetLeft - strip.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+      mark(+t.dataset.thumb!);
+    });
+    strip.addEventListener("scroll", () => {
+      const i = Math.round(strip.scrollLeft / Math.max(1, strip.clientWidth));
+      const s = slides()[i];
+      if (s) mark(+s.dataset.slide!);
+    }, { passive: true });
+  }
+</script>

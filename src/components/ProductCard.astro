@@ -2,7 +2,7 @@
 import BottleArt from "./BottleArt.astro";
 import { getDict, productPath, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
-import { cartBase, defaultSize, initialOf, isSoldOut, sortedSizes, type Product } from "../lib/products";
+import { cartBase, defaultSize, initialOf, isSoldOut, photosOf, sortedSizes, type Product } from "../lib/products";
 
 interface Props {
   product: Product;
@@ -20,11 +20,35 @@ const start = defaultSize(p);
 const soldOut = isSoldOut(p);
 const base = await cartBase(p);
 const H = `h${level}` as "h2" | "h3";
+// The owner's own photo (`image`) wins; otherwise the linked remote photos (front first, then back).
+const photos = p.image ? [] : photosOf(p, 800);
+const [main, alt] = photos;
+const altText = (kind: "front" | "back") => `${p.brand} ${p.name} — ${kind === "front" ? tr.common.photoFront : tr.common.photoBack}`;
+const imgSizes = "(min-width: 1100px) 280px, (min-width: 700px) 30vw, 46vw";
 const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`;
 ---
 <article class:list={["pcard", cls]} data-card data-slug={p.slug} style={`--tint:var(--fam-${p.family})`}>
   <a class="pcard__media" href={href} tabindex="-1" aria-hidden="true">
-    <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} eager={eager} />
+    {main ? (
+      <span class="pcard__photos" data-photos>
+        <span class="pcard__ph" aria-hidden="true"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} /></span>
+        <img
+          class="pcard__img pcard__img--main" src={main.src} srcset={main.srcset} sizes={main.srcset ? imgSizes : undefined}
+          alt={altText(main.kind)} width="800" height="800" decoding="async"
+          loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined}
+          onerror="this.parentNode.dataset.main='err'"
+        />
+        {alt && (
+          <img
+            class="pcard__img pcard__img--alt" src={alt.src} srcset={alt.srcset} sizes={alt.srcset ? imgSizes : undefined}
+            alt={altText(alt.kind)} width="800" height="800" decoding="async" loading="lazy"
+            onload="this.dataset.ok=''" onerror="this.parentNode.dataset.alt='err'"
+          />
+        )}
+      </span>
+    ) : (
+      <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} eager={eager} />
+    )}
   </a>
   {p.isNew && !soldOut && <span class="pcard__flag">{tr.common.new}</span>}
   {soldOut && <span class="pcard__flag pcard__flag--out">{tr.common.soldOut}</span>}
@@ -89,6 +113,32 @@ const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`
   .pcard__media :global(.bottle) { transition: transform .7s var(--ease-out); will-change: transform; }
   .pcard:hover .pcard__media :global(.bottle) { transform: translateY(-6px) scale(1.04) rotate(-2deg); }
   .pcard__media :global(.bottle-photo) { position: absolute; inset: 0; object-fit: cover; }
+
+  /* Remote photos: front and back stacked in one fixed box, so hovering never moves the layout. */
+  .pcard__photos { position: absolute; inset: 0; display: block; background: #fff; }
+  .pcard__img, .pcard__ph {
+    position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain;
+    transition: opacity .25s ease;
+  }
+  .pcard__ph { display: grid; place-items: center; padding: 4% 20% 0; visibility: hidden; }
+  .pcard__img--alt { opacity: 0; }
+  /* Front failed: show the back instead (if it loaded), else the illustrated bottle. */
+  [data-main="err"] .pcard__img--main { display: none; }
+  [data-main="err"] .pcard__img--alt[data-ok] { opacity: 1; }
+  [data-main="err"]:not(:has(.pcard__img--alt[data-ok])) .pcard__ph { visibility: visible; }
+  [data-alt="err"] .pcard__img--alt { display: none; }
+
+  /* Crossfade to the back photo: pointer hover on devices that hover, or keyboard focus on the card link.
+     Only when the back photo actually loaded, so a missing/broken one leaves the front in place. */
+  @media (hover: hover) and (pointer: fine) {
+    .pcard:hover [data-photos]:not([data-main="err"]):has(.pcard__img--alt[data-ok]) .pcard__img--main { opacity: 0; }
+    .pcard:hover [data-photos]:not([data-main="err"]) .pcard__img--alt[data-ok] { opacity: 1; }
+  }
+  .pcard:has(.pcard__name a:focus-visible) [data-photos]:not([data-main="err"]):has(.pcard__img--alt[data-ok]) .pcard__img--main { opacity: 0; }
+  .pcard:has(.pcard__name a:focus-visible) [data-photos]:not([data-main="err"]) .pcard__img--alt[data-ok] { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .pcard__img, .pcard__ph { transition: none; }
+  }
 
   .pcard__flag {
     position: absolute; top: 10px; left: 10px; z-index: 1; padding: 3px 8px; border-radius: 3px;

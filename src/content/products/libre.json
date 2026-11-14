@@ -53,5 +53,9 @@
     "day",
     "date",
     "night"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/a109f9c9-4814-4f2b-bbfc-f422a595b5fd.jpg?v=1683236108",
+    "back": "https://feel22.com/cdn/shop/files/2_67bd8b5d-9826-45ad-b1ea-5944cde07b09.png?v=1689592938&width=720"
+  }
 }

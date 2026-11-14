@@ -48,7 +48,9 @@
     "viewAll": "View all",
     "prev": "Previous",
     "next": "Next",
-    "of": "/"
+    "of": "/",
+    "photoFront": "main image",
+    "photoBack": "with box"
   },
   "families": {
     "amber": "Amber",

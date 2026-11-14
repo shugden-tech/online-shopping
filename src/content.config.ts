@@ -34,6 +34,15 @@ const products = defineCollection({
           .refine((s) => new Set(s.map((x) => x.ml)).size === s.length, "each size (ml) may appear only once"),
         bottleShape: z.enum(SHAPES),
         image: image().optional(), // e.g. "./photos/baccarat-rouge-540.jpg" (relative to the JSON file)
+        // Remote product photos, linked by scripts/link-product-images.mjs. `front` is the bottle,
+        // `back` the bottle with its box. Either may be missing; never fill one with another product's photo.
+        photos: z
+          .object({
+            front: z.string().url().startsWith("https://").optional(),
+            back: z.string().url().startsWith("https://").optional(),
+          })
+          .strict()
+          .optional(),
         featured: z.boolean().optional(),
         isNew: z.boolean().optional(),
         intensity: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),

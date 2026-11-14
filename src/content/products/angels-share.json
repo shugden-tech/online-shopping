@@ -51,5 +51,9 @@
   "occasion": [
     "night",
     "date"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/0c98b391-bf8e-46d3-88ec-134d68d04b89_40a7d976-9a96-4ff1-be5b-bc36c1d07e5e.jpg?v=1683743435",
+    "back": "https://cdn.fragrancenet.com/images/photos/900x900/461449.jpg"
+  }
 }

@@ -19,6 +19,27 @@
 .pdp__float { width: min(58%, 320px); animation: gz-float 7s var(--ease-sine) infinite alternate; will-change: transform; }
 .pdp__float .bottle-photo { aspect-ratio: 200 / 280; object-fit: contain; }
 @keyframes gz-float { from { transform: translateY(6px); } to { transform: translateY(-10px); } }
+/* Remote photo gallery (front first, then back). Same box as the illustrated stage. */
+.pdp__stage--photos { display: flex; flex-direction: column; padding: 0; background: #fff; }
+.pdp__stage--photos::after { display: none; }
+.pdp__slides {
+  flex: 1; display: flex; width: 100%; min-height: min(64vh, 600px);
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.pdp__slides::-webkit-scrollbar { display: none; }
+.pdp__slides:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.pdp__slide { position: relative; flex: 0 0 100%; margin: 0; scroll-snap-align: center; }
+.pdp__slide img { position: absolute; inset: 5%; width: 90%; height: 90%; object-fit: contain; }
+.pdp__thumbs { display: flex; justify-content: center; gap: 10px; padding: 0 16px 16px; }
+.pdp__thumb {
+  width: 64px; height: 64px; padding: 4px; border: 1px solid var(--line-soft); border-radius: 6px; background: #fff;
+  transition: border-color .2s;
+}
+.pdp__thumb img { width: 100%; height: 100%; object-fit: contain; }
+.pdp__thumb[aria-pressed="true"] { border-color: var(--black, #111); }
+.pdp__fallback { margin: auto; padding: 32px 0; }
+.pdp__fallback[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .pdp__slides { scroll-behavior: auto; } }
 .pdp__stage-cap { position: absolute; left: 0; right: 0; bottom: 5%; text-align: center; letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--text-dim); }
 
 .pdp__info { padding-block: clamp(0px, 2vw, 32px); min-width: 0; }
@@ -94,6 +115,8 @@
   .pdp__top { grid-template-columns: minmax(0, 1fr); }
   .pdp__stage { position: relative; top: 0; min-height: 0; aspect-ratio: 1 / 1; padding: 20px; }
   .pdp__float { width: min(44%, 240px); }
+  .pdp__stage--photos { aspect-ratio: auto; }
+  .pdp__slides { min-height: 0; aspect-ratio: 1 / 1; }
   .pdp__crumbs { margin-bottom: 12px; }
   .pdp__specs > div { grid-template-columns: 104px 1fr; }
 }

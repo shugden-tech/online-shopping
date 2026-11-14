@@ -51,5 +51,9 @@
   "occasion": [
     "day",
     "date"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/c6e84e44-c5fe-4b79-8888-32ccab824705_b5ecef4d-3157-4237-9b36-7c1c794b79a1.jpg?v=1683235427",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/56c485d1-e13e-478c-b0d7-97054da65632.jpg?v=1683235427"
+  }
 }

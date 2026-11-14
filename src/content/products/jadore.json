@@ -51,5 +51,9 @@
     "day",
     "office",
     "date"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/639196.jpg?v=1745867181",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/621186.jpg?v=1745867181"
+  }
 }

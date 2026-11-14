@@ -25,6 +25,7 @@ Each perfume is **one JSON file** in this folder. The file name is the product's
 | `sizes` | One entry per size: `{ "ml": 2, "price": 15000, "inStock": true }`. Allowed sizes: 2, 5, 10, 30. Price is in ₮ (whole number). Set `inStock` to `false` to show the size struck through. |
 | `bottleShape` | `classic`, `tall`, `round` or `square` — the silhouette of the illustrated bottle. |
 | `image` *(optional)* | A real photo, e.g. `"./photos/baccarat-rouge-540.jpg"` (path relative to this folder; create `photos/`). When set, the photo replaces the illustrated bottle. Use a portrait image on a dark background, at least 800 px wide. |
+| `photos` *(optional)* | Remote photos: `{ "front": "https://…", "back": "https://…" }`. `front` is the bottle, `back` the bottle with its box; either may be left out. Cards show the front and fade to the back on hover/focus; the product page shows front then back. Filled by `node scripts/link-product-images.mjs --write` (dry run without `--write`). Ignored when `image` is set. |
 | `featured` *(optional)* | `true` puts it in the home-page slider and first in the shop. |
 | `isNew` *(optional)* | `true` shows the “New” flag and puts it in “New arrivals”. |
 | `intensity` | 1 (very soft) to 5 (very strong). Used by filters and the Scent Finder. |

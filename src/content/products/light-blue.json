@@ -51,5 +51,9 @@
   "occasion": [
     "day",
     "office"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/dcaed24e-f536-48b5-81ec-37f5652926f1_2936c3c3-ab2a-4614-b19d-6db2c9824316.jpg?v=1683114329",
+    "back": "https://scentsesandco.com/cdn/shop/products/D_Glightblueforheredt.jpg?v=1668131825&width=1400"
+  }
 }

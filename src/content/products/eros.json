@@ -52,5 +52,9 @@
   "occasion": [
     "night",
     "date"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/5d6498ff-48d1-4e40-9e37-9e46cf973f11_91ac4b32-0464-4f00-9aa2-19341d93e813.jpg?v=1683239897",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/cad31b29-4714-4414-a6ce-729e3e3a493c.jpg?v=1683239897"
+  }
 }

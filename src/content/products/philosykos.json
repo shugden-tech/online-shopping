@@ -47,5 +47,9 @@
   ],
   "occasion": [
     "day"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/607762.jpg?v=1745871507",
+    "back": "https://justordertoday.b-cdn.net/fs_shop/4010/fs_product_default_photo/5e8997c1ddb5593f9c7f493fc4808159ac98a66f56d9581cc37b8196f5bf6396.jpeg"
+  }
 }

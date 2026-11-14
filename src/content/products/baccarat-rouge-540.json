@@ -51,5 +51,9 @@
   "occasion": [
     "night",
     "date"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/994da4c3-431f-4297-aae7-6ac1efc9bfbb_60f42704-6409-4247-a6dc-d787e9efa1a2.jpg?v=1683216558",
+    "back": "https://perfumeriaonlyone.pl/upload/produkty/maxi-411-maison-francis-kurkdjian-baccarat-rouge-540-woda-perfumowana-70-ml-2.jpg"
+  }
 }

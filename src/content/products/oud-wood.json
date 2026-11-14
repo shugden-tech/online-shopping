@@ -52,5 +52,9 @@
     "office",
     "night",
     "date"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/04aa29d0-ad78-405b-a52b-0b75ff8822ef_0307c5f0-d7dd-43f4-8c0f-cb81970ecc8d.jpg?v=1683235614",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/f4ca775d-e558-4fc3-bb0b-0d80d31d80fb_0f3fab29-9537-4e5f-93c2-01147a1fa919.jpg?v=1683235614"
+  }
 }

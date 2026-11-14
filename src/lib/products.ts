@@ -67,11 +67,55 @@ export const isSoldOut = (p: Product): boolean => p.sizes.every((s) => !s.inStoc
 
 export const initialOf = (p: Product): string => p.brand.trim().charAt(0).toUpperCase();
 
-/** Optimised thumbnail URL for islands when the owner has set a real photo. */
+/** A remote photo ready for <img>: src plus an optional resized srcset. */
+export interface RemotePhoto { src: string; srcset?: string; kind: "front" | "back" }
+
+const SHOPIFY_WIDTHS = [240, 480, 800, 1200];
+
+/** Shopify's CDN resizes on the fly with `width=`; other hosts are used as-is. */
+function remoteSized(url: string, width: number): string | undefined {
+  try {
+    const u = new URL(url);
+    if (u.hostname !== "cdn.shopify.com") return undefined;
+    u.searchParams.set("width", String(width));
+    return u.href;
+  } catch {
+    return undefined;
+  }
+}
+
+function remotePhoto(url: string, kind: RemotePhoto["kind"], maxWidth = 1200): RemotePhoto {
+  const widths = SHOPIFY_WIDTHS.filter((w) => w <= maxWidth);
+  const sized = widths.map((w) => [remoteSized(url, w), w] as const).filter(([u]) => u);
+  return {
+    src: remoteSized(url, Math.min(800, maxWidth)) ?? url,
+    ...(sized.length ? { srcset: sized.map(([u, w]) => `${u} ${w}w`).join(", ") } : {}),
+    kind,
+  };
+}
+
+/**
+ * The product's remote photos, in display order: front first, then back. A duplicate URL appears once.
+ * When there is no front photo the back photo becomes the main one. Empty when neither exists.
+ */
+export function photosOf(p: Product, maxWidth = 1200): RemotePhoto[] {
+  const out: RemotePhoto[] = [];
+  const front = p.photos?.front;
+  const back = p.photos?.back;
+  if (front) out.push(remotePhoto(front, "front", maxWidth));
+  if (back && back !== front) out.push(remotePhoto(back, "back", maxWidth));
+  return out;
+}
+
+/** Optimised thumbnail URL for islands (cart, finder): the owner's own photo, else the main remote photo. */
 export async function thumbOf(p: Product, width = 480): Promise<string | undefined> {
-  if (!p.image) return undefined;
-  const img = await getImage({ src: p.image, width, format: "webp" });
-  return img.src;
+  if (p.image) {
+    const img = await getImage({ src: p.image, width, format: "webp" });
+    return img.src;
+  }
+  const main = photosOf(p)[0];
+  if (!main) return undefined;
+  return remoteSized(p.photos?.[main.kind] ?? main.src, width) ?? main.src;
 }
 
 /** The snapshot stored in the cart for a product (without size/price/qty). */

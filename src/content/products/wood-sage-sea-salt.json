@@ -49,5 +49,9 @@
   "occasion": [
     "day",
     "office"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/80aaac6a-44a6-44d0-817e-6531a130269a_5e7a5a7e-908e-4e37-8b4a-86b95e7c7f75.jpg?v=1683141533",
+    "back": "https://img.fragrancex.com/images/products/sku/large/jmwssw.jpg"
+  }
 }

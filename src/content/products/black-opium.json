@@ -50,5 +50,9 @@
   "occasion": [
     "night",
     "date"
-  ]
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/822397.jpg?v=1749220888",
+    "back": "https://www.perfumes.com.ph/cdn/shop/files/yves-saint-laurent-black-opium-edp-for-women-90ml-perfume-philippines-best-price_67d9821b.webp?v=1752829117"
+  }
 }
