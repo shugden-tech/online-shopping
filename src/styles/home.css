@@ -103,8 +103,8 @@
 .tabs__panel { animation: tab-in .4s var(--ease-out); }
 @keyframes tab-in { from { opacity: 0; transform: translateY(8px); } }
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 34px 24px; }
-.grid > li { display: flex; }
-.grid > li > :global(*) { flex: 1; }
+.grid > li { display: flex; min-width: 0; }
+.grid > li > * { flex: 1; min-width: 0; }
 .tabs__more { display: flex; justify-content: center; margin-top: 34px; }
 
 /* ---------- 6 · brand marquee ---------- */
