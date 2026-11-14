@@ -201,3 +201,17 @@ Work by model: code, tests and docs by **Opus 5.5** directly. The Mongolian copy
 **Deviations from the plan:** no GSAP and no Swiper on home (plan §5.2/§5.3 named them; the handoff preferred this). Scent Finder and checkout budgets are 25 KB.
 
 **Incident:** a scripted edit truncated `src/layouts/Base.astro`. It was restored from the session transcript's last full read of the file and checked against the previous build: the rebuilt HTML differs only by the intended `<noscript>` change and the copy edits.
+
+---
+
+## Light storefront redesign (2026-11-14) — Opus
+
+The owner found the dark luxury UI hard to shop and asked for a layout like a classic decant store (white page, search, black menu bar, product grid with size buttons). No DecantX text or images were used; only the layout pattern.
+
+- **Theme:** `tokens.css` flipped to light. The old token names are kept (`--ink*` are now light surfaces, `--gold` is a muted plum accent, new `--black` for buttons), so every page follows. Buttons are solid black; bottle glass outlines now read on white.
+- **Header:** announcement bar (free-delivery threshold from `settings.json`), logo, search box (GET `?q=` to the shop), MN/EN, cart button with count, and a black nav bar: All / Women / Men / Unisex / New / Scent Finder / About / Help. Mobile: burger with a slide-in menu, search on its own row. The header is now `sticky` (not fixed); `--header-h` is 116px.
+- **Home (`HomeView.astro`, `home.css`, `scripts/store-home.ts`):** banner slider (3 slides, auto-advance, arrows, dots, swipe, paused on hover/focus and under reduced motion), two promo tiles, scent-note collection rail, Women/Men/Unisex tiles, tabbed product grid (Bestsellers / New / Women / Men / Unisex, keyboard arrow support), brand marquee, about text and an info line.
+- **Product card:** light, square image, price above the size buttons, full-width black "Add to cart" button. Same data attributes, so `shell.ts` quick-add is unchanged.
+- **New strings:** `store` block in `src/i18n/mn.json` and `en.json`.
+- **No longer used by any page** (kept for now, can be deleted): `scripts/home.ts`, `islands/LayeringSlider.tsx`, `components/FamilyBand.astro`, `components/NoteTile.astro`. `scripts/e2e-home.mjs` tests the old hero and needs rewriting.
+- **Checks:** `astro check` 0 errors, build passes, JS budget PASS, no horizontal overflow and no page errors on home, shop, product, about, checkout and finder at 1440 px and 390 px; add-to-cart from the home tabs opens the cart drawer.

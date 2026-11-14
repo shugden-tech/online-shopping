@@ -2,236 +2,180 @@
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import BottleArt from "../components/BottleArt.astro";
-import FamilyBand from "../components/FamilyBand.astro";
-import NoteTile from "../components/NoteTile.astro";
 import ProductCard from "../components/ProductCard.astro";
-import LayeringSlider, { type Slide } from "../islands/LayeringSlider.tsx";
-import logo from "../assets/brand/logo.png";
-import { getDict, route, productPath, fill, type Locale } from "../i18n";
+import Icon from "../components/Icon.astro";
+import settings from "../data/settings.json";
+import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
-import { NOTES, NOTE_GROUPS, cartBase, defaultSize, fromPrice, getProducts, initialOf, isSoldOut } from "../lib/products";
-import { BAND_FAMILIES, familyStrips, noteImages } from "../lib/images";
+import { NOTES, NOTE_GROUPS, getProducts, initialOf, type Product } from "../lib/products";
+import { familyStrips, noteImages } from "../lib/images";
 import "../styles/home.css";
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const tr = getDict(locale);
-const h = tr.home;
-const other: Locale = locale === "mn" ? "en" : "mn";
+const s = tr.store;
 const shop = route("shop", locale);
+const free = formatPrice(settings.delivery.freeThreshold, locale);
 const products = await getProducts();
 
-const featured = products.filter((p) => p.featured).slice(0, 8);
-const fresh = products.filter((p) => p.isNew).slice(0, 8);
-// three featured bottles with different liquid colours for the hero's second beat
-const distinct = featured.filter((p, i) => featured.findIndex((o) => o.family === p.family) === i);
-const heroBottles = [distinct[1], distinct[0], distinct[2]].filter((p) => p !== undefined);
-
-const slides: Slide[] = await Promise.all(
-  featured.map(async (p) => {
-    const size = defaultSize(p);
-    return {
-      href: productPath(locale, p.slug),
-      base: await cartBase(p),
-      familyLabel: tr.families[p.family],
-      fromLabel: fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }),
-      addMl: size.ml,
-      addPrice: size.price,
-      addLabel: fill(tr.common.addSize, { ml: size.ml }),
-      soldOut: isSoldOut(p),
-    };
-  }),
+const byFeatured = [...products].sort(
+  (a, b) => Number(b.featured ?? false) - Number(a.featured ?? false) || Number(b.isNew ?? false) - Number(a.isNew ?? false),
 );
+const fresh = [...products].sort((a, b) => Number(b.isNew ?? false) - Number(a.isNew ?? false));
+const ofGender = (g: Product["gender"]) => byFeatured.filter((p) => p.gender === g);
 
-const steps = [
-  { n: "01", title: h.how.step1, text: h.how.step1Text },
-  { n: "02", title: h.how.step2, text: h.how.step2Text },
-  { n: "03", title: h.how.step3, text: h.how.step3Text },
+const tabs = [
+  { id: "best", label: s.tabs.best, items: byFeatured.slice(0, 8), href: shop },
+  { id: "new", label: s.tabs.new, items: fresh.slice(0, 8), href: `${shop}?sort=newest` },
+  { id: "women", label: s.tabs.women, items: ofGender("women").slice(0, 8), href: `${shop}?gender=women` },
+  { id: "men", label: s.tabs.men, items: ofGender("men").slice(0, 8), href: `${shop}?gender=men` },
+  { id: "unisex", label: s.tabs.unisex, items: ofGender("unisex").slice(0, 8), href: `${shop}?gender=unisex` },
+].filter((t) => t.items.length > 0);
+
+/** Three bottles with different liquid colours for a banner. */
+const trio = (list: Product[]) => list.filter((p, i) => list.findIndex((o) => o.family === p.family) === i).slice(0, 3);
+
+const slides = [
+  { ...s.slides[0]!, href: shop, img: familyStrips.amber!, bg: "#2b211b,#8a5a33", bottles: trio(byFeatured) },
+  { ...s.slides[1]!, href: `${shop}?sort=newest`, img: familyStrips.citrus!, bg: "#1d3433,#5f8f86", bottles: trio(fresh) },
+  { ...s.slides[2]!, href: route("finder", locale), img: familyStrips.woody!, bg: "#2a2233,#6b5f70", bottles: trio([...byFeatured].reverse()) },
 ];
-// real-world proportions of typical 2 / 5 / 10 ml glass atomisers (height × diameter, mm)
-const vials = [
-  { ml: 2, mm: 46, dia: 10, note: h.how.vial2 },
-  { ml: 5, mm: 70, dia: 13, note: h.how.vial5 },
-  { ml: 10, mm: 95, dia: 15, note: h.how.vial10 },
-];
-const PX = 3.3; // px per mm
+
+const genderTiles = (["women", "men", "unisex"] as const).map((g) => ({
+  g, label: tr.genders[g], href: `${shop}?gender=${g}`, bottles: trio(ofGender(g)),
+}));
+
+const brands = [...new Set(products.map((p) => p.brand))];
+const infoIcons = ["bag", "check", "briefcase"] as const;
 ---
-<Base locale={locale} title={tr.site.name} overlayHeader>
-  <!-- 1 · hero -->
-  <section class="hero" data-hero aria-labelledby="hero-title">
-    <div class="hero__pin">
-      <div class="hero__spot" aria-hidden="true"></div>
-      <canvas class="hero__dust" aria-hidden="true"></canvas>
-
-      <div class="hero__content">
-        <Image src={logo} alt="" width={112} height={112} densities={[1, 2]} loading="eager" fetchpriority="high" class="hero__logo" />
-        <p class="hero__word t-title">{h.hero.eyebrow}</p>
-        <h1 class="hero__title t-head" id="hero-title">{h.hero.headline}</h1>
-        <p class="hero__sub">{h.hero.sub}</p>
-        <div class="hero__cta">
-          <a class="btn btn--gold" href={shop}>{h.hero.ctaShop}</a>
-          <a class="btn" href={route("finder", locale)}>{h.hero.ctaFinder}</a>
-        </div>
-      </div>
-
-      <div class="hero__bottles" aria-hidden="true">
-        {heroBottles.map((p, i) => (
-          <div class={`hero__bottle hero__bottle--${i}`} style={`--tint:var(--fam-${p.family})`}>
-            <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} />
+<Base locale={locale} title={tr.site.name}>
+  <!-- 1 · banner slider -->
+  <section class="wrap hb" aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
+    <div class="hb__track">
+      {slides.map((sl, i) => (
+        <div class:list={["hb__slide", { "is-on": i === 0 }]} data-slide style={`--a:${sl.bg.split(",")[0]};--b:${sl.bg.split(",")[1]}`} aria-roledescription="slide" aria-label={`${i + 1} / ${slides.length}`} aria-hidden={i === 0 ? undefined : "true"}>
+          <Image src={sl.img} alt="" widths={[640, 1280, 1920]} sizes="(min-width: 1320px) 1320px, 100vw" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__bg" />
+          <div class="hb__text">
+            <p class="hb__eyebrow">{sl.eyebrow}</p>
+            {i === 0 ? <h1 class="hb__title">{sl.title}</h1> : <h2 class="hb__title">{sl.title}</h2>}
+            <p class="hb__sub">{sl.text}</p>
+            <a class="btn btn--light" href={sl.href} tabindex={i === 0 ? undefined : -1}>{sl.cta}</a>
           </div>
-        ))}
-        <div class="hero__floor"></div>
-        <p class="hero__sizes t-title">2 · 5 · 10 {tr.common.ml}</p>
-      </div>
-
-      <p class="hero__scroll" aria-hidden="true"><span>{h.hero.scroll}</span><i></i></p>
-    </div>
-  </section>
-
-  <!-- 2 · scent families -->
-  <section class="section fam" aria-labelledby="fam-title">
-    <header class="wrap sec-head">
-      <p class="t-title" data-reveal>{h.families.eyebrow}</p>
-      <h2 class="t-h2" id="fam-title" data-reveal style="--delay:80ms">{h.families.title}</h2>
-    </header>
-    <div class="fam__bands">
-      {BAND_FAMILIES.map((f, i) => (
-        <FamilyBand
-          family={f}
-          name={tr.families[f]}
-          line={tr.familyLines[f]}
-          href={`${shop}?family=${f}`}
-          cta={h.families.cta}
-          strip={familyStrips[f]!}
-          index={i}
-        />
-      ))}
-    </div>
-  </section>
-
-  <!-- 3 · featured: the layering slider -->
-  <section class="section feat" aria-labelledby="feat-title">
-    <header class="wrap sec-head sec-head--center">
-      <p class="t-title" data-reveal>{h.slider.eyebrow}</p>
-      <h2 class="t-h2" id="feat-title" data-reveal style="--delay:80ms">{h.slider.title}</h2>
-    </header>
-    <div class="wrap">
-      <LayeringSlider
-        client:visible={{ rootMargin: "300px" }}
-        slides={slides}
-        labels={{
-          region: h.slider.label, prev: tr.common.prev, next: tr.common.next,
-          view: tr.common.view, hint: h.slider.hint, soldOut: tr.common.soldOut,
-        }}
-      />
-    </div>
-  </section>
-
-  <!-- 4 · notes explorer -->
-  <section class="section wrap notes" aria-labelledby="notes-title">
-    <header class="sec-head">
-      <p class="t-title" data-reveal>{h.notes.eyebrow}</p>
-      <h2 class="t-h2" id="notes-title" data-reveal style="--delay:80ms">{h.notes.title}</h2>
-      <p class="t-body t-dim" data-reveal style="--delay:160ms">{h.notes.sub}</p>
-    </header>
-    <div class="notes__grid">
-      {NOTE_GROUPS.map((g, i) => (
-        <NoteTile
-          image={noteImages[g]!}
-          name={NOTES[g]![locale]}
-          alt={NOTES[g]![other]}
-          altLang={other}
-          href={`${shop}?notes=${g}`}
-          index={i}
-          wide={i === 0}
-        />
-      ))}
-    </div>
-  </section>
-
-  <!-- 5 · how decants work -->
-  <section class="section how" aria-labelledby="how-title">
-    <div class="wrap how__in">
-      <div class="how__copy">
-        <header class="sec-head">
-          <p class="t-title" data-reveal>{h.how.eyebrow}</p>
-          <h2 class="t-h2" id="how-title" data-reveal style="--delay:80ms">{h.how.title}</h2>
-          <p class="t-body t-dim" data-reveal style="--delay:160ms">{h.how.intro}</p>
-        </header>
-        <ol class="how__steps">
-          {steps.map((s, i) => (
-            <li data-reveal style={`--delay:${i * 120}ms`}>
-              <span class="how__n" aria-hidden="true">{s.n}</span>
-              <h3 class="t-h3">{s.title}</h3>
-              <p class="t-dim">{s.text}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <figure class="how__vials" data-reveal aria-label={h.how.vialsLabel}>
-        <div class="how__row">
-          {vials.map((v) => {
-            const bodyH = v.mm * PX * 0.7;
-            const capH = v.mm * PX * 0.3;
-            const w = v.dia * PX;
-            const totalH = bodyH + capH;
-            return (
-              <div class="how__vial">
-                <svg width={w + 8} height={totalH + 4} viewBox={`0 0 ${w + 8} ${totalH + 4}`} aria-hidden="true">
-                  <rect x={4 + w * 0.14} y="1" width={w * 0.72} height={capH * 0.72} rx="1.500" fill="url(#gz-gold)" />
-                  <rect x={4 + w * 0.3} y={capH * 0.72} width={w * 0.4} height={capH * 0.28 + 2} fill="url(#gz-gold)" opacity=".75" />
-                  <rect x="4" y={capH} width={w} height={bodyH} rx={w * 0.22} fill="url(#gz-glass)" stroke="#fff" stroke-opacity=".34" />
-                  <rect x={4 + 2.500} y={capH + bodyH * 0.16} width={w - 5} height={bodyH * 0.84 - 2.500} rx={w * 0.16} fill="#CC9E48" opacity=".9" />
-                  <rect x={4 + 2.500} y={capH + bodyH * 0.16} width={w - 5} height={bodyH * 0.84 - 2.500} rx={w * 0.16} fill="url(#gz-shade)" />
-                  <rect x={4 + w * 0.2} y={capH + 6} width="1.600" height={bodyH - 14} rx=".8" fill="#fff" opacity=".35" />
-                </svg>
-                <figcaption>
-                  <b>{v.ml} <small>{tr.common.ml}</small></b>
-                  <span>{v.note}</span>
-                </figcaption>
-              </div>
-            );
-          })}
+          <div class="hb__bottles" aria-hidden="true">
+            {sl.bottles.map((p) => (
+              <div class="hb__bottle"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} /></div>
+            ))}
+          </div>
         </div>
-      </figure>
+      ))}
+    </div>
+    <button class="hb__arrow hb__arrow--prev" type="button" data-prev aria-label={tr.common.prev}><Icon name="chevron" size={22} /></button>
+    <button class="hb__arrow hb__arrow--next" type="button" data-next aria-label={tr.common.next}><Icon name="chevron" size={22} /></button>
+    <div class="hb__dots">
+      {slides.map((_, i) => (
+        <button type="button" data-dot={i} aria-label={`${i + 1} / ${slides.length}`} aria-current={i === 0 ? "true" : undefined}></button>
+      ))}
     </div>
   </section>
 
-  <!-- 6 · scent finder teaser -->
-  <section class="teaser" aria-labelledby="teaser-title">
-    <div class="teaser__rays" aria-hidden="true"><i></i><i></i><i></i></div>
-    <div class="wrap teaser__in">
-      <p class="t-title t-gold" data-reveal>{h.teaser.eyebrow}</p>
-      <h2 class="t-head" id="teaser-title" data-reveal style="--delay:80ms">{h.teaser.title}</h2>
-      <p class="t-body t-dim" data-reveal style="--delay:160ms">{h.teaser.sub}</p>
-      <a class="btn btn--gold" href={route("finder", locale)} data-reveal style="--delay:240ms">
-        {h.teaser.cta}
-        <svg viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1.200" aria-hidden="true"><path d="M0 5h21M17 1l4 4-4 4" /></svg>
-      </a>
+  <!-- 2 · two promo tiles -->
+  <section class="wrap promo">
+    <a class="promo__tile promo__tile--big" href={shop} style="--a:#efe9df;--b:#d9cbb4">
+      <Image src={familyStrips.chypre!} alt="" widths={[480, 960, 1280]} sizes="(min-width: 900px) 66vw, 100vw" loading="lazy" />
+      <span class="promo__label">{s.tileAll}</span>
+    </a>
+    <a class="promo__tile" href={`${shop}?sort=newest`} style="--a:#e7e3ef;--b:#b9aecb">
+      <Image src={familyStrips.fresh!} alt="" widths={[480, 720]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" />
+      <span class="promo__label">{s.tileNew}</span>
+    </a>
+  </section>
+
+  <!-- 3 · featured collections (scent notes) -->
+  <section class="coll" aria-labelledby="coll-title">
+    <div class="wrap">
+      <h2 class="h-sec" id="coll-title">{s.collections}</h2>
+      <ul class="coll__rail" tabindex="0" aria-labelledby="coll-title">
+        {NOTE_GROUPS.map((g) => (
+          <li>
+            <a class="coll__item" href={`${shop}?notes=${g}`}>
+              <span class="coll__img">
+                <Image src={noteImages[g]!} alt="" widths={[200, 400]} sizes="180px" loading="lazy" quality={62} />
+              </span>
+              <span class="coll__name">{NOTES[g]![locale]}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <!-- 7 · new arrivals -->
-  <section class="section newin" aria-labelledby="new-title">
-    <header class="wrap sec-head newin__head">
-      <p class="t-title" data-reveal>{h.new.eyebrow}</p>
-      <h2 class="t-h2" id="new-title" data-reveal style="--delay:80ms">{h.new.title}</h2>
-      <a class="link-arrow" href={`${shop}?sort=newest`}>
-        {tr.common.viewAll}
-        <svg viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M0 5h21M17 1l4 4-4 4" /></svg>
+  <!-- 4 · women / men / unisex -->
+  <section class="wrap gtiles">
+    {genderTiles.map((t) => (
+      <a class={`gtile gtile--${t.g}`} href={t.href}>
+        <span class="gtile__bottles" aria-hidden="true">
+          {t.bottles.map((p) => (
+            <span class="gtile__bottle"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} sizes="120px" /></span>
+          ))}
+        </span>
+        <span class="gtile__label">{t.label}</span>
       </a>
-    </header>
-    <ul class="newin__rail" tabindex="0" aria-labelledby="new-title">
-      {fresh.map((p, i) => (
-        <li data-reveal style={`--delay:${i * 80}ms`}>
-          <ProductCard product={p} locale={locale} level={3} />
+    ))}
+  </section>
+
+  <!-- 5 · tabbed product grid -->
+  <section class="wrap tabs-sec" aria-label={tr.nav.shop} data-tabs>
+    <div class="tabs" role="tablist">
+      {tabs.map((t, i) => (
+        <button type="button" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>
+          {t.id === "new" && <span aria-hidden="true">✨ </span>}{t.label}
+        </button>
+      ))}
+    </div>
+    {tabs.map((t, i) => (
+      <div class="tabs__panel" role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} hidden={i !== 0}>
+        <ul class="grid">
+          {t.items.map((p, j) => (
+            <li><ProductCard product={p} locale={locale} level={3} eager={i === 0 && j < 4} /></li>
+          ))}
+        </ul>
+        <div class="tabs__more"><a class="btn" href={t.href}>{s.seeAll} · {t.label}</a></div>
+      </div>
+    ))}
+  </section>
+
+  <!-- 6 · brands -->
+  <section class="brands" aria-label={tr.nav.shop}>
+    <div class="brands__marquee">
+      <ul class="brands__track">
+        {[...brands, ...brands].map((b, i) => (
+          <li aria-hidden={i >= brands.length ? "true" : undefined}><a href={`${shop}?q=${encodeURIComponent(b)}`} tabindex={i >= brands.length ? -1 : undefined}>{b}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 · about -->
+  <section class="wrap about" aria-labelledby="about-title">
+    <h2 class="h-sec" id="about-title">{s.aboutTitle}</h2>
+    <p>{s.about1}</p>
+    <p>{s.about2}</p>
+  </section>
+
+  <!-- 8 · info line -->
+  <section class="info">
+    <ul class="wrap info__in">
+      {s.info.map((it, i) => (
+        <li>
+          <span class="info__icon"><Icon name={infoIcons[i] ?? "check"} size={26} /></span>
+          <span><b>{it.t}</b><span>{fill(it.d, { price: free })}</span></span>
         </li>
       ))}
     </ul>
   </section>
 
   <script>
-    import "../scripts/home";
+    import "../scripts/store-home";
   </script>
 </Base>

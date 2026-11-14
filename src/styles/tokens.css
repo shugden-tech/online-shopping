@@ -1,31 +1,36 @@
 :root {
-  --ink: #070707;                      /* page background, matches the logo backdrop */
-  --ink-2: #111110;                    /* cards */
-  --ink-3: #1b1a18;                    /* raised / hover */
-  --line: rgba(204, 158, 72, .22);     /* gold hairline */
-  --line-soft: rgba(237, 232, 223, .09);
-  --gold: #CC9E48;
-  --gold-soft: #e2c48a;
-  --text: #EDE8DF;                     /* warm off-white */
-  --text-dim: #9C968C;
-  --danger: #D9534F;
-  --danger-text: #F08A85;              /* AA on --ink for small error text */
+  /* light storefront theme. The old names are kept so every component follows along:
+     --ink* are now light surfaces, --gold is the accent (muted plum), --black is the button colour. */
+  --ink: #ffffff;                      /* page background */
+  --ink-2: #ffffff;                    /* cards */
+  --ink-3: #f5f4f2;                    /* soft panels / hover */
+  --soft: #f5f4f2;
+  --line: #e2e0dc;                     /* hairline */
+  --line-soft: #ecebe8;
+  --gold: #6b5f70;                     /* accent */
+  --gold-soft: #4e4453;
+  --black: #141414;
+  --on-accent: #ffffff;
+  --text: #141414;
+  --text-dim: #6c6a66;
+  --danger: #c0392b;
+  --danger-text: #b03024;
 
   --font-head: "Cormorant Garamond", "Cormorant Fallback", "Times New Roman", serif;
   --font-sans: "Montserrat", "Montserrat Fallback", "Helvetica Neue", Arial, sans-serif;
-  --fs-head: clamp(40px, 5.5vw + 1rem, 88px);
-  --fs-h2: clamp(28px, 2.5vw + 1rem, 48px);
+  --fs-head: clamp(34px, 3.5vw + 1rem, 60px);
+  --fs-h2: clamp(26px, 1.6vw + 1rem, 38px);
   --fs-title: clamp(12px, 0.3vw + 11px, 14px);
   --fs-body: clamp(15px, 0.25vw + 14px, 17px);
   --fs-small: 13px;
 
   --ease-sine: cubic-bezier(.445, .05, .55, .95);   /* from animation1.md */
   --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --radius: 2px;                       /* near-square, luxury */
+  --radius: 6px;
   --gutter: clamp(16px, 4vw, 48px);
   --maxw: 1320px;
-  --header-h: 72px;
-  --section: clamp(72px, 10vw, 150px);
+  --header-h: 116px;                   /* sticky part of the header: top row + nav bar */
+  --section: clamp(48px, 6vw, 80px);
 
   /* scent-family tints (bottle liquid, washes, chips) */
   --fam-amber: #C9862B;
@@ -39,5 +44,5 @@
 }
 
 @media (max-width: 720px) {
-  :root { --header-h: 60px; }
+  :root { --header-h: 116px; }
 }

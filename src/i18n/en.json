@@ -175,7 +175,13 @@
     "decantNote": "Hand-decanted from the original bottle into a spray vial.",
     "intensity": "Intensity",
     "intensityOf": "{n} of 5",
-    "intensityLevels": ["Very soft", "Soft", "Moderate", "Strong", "Very strong"],
+    "intensityLevels": [
+      "Very soft",
+      "Soft",
+      "Moderate",
+      "Strong",
+      "Very strong"
+    ],
     "season": "Season",
     "occasion": "Occasion",
     "pyramid": "Notes pyramid",
@@ -422,5 +428,59 @@
     "text": "We couldn't find the page you were looking for. The address may be wrong or the page may have moved.",
     "home": "Home",
     "shop": "Visit the shop"
+  },
+  "store": {
+    "announce": "Free delivery on orders over {price} · Every fragrance 100% authentic",
+    "searchPlaceholder": "Search perfumes, brands, notes...",
+    "all": "All",
+    "newIn": "New",
+    "slides": [
+      {
+        "eyebrow": "New season",
+        "title": "Warm, deep scents for winter",
+        "text": "Amber, vanilla and woody picks from 2 ml.",
+        "cta": "Shop now"
+      },
+      {
+        "eyebrow": "Just in",
+        "title": "The latest releases",
+        "text": "Be first to try the newest niche and designer fragrances.",
+        "cta": "New arrivals"
+      },
+      {
+        "eyebrow": "Scent Finder",
+        "title": "Not sure what suits you?",
+        "text": "Answer a few questions and find your scent.",
+        "cta": "Start the quiz"
+      }
+    ],
+    "tileAll": "All fragrances",
+    "tileNew": "New arrivals",
+    "collections": "Featured collections",
+    "tabs": {
+      "best": "Bestsellers",
+      "new": "New",
+      "women": "Women",
+      "men": "Men",
+      "unisex": "Unisex"
+    },
+    "seeAll": "See all",
+    "aboutTitle": "About genzst",
+    "about1": "Feeling good starts with smelling good. genzst hand-decants authentic designer and niche fragrances for women, men and everyone from the original bottle into 2, 5 and 10 ml vials.",
+    "about2": "Try a scent on your skin before you commit to a full bottle. Sample it, don't settle.",
+    "info": [
+      {
+        "t": "Free delivery",
+        "d": "In Ulaanbaatar on orders over {price}"
+      },
+      {
+        "t": "100% authentic",
+        "d": "Every sample is decanted by hand from the original bottle"
+      },
+      {
+        "t": "Payment",
+        "d": "Bank transfer or QPay"
+      }
+    ]
   }
 }

@@ -1,7 +1,7 @@
 /* Scent Finder (islands/ScentFinder.tsx) */
 .sf {
   position: relative; min-height: 100svh; display: flex; flex-direction: column; isolation: isolate;
-  padding: calc(var(--header-h) + clamp(20px, 4vh, 56px)) var(--gutter) 0;
+  padding: clamp(20px, 4vh, 56px) var(--gutter) 0;
 }
 
 /* per-step colour wash, crossfading */
