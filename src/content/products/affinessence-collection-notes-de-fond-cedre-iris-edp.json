@@ -1,0 +1,44 @@
+{
+  "slug": "affinessence-collection-notes-de-fond-cedre-iris-edp",
+  "brand": "Affinessence",
+  "name": "Collection Notes de Fond Cedre Iris",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Affinessence Collection Notes de Fond Cedre Iris: Хүйс харгалзахгүй модлог үнэр (EDP).",
+    "en": "Affinessence's Cedre Iris is a unisex scent that falls within the Woody Floral Musk olfactory family. This fragrance was introduced to the market in 2015, with its creation attributed to perfumer Nicolas Bonneville."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/b11ce24c-8316-43c8-a298-cf1d20eb457c.jpg?v=1705089639",
+    "back": "https://cdn.fragrancenet.com/images/photos/900x900/407166.jpg"
+  }
+}

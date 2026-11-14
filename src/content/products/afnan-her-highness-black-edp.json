@@ -1,0 +1,43 @@
+{
+  "slug": "afnan-her-highness-black-edp",
+  "brand": "Afnan",
+  "name": "Her Highness Black",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Afnan Her Highness Black: Эмэгтэйчүүдэд зориулсан модлог үнэр (EDP).",
+    "en": "Her Highness Black by Afnan Perfume. Every woman can feel like a royalty thanks to Her Highness Black. This tantalizing perfume embodies the confidence bestowed upon a royal with the bold power of self-sufficiency and independence that can turn any woman into the queen of her world. Seductive, bold and sophisticated, this fragrance is a complementary blend of delectable plums immersed in an intoxicating bouquet of tuberose, jasmine and ylang-ylang. A dash of pink pepper kicks the scent up a notch, adding an invigorating spiciness to the long-lasting aroma."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/5378e3f0-542d-444c-8687-c3f0bf935bf5_10ea3ff8-d309-4bb2-acc7-a5f69508f3f5.jpg?v=1683063805",
+    "back": "https://img.perfume.com/images/products/parent/medium/77893w.jpg"
+  }
+}

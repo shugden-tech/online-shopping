@@ -1,0 +1,55 @@
+{
+  "slug": "al-haramain-amber-oud-carbon-edition-edp",
+  "brand": "Al Haramain",
+  "name": "Amber Oud Carbon Edition",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "bergamot",
+      "lavender",
+      "rosemary"
+    ],
+    "heart": [
+      "marine",
+      "geranium",
+      "sage"
+    ],
+    "base": [
+      "moss",
+      "cedar",
+      "vetiver",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Al Haramain Amber Oud Carbon Edition: Хүйс харгалзахгүй модлог үнэр (EDP). Эхний ноот: бергамот, лаванда, розмарин; зүрхний ноот: далайн ноот, герань, мэргэн өвс; суурь ноот: хөвд, хуш мод, ветивер, хув.",
+    "en": "Amber Oud Carbon Edition by Al Haramain Perfumes is a Woody Aromatic fragrance for women and men. This is a new fragrance. Amber Oud Carbon Edition was launched in 2022. Top notes are Bergamot, Lavender and Rosemary; middle notes are Sea Notes, Geranium and Sage; base notes are Moss, Cedar, Vetiver and Amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/16a14ae3-2a52-4313-8d13-185904c9cf96_321a898f-1446-46ee-97e9-8b17001234a9.jpg?v=1683067912",
+    "back": "https://cd3c14-whites.akinoncloudcdn.com/products/2025/09/10/44536/eb27311e-1152-4474-a544-e3e9faa8a338_size2048x2048_cropCenter.jpg"
+  }
+}

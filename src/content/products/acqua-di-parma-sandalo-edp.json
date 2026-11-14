@@ -1,0 +1,56 @@
+{
+  "slug": "acqua-di-parma-sandalo-edp",
+  "brand": "Acqua di Parma",
+  "name": "Sandalo",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "lemon",
+      "bergamot",
+      "orange",
+      "petitgrain"
+    ],
+    "heart": [
+      "lavender",
+      "cardamom"
+    ],
+    "base": [
+      "sandalwood",
+      "amber",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Sandalo: Хүйс харгалзахгүй модлог үнэр (EDP). Эхний ноот: нимбэг, бергамот, жүрж, петигрейн; зүрхний ноот: лаванда, кардамон; суурь ноот: зандан мод, хув, тонка шош.",
+    "en": "Sandalo Eau de Parfum by Acqua di Parma is a Woody Aromatic fragrance for women and men. This is a new fragrance. Sandalo Eau de Parfum was launched in 2019. Top notes are lemon, calabrian bergamot, orange and petitgrain; middle notes are lavender and cardamom; base notes are sandalwood, amber and tonka bean."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/b3adfae2-ab9c-447b-8392-edacd43240cf_7d2e5f93-8d8f-4998-82bd-48c24944a9f6.jpg?v=1683063586",
+    "back": "https://cdn.fragrancenet.com/images/photos/600x600/354149.jpg"
+  }
+}

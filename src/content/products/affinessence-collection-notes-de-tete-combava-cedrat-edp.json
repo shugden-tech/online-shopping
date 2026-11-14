@@ -1,0 +1,44 @@
+{
+  "slug": "affinessence-collection-notes-de-tete-combava-cedrat-edp",
+  "brand": "Affinessence",
+  "name": "Collection Notes de Tete Combava Cedrat",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "citrus",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Affinessence Collection Notes de Tete Combava Cedrat: Хүйс харгалзахгүй цитрус үнэр (EDP).",
+    "en": "Affinessence introduces Combava Cedrat, a unisex scent under the Citrus Aromatic category. Freshly released, this fragrance made its debut in 2022 with the creative expertise of perfumer Nicolas Bonneville. It opens with the invigorating essence of Kaffir Lime at the top, followed by a harmonious blend of Lime and Mint at the heart. The base is a warm fusion of Cardamom and Wood notes, grounding the scent with depth and character."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/b2bf10f7-919b-4573-b254-06b65e7337b3.jpg?v=1705089831",
+    "back": "https://welzo.com/cdn/shop/files/10049723.jpg?v=1755899182"
+  }
+}

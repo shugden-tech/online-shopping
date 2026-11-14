@@ -1,0 +1,49 @@
+{
+  "slug": "abercrombie-and-fitch-authentic-night-edp",
+  "brand": "Abercrombie & Fitch",
+  "name": "Authentic Night",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "chypre",
+  "notes": {
+    "top": [
+      "blackcurrant",
+      "apple",
+      "pink-pepper"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch Authentic Night: Эмэгтэйчүүдэд зориулсан шипр үнэр (EDP). Эхний ноот: үхрийн нүд, алим, ягаан чинжүү.",
+    "en": "Authentic Night Femme by Abercrombie & Fitch is a captivating Chypre Floral fragrance designed for women. Introduced in 2020, this new scent features an alluring blend of top notes including Black Currant, Apple, and Pink Pepper. The heart of the fragrance reveals floral notes of Tuberose, Jasmine Sambac, and Magnolia, while the base is crafted from rich Patchouli, Sandalwood, and Cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 56000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": true,
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/1292050.jpg?v=1741965493",
+    "back": "https://cdn11.bigcommerce.com/s-2vt02okold/images/stencil/1280x1280/products/2973/2893/MAFAN__04028.1731099891.jpg?c=1"
+  }
+}

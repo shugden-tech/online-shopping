@@ -1,0 +1,54 @@
+{
+  "slug": "abercrombie-and-fitch-first-instinct-together-edt",
+  "brand": "Abercrombie & Fitch",
+  "name": "First Instinct Together",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "green-apple",
+      "pineapple-leaf",
+      "grapefruit",
+      "cardamom"
+    ],
+    "heart": [
+      "lavender",
+      "orange-blossom"
+    ],
+    "base": [
+      "musk",
+      "sandalwood",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch First Instinct Together: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: ногоон алим, хан боргоцойн навч, бэрсүүт жүрж, кардамон; зүрхний ноот: лаванда, жүржийн цэцэг; суурь ноот: заар, зандан мод, хуш мод.",
+    "en": "First Instinct Together Eau de Toilette For Him by Abercrombie & Fitch is a Woody Aromatic fragrance for men. This is a new fragrance. First Instinct Together Eau de Toilette For Him was launched in 2020. Top notes are Green Apple, Pineapple Leaf, Grapefruit and Cardamom; middle notes are Lavender and Orange Blossom; base notes are Musk, Sandalwood and Cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/cb369437-e235-4ca4-b8e9-87d0ede11cf4_2ebcec8f-db2d-4982-b305-916f86817853.jpg?v=1683060866",
+    "back": "https://fragrancelondon.com/cdn/shop/files/abercrombie-fitch-first-instinct-together-man-eau-de-toilette-spray-100ml-965753.webp?v=1747207277&width=1080"
+  }
+}

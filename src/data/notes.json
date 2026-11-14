@@ -1,79 +1,677 @@
 {
-  "amber": { "mn": "Хув", "en": "Amber", "image": "amber" },
-  "aromatic-notes": { "mn": "Анхилуун өвс", "en": "Aromatic herbs", "image": "aromatic-notes" },
-  "green-notes": { "mn": "Ногоон ноот", "en": "Green notes", "image": "green-notes" },
-  "incense-minerals": { "mn": "Хүж ба эрдэс", "en": "Incense & minerals", "image": "incense-minerals" },
-  "leather": { "mn": "Арьс", "en": "Leather", "image": "leather" },
-  "musk": { "mn": "Заар", "en": "Musk", "image": "musk" },
-  "oud": { "mn": "Агар мод", "en": "Oud", "image": "oud" },
-  "saffron": { "mn": "Гүргэм", "en": "Saffron", "image": "saffron" },
-  "vanilla": { "mn": "Ваниль", "en": "Vanilla", "image": "vanilla" },
-  "white-flowers": { "mn": "Цагаан цэцэгс", "en": "White flowers", "image": "white-flowers" },
-  "woods": { "mn": "Модлог ноот", "en": "Woods", "image": "woods" },
-
-  "ambergris": { "mn": "Амбра", "en": "Ambergris", "image": "amber" },
-  "ambroxan": { "mn": "Амброксан", "en": "Ambroxan", "image": "amber" },
-  "labdanum": { "mn": "Лабданум", "en": "Labdanum", "image": "amber" },
-  "benzoin": { "mn": "Бензойн", "en": "Benzoin", "image": "amber" },
-
-  "lavender": { "mn": "Лаванда", "en": "Lavender", "image": "aromatic-notes" },
-  "mint": { "mn": "Гаа", "en": "Mint", "image": "aromatic-notes" },
-  "rosemary": { "mn": "Розмарин", "en": "Rosemary", "image": "aromatic-notes" },
-  "sage": { "mn": "Мэргэн өвс", "en": "Sage", "image": "aromatic-notes" },
-  "geranium": { "mn": "Герань", "en": "Geranium", "image": "aromatic-notes" },
-  "juniper": { "mn": "Арц", "en": "Juniper", "image": "aromatic-notes" },
-  "pine": { "mn": "Нарс", "en": "Pine", "image": "aromatic-notes" },
-
-  "fig-leaf": { "mn": "Инжирийн навч", "en": "Fig leaf", "image": "green-notes" },
-  "oakmoss": { "mn": "Царсны хөвд", "en": "Oakmoss", "image": "green-notes" },
-  "bamboo": { "mn": "Хулс", "en": "Bamboo", "image": "green-notes" },
-  "green-apple": { "mn": "Ногоон алим", "en": "Green apple", "image": "green-notes" },
-
-  "incense": { "mn": "Хүж", "en": "Incense", "image": "incense-minerals" },
-  "flint": { "mn": "Цахиур чулуу", "en": "Flint", "image": "incense-minerals" },
-  "sea-salt": { "mn": "Далайн давс", "en": "Sea salt", "image": "incense-minerals" },
-
-  "ambrette": { "mn": "Амбретт", "en": "Ambrette", "image": "musk" },
-
-  "tonka": { "mn": "Тонка шош", "en": "Tonka bean", "image": "vanilla" },
-
-  "jasmine": { "mn": "Жасмин", "en": "Jasmine", "image": "white-flowers" },
-  "orange-blossom": { "mn": "Жүржийн цэцэг", "en": "Orange blossom", "image": "white-flowers" },
-  "neroli": { "mn": "Нероли", "en": "Neroli", "image": "white-flowers" },
-
-  "cedar": { "mn": "Хуш мод", "en": "Cedar", "image": "woods" },
-  "sandalwood": { "mn": "Зандан мод", "en": "Sandalwood", "image": "woods" },
-  "vetiver": { "mn": "Ветивер", "en": "Vetiver", "image": "woods" },
-  "patchouli": { "mn": "Пачули", "en": "Patchouli", "image": "woods" },
-  "birch": { "mn": "Хус мод", "en": "Birch", "image": "woods" },
-  "oak": { "mn": "Царс мод", "en": "Oak", "image": "woods" },
-  "fir-resin": { "mn": "Гацуурын давирхай", "en": "Fir resin", "image": "woods" },
-
-  "bergamot": { "mn": "Бергамот", "en": "Bergamot" },
-  "lemon": { "mn": "Нимбэг", "en": "Lemon" },
-  "grapefruit": { "mn": "Бэрсүүт жүрж", "en": "Grapefruit" },
-  "orange": { "mn": "Жүрж", "en": "Orange" },
-  "mandarin": { "mn": "Мандарин", "en": "Mandarin" },
-  "rose": { "mn": "Сарнай", "en": "Rose" },
-  "iris": { "mn": "Цахилдаг", "en": "Iris" },
-  "violet": { "mn": "Нил цэцэг", "en": "Violet" },
-  "pepper": { "mn": "Хар чинжүү", "en": "Black pepper" },
-  "pink-pepper": { "mn": "Ягаан чинжүү", "en": "Pink pepper" },
-  "cardamom": { "mn": "Кардамон", "en": "Cardamom" },
-  "cinnamon": { "mn": "Шанцай", "en": "Cinnamon" },
-  "ginger": { "mn": "Цагаан гаа", "en": "Ginger" },
-  "pear": { "mn": "Лийр", "en": "Pear" },
-  "pineapple": { "mn": "Хан боргоцой", "en": "Pineapple" },
-  "blackcurrant": { "mn": "Үхрийн нүд", "en": "Blackcurrant" },
-  "quince": { "mn": "Айва", "en": "Quince" },
-  "fig": { "mn": "Инжир", "en": "Fig" },
-  "coconut": { "mn": "Кокос", "en": "Coconut" },
-  "coffee": { "mn": "Кофе", "en": "Coffee" },
-  "cacao": { "mn": "Какао", "en": "Cacao" },
-  "praline": { "mn": "Пралине", "en": "Praline" },
-  "tobacco": { "mn": "Тамхины навч", "en": "Tobacco leaf" },
-  "cognac": { "mn": "Коньяк", "en": "Cognac" },
-  "rum": { "mn": "Ром", "en": "Rum" },
-  "dried-fruits": { "mn": "Хатаасан жимс", "en": "Dried fruits" },
-  "marine": { "mn": "Далайн ноот", "en": "Marine notes" }
+  "amber": {
+    "mn": "Хув",
+    "en": "Amber",
+    "image": "amber"
+  },
+  "aromatic-notes": {
+    "mn": "Анхилуун өвс",
+    "en": "Aromatic herbs",
+    "image": "aromatic-notes"
+  },
+  "green-notes": {
+    "mn": "Ногоон ноот",
+    "en": "Green notes",
+    "image": "green-notes"
+  },
+  "incense-minerals": {
+    "mn": "Хүж ба эрдэс",
+    "en": "Incense & minerals",
+    "image": "incense-minerals"
+  },
+  "leather": {
+    "mn": "Арьс",
+    "en": "Leather",
+    "image": "leather"
+  },
+  "musk": {
+    "mn": "Заар",
+    "en": "Musk",
+    "image": "musk"
+  },
+  "oud": {
+    "mn": "Агар мод",
+    "en": "Oud",
+    "image": "oud"
+  },
+  "saffron": {
+    "mn": "Гүргэм",
+    "en": "Saffron",
+    "image": "saffron"
+  },
+  "vanilla": {
+    "mn": "Ваниль",
+    "en": "Vanilla",
+    "image": "vanilla"
+  },
+  "white-flowers": {
+    "mn": "Цагаан цэцэгс",
+    "en": "White flowers",
+    "image": "white-flowers"
+  },
+  "woods": {
+    "mn": "Модлог ноот",
+    "en": "Woods",
+    "image": "woods"
+  },
+  "ambergris": {
+    "mn": "Амбра",
+    "en": "Ambergris",
+    "image": "amber"
+  },
+  "ambroxan": {
+    "mn": "Амброксан",
+    "en": "Ambroxan",
+    "image": "amber"
+  },
+  "labdanum": {
+    "mn": "Лабданум",
+    "en": "Labdanum",
+    "image": "amber"
+  },
+  "benzoin": {
+    "mn": "Бензойн",
+    "en": "Benzoin",
+    "image": "amber"
+  },
+  "lavender": {
+    "mn": "Лаванда",
+    "en": "Lavender",
+    "image": "aromatic-notes"
+  },
+  "mint": {
+    "mn": "Гаа",
+    "en": "Mint",
+    "image": "aromatic-notes"
+  },
+  "rosemary": {
+    "mn": "Розмарин",
+    "en": "Rosemary",
+    "image": "aromatic-notes"
+  },
+  "sage": {
+    "mn": "Мэргэн өвс",
+    "en": "Sage",
+    "image": "aromatic-notes"
+  },
+  "geranium": {
+    "mn": "Герань",
+    "en": "Geranium",
+    "image": "aromatic-notes"
+  },
+  "juniper": {
+    "mn": "Арц",
+    "en": "Juniper",
+    "image": "aromatic-notes"
+  },
+  "pine": {
+    "mn": "Нарс",
+    "en": "Pine",
+    "image": "aromatic-notes"
+  },
+  "fig-leaf": {
+    "mn": "Инжирийн навч",
+    "en": "Fig leaf",
+    "image": "green-notes"
+  },
+  "oakmoss": {
+    "mn": "Царсны хөвд",
+    "en": "Oakmoss",
+    "image": "green-notes"
+  },
+  "bamboo": {
+    "mn": "Хулс",
+    "en": "Bamboo",
+    "image": "green-notes"
+  },
+  "green-apple": {
+    "mn": "Ногоон алим",
+    "en": "Green apple",
+    "image": "green-notes"
+  },
+  "incense": {
+    "mn": "Хүж",
+    "en": "Incense",
+    "image": "incense-minerals"
+  },
+  "flint": {
+    "mn": "Цахиур чулуу",
+    "en": "Flint",
+    "image": "incense-minerals"
+  },
+  "sea-salt": {
+    "mn": "Далайн давс",
+    "en": "Sea salt",
+    "image": "incense-minerals"
+  },
+  "ambrette": {
+    "mn": "Амбретт",
+    "en": "Ambrette",
+    "image": "musk"
+  },
+  "tonka": {
+    "mn": "Тонка шош",
+    "en": "Tonka bean",
+    "image": "vanilla"
+  },
+  "jasmine": {
+    "mn": "Жасмин",
+    "en": "Jasmine",
+    "image": "white-flowers"
+  },
+  "orange-blossom": {
+    "mn": "Жүржийн цэцэг",
+    "en": "Orange blossom",
+    "image": "white-flowers"
+  },
+  "neroli": {
+    "mn": "Нероли",
+    "en": "Neroli",
+    "image": "white-flowers"
+  },
+  "cedar": {
+    "mn": "Хуш мод",
+    "en": "Cedar",
+    "image": "woods"
+  },
+  "sandalwood": {
+    "mn": "Зандан мод",
+    "en": "Sandalwood",
+    "image": "woods"
+  },
+  "vetiver": {
+    "mn": "Ветивер",
+    "en": "Vetiver",
+    "image": "woods"
+  },
+  "patchouli": {
+    "mn": "Пачули",
+    "en": "Patchouli",
+    "image": "woods"
+  },
+  "birch": {
+    "mn": "Хус мод",
+    "en": "Birch",
+    "image": "woods"
+  },
+  "oak": {
+    "mn": "Царс мод",
+    "en": "Oak",
+    "image": "woods"
+  },
+  "fir-resin": {
+    "mn": "Гацуурын давирхай",
+    "en": "Fir resin",
+    "image": "woods"
+  },
+  "bergamot": {
+    "mn": "Бергамот",
+    "en": "Bergamot"
+  },
+  "lemon": {
+    "mn": "Нимбэг",
+    "en": "Lemon"
+  },
+  "grapefruit": {
+    "mn": "Бэрсүүт жүрж",
+    "en": "Grapefruit"
+  },
+  "orange": {
+    "mn": "Жүрж",
+    "en": "Orange"
+  },
+  "mandarin": {
+    "mn": "Мандарин",
+    "en": "Mandarin"
+  },
+  "rose": {
+    "mn": "Сарнай",
+    "en": "Rose"
+  },
+  "iris": {
+    "mn": "Цахилдаг",
+    "en": "Iris"
+  },
+  "violet": {
+    "mn": "Нил цэцэг",
+    "en": "Violet"
+  },
+  "pepper": {
+    "mn": "Хар чинжүү",
+    "en": "Black pepper"
+  },
+  "pink-pepper": {
+    "mn": "Ягаан чинжүү",
+    "en": "Pink pepper"
+  },
+  "cardamom": {
+    "mn": "Кардамон",
+    "en": "Cardamom"
+  },
+  "cinnamon": {
+    "mn": "Шанцай",
+    "en": "Cinnamon"
+  },
+  "ginger": {
+    "mn": "Цагаан гаа",
+    "en": "Ginger"
+  },
+  "pear": {
+    "mn": "Лийр",
+    "en": "Pear"
+  },
+  "pineapple": {
+    "mn": "Хан боргоцой",
+    "en": "Pineapple"
+  },
+  "blackcurrant": {
+    "mn": "Үхрийн нүд",
+    "en": "Blackcurrant"
+  },
+  "quince": {
+    "mn": "Айва",
+    "en": "Quince"
+  },
+  "fig": {
+    "mn": "Инжир",
+    "en": "Fig"
+  },
+  "coconut": {
+    "mn": "Кокос",
+    "en": "Coconut"
+  },
+  "coffee": {
+    "mn": "Кофе",
+    "en": "Coffee"
+  },
+  "cacao": {
+    "mn": "Какао",
+    "en": "Cacao"
+  },
+  "praline": {
+    "mn": "Пралине",
+    "en": "Praline"
+  },
+  "tobacco": {
+    "mn": "Тамхины навч",
+    "en": "Tobacco leaf"
+  },
+  "cognac": {
+    "mn": "Коньяк",
+    "en": "Cognac"
+  },
+  "rum": {
+    "mn": "Ром",
+    "en": "Rum"
+  },
+  "dried-fruits": {
+    "mn": "Хатаасан жимс",
+    "en": "Dried fruits"
+  },
+  "marine": {
+    "mn": "Далайн ноот",
+    "en": "Marine notes"
+  },
+  "amberwood": {
+    "mn": "Хув мод",
+    "en": "Amberwood",
+    "image": "woods"
+  },
+  "apple": {
+    "mn": "Алим",
+    "en": "Apple"
+  },
+  "amyris": {
+    "mn": "Амирис",
+    "en": "Amyris",
+    "image": "woods"
+  },
+  "artemisia": {
+    "mn": "Шарилж",
+    "en": "Artemisia",
+    "image": "aromatic-notes"
+  },
+  "basil": {
+    "mn": "Базилик",
+    "en": "Basil",
+    "image": "aromatic-notes"
+  },
+  "bitter-orange": {
+    "mn": "Гашуун жүрж",
+    "en": "Bitter orange"
+  },
+  "raspberry": {
+    "mn": "Бөөрөлзгөнө",
+    "en": "Raspberry"
+  },
+  "rosewood": {
+    "mn": "Сарнай мод",
+    "en": "Rosewood",
+    "image": "woods"
+  },
+  "cashmere-wood": {
+    "mn": "Кашмир мод",
+    "en": "Cashmere wood",
+    "image": "woods"
+  },
+  "chinotto": {
+    "mn": "Чинотто",
+    "en": "Chinotto"
+  },
+  "citron": {
+    "mn": "Цитрон",
+    "en": "Citron"
+  },
+  "citrus": {
+    "mn": "Цитрусын ноот",
+    "en": "Citrus notes"
+  },
+  "clary-sage": {
+    "mn": "Мускат хашхираа",
+    "en": "Clary sage",
+    "image": "aromatic-notes"
+  },
+  "clearwood": {
+    "mn": "Клиэрвүүд",
+    "en": "Clearwood",
+    "image": "woods"
+  },
+  "clove": {
+    "mn": "Гвоздик",
+    "en": "Clove"
+  },
+  "coconut-water": {
+    "mn": "Кокосын ус",
+    "en": "Coconut water"
+  },
+  "coriander": {
+    "mn": "Кориандр",
+    "en": "Coriander"
+  },
+  "cumin": {
+    "mn": "Зира",
+    "en": "Cumin"
+  },
+  "cypress": {
+    "mn": "Кипарис",
+    "en": "Cypress",
+    "image": "woods"
+  },
+  "ebony": {
+    "mn": "Хар мод",
+    "en": "Ebony",
+    "image": "woods"
+  },
+  "elemi": {
+    "mn": "Элеми давирхай",
+    "en": "Elemi",
+    "image": "incense-minerals"
+  },
+  "fir": {
+    "mn": "Жодоо",
+    "en": "Fir",
+    "image": "woods"
+  },
+  "fruity-notes": {
+    "mn": "Жимсний ноот",
+    "en": "Fruity notes"
+  },
+  "galbanum": {
+    "mn": "Гальбанум",
+    "en": "Galbanum",
+    "image": "green-notes"
+  },
+  "gin": {
+    "mn": "Жин",
+    "en": "Gin"
+  },
+  "green-tea": {
+    "mn": "Ногоон цай",
+    "en": "Green tea",
+    "image": "green-notes"
+  },
+  "guaiac-wood": {
+    "mn": "Гваяк мод",
+    "en": "Guaiac wood",
+    "image": "woods"
+  },
+  "heliotrope": {
+    "mn": "Гелиотроп",
+    "en": "Heliotrope"
+  },
+  "honey": {
+    "mn": "Зөгийн бал",
+    "en": "Honey"
+  },
+  "honeysuckle": {
+    "mn": "Далан хальс",
+    "en": "Honeysuckle"
+  },
+  "kiwano": {
+    "mn": "Кивано",
+    "en": "Kiwano melon"
+  },
+  "laurel": {
+    "mn": "Лаврын навч",
+    "en": "Laurel",
+    "image": "aromatic-notes"
+  },
+  "licorice": {
+    "mn": "Чихэр өвс",
+    "en": "Licorice"
+  },
+  "lily-of-the-valley": {
+    "mn": "Хонхон цэцэг",
+    "en": "Lily-of-the-valley",
+    "image": "white-flowers"
+  },
+  "lotus": {
+    "mn": "Бадамлянхуа",
+    "en": "Lotus"
+  },
+  "lychee": {
+    "mn": "Личи",
+    "en": "Lychee"
+  },
+  "magnolia": {
+    "mn": "Магнолия",
+    "en": "Magnolia",
+    "image": "white-flowers"
+  },
+  "mimosa": {
+    "mn": "Мимоза",
+    "en": "Mimosa"
+  },
+  "moss": {
+    "mn": "Хөвд",
+    "en": "Moss",
+    "image": "green-notes"
+  },
+  "myrrh": {
+    "mn": "Мирра",
+    "en": "Myrrh",
+    "image": "incense-minerals"
+  },
+  "myrtle": {
+    "mn": "Мирт",
+    "en": "Myrtle",
+    "image": "aromatic-notes"
+  },
+  "nagarmotha": {
+    "mn": "Нагармота",
+    "en": "Nagarmotha",
+    "image": "woods"
+  },
+  "narcissus": {
+    "mn": "Нарцисс",
+    "en": "Narcissus"
+  },
+  "nutmeg": {
+    "mn": "Задийн самар",
+    "en": "Nutmeg"
+  },
+  "opoponax": {
+    "mn": "Опопонакс",
+    "en": "Opoponax",
+    "image": "incense-minerals"
+  },
+  "oregano": {
+    "mn": "Орегано",
+    "en": "Oregano",
+    "image": "aromatic-notes"
+  },
+  "osmanthus": {
+    "mn": "Османтус",
+    "en": "Osmanthus"
+  },
+  "peach-blossom": {
+    "mn": "Тоорын цэцэг",
+    "en": "Peach blossom"
+  },
+  "peony": {
+    "mn": "Цээнэ цэцэг",
+    "en": "Peony"
+  },
+  "petitgrain": {
+    "mn": "Петигрейн",
+    "en": "Petitgrain",
+    "image": "green-notes"
+  },
+  "pineapple-leaf": {
+    "mn": "Хан боргоцойн навч",
+    "en": "Pineapple leaf"
+  },
+  "powdery": {
+    "mn": "Пудрын ноот",
+    "en": "Powdery notes"
+  },
+  "red-currant": {
+    "mn": "Улаан үхрийн нүд",
+    "en": "Red currant"
+  },
+  "red-pepper": {
+    "mn": "Улаан чинжүү",
+    "en": "Red pepper"
+  },
+  "thyme": {
+    "mn": "Ганга",
+    "en": "Thyme",
+    "image": "aromatic-notes"
+  },
+  "resins": {
+    "mn": "Давирхай",
+    "en": "Resins",
+    "image": "incense-minerals"
+  },
+  "rhubarb": {
+    "mn": "Гишүүнэ",
+    "en": "Rhubarb"
+  },
+  "sichuan-pepper": {
+    "mn": "Сычуань чинжүү",
+    "en": "Sichuan pepper"
+  },
+  "spruce": {
+    "mn": "Гацуур",
+    "en": "Spruce",
+    "image": "woods"
+  },
+  "star-anise": {
+    "mn": "Одон анис",
+    "en": "Star anise"
+  },
+  "suede": {
+    "mn": "Илгэ",
+    "en": "Suede",
+    "image": "leather"
+  },
+  "sweet-notes": {
+    "mn": "Чихэрлэг ноот",
+    "en": "Sweet notes"
+  },
+  "tonic": {
+    "mn": "Тоник",
+    "en": "Tonic"
+  },
+  "tropical": {
+    "mn": "Халуун орны жимс",
+    "en": "Tropical fruits"
+  },
+  "tuberose": {
+    "mn": "Тубероз",
+    "en": "Tuberose",
+    "image": "white-flowers"
+  },
+  "verbena": {
+    "mn": "Вербена",
+    "en": "Verbena",
+    "image": "green-notes"
+  },
+  "violet-leaf": {
+    "mn": "Нил цэцгийн навч",
+    "en": "Violet leaf",
+    "image": "green-notes"
+  },
+  "ylang-ylang": {
+    "mn": "Иланг-иланг",
+    "en": "Ylang-ylang",
+    "image": "white-flowers"
+  },
+  "yuzu": {
+    "mn": "Юзу",
+    "en": "Yuzu"
+  },
+  "camellia": {
+    "mn": "Камелия",
+    "en": "Camellia"
+  },
+  "smoky": {
+    "mn": "Утаат ноот",
+    "en": "Smoky notes",
+    "image": "incense-minerals"
+  },
+  "pimento": {
+    "mn": "Пимент",
+    "en": "Pimento"
+  },
+  "melon": {
+    "mn": "Амтат гуа",
+    "en": "Melon"
+  },
+  "freesia": {
+    "mn": "Фрезия",
+    "en": "Freesia"
+  },
+  "cyclamen": {
+    "mn": "Цикламен",
+    "en": "Cyclamen"
+  },
+  "plum": {
+    "mn": "Чавга",
+    "en": "Plum"
+  },
+  "cherry-blossom": {
+    "mn": "Интоорын цэцэг",
+    "en": "Cherry blossom"
+  },
+  "almond": {
+    "mn": "Бүйлс",
+    "en": "Almond"
+  },
+  "solar": {
+    "mn": "Нарны ноот",
+    "en": "Solar notes"
+  },
+  "peach": {
+    "mn": "Тоор",
+    "en": "Peach"
+  },
+  "toffee": {
+    "mn": "Ирис чихэр",
+    "en": "Toffee"
+  },
+  "whisky": {
+    "mn": "Виски",
+    "en": "Whisky"
+  }
 }

@@ -1,0 +1,49 @@
+{
+  "slug": "acqua-di-parma-colonia-c-l-u-b-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia C.L.U.B.",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "pink-pepper",
+      "lemon",
+      "bergamot",
+      "pepper"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia C.L.U.B.: Эрэгтэйчүүдэд зориулсан модлог үнэр (Cologne). Эхний ноот: ягаан чинжүү, нимбэг, бергамот, хар чинжүү.",
+    "en": "Colonia C.L.U.B. by Acqua di Parma is a Woody Spicy fragrance designed for men. Introduced as a fresh addition to the lineup in 2022, this scent opens with vibrant top notes of Pink Pepper, Lemon, Bergamot, and Black Pepper. Its heart is enriched with Shiso and Rosemary, while the base features the grounding notes of Cedar and Musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/d7c358cd-a350-4d73-abd1-db32fd57c894.jpg?v=1731423083",
+    "back": "https://www.fraganciaslam.com.mx/storage/products/perf12362.jpg"
+  }
+}

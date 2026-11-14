@@ -1,0 +1,52 @@
+{
+  "slug": "afnan-supremacy-in-oud-extrait",
+  "brand": "Afnan",
+  "name": "Supremacy In Oud",
+  "concentration": "Extrait",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "saffron",
+      "nutmeg",
+      "lavender"
+    ],
+    "heart": [
+      "oud",
+      "sweet-notes"
+    ],
+    "base": [
+      "patchouli",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy In Oud: Хүйс харгалзахгүй өвслөг үнэр (Extrait). Эхний ноот: гүргэм, задийн самар, лаванда; зүрхний ноот: агар мод, чихэрлэг ноот; суурь ноот: пачули, заар.",
+    "en": "Supremacy in Oud by Afnan Perfumes is a Aromatic Spicy fragrance for women and men. This is a new fragrance. Supremacy in Oud was launched in 2021. Top notes are Saffron, Nutmeg and Lavender; middle notes are Agarwood (Oud) and Sweet Notes; base notes are Patchouli and Musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 5,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/7e921156-e0db-442b-8efe-4790f4fbd42f.jpg?v=1683065281",
+    "back": "https://productosdelujo.cl/cdn/shop/files/Disenosintitulo_59_edc3cc59-5e52-4f44-aeba-b8e6e536e87f.jpg?v=1703341513&width=1214"
+  }
+}

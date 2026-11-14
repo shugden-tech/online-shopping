@@ -1,0 +1,49 @@
+{
+  "slug": "acqua-di-parma-note-di-colonia-iv-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Note di Colonia IV",
+  "concentration": "Cologne",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "mandarin",
+      "bergamot"
+    ],
+    "heart": [
+      "orange-blossom",
+      "rose"
+    ],
+    "base": [
+      "opoponax",
+      "labdanum",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Note di Colonia IV: Хүйс харгалзахгүй хув үнэр (Cologne). Эхний ноот: мандарин, бергамот; зүрхний ноот: жүржийн цэцэг, сарнай; суурь ноот: опопонакс, лабданум, пачули.",
+    "en": "Note di Colonia IV by Acqua di Parma is a Amber Floral fragrance for women and men. Note di Colonia IV was launched in 2017. Top notes are Mandarin Orange and Bergamot; middle notes are Orange Blossom and Turkish Rose; base notes are Opoponax, Labdanum and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 54500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/8bbcff2c-8814-46d2-93e4-c0140e6cb364.jpg?v=1683063093",
+    "back": "https://cdn2.jomashop.com/media/catalog/product/cache/fde19e4197824625333be074956e7640/a/c/acqua-di-parma-unisex-note-di-colonia-iv-edc-spray-5-oz-fragrances-8028713290053_2.jpg?height=546&width=546"
+  }
+}

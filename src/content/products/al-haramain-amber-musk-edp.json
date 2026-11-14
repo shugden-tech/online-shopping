@@ -1,0 +1,57 @@
+{
+  "slug": "al-haramain-amber-musk-edp",
+  "brand": "Al Haramain",
+  "name": "Amber Musk",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "amber",
+      "musk",
+      "oud"
+    ],
+    "heart": [
+      "raspberry",
+      "rose",
+      "birch",
+      "saffron"
+    ],
+    "base": [
+      "amberwood",
+      "geranium",
+      "benzoin"
+    ]
+  },
+  "description": {
+    "mn": "Al Haramain Amber Musk: Хүйс харгалзахгүй хув үнэр (EDP). Эхний ноот: хув, заар, агар мод; зүрхний ноот: бөөрөлзгөнө, сарнай, хус мод, гүргэм; суурь ноот: хув мод, герань, бензойн.",
+    "en": "Amber Musk by Al Haramain Perfumes is a fragrance for women and men. This is a new fragrance. Amber Musk was launched in 2021. Top notes are Amber, Musk and Agarwood (Oud); middle notes are Raspberry, Rose, Birch and Saffron; base notes are Amberwood, Geranium and Benzoin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/4567ef63-6661-4d36-a41a-0b5460b9273c_577fc3c3-5109-4174-9106-4edb43640d00.jpg?v=1683067690",
+    "back": "https://cdn.fragrancenet.com/images/photos/900x900/458626.jpg"
+  }
+}

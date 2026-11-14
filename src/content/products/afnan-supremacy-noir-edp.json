@@ -1,0 +1,55 @@
+{
+  "slug": "afnan-supremacy-noir-edp",
+  "brand": "Afnan",
+  "name": "Supremacy Noir",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "spruce",
+      "violet",
+      "bergamot"
+    ],
+    "heart": [
+      "pine",
+      "leather",
+      "lavender"
+    ],
+    "base": [
+      "labdanum",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy Noir: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: гацуур, нил цэцэг, бергамот; зүрхний ноот: нарс, арьс, лаванда; суурь ноот: лабданум, пачули.",
+    "en": "Supremacy Noir by Afnan Perfumes is a Oriental Spicy fragrance for women and men. Supremacy Noir was launched in 2015. Top notes are Spruce, Violet and Bergamot; middle notes are Pine Tree, Leather and Lavender; base notes are Labdanum and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/34504215-b648-4c90-a419-e42af9e7a495_6cb20107-b128-4441-9625-9e260b65a292.jpg?v=1683065384",
+    "back": "https://www.oudnaroma.com/cdn/shop/files/d03f85cd-7d91-49db-8377-e4dfaaa0df7b_3442ce51-f1db-49a4-a8a9-b0d37fd25775.jpg?v=1763918598&width=1080"
+  }
+}

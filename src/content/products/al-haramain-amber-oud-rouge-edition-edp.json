@@ -1,0 +1,50 @@
+{
+  "slug": "al-haramain-amber-oud-rouge-edition-edp",
+  "brand": "Al Haramain",
+  "name": "Amber Oud Rouge Edition",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "saffron"
+    ],
+    "heart": [],
+    "base": [
+      "ambergris",
+      "musk",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Al Haramain Amber Oud Rouge Edition: Хүйс харгалзахгүй хув үнэр (EDP). Эхний ноот: гүргэм; суурь ноот: амбра, заар, хуш мод.",
+    "en": "Amber Oud Rouge by Al Haramain Perfumes is a Amber Floral fragrance for women and men. Amber Oud Rouge was launched in 2019. Top note is Saffron; middle note is Jasmine; base notes are Ambergris, Musk and White Cedar Extract."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/af1daeeb-b889-40d2-a61a-cb73d42ceb37_0d5e595c-f02d-4988-99dd-33b36f81d6a1.jpg?v=1683068354",
+    "back": "https://mundoaromas.cl/cdn/shop/products/amber-oud-rouge.webp?v=1701295085"
+  }
+}

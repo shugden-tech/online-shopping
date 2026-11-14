@@ -1,0 +1,44 @@
+{
+  "slug": "affinessence-collection-notes-de-fond-cuir-curcuma-edp",
+  "brand": "Affinessence",
+  "name": "Collection Notes de Fond Cuir Curcuma",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Affinessence Collection Notes de Fond Cuir Curcuma: Хүйс харгалзахгүй модлог үнэр (EDP).",
+    "en": "Launched in 2017, Cuir Curcuma by Affinessence is a unisex Leather perfume. The olfactory creation is the handiwork of perfumer Alexandra Carlin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/342a1c93-b709-4502-8214-531b0fa21720.jpg?v=1705090034",
+    "back": "https://cdn.fragrancenet.com/images/photos/1600x1600/407169.jpg"
+  }
+}

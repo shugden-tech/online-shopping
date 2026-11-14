@@ -1,0 +1,51 @@
+{
+  "slug": "acqua-di-parma-colonia-assoluta-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Assoluta",
+  "concentration": "Cologne",
+  "gender": "unisex",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "bitter-orange"
+    ],
+    "heart": [
+      "ylang-ylang"
+    ],
+    "base": [
+      "oakmoss",
+      "resins",
+      "musk",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Assoluta: Хүйс харгалзахгүй цитрус үнэр (Cologne). Эхний ноот: гашуун жүрж; зүрхний ноот: иланг-иланг; суурь ноот: царсны хөвд, давирхай, заар, пачули.",
+    "en": "Acqua di Parma Colonia Assoluta by Acqua di Parma is a Citrus Aromatic fragrance for women and men. Acqua di Parma Colonia Assoluta was launched in 2003. Acqua di Parma Colonia Assoluta was created by Bertrand Duchaufour and Jean-Claude Ellena. Top notes are Bitter Orange, Bergamot, Lemon Verbena and Sweet Orange; middle notes are Ylang-Ylang, Vetiver, Jasmine, Cedar, Cardamom, Pink Pepper and Paprika; base notes are Oakmoss, resins, White Musk and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/fcd0871a-97ce-4925-ba33-f52c2bc1e628.jpg?v=1683061490",
+    "back": "https://kaneen.com/media/catalog/product/C/o/Colonia-Assoluta-Edc-Perfume-by-Acqua-Di-Parma-Eau-de-Cologne-For-Unisex-100-ml-1-39989201.webp"
+  }
+}

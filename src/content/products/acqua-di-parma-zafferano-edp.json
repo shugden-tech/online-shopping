@@ -1,0 +1,53 @@
+{
+  "slug": "acqua-di-parma-zafferano-edp",
+  "brand": "Acqua di Parma",
+  "name": "Zafferano",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot",
+      "bitter-orange",
+      "mandarin",
+      "coriander"
+    ],
+    "heart": [],
+    "base": [
+      "woods",
+      "vanilla",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Zafferano: Хүйс харгалзахгүй хув үнэр (EDP). Эхний ноот: бергамот, гашуун жүрж, мандарин, кориандр; суурь ноот: модлог ноот, ваниль, тонка шош.",
+    "en": "Zafferano by Acqua di Parma is an Amber Floral fragrance designed for both women and men. Introduced in 2022, this modern scent opens with top notes of Bergamot, Bitter Orange, Mandarin Orange, and Coriander. The heart of the fragrance features a blend of Saffron, Orange Blossom, Geranium, Jasmine Sambac, and Rose. The base notes consist of Woody Notes, Vanilla, and Tonka Bean, creating a well-rounded and captivating aroma."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/e91a613f-7817-49ec-aead-f59995232cf1.jpg?v=1721766935",
+    "back": "https://cdn.fragrancenet.com/images/photos/600x600/493401.jpg"
+  }
+}

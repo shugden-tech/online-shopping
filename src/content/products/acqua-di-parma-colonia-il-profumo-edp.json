@@ -1,0 +1,55 @@
+{
+  "slug": "acqua-di-parma-colonia-il-profumo-edp",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Il Profumo",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "orange",
+      "bergamot",
+      "lemon",
+      "petitgrain",
+      "pineapple",
+      "verbena",
+      "neroli",
+      "lavender"
+    ],
+    "heart": [],
+    "base": [
+      "moss",
+      "vetiver",
+      "cedar",
+      "patchouli",
+      "leather",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Il Profumo: Хүйс харгалзахгүй өвслөг үнэр (EDP). Эхний ноот: жүрж, бергамот, нимбэг, петигрейн, хан боргоцой, вербена, нероли, лаванда; суурь ноот: хөвд, ветивер, хуш мод, пачули, арьс, зандан мод.",
+    "en": "Colonia Il Profumo by Acqua di Parma is an Aromatic Fruity fragrance designed for both women and men. This fresh scent was introduced in 2025. The top notes feature vibrant Orange, Bergamot, Lemon, Petitgrain, and Pineapple, while the heart of the fragrance blooms with Verbena, Neroli, Lavender, Ylang-Ylang, and Rose. The base notes create a rich foundation with Moss, Vetiver, Cedar, Patchouli, Leather, and Sandalwood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 121500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/1300937.jpg?v=1746802080",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/files/acqua-di-parma-colonia-II-profumo_1400x1400.png?v=1765503755"
+  }
+}

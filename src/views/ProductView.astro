@@ -8,7 +8,7 @@ import AddToCart from "../islands/AddToCart.tsx";
 import { getDict, route, productPath, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
 import { SEASONS, OCCASIONS } from "../lib/taxonomy";
-import { cartBase, fromPrice, getProducts, initialOf, photosOf, similarTo, sortedSizes, type Product } from "../lib/products";
+import { allNotes, cartBase, fromPrice, getProducts, initialOf, photosOf, similarTo, sortedSizes, type Product } from "../lib/products";
 import "../styles/product.css";
 
 interface Props { locale: Locale; product: Product }
@@ -185,13 +185,15 @@ const jsonLd = {
       </div>
     </div>
 
-    <section class="wrap section pdp__pyramid" aria-labelledby="pyr-title">
-      <header class="sec-head sec-head--center">
-        <p class="t-title">{tr.product.pyramid}</p>
-        <h2 class="t-h2" id="pyr-title">{tr.product.pyramidSub}</h2>
-      </header>
-      <NotesPyramid product={p} locale={locale} />
-    </section>
+    {allNotes(p).length > 0 && (
+      <section class="wrap section pdp__pyramid" aria-labelledby="pyr-title">
+        <header class="sec-head sec-head--center">
+          <p class="t-title">{tr.product.pyramid}</p>
+          <h2 class="t-h2" id="pyr-title">{tr.product.pyramidSub}</h2>
+        </header>
+        <NotesPyramid product={p} locale={locale} />
+      </section>
+    )}
 
     <section class="wrap pdp__similar" aria-labelledby="sim-title">
       <header class="sec-head">

@@ -1,0 +1,52 @@
+{
+  "slug": "acqua-di-parma-osmanthus-edp",
+  "brand": "Acqua di Parma",
+  "name": "Osmanthus",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "neroli",
+      "mandarin"
+    ],
+    "heart": [
+      "ambrette",
+      "peony",
+      "pink-pepper"
+    ],
+    "base": [
+      "osmanthus",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Osmanthus: Хүйс харгалзахгүй цэцэгсийн үнэр (EDP). Эхний ноот: нероли, мандарин; зүрхний ноот: амбретт, цээнэ цэцэг, ягаан чинжүү; суурь ноот: османтус, пачули.",
+    "en": "Osmanthus Eau de Parfum by Acqua di Parma is a Floral fragrance for women and men. This is a new fragrance. Osmanthus Eau de Parfum was launched in 2019. Top notes are Neroli and Green Mandarin; middle notes are Ambrette (Musk Mallow), Peony and Pink Pepper; base notes are Osmanthus and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/a22795b4-dd40-439e-8341-cd17d5c07b3f_3738d461-2773-4550-b64e-4501f8e6fe7b.jpg?v=1683063139",
+    "back": "https://hrd-live.cdn.scayle.cloud/images/262750406600a1492a228cf8c0a6b170.jpg?quality=75"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "slug": "acqua-di-parma-colonia-quercia-concentree-edp",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Quercia Concentree",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "lemon",
+      "pink-pepper",
+      "bergamot",
+      "petitgrain"
+    ],
+    "heart": [
+      "cardamom",
+      "cedar",
+      "geranium"
+    ],
+    "base": [
+      "moss",
+      "tonka",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Quercia Concentree: Хүйс харгалзахгүй модлог үнэр (EDP). Эхний ноот: нимбэг, ягаан чинжүү, бергамот, петигрейн; зүрхний ноот: кардамон, хуш мод, герань; суурь ноот: хөвд, тонка шош, пачули.",
+    "en": "Quercia Eau de Parfum by Acqua di Parma is a Woody Aromatic fragrance for women and men. Quercia Eau de Parfum was launched in 2019. Top notes are Lemon, Pink Pepper, Calabrian bergamot and Petitgrain; middle notes are Cardamom, Cedar and Geranium; base notes are Moss, Tonka Bean and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 54500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 82000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/3d75d7d8-05f4-4fac-be33-6491d8fcc579.jpg?v=1683063439",
+    "back": "https://luxplus.imgix.net/content/product/image/130668-58097-1708950383.jpg"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "slug": "afnan-mirsaal-of-trust-edp",
+  "brand": "Afnan",
+  "name": "Mirsaal of Trust",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "vetiver",
+      "ambroxan",
+      "raspberry",
+      "saffron"
+    ],
+    "heart": [
+      "raspberry",
+      "saffron"
+    ],
+    "base": []
+  },
+  "description": {
+    "mn": "Afnan Mirsaal of Trust: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: ветивер, амброксан, бөөрөлзгөнө, гүргэм; зүрхний ноот: бөөрөлзгөнө, гүргэм.",
+    "en": "Afnan's Mirsaal of Trust is a warm and spicy fragrance specifically created for men and released in 2020. Its top notes are composed of Vetiver and Ambroxan, while the middle notes blend Raspberry and Saffron. Finally, a luxurious blend of Cashmere Wood, Carnation and Amber form the base of this scent."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/c3eecff3-3c8b-4a8a-a7fe-34093dc868ea_64c54685-1d2b-459c-8149-8140a8dcaafa.jpg?v=1691167985",
+    "back": "https://beautyhouse.com/cdn/shop/files/04qk8lso0c.png?v=1723878625&width=1600"
+  }
+}

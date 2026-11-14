@@ -1,0 +1,56 @@
+{
+  "slug": "acqua-di-parma-yuzu-edp",
+  "brand": "Acqua di Parma",
+  "name": "Yuzu",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "bergamot",
+      "sichuan-pepper",
+      "yuzu"
+    ],
+    "heart": [
+      "mimosa",
+      "lotus",
+      "violet-leaf",
+      "jasmine"
+    ],
+    "base": [
+      "musk",
+      "licorice",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Yuzu: Хүйс харгалзахгүй цитрус үнэр (EDP). Эхний ноот: бергамот, сычуань чинжүү, юзу; зүрхний ноот: мимоза, бадамлянхуа, нил цэцгийн навч, жасмин; суурь ноот: заар, чихэр өвс, зандан мод.",
+    "en": "Yuzu Eau de Parfum by Acqua di Parma is a Citrus Aromatic fragrance for women and men. This is a new fragrance. Yuzu Eau de Parfum was launched in 2019. Top notes are calabrian bergamot, sichuan pepper and yuzu; middle notes are mimosa, lotus, violet leaf and jasmine; base notes are musk, licorice and sandalwood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 79500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 125500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/032c146b-e7ad-484b-8367-d72a658c7b0d_91e84ed2-9a73-4290-b689-b07b24b11242.jpg?v=1683063730",
+    "back": "https://priveperfumes.com/cdn/shop/files/perfume-acqua-di-parma-signature-yuzu-edp-u-100-ml-1-prive-perfumes.webp?v=1775214571&width=1600"
+  }
+}

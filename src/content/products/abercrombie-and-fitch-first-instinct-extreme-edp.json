@@ -1,0 +1,55 @@
+{
+  "slug": "abercrombie-and-fitch-first-instinct-extreme-edp",
+  "brand": "Abercrombie & Fitch",
+  "name": "First Instinct Extreme",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "fresh",
+  "notes": {
+    "top": [],
+    "heart": [
+      "violet-leaf",
+      "saffron",
+      "cardamom",
+      "pepper"
+    ],
+    "base": [
+      "leather",
+      "cashmere-wood",
+      "amber",
+      "coconut-water"
+    ]
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch First Instinct Extreme: Эрэгтэйчүүдэд зориулсан сэрүүн үнэр (EDP). Зүрхний ноот: нил цэцгийн навч, гүргэм, кардамон, хар чинжүү; суурь ноот: арьс, кашмир мод, хув, кокосын ус.",
+    "en": "An intriguing and charismatic, intensely masculine fragrance. The opening notes create an instant rush of invigorating pepper, followed by an unforgettable development of warm cardamom. The base notes leave an irresistible trail of sensual leather. It is Abercrombie’s fragrant take on the charismatic personality of a man who is naturally attractive. It's a genuinely intriguing and addictive woody spicy oriental, blended for the man who is driven by his First Instinct. Head Notes: Invigorating Pepper, Mandarin Leaf, Star Fruit Heart Note: Violet Leaves, Saffron Powder Warm Cardamom, Spicy Pepper Base Notes: Sensual Leather, Cashmere Wood, Extreme Amber, Coconut Water"
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/005fe677-6ace-4a1b-a9a6-d109342687f4.jpg?v=1683060793",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/8123c474-c6ab-4129-98fd-b1d6f65fb85c_59b80f04-3bc9-4602-ad5e-1dbe084b21ae.jpg?v=1683060793"
+  }
+}

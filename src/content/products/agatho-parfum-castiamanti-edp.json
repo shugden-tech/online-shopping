@@ -1,0 +1,56 @@
+{
+  "slug": "agatho-parfum-castiamanti-edp",
+  "brand": "Agatho Parfum",
+  "name": "Castiamanti",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "saffron",
+      "laurel",
+      "myrtle"
+    ],
+    "heart": [
+      "rose",
+      "jasmine"
+    ],
+    "base": [
+      "vanilla",
+      "oud",
+      "incense",
+      "amber",
+      "labdanum",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Agatho Parfum Castiamanti: Хүйс харгалзахгүй хув үнэр (EDP). Эхний ноот: гүргэм, лаврын навч, мирт; зүрхний ноот: сарнай, жасмин; суурь ноот: ваниль, агар мод, хүж, хув, лабданум, заар.",
+    "en": "Castiamanti by Agatho Parfum is a Amber Vanilla fragrance for women and men. Castiamanti was launched in 2019. The nose behind this fragrance is Maurizio Cerizza. Top notes are Saffron, Laurels and Myrtle; middle notes are Rose and Jasmine; base notes are Vanilla, Agarwood (Oud), Incense, Amber, Labdanum and White Musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/4e229ff7-5406-4857-a962-dc2dd58a1695.jpg?v=1711382242",
+    "back": "https://www.thescentsstore.com/cdn/shop/products/428666.jpg?v=1753701034"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "slug": "afnan-her-highness-red-edp",
+  "brand": "Afnan",
+  "name": "Her Highness Red",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Afnan Her Highness Red: Эмэгтэйчүүдэд зориулсан модлог үнэр (EDP).",
+    "en": "Her Highness Red Perfume by Afnan, As we walked along the plaza outside the opulent Burj Khalifa, the tallest building in the world, a cool breeze wafted in from the ocean. Evening fell, and we found ourselves dazzled by the Dubai Fountain, perhaps the most extravagant and beautiful man-made water and light show in existence. I’ll never forget that magical evening! Afnan Her Highness Red Perfume captures the enchantment and scents of the best the United Arab Emirates has to offer. Sea salt and a breath of ocean opens the fragrance in a crisp and breathlessly fresh top. Sweet and powdery heliotrope carries the heart, along with undertones of juicy fruits and a bouquet of white florals. Elegant and soft musk creates a memorable base. Unusual and intriguing, this perfume is for women who enjoy romance and a hint of mystery."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 38000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 59000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/f7920de3-e297-4322-8668-0f7235bab5e0_09769719-bfa3-4431-b2a7-ed5dca2b8610.jpg?v=1759441199",
+    "back": "https://product-data.raiadrogasil.io/images/17563416.webp"
+  }
+}

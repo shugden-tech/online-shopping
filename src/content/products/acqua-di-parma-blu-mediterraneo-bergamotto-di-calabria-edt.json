@@ -1,0 +1,41 @@
+{
+  "slug": "acqua-di-parma-blu-mediterraneo-bergamotto-di-calabria-edt",
+  "brand": "Acqua di Parma",
+  "name": "Blu Mediterraneo Bergamotto di Calabria",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Blu Mediterraneo Bergamotto di Calabria: Хүйс харгалзахгүй модлог үнэр (EDT).",
+    "en": "The land of Calabria is strong and intense. Only here does authentic bergamot find its natural habitat. Its sparkling notes appear at the onset of this joyful and uplifting fragrance and are enhanced by the freshness of citron, red ginger, and cedarwood. At the base, an unprecedented combination of vetiver, benzoin, and musk emerges. Notes: Bergamot, Citron, Red Ginger, Cedarwood. Vetiver, Benzoin, and Musk. Style: Joyful. Uplifting. Unique."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/05b64365-7c13-4e51-ab4c-08e107cbb318_f845af93-c8fd-4d55-955d-523efad22cba.jpg?v=1683061026",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/04ba25e1-c89b-410d-b14d-e17db251052d.jpg?v=1683061026"
+  }
+}

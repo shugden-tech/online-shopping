@@ -1,0 +1,53 @@
+{
+  "slug": "afnan-supremacy-in-heaven-edp",
+  "brand": "Afnan",
+  "name": "Supremacy In Heaven",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot",
+      "mandarin"
+    ],
+    "heart": [
+      "green-tea",
+      "blackcurrant"
+    ],
+    "base": [
+      "musk",
+      "sandalwood",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy In Heaven: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: бергамот, мандарин; зүрхний ноот: ногоон цай, үхрийн нүд; суурь ноот: заар, зандан мод, модлог ноот.",
+    "en": "Supremacy in Heaven is a perfume by Afnan Perfumes for women and men and was released in 2018. The scent is green-citrusy"
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/a5d86c18-98fd-41d8-b8cb-5e895219520a_9741d08c-d931-4aa1-8da5-dee59c5df67e.jpg?v=1683065194",
+    "back": "https://www.sobelia.com/35000-50208/supremacy-in-heaven-afnan-eau-de-parfum-spray-100ml.jpg"
+  }
+}

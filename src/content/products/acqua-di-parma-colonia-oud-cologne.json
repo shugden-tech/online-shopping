@@ -1,0 +1,48 @@
+{
+  "slug": "acqua-di-parma-colonia-oud-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Oud",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot",
+      "orange",
+      "oud",
+      "amyris",
+      "coriander"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Oud: Эрэгтэйчүүдэд зориулсан хув үнэр (Cologne). Эхний ноот: бергамот, жүрж, агар мод, амирис, кориандр.",
+    "en": "Colonia Oud, crafted by Acqua di Parma, is an enticing Amber Woody fragrance designed for men. Introduced in 2012, this captivating scent was created by perfumer Francois Demachy. It opens with fresh top notes of Calabrian bergamot and Italian orange, leading into a heart of agarwood (oud), amyris, and coriander. The fragrance concludes with a rich base of leather, Atlas cedar, sandalwood, musk, and Indonesian patchouli leaf. Hailing from Southeast Asia, Oud is rare and widely sought after. It is said to cost more than its weight in gold. A new interpretation of Colonia Intensa, Colonia Oud combines the unique freshness of Colonia Intensa with one of the world’s most cherished ingredients, Oud, for an unforgettable fragrance that is both fresh and richly aromatic. A touch of masculine elegance. The traditional Acqua di Parma Colonia Intensa bottle shape is distinguished with a deep matte brown finish on the glass and cap. Colonia Intensa Oud is presented in a hand crafted box lined with luxurious brown satin. Notes: Bergamot from Calabria, Italian Orange, Haitian Amyris Oil, Russian Coriander, Agarwood Oil, Moroccan Cedarwood, Indonesian Patchouli Oil, Leather Accord, Sandalwood Accord, Musk. Style: Luxurious. Fresh. Masculine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/543867.jpg?v=1745437091",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/620444.jpg?v=1745437091"
+  }
+}

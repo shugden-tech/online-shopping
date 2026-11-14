@@ -1,0 +1,54 @@
+{
+  "slug": "acqua-di-parma-leather-edp",
+  "brand": "Acqua di Parma",
+  "name": "Leather",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "raspberry",
+      "orange",
+      "lemon"
+    ],
+    "heart": [
+      "thyme",
+      "honeysuckle",
+      "petitgrain"
+    ],
+    "base": [
+      "leather",
+      "cedar",
+      "guaiac-wood"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Leather: Хүйс харгалзахгүй модлог үнэр (EDP). Эхний ноот: бөөрөлзгөнө, жүрж, нимбэг; зүрхний ноот: ганга, далан хальс, петигрейн; суурь ноот: арьс, хуш мод, гваяк мод.",
+    "en": "Leather Eau de Parfum by Acqua di Parma is a unisex fragrance that embodies the essence of leather. Introduced in 2019, this scent opens with vibrant top notes of Raspberry, Brazilian Orange, and Sicilian Lemon. The heart features a floral blend of Rose, Red Thyme, Honeysuckle, and Petitgrain, while the base is enriched with warm notes of Leather, Guaiac Wood, and Cedar. Leather Eau de Parfum by Acqua di Parma is a Leather fragrance for women and men. This is a new fragrance. Leather Eau de Parfum was launched in 2019. Top notes are brazilian orange, sicilian lemon and raspberry; middle notes are red thyme, honeysuckle, petitgrain and rose; base notes are leather, cedar and guaiac wood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 94500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 160500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/546202.jpg?v=1745438045",
+    "back": "https://cdn2.jomashop.com/media/catalog/product/cache/fde19e4197824625333be074956e7640/a/c/acqua-di-parma-leather-eau-de-parfum-spray-34-oz-100-ml-8028713810619_3.jpg?height=546&width=546"
+  }
+}

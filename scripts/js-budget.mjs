@@ -14,7 +14,7 @@ const dist = join(root, "dist");
 const pages = [
   ["index.html", 90, "total"],
   ["delguur/index.html", 40, "initial"],
-  ["delguur/baccarat-rouge-540/index.html", 50, "initial"],
+  ["delguur/abercrombie-and-fitch-authentic-man-edt/index.html", 50, "initial"],
   // Plan correction (VERIFY.md): the finder and checkout are island pages. Their initial JS is the shared
   // shell (Preact 4.4 + view-transition router 5.7 + cart store 2.4 KB) plus a 4 KB island, with no waste
   // left to cut (cart drawer and dictionaries are already lazy / per-locale), so they get 25 KB, not 20.

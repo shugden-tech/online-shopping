@@ -1,0 +1,54 @@
+{
+  "slug": "acqua-di-parma-lily-of-the-valley-edp",
+  "brand": "Acqua di Parma",
+  "name": "Lily Of The Valley",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "blackcurrant",
+      "grapefruit",
+      "bergamot"
+    ],
+    "heart": [
+      "lily-of-the-valley",
+      "jasmine",
+      "geranium",
+      "magnolia"
+    ],
+    "base": [
+      "cedar",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Lily Of The Valley: Хүйс харгалзахгүй цэцэгсийн үнэр (EDP). Эхний ноот: үхрийн нүд, бэрсүүт жүрж, бергамот; зүрхний ноот: хонхон цэцэг, жасмин, герань, магнолия; суурь ноот: хуш мод, заар.",
+    "en": "Lily of the Valley by Acqua di Parma is a Floral fragrance for women and men. This is a new fragrance. Lily of the Valley was launched in 2021. Top notes are Black Currant, Grapefruit and Bergamot; middle notes are Lily-of-the-Valley, Jasmine, Geranium and Magnolia; base notes are Cedar and Musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/d0247180-371a-4fcd-8e85-c88598ff27ef_a63b3ca6-7dc8-4b0f-a5f7-70e95bb7fc26.jpg?v=1683062700",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/files/acqua-di-parma-lily-of-the-valley_1200x1200.png?v=1704842036"
+  }
+}

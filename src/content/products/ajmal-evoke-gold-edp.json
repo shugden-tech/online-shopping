@@ -1,0 +1,48 @@
+{
+  "slug": "ajmal-evoke-gold-edp",
+  "brand": "Ajmal",
+  "name": "Evoke Gold",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [
+      "iris",
+      "amber",
+      "geranium"
+    ],
+    "base": []
+  },
+  "description": {
+    "mn": "Ajmal Evoke Gold: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Зүрхний ноот: цахилдаг, хув, герань.",
+    "en": "Ajmal's Evoke Gold For Him is a masculine Woody Aromatic scent that debuted in 2018. Its opening notes are Neroli and Pepper, while its middle notes are a combination of Orris Root, Amber, and Geranium. To complete the fragrance, its base is composed of Cedar and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/f60e00c1-a11f-4fe6-92e9-fc7d83391e11.jpg?v=1691178091",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/ajmal-evoke-gold_700x700.png?v=1649800834"
+  }
+}

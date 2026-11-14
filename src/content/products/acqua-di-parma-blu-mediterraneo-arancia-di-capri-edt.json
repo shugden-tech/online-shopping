@@ -1,0 +1,42 @@
+{
+  "slug": "acqua-di-parma-blu-mediterraneo-arancia-di-capri-edt",
+  "brand": "Acqua di Parma",
+  "name": "Blu Mediterraneo Arancia Di Capri",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "citrus",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Blu Mediterraneo Arancia Di Capri: Хүйс харгалзахгүй цитрус үнэр (EDT).",
+    "en": "This unisex perfume introduced in 1999 is full of fresh, aromatic and encouraging notes. Top notes bring us juicy freshness of orange, Sicilian mandarin, bergamot and luminous, bitter grapefruit. A heart is composed of petit grain and cardamom, while a base carries notes of caramel and musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/a145384b-b186-41d8-ad9d-7c56121c7151_d71201e7-c7c6-429a-961d-7fd2bd0e5d1a.jpg?v=1683060947",
+    "back": "https://www.bella-me.de/754-large_default/acqua-di-parma-blu-mediterraneo-arancia-di-capri-eau-de-toilette-unisex-75-ml.jpg"
+  }
+}

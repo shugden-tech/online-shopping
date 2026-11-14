@@ -27,7 +27,7 @@ const tiers = [
   { key: "top", label: tr.product.top, hint: tr.product.topHint, notes: await Promise.all(p.notes.top.map(chip)) },
   { key: "heart", label: tr.product.heart, hint: tr.product.heartHint, notes: await Promise.all(p.notes.heart.map(chip)) },
   { key: "base", label: tr.product.base, hint: tr.product.baseHint, notes: await Promise.all(p.notes.base.map(chip)) },
-];
+].filter((t) => t.notes.length);
 ---
 <div class="pyr">
   {tiers.map((tier, i) => (
@@ -62,7 +62,8 @@ const tiers = [
   /* the pyramid: each tier is wider than the one above */
   .pyr__tier--top { max-width: 68%; }
   .pyr__tier--heart { max-width: 84%; }
-  .pyr__tier--base { max-width: 100%; border-bottom-width: 1px; }
+  .pyr__tier--base { max-width: 100%; }
+  .pyr__tier:last-child { border-bottom-width: 1px; }
   .pyr__label { display: grid; gap: 2px; }
   .pyr__num { font-family: var(--font-head); font-style: italic; font-size: 20px; color: var(--gold); line-height: 1; margin-bottom: 6px; }
   .pyr__chips { display: flex; flex-wrap: wrap; gap: 8px; }

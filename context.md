@@ -27,7 +27,7 @@ genzst is a perfume **decant** shop for Mongolia: 2 / 5 / 10 / 30 ml samples of 
 | Lighthouse mobile | Home 100/100/100/100 · Shop 100/100/100/100 · Product 97/100/100/100 |
 | Test order | ✅ `GZ-261113-NEAJ` saved in local D1 with server-calculated prices |
 | Deployment | ❌ Not deployed (needs the owner's Cloudflare login) |
-| Real products, prices and photos | ❌ 24 **sample** products for now |
+| Real products, prices and photos | ⚠️ 100 products imported from `decantx/merged.json` (prices converted from USD; see PROGRESS.md) |
 | Logo SVG | ⏸ Dropped by the owner: the logo PNG is used as-is |
 
 ---

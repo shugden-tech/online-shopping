@@ -1,0 +1,57 @@
+{
+  "slug": "afnan-highness-vi-blue-edp",
+  "brand": "Afnan",
+  "name": "Highness VI Blue",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "cypress",
+      "bergamot",
+      "lavender"
+    ],
+    "heart": [
+      "cedar",
+      "galbanum",
+      "pepper",
+      "petitgrain"
+    ],
+    "base": [
+      "oud",
+      "oakmoss",
+      "leather"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Highness VI Blue: Хүйс харгалзахгүй өвслөг үнэр (EDP). Эхний ноот: кипарис, бергамот, лаванда; зүрхний ноот: хуш мод, гальбанум, хар чинжүү, петигрейн; суурь ноот: агар мод, царсны хөвд, арьс.",
+    "en": "His Highness Green by Afnan is a Aromatic Spicy fragrance for men. This is a new fragrance. His Highness Green was launched in 2020. Top notes are Cypress, Bergamot and Lavender; middle notes are Cedar, Galbanum, Black Pepper and Petitgrain; base notes are Agarwood (Oud), Oakmoss and Leather."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 39500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 59500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/1b2b0523-5d64-4beb-b5e2-3d2ae265e998_c424f22c-fc59-4336-92a6-6634799bead7.jpg?v=1683064113",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/afnan-highness-vi_1596x1596.png?v=1657842768"
+  }
+}

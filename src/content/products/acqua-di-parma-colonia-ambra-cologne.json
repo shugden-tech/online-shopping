@@ -1,0 +1,44 @@
+{
+  "slug": "acqua-di-parma-colonia-ambra-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Ambra",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Ambra: Эрэгтэйчүүдэд зориулсан хув үнэр (Cologne).",
+    "en": "Colonia Ambra by Acqua di Parma is a Amber fragrance for men. Colonia Ambra was launched in 2015."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/b0192740-8160-440c-8672-de83a42d1af1.jpg?v=1683061413",
+    "back": "https://dscentsation.ng/cdn/shop/products/AcquaDiParmaColoniaAmbraEDC100mlPerfumeforMen.png?v=1645453031"
+  }
+}

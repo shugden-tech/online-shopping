@@ -1,0 +1,44 @@
+{
+  "slug": "acqua-di-parma-blu-mediterraneo-mandorlo-di-sicilia-edt",
+  "brand": "Acqua di Parma",
+  "name": "Blu Mediterraneo Mandorlo di Sicilia",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "gourmand",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": [
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Blu Mediterraneo Mandorlo di Sicilia: Хүйс харгалзахгүй гурман үнэр (EDT). Суурь ноот: хуш мод.",
+    "en": "Sicily is a crossroads of art and culture, with the almond as part of the local tastes and traditions. Known in Italian as Mandorlo di Sicilia, the soothing appeal of Sicilian almond opens this delicious fragrance. Its sweet caress joins notes of star anise, bergamot, and orange. The fragrance’s heart blends green Mediterranean almond and ylang-ylang before base notes of cedarwood, vanilla, and white musk emerge. Notes: Sicilian Almond, Star Anise, Bergamot, Orange, Green Mediterranean Almond, Ylang-Ylang, Cedarwood, Vanilla, and White Musk. Style: Delicious. Sweet. Soothing."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "autumn",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/a9f8010c-eced-4fa5-a6af-d30a02ee093b_47e25cee-2665-407c-8c0c-d4e95e647064.jpg?v=1683062855",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/d701878c-24f9-4507-b702-e3fd1c13b79d.jpg?v=1683062855"
+  }
+}

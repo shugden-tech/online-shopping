@@ -1,0 +1,48 @@
+{
+  "slug": "afnan-9-pm-rebel-edp",
+  "brand": "Afnan",
+  "name": "9 PM Rebel",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "mandarin",
+      "pineapple",
+      "apple"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Afnan 9 PM Rebel: Хүйс харгалзахгүй өвслөг үнэр (EDP). Эхний ноот: мандарин, хан боргоцой, алим.",
+    "en": "Afnan's 9 PM Rebel is an Aromatic Fruity fragrance designed for both women and men. This is a recent addition to the fragrance world, having been introduced in 2024. The scent opens with top notes of Mandarin, Pineapple, and Granny Smith apple. The heart of the fragrance features Cedarwood, Vanilla, and Oakmoss, while the base is composed of Ambergris, Dry Wood, Caramel, and Musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/32540532-2d61-411a-982d-1615e9a86668.jpg?v=1732551814",
+    "back": "https://coopera.vtexassets.com/arquivos/ids/61561568/17522103604843.jpg?v=638908874838870000"
+  }
+}

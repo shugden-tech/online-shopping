@@ -1,0 +1,49 @@
+{
+  "slug": "abercrombie-and-fitch-first-instinct-together-edp",
+  "brand": "Abercrombie & Fitch",
+  "name": "First Instinct Together",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "pineapple",
+      "red-currant",
+      "lily-of-the-valley",
+      "peony"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch First Instinct Together: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: хан боргоцой, улаан үхрийн нүд, хонхон цэцэг, цээнэ цэцэг.",
+    "en": "First Instinct Together Eau de Parfum For Her by Abercrombie & Fitch is a delightful Floral Fruity fragrance designed for women. Introduced in 2020, this new scent features top notes of Pineapple and Red Currant, followed by a heart of Lily-of-the-Valley and Peony. The fragrance concludes with a warm base of Musk, Amber, and Sandalwood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 56000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/1292557.jpg?v=1742225321",
+    "back": "https://cdn.shopify.com/s/files/1/0259/7733/products/abercrombie-first-instinct-together-women_1024x1024.png?v=1613535107"
+  }
+}

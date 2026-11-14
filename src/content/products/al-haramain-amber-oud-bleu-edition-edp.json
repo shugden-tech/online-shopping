@@ -1,0 +1,57 @@
+{
+  "slug": "al-haramain-amber-oud-bleu-edition-edp",
+  "brand": "Al Haramain",
+  "name": "Amber Oud Bleu Edition",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "grapefruit",
+      "pink-pepper",
+      "mint",
+      "lemon"
+    ],
+    "heart": [
+      "vetiver",
+      "ginger",
+      "jasmine"
+    ],
+    "base": [
+      "sandalwood",
+      "patchouli",
+      "incense",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Al Haramain Amber Oud Bleu Edition: Хүйс харгалзахгүй хув үнэр (EDP). Эхний ноот: бэрсүүт жүрж, ягаан чинжүү, гаа, нимбэг; зүрхний ноот: ветивер, цагаан гаа, жасмин; суурь ноот: зандан мод, пачули, хүж, хуш мод.",
+    "en": "Amber Oud Bleu Edition by Al Haramain Perfumes is a fragrance for women and men. This is a new fragrance. Amber Oud Bleu Edition was launched in 2022. Top notes are Grapefruit, Pink Pepper, Mint and Lemon; middle notes are Vetiver, Ginger and Jasmine; base notes are Sandalwood, Patchouli, Olibanum and Cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/7f544716-484d-40dd-b540-89afed8495a1_a1b610f7-177c-47de-97a0-ba0b05ddff64.jpg?v=1683067834",
+    "back": "https://http2.mlstatic.com/D_NQ_NP_890240-MLM71391214043_082023-O-al-haramain-amber-oud-bleu-edition-edp-200-ml-unisex.webp"
+  }
+}

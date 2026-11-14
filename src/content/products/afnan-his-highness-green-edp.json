@@ -1,0 +1,57 @@
+{
+  "slug": "afnan-his-highness-green-edp",
+  "brand": "Afnan",
+  "name": "His Highness Green",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "nutmeg",
+      "cardamom",
+      "cumin",
+      "pink-pepper"
+    ],
+    "heart": [
+      "geranium",
+      "myrrh"
+    ],
+    "base": [
+      "cedar",
+      "sandalwood",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Afnan His Highness Green: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: задийн самар, кардамон, зира, ягаан чинжүү; зүрхний ноот: герань, мирра; суурь ноот: хуш мод, зандан мод, пачули.",
+    "en": "This is a masculine warm spicy fragrance for men. Rich high quality notes are brought together to give you an experience of greatness. Sensual and robust in nature, you will enjoy every minute of this high end cologne."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/d4ac7f96-c999-4016-807b-e52c97217fb7_eedc01b1-7607-4890-81d7-35c8d9ba8015.jpg?v=1683064264",
+    "back": "https://www.essenza.ng/cdn/shop/products/9a9964696e4d05cf8524eb5a0724f6b24e0f7625_1024x.jpg?v=1722415941"
+  }
+}

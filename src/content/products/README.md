@@ -3,8 +3,10 @@
 Each perfume is **one JSON file** in this folder. The file name is the product's URL slug:
 `baccarat-rouge-540.json` becomes `/delguur/baccarat-rouge-540/` (and `/en/shop/baccarat-rouge-540/`).
 
-> The 24 files here are **sample data** (real perfume names, placeholder prices and our own
-> descriptions). Replace them with the real catalog before launch.
+> The 100 files here were generated from `decantx/merged.json` by
+> `node scripts/import-merged-products.mjs --write` (the first 100 perfumes with a front photo that
+> could be mapped). Re-running it **deletes and rewrites every product file**, so hand edits are lost.
+> Prices are converted from USD with `USD_TO_MNT` in that script.
 
 ## Add or edit a product
 
@@ -20,12 +22,12 @@ Each perfume is **one JSON file** in this folder. The file name is the product's
 | `concentration` | `EDT`, `EDP`, `Parfum`, `Extrait` or `Cologne`. |
 | `gender` | `women`, `men` or `unisex`. |
 | `family` | `amber`, `woody`, `floral`, `citrus`, `chypre`, `fresh`, `gourmand` or `aromatic`. Sets the liquid colour of the bottle art. |
-| `notes.top / heart / base` | Lists of note ids from `src/data/notes.json`. To use a new note, add it there first (`"id": { "mn": "…", "en": "…" }`; add `"image": "woods"` to group it under one of the 11 note photos). |
+| `notes.top / heart / base` | Lists of note ids (a tier may be empty; empty tiers and an empty pyramid are hidden) from `src/data/notes.json`. To use a new note, add it there first (`"id": { "mn": "…", "en": "…" }`; add `"image": "woods"` to group it under one of the 11 note photos). |
 | `description.mn / .en` | 1–3 sentences **in your own words**, in both languages. |
 | `sizes` | One entry per size: `{ "ml": 2, "price": 15000, "inStock": true }`. Allowed sizes: 2, 5, 10, 30. Price is in ₮ (whole number). Set `inStock` to `false` to show the size struck through. |
 | `bottleShape` | `classic`, `tall`, `round` or `square` — the silhouette of the illustrated bottle. |
 | `image` *(optional)* | A real photo, e.g. `"./photos/baccarat-rouge-540.jpg"` (path relative to this folder; create `photos/`). When set, the photo replaces the illustrated bottle. Use a portrait image on a dark background, at least 800 px wide. |
-| `photos` *(optional)* | Remote photos: `{ "front": "https://…", "back": "https://…" }`. `front` is the bottle, `back` the bottle with its box; either may be left out. Cards show the front and fade to the back on hover/focus; the product page shows front then back. Filled by `node scripts/link-product-images.mjs --write` (dry run without `--write`). Ignored when `image` is set. |
+| `photos` *(optional)* | Remote photos: `{ "front": "https://…", "back": "https://…" }`. `front` is the bottle, `back` the bottle with its box; either may be left out. Cards show the front and fade to the back on hover/focus; the product page shows front then back. Filled by the import script. Ignored when `image` is set. |
 | `featured` *(optional)* | `true` puts it in the home-page slider and first in the shop. |
 | `isNew` *(optional)* | `true` shows the “New” flag and puts it in “New arrivals”. |
 | `intensity` | 1 (very soft) to 5 (very strong). Used by filters and the Scent Finder. |

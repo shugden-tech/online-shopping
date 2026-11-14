@@ -1,0 +1,45 @@
+{
+  "slug": "acqua-di-parma-blu-mediterraneo-fico-di-amalfi-edt",
+  "brand": "Acqua di Parma",
+  "name": "Blu Mediterraneo Fico Di Amalfi",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": [
+      "fig",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Blu Mediterraneo Fico Di Amalfi: Хүйс харгалзахгүй модлог үнэр (EDT). Суурь ноот: инжир, хуш мод.",
+    "en": "Acqua di Parma Fico di Amalfi is a sunny blend of citrus and fig. Launched in 2006, it opens with grapefruit, bergamot, citron and lemon. Fig nectar, jasmine and pink pepper form a juicy heart, and fig tree, cedar and benzoin give it a soft, woody finish. A summer favorite for everyday wear and the gym. The Amalfi Coast: it’s one of the most breathtaking places on Earth. This floral, woody, and citrusy fragrance calls to mind this breathtaking stretch of Mediterranean coastline with a strong, energizing effect. A unique combination of notes, including bergamot, lemon, grapefruit, and citron open the fragrance. Fig nectar, pink pepper, and jasmine petals are blended at the heart and base notes of fig wood, cedarwood, and benzoin follow. Notes: Bergamot, Lemon, Grapefruit, Citron, Fig Nectar, Pink Pepper, Jasmine Petals, Fig Wood, Cedarwood, and Benzoin. Style: Strong. Energizing. Unique."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/dffe6f4e-6b81-4eeb-8249-3969900f560c_b400af7e-9027-4786-aed2-68f6d9893f06.jpg?v=1683062404",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/15646900-0a4c-422b-8880-d0d870bbc737.jpg?v=1683062404"
+  }
+}

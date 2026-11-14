@@ -1,0 +1,54 @@
+{
+  "slug": "acqua-di-parma-camelia-edp",
+  "brand": "Acqua di Parma",
+  "name": "Camelia",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "bergamot",
+      "mandarin",
+      "pink-pepper",
+      "cardamom"
+    ],
+    "heart": [
+      "camellia",
+      "jasmine",
+      "clary-sage"
+    ],
+    "base": [
+      "musk",
+      "benzoin"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Camelia: Хүйс харгалзахгүй цэцэгсийн үнэр (EDP). Эхний ноот: бергамот, мандарин, ягаан чинжүү, кардамон; зүрхний ноот: камелия, жасмин, мускат хашхираа; суурь ноот: заар, бензойн.",
+    "en": "Camelia Eau de Parfum by Acqua di Parma is a Floral fragrance for women and men. Camelia Eau de Parfum was launched in 2019. Top notes are Calabrian bergamot, Yellow Mandarin, Pink Pepper and Cardamom; middle notes are Camelia, Jasmine Sambac and Clary Sage; base notes are Musk and Benzoin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/d632fdce-8818-42c1-8767-94d796ba686b.jpg?v=1683061100",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/acqua-di-parma-camelia_1200x1200.png?v=1648427439"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "akro-ink-edp",
+  "brand": "Akro",
+  "name": "Ink",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "floral",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Akro Ink: Хүйс харгалзахгүй цэцэгсийн үнэр (EDP).",
+    "en": "Ink by Akro is a unisex Floral scent that has recently entered the market. Released in 2022, this fresh addition to the fragrance world was expertly crafted by perfumer Olivier Cresp."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/770d8ae2-a1d7-4012-aed4-9cc4226fe914.jpg?v=1705010525",
+    "back": "https://beautyhouse.com/cdn/shop/files/02waolokvm.png?v=1762196441&width=954"
+  }
+}

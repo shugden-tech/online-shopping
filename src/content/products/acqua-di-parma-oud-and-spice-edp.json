@@ -1,0 +1,56 @@
+{
+  "slug": "acqua-di-parma-oud-and-spice-edp",
+  "brand": "Acqua di Parma",
+  "name": "Oud & Spice",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "raspberry",
+      "rose",
+      "bergamot"
+    ],
+    "heart": [
+      "clove",
+      "pink-pepper",
+      "cinnamon"
+    ],
+    "base": [
+      "oud",
+      "labdanum",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Oud & Spice: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: бөөрөлзгөнө, сарнай, бергамот; зүрхний ноот: гвоздик, ягаан чинжүү, шанцай; суурь ноот: агар мод, лабданум, пачули.",
+    "en": "Oud & Spice by Acqua di Parma is a Woody Spicy fragrance for men. This is a new fragrance. Oud & Spice was launched in 2021. Top notes are Raspberry, Rose and Bergamot; middle notes are Cloves, Pink Pepper and Cinnamon; base notes are Agarwood (Oud), Labdanum and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/f9089778-f97f-49cb-9907-e0bf1a9d7420.jpg?v=1683063288",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/acqua-di-parma-oud-spice_1024x1024.jpg?v=1660279917"
+  }
+}

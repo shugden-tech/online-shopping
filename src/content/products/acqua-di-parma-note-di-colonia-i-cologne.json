@@ -1,0 +1,49 @@
+{
+  "slug": "acqua-di-parma-note-di-colonia-i-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Note di Colonia I",
+  "concentration": "Cologne",
+  "gender": "unisex",
+  "family": "chypre",
+  "notes": {
+    "top": [
+      "bergamot",
+      "neroli"
+    ],
+    "heart": [
+      "violet",
+      "rose",
+      "lavender"
+    ],
+    "base": [
+      "patchouli",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Note di Colonia I: Хүйс харгалзахгүй шипр үнэр (Cologne). Эхний ноот: бергамот, нероли; зүрхний ноот: нил цэцэг, сарнай, лаванда; суурь ноот: пачули, хуш мод.",
+    "en": "Note di Colonia I by Acqua di Parma is a Chypre Floral fragrance for women and men. Note di Colonia I was launched in 2016. Top notes are Bergamot and Neroli; middle notes are Violet, Damask Rose and Lavender; base notes are Patchouli and Cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 54500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/9e5322f8-af85-4041-a7ba-e65bc91e1c77.jpg?v=1683063004",
+    "back": "https://hrd-live.cdn.scayle.cloud/images/f0a0584fbbb3bfbe32554fbf3f273228.jpg?bg=ffffff&brightness=1&height=1230&quality=75&width=922"
+  }
+}

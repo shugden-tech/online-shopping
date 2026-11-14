@@ -1,0 +1,50 @@
+{
+  "slug": "al-haramain-amber-oud-exclusif-sport-extrait-the-extrait",
+  "brand": "Al Haramain",
+  "name": "Amber Oud Exclusif Sport Extrait the",
+  "concentration": "Extrait",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "saffron"
+    ],
+    "heart": [],
+    "base": [
+      "ambergris",
+      "musk",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Al Haramain Amber Oud Exclusif Sport Extrait the: Хүйс харгалзахгүй хув үнэр (Extrait). Эхний ноот: гүргэм; суурь ноот: амбра, заар, хуш мод.",
+    "en": "Amber Oud Exclusif Sport Extrait de Parfum by Al Haramain Perfumes is a Amber Floral fragrance for women and men. Amber Oud Sport was launched in 2019. Top note is saffron. Middle note is Jasmine. Base notes are ambergris, musk and white cedar extract."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 5,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/5e6cece5-f3eb-4393-a52f-590c2de7a293.jpg?v=1683068684",
+    "back": "https://cdn2.jomashop.com/media/catalog/product/cache/fde19e4197824625333be074956e7640/a/l/al-haramain-mens-amber-oud-exclusif-sport-edp-20-oz-fragrances-3760327810030.jpg?height=546&width=546"
+  }
+}

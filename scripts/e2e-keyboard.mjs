@@ -8,7 +8,7 @@ import { chromium } from "playwright-core";
 
 const base = process.env.BASE ?? "http://localhost:4321";
 const edge = process.env.CHROME_PATH ?? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe";
-const pages = ["/", "/delguur/", "/delguur/baccarat-rouge-540/", "/zahialga/", "/tuslamj/"];
+const pages = ["/", "/delguur/", "/delguur/abercrombie-and-fitch-authentic-man-edt/", "/zahialga/", "/tuslamj/"];
 const TABS = 40;
 
 const browser = await chromium.launch({ executablePath: edge, headless: true });

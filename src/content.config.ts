@@ -7,7 +7,8 @@ import { FAMILIES, GENDERS, SEASONS, OCCASIONS, SHAPES } from "./lib/taxonomy";
 const noteId = z.string().refine((id) => id in notes, (id) => ({
   message: `Unknown note id "${id}". Add it to src/data/notes.json first.`,
 }));
-const noteList = z.array(noteId).min(1).max(8);
+// A tier may be empty: imported perfumes do not always list every tier (or any notes at all).
+const noteList = z.array(noteId).max(8);
 
 const size = z.object({
   ml: z.union([z.literal(2), z.literal(5), z.literal(10), z.literal(30)]),

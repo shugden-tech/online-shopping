@@ -1,0 +1,45 @@
+{
+  "slug": "acqua-di-parma-blu-mediterraneo-cedro-di-taormina-edt",
+  "brand": "Acqua di Parma",
+  "name": "Blu Mediterraneo Cedro Di Taormina",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": [
+      "labdanum"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Blu Mediterraneo Cedro Di Taormina: Хүйс харгалзахгүй модлог үнэр (EDT). Суурь ноот: лабданум.",
+    "en": "The latest fragrance in the Blu Mediterraneo collection is inspired by Taormina—a spectacular landscape where the unique and lush nature of the Mediterranean vegetation blends with the impressive strength of volcanic rock formations. Fresh citrus essences and aromatic basil capture the landscape’s vibrant fragrance and sunlit radiance. In the heart of the fragrance, black pepper and lavender create a sparkling, spicy experience and blend perfectly with the elegant, intense base notes of cistus labdanum, vetiver, and Virginia cedarwood. Notes: Italian Citron, Black Pepper, Virginia Cedarwood, Elemi Resin, Vetiver, Guaiac. Style: Vibrant. Fresh. Sparkling."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/43370d36-e596-4553-8470-6e74c9ec35f7_7ab6a7b7-df8b-4b4b-a665-898607c637bc.jpg?v=1683061177",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/f298e579-3ffd-4ba4-ba92-e903c77dbd0e.jpg?v=1683061177"
+  }
+}

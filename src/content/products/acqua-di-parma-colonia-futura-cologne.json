@@ -1,0 +1,52 @@
+{
+  "slug": "acqua-di-parma-colonia-futura-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Futura",
+  "concentration": "Cologne",
+  "gender": "unisex",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "lemon",
+      "bergamot",
+      "grapefruit",
+      "pink-pepper"
+    ],
+    "heart": [
+      "lavender",
+      "sage"
+    ],
+    "base": [
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Futura: Хүйс харгалзахгүй цитрус үнэр (Cologne). Эхний ноот: нимбэг, бергамот, бэрсүүт жүрж, ягаан чинжүү; зүрхний ноот: лаванда, мэргэн өвс; суурь ноот: ветивер.",
+    "en": "Colonia Futura by Acqua di Parma is a Citrus Aromatic fragrance for women and men. This is a new fragrance. Colonia Futura was launched in 2020. Top notes are Lemon, Bergamot, Grapefruit and Pink Pepper; middle notes are Lavender and Sage; base note is Vetiver."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/d000ab2c-f625-49b2-97a1-b33ca5ae262d.jpg?v=1683061875",
+    "back": "https://cdn.fragrancenet.com/images/photos/1600x1600/377754.jpg"
+  }
+}

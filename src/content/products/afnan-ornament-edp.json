@@ -1,0 +1,58 @@
+{
+  "slug": "afnan-ornament-edp",
+  "brand": "Afnan",
+  "name": "Ornament",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "apple",
+      "cardamom",
+      "clove",
+      "nutmeg"
+    ],
+    "heart": [
+      "saffron",
+      "pepper",
+      "geranium"
+    ],
+    "base": [
+      "amber",
+      "patchouli",
+      "cedar",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Ornament: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: алим, кардамон, гвоздик, задийн самар; зүрхний ноот: гүргэм, хар чинжүү, герань; суурь ноот: хув, пачули, хуш мод, зандан мод.",
+    "en": "Ornament Pour Homme by Afnan is a Woody Aromatic fragrance for men. Ornament Pour Homme was launched in 2014. Top notes are Apple, Cardamom, Clove and Nutmeg; middle notes are Saffron, Pepper and Geranium; base notes are Amber, Patchouli, Cedar and Sandalwood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/c03d0f92-0c9b-4fd2-a107-5ccaffb645a5_b00ccf21-a77b-497f-a637-5a4f7609cd0b.jpg?v=1683737110",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/afnan-ornament-men_700x700.png?v=1655263490"
+  }
+}

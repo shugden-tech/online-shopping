@@ -1,0 +1,52 @@
+{
+  "slug": "acqua-di-parma-colonia-mirra-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Mirra",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "orange-blossom",
+      "citrus"
+    ],
+    "heart": [
+      "myrrh",
+      "nutmeg"
+    ],
+    "base": [
+      "amber",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Mirra: Эрэгтэйчүүдэд зориулсан хув үнэр (Cologne). Эхний ноот: жүржийн цэцэг, цитрусын ноот; зүрхний ноот: мирра, задийн самар; суурь ноот: хув, пачули.",
+    "en": "Colonia Mirra by Acqua di Parma is a Amber Woody fragrance for men. Colonia Mirra was launched in 2017. Top notes are Orange Blossom and Citruses; middle notes are Myrhh and Nutmeg; base notes are Amber and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/2b9018dc-043f-4cf9-b665-1b8301c66794.jpg?v=1683062101",
+    "back": "https://img.fragrancex.com/images/products/sku/large/adp34tw.jpg"
+  }
+}

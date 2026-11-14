@@ -1,0 +1,44 @@
+{
+  "slug": "agatho-parfum-195-a-c-edp",
+  "brand": "Agatho Parfum",
+  "name": "195 A.C.",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Agatho Parfum 195 A.C.: Хүйс харгалзахгүй хув үнэр (EDP).",
+    "en": "195 a.C. by Agatho Parfum is a fragrance for women and men. 195 a.C. was launched in 2019. The nose behind this fragrance is Maurizio Cerizza."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/d87dd4eb-48fd-4eb4-a482-a9672756a35a.jpg?v=1711382209",
+    "back": "https://cdn.fragrancenet.com/images/photos/1600x1600/428667.jpg"
+  }
+}
