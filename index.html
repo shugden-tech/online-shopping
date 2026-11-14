@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GENZST — Үнэртэй усны дээж</title>
+  <meta name="description" content="Жинхэнэ үнэртэй усны 2ml, 5ml, 10ml дээж. Худалдан авахаасаа өмнө туршаад үзээрэй.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Announcement bar -->
+  <div class="announce" id="announce">
+    <p>🎀 Өвлийн хямдрал — <b>WINTER15</b> кодоор 15% хөнгөлөлт</p>
+    <button class="announce__close" aria-label="Хаах" data-close-announce>&times;</button>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header__top">
+      <button class="icon-btn header__burger" aria-label="Цэс" data-open="menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h11"/></svg>
+      </button>
+      <a href="#" class="logo" aria-label="GENZST нүүр">
+        <span class="logo__mark">◆</span><span class="logo__text">GENZST</span>
+      </a>
+      <form class="search" role="search" onsubmit="return false">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="searchInput" placeholder="Үнэртэй ус, брэнд хайх..." autocomplete="off">
+      </form>
+      <div class="header__actions">
+        <a href="#" class="icon-btn" aria-label="Бүртгэл">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        </a>
+        <button class="icon-btn" aria-label="Хүслийн жагсаалт" data-open="wish">
+          <svg viewBox="0 0 24 24"><path d="M12 20.5 4.6 13.3a4.8 4.8 0 0 1 6.8-6.8l.6.6.6-.6a4.8 4.8 0 0 1 6.8 6.8z"/></svg>
+          <span class="badge" id="wishCount">0</span>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Сагс" data-open="cart">
+          <svg viewBox="0 0 24 24"><path d="M5 7h14l-1 13H6zM9 7a3 3 0 0 1 6 0"/></svg>
+          <span class="cart-btn__label">Сагс</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+    <nav class="nav" id="menu">
+      <div class="container nav__inner">
+        <button class="nav__close icon-btn" aria-label="Хаах" data-close>&times;</button>
+        <a href="#shop" data-filter="all">Бүгд</a>
+        <a href="#shop" data-filter="women">Эмэгтэй</a>
+        <a href="#shop" data-filter="men">Эрэгтэй</a>
+        <a href="#shop" data-filter="unisex">Унисекс</a>
+        <a href="#brands">Брэндүүд</a>
+        <a href="#shop" data-filter="new">Шинэ <span class="tag-new">NEW</span></a>
+        <a href="#about">Бидний тухай</a>
+        <a href="#shop" data-filter="sale" class="nav__sale">Хямдрал</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero slider -->
+    <section class="hero container">
+      <div class="slider" id="slider">
+        <div class="slide is-active" style="--a:#2b2233;--b:#6b5f70">
+          <div class="slide__text">
+            <span class="eyebrow">Өвлийн цуглуулга</span>
+            <h1>Дулаан, гүн үнэрүүд<br>энэ улиралд</h1>
+            <p>Амбер, ваниль, модлог ноотуудтай шилдэг дээжүүд 2ml-ээс эхлэн.</p>
+            <a href="#shop" class="btn btn--light" data-filter="winter">Цуглуулга үзэх</a>
+          </div>
+          <div class="slide__art" data-bottles="#d9b77a,#8c4a5b,#3d3550"></div>
+        </div>
+        <div class="slide" style="--a:#1f3a3a;--b:#5b8a83">
+          <div class="slide__text">
+            <span class="eyebrow">Шинээр ирсэн</span>
+            <h1>2026 оны шинэ<br>гаралтууд</h1>
+            <p>Хамгийн сүүлийн нишэ, дизайнер үнэрүүдийг хамгийн түрүүнд туршаарай.</p>
+            <a href="#shop" class="btn btn--light" data-filter="new">Шинэ бараа</a>
+          </div>
+          <div class="slide__art" data-bottles="#a8d5c8,#e9e2c8,#5b8a83"></div>
+        </div>
+        <div class="slide" style="--a:#3a2318;--b:#a0623f">
+          <div class="slide__text">
+            <span class="eyebrow">Бэлгийн хайрцаг</span>
+            <h1>5 дээж — нэг<br>хайрцагт</h1>
+            <p>Өөрөө сонгоод, хайртай хүндээ бэлэглээрэй. Үнэгүй боолт.</p>
+            <a href="#shop" class="btn btn--light" data-filter="all">Хайрцаг бүрдүүлэх</a>
+          </div>
+          <div class="slide__art" data-bottles="#f0c79b,#c26e4a,#6d3b26"></div>
+        </div>
+        <button class="slider__arrow slider__arrow--prev" aria-label="Өмнөх">&#8249;</button>
+        <button class="slider__arrow slider__arrow--next" aria-label="Дараах">&#8250;</button>
+        <div class="slider__dots"></div>
+      </div>
+    </section>
+
+    <!-- Promo tiles -->
+    <section class="container promo">
+      <a href="#shop" class="promo__big" data-filter="all">
+        <div class="promo__bg" style="--a:#e9e4dc;--b:#cfc4b4"></div>
+        <span class="promo__label">БҮХ ҮНЭРТЭЙ УС</span>
+      </a>
+      <a href="#shop" class="promo__small" data-filter="new">
+        <div class="promo__bg" style="--a:#d8d3e3;--b:#9e93b8"></div>
+        <span class="promo__label">ШИНЭ БАРАА</span>
+      </a>
+    </section>
+
+    <!-- Featured collections -->
+    <section class="collections">
+      <div class="container">
+        <h2 class="section-title">Онцлох цуглуулгууд</h2>
+        <div class="carousel" id="collections"></div>
+      </div>
+    </section>
+
+    <!-- Category tiles -->
+    <section class="container cats">
+      <a href="#shop" class="cat" data-filter="women"><div class="cat__bg" style="--a:#f3d9dc;--b:#d99aa5"></div><span>ЭМЭГТЭЙ</span></a>
+      <a href="#shop" class="cat" data-filter="men"><div class="cat__bg" style="--a:#d6dde6;--b:#5b6f88"></div><span>ЭРЭГТЭЙ</span></a>
+      <a href="#shop" class="cat" data-filter="unisex"><div class="cat__bg" style="--a:#e4e0d4;--b:#9b8f6f"></div><span>УНИСЕКС</span></a>
+    </section>
+
+    <!-- Shop -->
+    <section class="container shop" id="shop">
+      <div class="tabs" id="tabs">
+        <button data-filter="best" class="is-active">Бестселлер</button>
+        <button data-filter="new">✨ <span class="accent">Шинэ</span></button>
+        <button data-filter="women">Эмэгтэй</button>
+        <button data-filter="men">Эрэгтэй</button>
+        <button data-filter="unisex">Унисекс</button>
+        <button data-filter="sale">Хямдрал</button>
+        <button data-filter="all">Бүгд</button>
+      </div>
+      <p class="shop__empty" id="emptyMsg" hidden>Илэрц олдсонгүй.</p>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- Brands -->
+    <section class="brands" id="brands">
+      <div class="marquee">
+        <div class="marquee__track" id="brandTrack"></div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="container about" id="about">
+      <h2 class="section-title">GENZST-ийн тухай</h2>
+      <p>Сайхан мэдрэмж сайхан үнэрээс эхэлдэг. GENZST нь эрэгтэй, эмэгтэй, унисекс үнэртэй усны <b>жинхэнэ дээжийг</b> анхны савнаас нь гараар хувааж, жижиг саванд савладаг.</p>
+      <p>Том, үнэтэй сав авахаасаа өмнө хэдэн зуун нишэ болон дизайнер үнэрийг туршиж үзээрэй. <em>"Тэвчээд биш, туршаад сонго."</em></p>
+    </section>
+
+    <!-- Info line -->
+    <section class="info">
+      <div class="container info__inner">
+        <div class="info__item">
+          <svg viewBox="0 0 24 24"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+          <div><b>Үнэгүй хүргэлт</b><span>Улаанбаатар хотод бүх захиалгад</span></div>
+        </div>
+        <div class="info__item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+          <div><b>100% жинхэнэ</b><span>Анхны савнаас гараар хуваасан</span></div>
+        </div>
+        <div class="info__item">
+          <svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6 15h4"/></svg>
+          <div><b>Төлбөрийн хэрэгсэл</b><span>Карт, QPay, SocialPay</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__news">
+        <div>
+          <h3>Шинэ мэдээнээс бүү хоцор!</h3>
+          <p>Хямдрал, шинэ бараа, урамшууллын мэдээг имэйлээр аваарай.</p>
+        </div>
+        <form class="news-form" id="newsForm">
+          <input type="email" required placeholder="Имэйл хаягаа оруулна уу">
+          <button class="btn">Бүртгүүлэх</button>
+        </form>
+      </div>
+      <div class="footer__cols">
+        <div>
+          <h4>Дэлгүүр</h4>
+          <a href="#shop" data-filter="women">Эмэгтэй</a>
+          <a href="#shop" data-filter="men">Эрэгтэй</a>
+          <a href="#shop" data-filter="unisex">Унисекс</a>
+          <a href="#shop" data-filter="new">Шинэ бараа</a>
+          <a href="#shop" data-filter="sale">Хямдрал</a>
+        </div>
+        <div>
+          <h4>Мэдээлэл</h4>
+          <a href="#about">Бидний тухай</a>
+          <a href="#">Түгээмэл асуулт</a>
+          <a href="#">Савны төрөл</a>
+          <a href="#">Урамшууллын хөтөлбөр</a>
+        </div>
+        <div>
+          <h4>Захиалга</h4>
+          <a href="#" data-open="cart">Сагс харах</a>
+          <a href="#">Захиалга хянах</a>
+          <a href="#">Хүргэлт ба буцаалт</a>
+          <a href="#">Нууцлалын бодлого</a>
+        </div>
+        <div>
+          <h4>Холбоо барих</h4>
+          <p>Даваа–Баасан: 09:00–18:00</p>
+          <p>Бямба, Ням: амарна</p>
+          <a href="mailto:hello@example.com">Имэйл илгээх</a>
+        </div>
+      </div>
+      <p class="footer__note">GENZST нь бие даасан дэлгүүр бөгөөд аль нэг үйлдвэрлэгч, брэндтэй холбоогүй. Бид жинхэнэ үнэртэй усыг анхны савнаас нь өөрийн дээжийн саванд хувааж савладаг.</p>
+      <div class="footer__bottom">
+        <span>© 2026 GENZST. Бүх эрх хуулиар хамгаалагдсан.</span>
+        <span class="pay">VISA · Mastercard · QPay · SocialPay</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Drawers -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="cart" aria-label="Сагс">
+    <div class="drawer__head">
+      <h3>Миний сагс <span id="cartHeadCount">(0)</span></h3>
+      <button class="icon-btn" data-close aria-label="Хаах">&times;</button>
+    </div>
+    <div class="ship-bar"><p id="shipMsg"></p><div class="ship-bar__track"><i id="shipFill"></i></div></div>
+    <div class="drawer__body" id="cartItems"></div>
+    <div class="drawer__foot">
+      <div class="drawer__total"><span>Нийт дүн</span><b id="cartTotal">₮0</b></div>
+      <button class="btn btn--block" id="checkoutBtn">Захиалга хийх</button>
+    </div>
+  </aside>
+  <aside class="drawer" id="wish" aria-label="Хүслийн жагсаалт">
+    <div class="drawer__head">
+      <h3>Хүслийн жагсаалт</h3>
+      <button class="icon-btn" data-close aria-label="Хаах">&times;</button>
+    </div>
+    <div class="drawer__body" id="wishItems"></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <button class="to-top" id="toTop" aria-label="Дээш">&#8593;</button>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

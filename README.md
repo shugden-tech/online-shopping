@@ -1,17 +1,32 @@
-# Online Shopping
+# GENZST — Online Shopping
 
-An online shopping project.
+Үнэртэй усны дээж (2ml / 5ml / 10ml) худалдаалах онлайн дэлгүүрийн UI.
 
-## Getting Started
+## Боломжууд
 
-Clone the repository:
+- Зарлалын мөр, sticky header, хайлт, гар утсанд гулсдаг цэс
+- Автоматаар солигддог hero slider (swipe дэмжинэ)
+- Онцлох цуглуулгын carousel, ангиллын карт
+- Tab-аар шүүдэг бүтээгдэхүүний grid (Бестселлер, Шинэ, Эмэгтэй, Эрэгтэй, Унисекс, Хямдрал)
+- Хэмжээ сонгоход үнэ шинэчлэгдэнэ
+- Сагс (тоо ширхэг, үнэгүй хүргэлтийн progress bar) болон хүслийн жагсаалт — `localStorage`-д хадгалагдана
+- Брэндийн marquee, footer, newsletter
+- Desktop болон гар утсанд тохирсон
+
+## Ажиллуулах
+
+Ямар нэг build хэрэггүй. `index.html` файлыг browser-оор нээхэд хангалттай, эсвэл:
 
 ```bash
-git clone https://github.com/shugden-tech/online-shopping.git
-cd online-shopping
+python3 -m http.server 8000
 ```
 
-## Branches
+## Бүтэц
 
-- `main` — default branch
-- `genzst` — development branch
+```
+index.html     # хуудасны бүтэц
+css/style.css  # загвар
+js/app.js      # бүтээгдэхүүний өгөгдөл, сагс, slider, шүүлтүүр
+```
+
+Бүтээгдэхүүний жагсаалтыг `js/app.js` доторх `PRODUCTS` массиваас өөрчилнө.
