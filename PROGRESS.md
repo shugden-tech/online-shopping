@@ -303,3 +303,9 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - Replaced the old bestseller lineup with eight reviewed popular products: Le Male Elixir, Sauvage Elixir, Bleu de Chanel EDP, Uomo Born in Roma Intense, Donna Born in Roma, Good Girl, Baccarat Rouge 540 EDP, and Imagination.
 - src/data/bestsellers.json controls the exact home-page order. Cleared previous featured flags and marked only these eight featured. Products remain in the main catalog.
 - Validation: build passed; Edge checked both Mongolian and English built home pages render exactly the eight selected products in order.
+
+## GitHub Pages mirror (2025)
+- Static build pushed to shugden-tech/shugden-tech.github.io (main). Live: https://shugden-tech.github.io/
+- .nojekyll added so _astro assets are served.
+- LIMIT: /api/orders does not exist on Pages - checkout order submit will fail there. Use Cloudflare deploy for real orders.
+- Model: SWE-2 Flash (Devin)
