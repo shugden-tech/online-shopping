@@ -13,7 +13,7 @@ const tr = getDict(locale);
 // compact price catalog so the island can refresh stale cart snapshot prices
 const catalog: PriceCatalog = {};
 for (const p of await getProducts()) {
-  catalog[p.slug] = Object.fromEntries(p.sizes.map((s) => [String(s.ml), [s.price, s.inStock] as [number, boolean]]));
+  catalog[p.slug] = Object.fromEntries(p.sizes.map((s) => [String(s.ml), [s.price, s.inStock, s.stock] as [number, boolean, number?]]));
 }
 ---
 <Base locale={locale} title={tr.checkout.title} description={tr.checkout.metaDescription} noindex>

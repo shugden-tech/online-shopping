@@ -1,0 +1,62 @@
+{
+  "slug": "creed-aventus-edp",
+  "brand": "Creed",
+  "name": "Aventus",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "bergamot",
+      "blackcurrant",
+      "apple",
+      "lemon",
+      "pink-pepper"
+    ],
+    "heart": [
+      "pineapple",
+      "patchouli",
+      "jasmine"
+    ],
+    "base": [
+      "birch",
+      "musk",
+      "oakmoss",
+      "ambroxan",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Creed Aventus: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: бергамот, үхрийн нүд, алим, нимбэг, ягаан чинжүү; зүрхний ноот: хан боргоцой, пачули, жасмин; суурь ноот: хус мод, заар, царсны хөвд, амброксан, хуш мод.",
+    "en": "Creed Aventus is a woody fragrance in EDP concentration. Its listed notes include bergamot, blackcurrant, apple, lemon, pink pepper."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 94500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 160500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-074-front.webp",
+    "back": "/product-photos/curated-074-back.webp"
+  }
+}

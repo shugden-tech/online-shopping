@@ -1,0 +1,58 @@
+{
+  "slug": "tom-ford-lost-cherry-edp",
+  "brand": "Tom Ford",
+  "name": "Lost Cherry",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "bitter-almond",
+      "black-cherry",
+      "cherry-liqueur"
+    ],
+    "heart": [
+      "sour-cherry",
+      "plum",
+      "rose",
+      "jasmine"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "cinnamon",
+      "peru-balsam",
+      "benzoin",
+      "sandalwood",
+      "clove",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Tom Ford Lost Cherry: Хүйс харгалзахгүй гурман үнэр (EDP). Эхний ноот: гашуун бүйлс, хар интоор, интоорын ликёр; зүрхний ноот: исгэлэн интоор, чавга, сарнай, жасмин; суурь ноот: ваниль, тонка шош, шанцай, перу бальзам, бензойн, зандан мод, гвоздик, хуш мод.",
+    "en": "Tom Ford Lost Cherry is a gourmand fragrance in EDP concentration. Its listed notes include bitter almond, black cherry, cherry liqueur, sour cherry, plum."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 131000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-086-front.webp",
+    "back": "/product-photos/curated-086-back.webp"
+  }
+}

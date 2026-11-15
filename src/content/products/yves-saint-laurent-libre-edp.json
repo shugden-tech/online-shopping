@@ -1,0 +1,60 @@
+{
+  "slug": "yves-saint-laurent-libre-edp",
+  "brand": "Yves Saint Laurent",
+  "name": "Libre",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "lavender",
+      "mandarin",
+      "blackcurrant",
+      "petitgrain"
+    ],
+    "heart": [
+      "lavender",
+      "orange-blossom",
+      "jasmine"
+    ],
+    "base": [
+      "vanilla",
+      "musk",
+      "cedar",
+      "ambergris"
+    ]
+  },
+  "description": {
+    "mn": "Yves Saint Laurent Libre: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: лаванда, мандарин, үхрийн нүд, петигрейн; зүрхний ноот: лаванда, жүржийн цэцэг, жасмин; суурь ноот: ваниль, заар, хуш мод, амбра.",
+    "en": "Yves Saint Laurent Libre is a amber fragrance in EDP concentration. Its listed notes include lavender, mandarin, blackcurrant, petitgrain, lavender."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false,
+      "stock": 0
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-043-front.webp",
+    "back": "/product-photos/curated-043-back.webp"
+  }
+}

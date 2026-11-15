@@ -1,0 +1,63 @@
+{
+  "slug": "versace-eros-flame-edp",
+  "brand": "Versace",
+  "name": "Eros Flame",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "mandarin",
+      "pepper",
+      "lemon",
+      "chinotto",
+      "rosemary"
+    ],
+    "heart": [
+      "geranium",
+      "rose",
+      "pepperwoodtm"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "sandalwood",
+      "cedar",
+      "patchouli",
+      "oakmoss"
+    ]
+  },
+  "description": {
+    "mn": "Versace Eros Flame: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: мандарин, хар чинжүү, нимбэг, чинотто, розмарин; зүрхний ноот: герань, сарнай, пеппервүүд; суурь ноот: ваниль, тонка шош, зандан мод, хуш мод, пачули, царсны хөвд.",
+    "en": "Versace Eros Flame is a woody fragrance in EDP concentration. Its listed notes include mandarin, black pepper, lemon, chinotto, rosemary."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-024-front.webp",
+    "back": "/product-photos/curated-024-back.webp"
+  }
+}

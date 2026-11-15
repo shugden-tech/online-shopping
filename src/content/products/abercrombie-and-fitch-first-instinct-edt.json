@@ -29,16 +29,18 @@
     {
       "ml": 5,
       "price": 33000,
-      "inStock": false
+      "inStock": true,
+      "stock": 5
     },
     {
       "ml": 10,
       "price": 49500,
-      "inStock": false
+      "inStock": true,
+      "stock": 4
     }
   ],
   "bottleShape": "classic",
-  "featured": true,
+  "featured": false,
   "intensity": 2,
   "season": [
     "spring",

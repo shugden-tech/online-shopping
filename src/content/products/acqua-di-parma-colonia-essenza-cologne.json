@@ -18,12 +18,14 @@
     {
       "ml": 5,
       "price": 72000,
-      "inStock": true
+      "inStock": true,
+      "stock": 2
     },
     {
       "ml": 10,
       "price": 110500,
-      "inStock": true
+      "inStock": true,
+      "stock": 4
     }
   ],
   "bottleShape": "classic",

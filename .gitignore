@@ -5,5 +5,16 @@ dist/
 .dev.vars
 .env
 
+# Local research downloads, snapshots and browser review artifacts
+decantx/merged.backup-*.json
+decantx/catalog-backup-*/
+decantx/demo-inventory-backup-*/
+decantx/notes-source-cache/
+output/
+**/__pycache__/
+
 # Over GitHub 100 MB limit; kept on the original computer only
 decantx/products_full.json
+
+# Windows junk
+desktop.ini

@@ -7,6 +7,7 @@ export interface CartItem {
   ml: number;
   qty: number;
   price: number;
+  stock?: number;
   name: string;
   brand: string;
   family: string;
@@ -16,6 +17,7 @@ export interface CartItem {
 }
 
 export const MAX_QTY = 10;
+export const itemLimit = (item: { stock?: number }): number => Math.min(MAX_QTY, Math.max(0, item.stock ?? MAX_QTY));
 export const MAX_LINES = 30;
 const KEY = "gz-cart-v1";
 
@@ -26,12 +28,15 @@ function sanitize(raw: unknown): CartItem[] {
     if (!r || typeof r !== "object") continue;
     const i = r as Record<string, unknown>;
     if (typeof i.slug !== "string" || typeof i.ml !== "number" || typeof i.price !== "number") continue;
-    const qty = Math.min(MAX_QTY, Math.max(1, Math.floor(Number(i.qty) || 1)));
+    const stock = typeof i.stock === "number" && Number.isFinite(i.stock) ? Math.max(0, Math.floor(i.stock)) : undefined;
+    if (stock === 0) continue;
+    const qty = Math.min(itemLimit({ stock }), Math.max(1, Math.floor(Number(i.qty) || 1)));
     out.push({
       slug: i.slug,
       ml: i.ml,
       qty,
       price: i.price,
+      ...(stock !== undefined ? { stock } : {}),
       name: String(i.name ?? i.slug),
       brand: String(i.brand ?? ""),
       family: String(i.family ?? "amber"),
@@ -83,23 +88,26 @@ if (typeof window !== "undefined") {
 const same = (a: { slug: string; ml: number }, b: { slug: string; ml: number }) => a.slug === b.slug && a.ml === b.ml;
 
 export function addItem(item: Omit<CartItem, "qty">, qty = 1, open = true): void {
+  const limit = itemLimit(item);
+  if (limit < 1) return;
   const items = cartItems.value;
   const found = items.find((i) => same(i, item));
   if (found) {
     cartItems.value = items.map((i) =>
-      same(i, item) ? { ...i, ...item, qty: Math.min(MAX_QTY, i.qty + qty) } : i,
+      same(i, item) ? { ...i, ...item, qty: Math.min(limit, i.qty + qty) } : i,
     );
   } else if (items.length < MAX_LINES) {
-    cartItems.value = [...items, { ...item, qty: Math.min(MAX_QTY, Math.max(1, qty)) }];
+    cartItems.value = [...items, { ...item, qty: Math.min(limit, Math.max(1, qty)) }];
   }
   cartPulse.value++;
   if (open) cartOpen.value = true;
 }
 
 export function setQty(slug: string, ml: number, qty: number): void {
-  if (qty < 1) return removeItem(slug, ml);
+  const current = cartItems.value.find((i) => same(i, { slug, ml }));
+  if (qty < 1 || (current && itemLimit(current) < 1)) return removeItem(slug, ml);
   cartItems.value = cartItems.value.map((i) =>
-    same(i, { slug, ml }) ? { ...i, qty: Math.min(MAX_QTY, Math.floor(qty)) } : i,
+    same(i, { slug, ml }) ? { ...i, qty: Math.min(itemLimit(i), Math.floor(qty)) } : i,
   );
 }
 

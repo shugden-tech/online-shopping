@@ -1,0 +1,55 @@
+{
+  "slug": "dolce-and-gabbana-light-blue-eau-intense-edp",
+  "brand": "Dolce&Gabbana",
+  "name": "Light Blue Eau Intense",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "grapefruit",
+      "mandarin"
+    ],
+    "heart": [
+      "marine",
+      "juniper"
+    ],
+    "base": [
+      "musk",
+      "amberwood"
+    ]
+  },
+  "description": {
+    "mn": "Dolce&Gabbana Light Blue Eau Intense: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: бэрсүүт жүрж, мандарин; зүрхний ноот: далайн ноот, арц; суурь ноот: заар, хув мод.",
+    "en": "Dolce&Gabbana Light Blue Eau Intense is a woody fragrance in EDP concentration. Its listed notes include grapefruit, mandarin, marine notes, juniper, musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-036-front.webp",
+    "back": "/product-photos/curated-036-back.webp"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "rabanne-phantom-parfum",
+  "brand": "Rabanne",
+  "name": "Phantom",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "cardamom",
+      "bergamot",
+      "rhubarb",
+      "lemon"
+    ],
+    "heart": [
+      "lavender",
+      "patchouli",
+      "cedar",
+      "geranium"
+    ],
+    "base": [
+      "vanilla",
+      "tolu-balsam",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Rabanne Phantom: Эрэгтэйчүүдэд зориулсан өвслөг үнэр (Parfum). Эхний ноот: кардамон, бергамот, гишүүнэ, нимбэг; зүрхний ноот: лаванда, пачули, хуш мод, герань; суурь ноот: ваниль, толу бальзам, ветивер.",
+    "en": "Rabanne Phantom is a aromatic fragrance in Parfum concentration. Its listed notes include cardamom, bergamot, rhubarb, lemon, lavender."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": false,
+      "stock": 0
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-030-front.webp",
+    "back": "/product-photos/curated-030-back.webp"
+  }
+}

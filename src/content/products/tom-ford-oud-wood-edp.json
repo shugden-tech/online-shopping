@@ -1,0 +1,48 @@
+{
+  "slug": "tom-ford-oud-wood-edp",
+  "brand": "Tom Ford",
+  "name": "Oud Wood",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": [],
+    "key": [
+      "cardamom",
+      "pink-pepper",
+      "patchouli",
+      "amber",
+      "oud",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Tom Ford Oud Wood: Хүйс харгалзахгүй хув үнэр (EDP). Үндсэн ноотууд: Кардамон, Ягаан чинжүү, Пачули, Хув, Агар мод, Тонка шош.",
+    "en": "Tom Ford Oud Wood is a amber fragrance in EDP concentration. Its listed notes include cardamom, pink pepper, patchouli, amber, oud."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 87000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-085-front.webp",
+    "back": "/product-photos/curated-085-back.webp"
+  }
+}

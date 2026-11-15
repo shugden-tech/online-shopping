@@ -1,0 +1,56 @@
+{
+  "slug": "giorgio-armani-acqua-di-gio-parfum",
+  "brand": "Giorgio Armani",
+  "name": "Acqua di Gio",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "marine",
+      "bergamot"
+    ],
+    "heart": [
+      "rosemary",
+      "clary-sage",
+      "geranium"
+    ],
+    "base": [
+      "incense",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Giorgio Armani Acqua di Gio: Эрэгтэйчүүдэд зориулсан өвслөг үнэр (Parfum). Эхний ноот: далайн ноот, бергамот; зүрхний ноот: розмарин, мускат хашхираа, герань; суурь ноот: хүж, пачули.",
+    "en": "Giorgio Armani Acqua di Gio is a aromatic fragrance in Parfum concentration. Its listed notes include marine notes, bergamot, rosemary, clary sage, geranium."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-015-front.webp",
+    "back": "/product-photos/curated-015-back.webp"
+  }
+}

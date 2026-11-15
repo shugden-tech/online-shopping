@@ -1,0 +1,59 @@
+{
+  "slug": "versace-eros-edt",
+  "brand": "Versace",
+  "name": "Eros",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "mint",
+      "green-apple",
+      "lemon"
+    ],
+    "heart": [
+      "tonka",
+      "ambroxan",
+      "geranium"
+    ],
+    "base": [
+      "vanilla",
+      "cedar",
+      "vetiver",
+      "oakmoss"
+    ]
+  },
+  "description": {
+    "mn": "Versace Eros: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: гаа, ногоон алим, нимбэг; зүрхний ноот: тонка шош, амброксан, герань; суурь ноот: ваниль, хуш мод, ветивер, царсны хөвд.",
+    "en": "Versace Eros is a woody fragrance in EDT concentration. Its listed notes include mint, green apple, lemon, tonka bean, ambroxan."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-023-front.webp",
+    "back": "/product-photos/curated-023-back.webp"
+  }
+}

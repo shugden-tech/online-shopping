@@ -1,0 +1,52 @@
+{
+  "slug": "azzaro-the-most-wanted-parfum",
+  "brand": "Azzaro",
+  "name": "The Most Wanted",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "ginger"
+    ],
+    "heart": [
+      "woods"
+    ],
+    "base": [
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Azzaro The Most Wanted: Эрэгтэйчүүдэд зориулсан модлог үнэр (Parfum). Эхний ноот: цагаан гаа; зүрхний ноот: модлог ноот; суурь ноот: ваниль.",
+    "en": "Azzaro The Most Wanted is a woody fragrance in Parfum concentration. Its listed notes include ginger, woods, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-019-front.webp",
+    "back": "/product-photos/curated-019-back.webp"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "slug": "chanel-chance-eau-tendre-edp",
+  "brand": "Chanel",
+  "name": "Chance Eau Tendre",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "quince",
+      "grapefruit"
+    ],
+    "heart": [
+      "rose",
+      "jasmine"
+    ],
+    "base": [
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Chanel Chance Eau Tendre: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: айва, бэрсүүт жүрж; зүрхний ноот: сарнай, жасмин; суурь ноот: заар.",
+    "en": "Chanel Chance Eau Tendre is a floral fragrance in EDP concentration. Its listed notes include quince, grapefruit, rose, jasmine, musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-056-front.webp"
+  }
+}

@@ -12,7 +12,7 @@ import type { Dict, Locale } from "../i18n/lite";
 
 type Tr = Dict["checkout"];
 /** `{ [slug]: { [ml]: [price, inStock] } }` from the product collection at build time. */
-export type PriceCatalog = Record<string, Record<string, [number, boolean]>>;
+export type PriceCatalog = Record<string, Record<string, [number, boolean, number?]>>;
 
 export interface CheckoutFormProps {
   locale: Locale;
@@ -81,17 +81,19 @@ export default function CheckoutForm(props: CheckoutFormProps) {
   useEffect(() => {
     setMounted(true);
     let changed = false;
+    let priceChanged = false;
     const next = cartItems.value.map((i) => {
       const entry = catalog[i.slug]?.[String(i.ml)];
-      if (entry && entry[0] !== i.price) {
+      if (entry && (entry[0] !== i.price || entry[2] !== i.stock || i.qty > (entry[2] ?? 10))) {
         changed = true;
-        return { ...i, price: entry[0] };
+        priceChanged ||= entry[0] !== i.price;
+        return { ...i, price: entry[0], stock: entry[2], qty: Math.min(i.qty, Math.max(1, entry[2] ?? 10)) };
       }
       return i;
     });
     if (changed) {
       cartItems.value = next;
-      setPriceChanged(true);
+      if (priceChanged) setPriceChanged(true);
     }
   }, []);
 

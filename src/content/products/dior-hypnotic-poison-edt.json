@@ -1,0 +1,62 @@
+{
+  "slug": "dior-hypnotic-poison-edt",
+  "brand": "Dior",
+  "name": "Hypnotic Poison",
+  "concentration": "EDT",
+  "gender": "women",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "coconut",
+      "plum",
+      "apricot"
+    ],
+    "heart": [
+      "rosewood",
+      "jasmine",
+      "caraway",
+      "tuberose",
+      "rose",
+      "lily-of-the-valley"
+    ],
+    "base": [
+      "vanilla",
+      "almond",
+      "sandalwood",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Dior Hypnotic Poison: Эмэгтэйчүүдэд зориулсан гурман үнэр (EDT). Эхний ноот: кокос, чавга, чангаанз; зүрхний ноот: сарнай мод, жасмин, гоньд, тубероз, сарнай, хонхон цэцэг; суурь ноот: ваниль, бүйлс, зандан мод, заар.",
+    "en": "Dior Hypnotic Poison is a gourmand fragrance in EDT concentration. Its listed notes include coconut, plum, apricot, rosewood, jasmine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-059-front.webp",
+    "back": "/product-photos/curated-059-back.webp"
+  }
+}

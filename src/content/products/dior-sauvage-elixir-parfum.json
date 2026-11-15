@@ -1,0 +1,54 @@
+{
+  "slug": "dior-sauvage-elixir-parfum",
+  "brand": "Dior",
+  "name": "Sauvage Elixir",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "cinnamon",
+      "nutmeg",
+      "cardamom",
+      "grapefruit"
+    ],
+    "heart": [
+      "lavender"
+    ],
+    "base": [
+      "sandalwood",
+      "licorice",
+      "amber",
+      "patchouli",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Dior Sauvage Elixir: Эрэгтэйчүүдэд зориулсан өвслөг үнэр (Parfum). Эхний ноот: шанцай, задийн самар, кардамон, бэрсүүт жүрж; зүрхний ноот: лаванда; суурь ноот: зандан мод, чихэр өвс, хув, пачули, ветивер.",
+    "en": "Dior Sauvage Elixir is a aromatic fragrance in Parfum concentration. Its listed notes include cinnamon, nutmeg, cardamom, grapefruit, lavender."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 94500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": true,
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-007-front.webp",
+    "back": "/product-photos/curated-007-back.webp"
+  }
+}

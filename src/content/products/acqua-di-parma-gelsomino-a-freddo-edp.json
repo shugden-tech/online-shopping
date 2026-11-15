@@ -26,7 +26,8 @@
     {
       "ml": 5,
       "price": 65000,
-      "inStock": true
+      "inStock": false,
+      "stock": 0
     }
   ],
   "bottleShape": "classic",

@@ -71,6 +71,7 @@ function setMenu(open: boolean) {
   if (!menu || !btn) return;
   root.toggleAttribute("data-menu-open", open);
   menu.toggleAttribute("inert", !open);
+  doc.querySelector(".mmenu__backdrop")?.toggleAttribute("inert", !open);
   btn.setAttribute("aria-expanded", String(open));
   btn.setAttribute("aria-label", (open ? btn.dataset.closeLabel : btn.dataset.openLabel) ?? "");
   if (open) menu.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
@@ -82,19 +83,35 @@ doc.addEventListener("click", (e) => {
   const target = e.target as HTMLElement | null;
   if (!target?.closest) return;
 
-  // sample picker on a product card: a tap opens / closes it (mouse users get it on hover via CSS)
+  if (menuOpen() && (target.closest("[data-menu-close]") || !target.closest("#mobile-menu, [data-menu-toggle]"))) {
+    e.preventDefault();
+    setMenu(false);
+    doc.querySelector<HTMLElement>("[data-menu-toggle]")?.focus({ preventScroll: true });
+    return;
+  }
+
+  // Sample picker: use the same explicit toggle state for mouse, touch and keyboard.
   const decToggle = target.closest<HTMLElement>("[data-decant-toggle]");
   const openDec = doc.querySelectorAll<HTMLElement>("[data-decants].is-open");
   openDec.forEach((box) => {
     if (box.contains(target) && !target.closest("[data-add]") && !decToggle) return;
     box.classList.remove("is-open");
-    box.querySelector("[data-decant-toggle]")?.setAttribute("aria-expanded", "false");
+    const toggle = box.querySelector<HTMLElement>("[data-decant-toggle]");
+    toggle?.setAttribute("aria-expanded", "false");
+    if (toggle?.dataset.openLabel) {
+      toggle.setAttribute("aria-label", toggle.dataset.openLabel);
+      toggle.setAttribute("title", toggle.dataset.openLabel);
+    }
   });
   if (decToggle) {
     const box = decToggle.closest<HTMLElement>("[data-decants]");
     if (box && ![...openDec].includes(box)) {
       box.classList.add("is-open");
       decToggle.setAttribute("aria-expanded", "true");
+      if (decToggle.dataset.closeLabel) {
+        decToggle.setAttribute("aria-label", decToggle.dataset.closeLabel);
+        decToggle.setAttribute("title", decToggle.dataset.closeLabel);
+      }
     }
     return;
   }
@@ -136,7 +153,8 @@ doc.addEventListener("click", (e) => {
       const base = JSON.parse(add.dataset.item ?? "{}") as Omit<CartItem, "qty" | "ml" | "price">;
       const ml = Number(add.dataset.ml);
       const price = Number(add.dataset.price);
-      if (base.slug && ml > 0 && price > 0) addItem({ ...base, ml, price });
+      const stock = add.dataset.stock === undefined ? undefined : Number(add.dataset.stock);
+      if (base.slug && ml > 0 && price > 0) addItem({ ...base, ml, price, ...(stock !== undefined ? { stock } : {}) });
     } catch {
       /* malformed data attribute: ignore */
     }

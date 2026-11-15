@@ -319,4 +319,7 @@ async function main() {
   console.log(`\nWrote ${products.length} product files and updated notes.json.`);
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+export { concentrationOf, genderOf, familyOf, sizesOf, noteIds, slugify, mongolianDescription };
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((e) => { console.error(e); process.exit(1); });
+}

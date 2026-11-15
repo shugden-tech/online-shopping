@@ -1,0 +1,57 @@
+{
+  "slug": "jean-paul-gaultier-le-male-elixir-parfum",
+  "brand": "Jean Paul Gaultier",
+  "name": "Le Male Elixir",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "lavender",
+      "mint"
+    ],
+    "heart": [
+      "vanilla",
+      "benzoin"
+    ],
+    "base": [
+      "honey",
+      "tonka",
+      "tobacco"
+    ]
+  },
+  "description": {
+    "mn": "Jean Paul Gaultier Le Male Elixir: Эрэгтэйчүүдэд зориулсан гурман үнэр (Parfum). Эхний ноот: лаванда, гаа; зүрхний ноот: ваниль, бензойн; суурь ноот: зөгийн бал, тонка шош, тамхины навч.",
+    "en": "Jean Paul Gaultier Le Male Elixir is a gourmand fragrance in Parfum concentration. Its listed notes include lavender, mint, vanilla, benzoin, honey."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": true,
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-001-front.webp",
+    "back": "/product-photos/curated-001-back.webp"
+  }
+}

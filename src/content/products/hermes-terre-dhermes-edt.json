@@ -1,0 +1,57 @@
+{
+  "slug": "hermes-terre-dhermes-edt",
+  "brand": "Hermes",
+  "name": "Terre d'Hermes",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "orange",
+      "grapefruit"
+    ],
+    "heart": [
+      "pepper",
+      "geranium"
+    ],
+    "base": [
+      "vetiver",
+      "cedar",
+      "patchouli",
+      "benzoin"
+    ]
+  },
+  "description": {
+    "mn": "Hermes Terre d'Hermes: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: жүрж, бэрсүүт жүрж; зүрхний ноот: хар чинжүү, герань; суурь ноот: ветивер, хуш мод, пачули, бензойн.",
+    "en": "Hermes Terre d'Hermes is a woody fragrance in EDT concentration. Its listed notes include orange, grapefruit, black pepper, geranium, vetiver."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-038-front.webp",
+    "back": "/product-photos/curated-038-back.webp"
+  }
+}

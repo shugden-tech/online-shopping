@@ -47,3 +47,13 @@ To sell the full retail bottle, add it to `sizes` with `"full": true` (15–500 
 
 The product card's main **Add to cart** button then adds the full bottle, and the decants (5 / 10 ml) move into
 the small square picker next to it. Without a full bottle the main button adds the smallest decant in stock.
+
+## Curated catalog and demo inventory (2026-11-15)
+
+The catalog now contains 207 products: the previous 100 plus 107 new entries from the reviewed 108-product selection (one was already present). All 28 home-page logo searches have matching products. The additive importer is `scripts/import-curated-catalog.mjs`; its source and photo audit reports are in `decantx/curated-*-report.json` and `decantx/curated-catalog-sources.json`. Local product photos are served from `public/product-photos/`.
+
+`scripts/set-demo-inventory.mjs` sets deterministic demo quantities in each size's optional `stock` field. Currently 190 products are available with 1–5 units per size, and 17 are sold out with `stock: 0`. `inStock` must agree with `stock > 0`. Cart quantities and order validation respect this limit. These quantities are static demo data; orders do not decrement them.
+
+Missing prices received demo placeholders: 2 ml 20,000 MNT, 5 ml 45,000 MNT, 10 ml 80,000 MNT, 30 ml 200,000 MNT. Existing positive reference prices were retained. None of these establish real business prices or availability. The pre-change catalog backup and all counts are recorded in `decantx/demo-inventory-report.json`.
+
+Flat published fragrance-note lists use the optional `notes.key` field and appear as “Fragrance notes”, without inventing a top/heart/base assignment. New note labels have Mongolian translations; photos for individual notes remain a separate task.

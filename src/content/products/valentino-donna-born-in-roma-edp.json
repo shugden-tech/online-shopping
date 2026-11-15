@@ -1,0 +1,58 @@
+{
+  "slug": "valentino-donna-born-in-roma-edp",
+  "brand": "Valentino",
+  "name": "Donna Born in Roma",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "blackcurrant",
+      "pink-pepper",
+      "bergamot"
+    ],
+    "heart": [
+      "jasmine",
+      "green-tea"
+    ],
+    "base": [
+      "vanilla",
+      "cashmeran",
+      "guaiac-wood"
+    ]
+  },
+  "description": {
+    "mn": "Valentino Donna Born in Roma: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: үхрийн нүд, ягаан чинжүү, бергамот; зүрхний ноот: жасмин, ногоон цай; суурь ноот: ваниль, кашмеран, гваяк мод.",
+    "en": "Valentino Donna Born in Roma is a floral fragrance in EDP concentration. Its listed notes include blackcurrant, pink pepper, bergamot, jasmine, green tea."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-041-front.webp",
+    "back": "/product-photos/curated-041-back.webp"
+  },
+  "featured": true
+}

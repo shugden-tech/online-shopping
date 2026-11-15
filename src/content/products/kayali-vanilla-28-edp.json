@@ -1,0 +1,57 @@
+{
+  "slug": "kayali-vanilla-28-edp",
+  "brand": "Kayali",
+  "name": "Vanilla 28",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "vanilla-orchid",
+      "jasmine"
+    ],
+    "heart": [
+      "brown-sugar",
+      "tonka"
+    ],
+    "base": [
+      "amber",
+      "musk",
+      "amberwood",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Kayali Vanilla 28: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: ванилийн цахирмаа, жасмин; зүрхний ноот: бор сахар, тонка шош; суурь ноот: хув, заар, хув мод, пачули.",
+    "en": "Kayali Vanilla 28 is a amber fragrance in EDP concentration. Its listed notes include vanilla orchid, jasmine, brown sugar, tonka bean, amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": false,
+      "stock": 0
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-070-front.webp",
+    "back": "/product-photos/curated-070-back.webp"
+  }
+}

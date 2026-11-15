@@ -1,0 +1,55 @@
+{
+  "slug": "hugo-boss-bottled-elixir-parfum",
+  "brand": "HUGO BOSS",
+  "name": "Bottled Elixir",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "cardamom",
+      "incense"
+    ],
+    "heart": [
+      "patchouli",
+      "vetiver"
+    ],
+    "base": [
+      "labdanum",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "HUGO BOSS Bottled Elixir: Эрэгтэйчүүдэд зориулсан модлог үнэр (Parfum). Эхний ноот: кардамон, хүж; зүрхний ноот: пачули, ветивер; суурь ноот: лабданум, хуш мод.",
+    "en": "HUGO BOSS Bottled Elixir is a woody fragrance in Parfum concentration. Its listed notes include cardamom, incense, patchouli, vetiver, labdanum."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-105-front.webp",
+    "back": "/product-photos/curated-105-back.webp"
+  }
+}

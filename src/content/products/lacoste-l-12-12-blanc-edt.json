@@ -1,0 +1,57 @@
+{
+  "slug": "lacoste-l-12-12-blanc-edt",
+  "brand": "Lacoste",
+  "name": "L.12.12 Blanc",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "grapefruit",
+      "rosemary",
+      "cardamom"
+    ],
+    "heart": [
+      "ylang-ylang",
+      "tuberose"
+    ],
+    "base": [
+      "suede",
+      "cedar",
+      "leather",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Lacoste L.12.12 Blanc: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: бэрсүүт жүрж, розмарин, кардамон; зүрхний ноот: иланг-иланг, тубероз; суурь ноот: илгэ, хуш мод, арьс, ветивер.",
+    "en": "Lacoste L.12.12 Blanc is a woody fragrance in EDT concentration. Its listed notes include grapefruit, rosemary, cardamom, ylang-ylang, tuberose."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-106-front.webp"
+  }
+}

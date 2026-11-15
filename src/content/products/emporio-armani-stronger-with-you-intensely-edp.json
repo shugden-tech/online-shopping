@@ -1,0 +1,60 @@
+{
+  "slug": "emporio-armani-stronger-with-you-intensely-edp",
+  "brand": "Emporio Armani",
+  "name": "Stronger With You Intensely",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pink-pepper",
+      "juniper",
+      "violet"
+    ],
+    "heart": [
+      "toffee",
+      "cinnamon",
+      "lavender",
+      "sage"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "amber",
+      "suede"
+    ]
+  },
+  "description": {
+    "mn": "Emporio Armani Stronger With You Intensely: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: ягаан чинжүү, арц, нил цэцэг; зүрхний ноот: ирис чихэр, шанцай, лаванда, мэргэн өвс; суурь ноот: ваниль, тонка шош, хув, илгэ.",
+    "en": "Emporio Armani Stronger With You Intensely is a amber fragrance in EDP concentration. Its listed notes include pink pepper, juniper, violet, toffee, cinnamon."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": false,
+      "stock": 0
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-016-front.webp",
+    "back": "/product-photos/curated-016-back.webp"
+  }
+}

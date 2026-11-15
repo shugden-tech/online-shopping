@@ -1,0 +1,48 @@
+{
+  "slug": "diptyque-orpheon-edp",
+  "brand": "Diptyque",
+  "name": "Orpheon",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "juniper"
+    ],
+    "heart": [
+      "jasmine"
+    ],
+    "base": [
+      "powdery",
+      "cedar",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Diptyque Orpheon: Хүйс харгалзахгүй модлог үнэр (EDP). Эхний ноот: арц; зүрхний ноот: жасмин; суурь ноот: пудрын ноот, хуш мод, тонка шош.",
+    "en": "Diptyque Orpheon is a woody fragrance in EDP concentration. Its listed notes include juniper, jasmine, powdery notes, cedar, tonka bean."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 112500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-104-front.webp",
+    "back": "/product-photos/curated-104-back.webp"
+  }
+}

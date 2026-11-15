@@ -1,0 +1,52 @@
+{
+  "slug": "coach-for-men-edt",
+  "brand": "Coach",
+  "name": "For Men",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "woods"
+    ],
+    "heart": [
+      "cardamom"
+    ],
+    "base": [
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Coach For Men: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDT). Эхний ноот: модлог ноот; зүрхний ноот: кардамон; суурь ноот: модлог ноот.",
+    "en": "Coach For Men is a citrus fragrance in EDT concentration. Its listed notes include woods, cardamom, woods."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": false,
+      "stock": 0
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-103-front.webp",
+    "back": "/product-photos/curated-103-back.webp"
+  }
+}

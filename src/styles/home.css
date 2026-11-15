@@ -53,6 +53,7 @@
 .promo__tile { aspect-ratio: 16 / 7; background: linear-gradient(135deg, var(--a), var(--b)); }
 .promo__tile:not(.promo__tile--big) { aspect-ratio: auto; }
 .promo__tile img { position: absolute; inset: 6% 4%; width: 92%; height: 88%; object-fit: contain; z-index: -1; opacity: .9; transition: transform .9s var(--ease-out); }
+.promo__tile--big img { inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; }
 .promo__tile:hover img { transform: scale(1.06); }
 .promo__label, .gtile__label {
   position: absolute; left: 50%; top: 50%; translate: -50% -50%; white-space: nowrap;
@@ -85,9 +86,7 @@
 .gtile--women { background: linear-gradient(135deg, #f6e3e6, #dca7b1); }
 .gtile--men { background: linear-gradient(135deg, #e1e6ee, #7d8ea6); }
 .gtile--unisex { background: linear-gradient(135deg, #ece7da, #b3a682); }
-.gtile__bottles { position: absolute; inset: 14% 10% 6%; display: flex; align-items: flex-end; justify-content: center; gap: 4%; transition: transform .8s var(--ease-out); }
-.gtile:hover .gtile__bottles { transform: scale(1.05); }
-.gtile__bottle { width: 26%; opacity: .9; }
+.gtile__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
 .gtile__label { top: 50%; }
 
 /* ---------- 5 · tabs + grid ---------- */
@@ -114,6 +113,8 @@
 .brands__marquee:hover .brands__track, .brands__marquee:focus-within .brands__track { animation-play-state: paused; }
 .brands__track a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-head); font-weight: 600; font-size: 25px; letter-spacing: .08em; text-transform: uppercase; color: #a5a29c; white-space: nowrap; transition: color .2s; }
 .brands__track a:hover { color: var(--text); }
+.brands__track img { display: block; width: 160px; height: 64px; object-fit: contain; transition: opacity .2s; }
+.brands__track a:hover img { opacity: .7; }
 @keyframes marquee { to { transform: translateX(calc(-50% - 28px)); } }
 
 /* ---------- 7 · about ---------- */
@@ -173,13 +174,3 @@
 @media (max-width: 760px) {
   .hb--mob .hb__track--img { border-radius: 8px; }
 }
-
-/* gender tiles: real product photos on white cards */
-.gtile__bottles { inset: 12% 8% 10%; align-items: center; gap: 4%; }
-.gtile__bottle {
-  width: 29%; aspect-ratio: 1; opacity: 1; display: grid; place-items: center; padding: 6%;
-  background: #fff; border-radius: 8px; box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
-}
-.gtile__bottle:nth-child(2) { width: 33%; translate: 0 -6%; }
-.gtile__bottle img { width: 100%; height: 100%; object-fit: contain; }
-.gtile__label { top: auto; bottom: 7%; translate: -50% 0; }

@@ -1,0 +1,57 @@
+{
+  "slug": "lancome-idole-edp",
+  "brand": "Lancôme",
+  "name": "Idole",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "pear",
+      "bergamot",
+      "pink-pepper"
+    ],
+    "heart": [
+      "rose",
+      "jasmine"
+    ],
+    "base": [
+      "musk",
+      "vanilla",
+      "patchouli",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Lancôme Idole: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: лийр, бергамот, ягаан чинжүү; зүрхний ноот: сарнай, жасмин; суурь ноот: заар, ваниль, пачули, хуш мод.",
+    "en": "Lancôme Idole is a floral fragrance in EDP concentration. Its listed notes include pear, bergamot, pink pepper, rose, jasmine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-061-front.webp"
+  }
+}

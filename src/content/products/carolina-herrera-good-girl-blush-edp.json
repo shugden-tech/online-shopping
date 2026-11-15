@@ -1,0 +1,55 @@
+{
+  "slug": "carolina-herrera-good-girl-blush-edp",
+  "brand": "Carolina Herrera",
+  "name": "Good Girl Blush",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "bergamot",
+      "bitter-almond"
+    ],
+    "heart": [
+      "peony",
+      "ylang-ylang"
+    ],
+    "base": [
+      "vanilla",
+      "coumarin"
+    ]
+  },
+  "description": {
+    "mn": "Carolina Herrera Good Girl Blush: Эмэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: бергамот, гашуун бүйлс; зүрхний ноот: цээнэ цэцэг, иланг-иланг; суурь ноот: ваниль, кумарин.",
+    "en": "Carolina Herrera Good Girl Blush is a woody fragrance in EDP concentration. Its listed notes include bergamot, bitter almond, peony, ylang-ylang, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-048-front.webp",
+    "back": "/product-photos/curated-048-back.webp"
+  }
+}

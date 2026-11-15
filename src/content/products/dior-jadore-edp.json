@@ -1,0 +1,66 @@
+{
+  "slug": "dior-jadore-edp",
+  "brand": "Dior",
+  "name": "J'adore",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "peach",
+      "magnolia",
+      "mandarin",
+      "pear",
+      "bergamot",
+      "melon"
+    ],
+    "heart": [
+      "rose",
+      "violet",
+      "freesia",
+      "plum",
+      "jasmine",
+      "orchid",
+      "tuberose"
+    ],
+    "base": [
+      "cedar",
+      "blackberry",
+      "musk",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Dior J'adore: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: тоор, магнолия, мандарин, лийр, бергамот, амтат гуа; зүрхний ноот: сарнай, нил цэцэг, фрезия, чавга, жасмин, цахирмаа, тубероз; суурь ноот: хуш мод, хар бөөрөлзгөнө, заар, ваниль.",
+    "en": "Dior J'adore is a floral fragrance in EDP concentration. Its listed notes include peach, magnolia, mandarin, pear, bergamot."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-058-front.webp",
+    "back": "/product-photos/curated-058-back.webp"
+  }
+}

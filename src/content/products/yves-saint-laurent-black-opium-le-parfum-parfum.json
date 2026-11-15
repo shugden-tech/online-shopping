@@ -1,0 +1,58 @@
+{
+  "slug": "yves-saint-laurent-black-opium-le-parfum-parfum",
+  "brand": "Yves Saint Laurent",
+  "name": "Black Opium Le Parfum",
+  "concentration": "Parfum",
+  "gender": "women",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "cinnamon",
+      "pear",
+      "mandarin"
+    ],
+    "heart": [
+      "solar",
+      "jasmine",
+      "orange-blossom"
+    ],
+    "base": [
+      "vanilla",
+      "coffee",
+      "patchouli",
+      "vanilla-orchid"
+    ]
+  },
+  "description": {
+    "mn": "Yves Saint Laurent Black Opium Le Parfum: Эмэгтэйчүүдэд зориулсан гурман үнэр (Parfum). Эхний ноот: шанцай, лийр, мандарин; зүрхний ноот: нарны ноот, жасмин, жүржийн цэцэг; суурь ноот: ваниль, кофе, пачули, ванилийн цахирмаа.",
+    "en": "Yves Saint Laurent Black Opium Le Parfum is a gourmand fragrance in Parfum concentration. Its listed notes include cinnamon, pear, mandarin, solar notes, jasmine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-046-front.webp"
+  }
+}

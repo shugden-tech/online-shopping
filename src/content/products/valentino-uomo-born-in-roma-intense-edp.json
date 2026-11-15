@@ -1,0 +1,53 @@
+{
+  "slug": "valentino-uomo-born-in-roma-intense-edp",
+  "brand": "Valentino",
+  "name": "Uomo Born in Roma Intense",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "vanilla"
+    ],
+    "heart": [
+      "lavender"
+    ],
+    "base": [
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Valentino Uomo Born in Roma Intense: Эрэгтэйчүүдэд зориулсан гурман үнэр (EDP). Эхний ноот: ваниль; зүрхний ноот: лаванда; суурь ноот: ветивер.",
+    "en": "Valentino Uomo Born in Roma Intense is a gourmand fragrance in EDP concentration. Its listed notes include vanilla, lavender, vetiver."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-022-front.webp",
+    "back": "/product-photos/curated-022-back.webp"
+  },
+  "featured": true
+}

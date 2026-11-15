@@ -1,0 +1,56 @@
+{
+  "slug": "narciso-rodriguez-for-her-musc-noir-rose-edp",
+  "brand": "Narciso Rodriguez",
+  "name": "For Her Musc Noir Rose",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "plum",
+      "pink-pepper",
+      "bergamot"
+    ],
+    "heart": [
+      "musk",
+      "rose",
+      "tuberose"
+    ],
+    "base": [
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Narciso Rodriguez For Her Musc Noir Rose: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: чавга, ягаан чинжүү, бергамот; зүрхний ноот: заар, сарнай, тубероз; суурь ноот: ваниль.",
+    "en": "Narciso Rodriguez For Her Musc Noir Rose is a floral fragrance in EDP concentration. Its listed notes include plum, pink pepper, bergamot, musk, rose."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-069-front.webp",
+    "back": "/product-photos/curated-069-back.webp"
+  }
+}

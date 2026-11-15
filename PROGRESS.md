@@ -257,3 +257,49 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - **Gender tiles:** Women / Men / Unisex now show three random products of that gender with real photos (picked on each build), instead of illustrated bottles.
 - **Cart drawer could not be closed (fixed):** Haiku reproduced it: the X button, the backdrop and "continue" reopened the drawer at once; only Escape worked. Cause: the drawer sets `data-cart-open` on `<html>` while open, and the delegated click handler in `shell.ts` matched `closest("[data-cart-open]")`, which reached `<html>`. The opener and pulse selectors are now `[data-cart-open]:not(html)`. On phones the drawer now leaves a 40 px backdrop strip so tapping outside closes it.
 - **Checks:** close by X / backdrop / continue / Escape, then reopen: all pass at 1440 px and 390 px (touch), 0 page errors. Build passes, JS budget PASS.
+
+## Mobile decant picker close fix - Codex GPT-6.1
+
+- Replaced hover/focus-driven opening with an explicit click/tap state so the picker closes while its toggle retains focus.
+- The bottle icon animates into a left chevron while open; tapping it closes the 5/10 ml options. The accessible label switches between open and close; reduced motion is respected.
+- Applies to the shared product card, including product-page similar items. Validation: Astro check; browser interaction has not yet been checked.
+
+## Gender tiles images + hidden announcement bar (2026-11-15) — SWE-2 Flash Medium
+
+- **Announcement bar:** hidden via the `hidden` attribute on `.ann` in `Header.astro`; remove the attribute to re-enable it.
+- **Gender tiles:** order changed to Unisex / Men / Women; each tile now uses the owner-approved DecantX category image (`decantx/men.jpg`, `women.jpg`, `unisex.jpg`, copied to `src/assets/gender/`). `CLAUDE.md` and `context.md` updated to allow these three images only.
+- **Checks:** `astro check` 0 errors, `npm run build` passes, browser check at 1440 px confirms tile order and images; no console errors. Screenshots: `docs/screens/home-gender-1440.png`, `home-gender-390.png`.
+- **Tab emoji:** removed the ✨ prefix from the "New" tab label on the home page.
+- **Favicon:** regenerated `public/favicon.png` from the transparent `logo-mark.png` (no more white box in the browser tab). `apple-touch-icon.png` keeps an opaque ink backdrop; `og.jpg` now uses the new mark + wordmark on ink. `scripts/make-icons.mjs` updated to match.
+- **Scent Finder auto-advance:** the three single-choice questions (who / when / mood) now move to the next question as soon as an option is picked, and the intensity slider advances on release for mouse/touch. Keyboard arrow changes on the slider stay manual (one arrow press per value, then Next) so users can still reach 4–5. Notes stay multi-select with a manual Next. `e2e-finder.mjs` keyboard section updated; all keyboard checks pass. The six `path:` result checks still fail — they assert old seed-catalog product names (same known issue as `e2e-shop`/`e2e-checkout`, see the import entry above).
+- **Finder result cards (light theme):** `.sf__card` was still the old dark translucent style; now a white translucent card with hairline border and blur, and `.sf__card-art` uses the same light gradient + family-tint radial as product cards, with the bottle photo contained inside instead of stretched edge-to-edge.
+- **Footer:** removed the underline on the `shugden.tech` credit link (underline only on hover); set the footer Instagram link to `https://www.instagram.com/shugden__/`.
+- **Mobile menu:** replaced `justify-content: space-between` with `margin-top: auto` on `.mmenu__foot` so the nav can't be clipped on short screens; removed the in-panel close button (backdrop tap and burger still dismiss).
+- **Home promo tile:** the big "all products" tile now uses the owner-supplied `assets/families/all_notes.jpg` instead of the chypre strip.
+
+## Mobile menu dismissal and developer credit - Codex GPT-6.1
+
+- Added a dimmed clickable menu backdrop and an in-panel close button. Outside taps dismiss the menu and restore focus to its opener.
+- Added a localized website-development credit linking to https://shugden.tech in the footer.
+- Validation: Astro check passed (0 errors, 0 warnings, 2 existing hints). Headless Edge at 390x844 with touch: outside dismissal, close button, and footer link passed against the local dev server.
+
+## Owner-supplied brand logos - Codex GPT-6.1
+
+- Connected all 28 SVG files from assets/logos/brand logo directly to the home brand marquee through Vite asset URL imports. Each links to shop search by name; the repeated marquee copy remains hidden from assistive technology.
+- Set consistent contain-fit logo boxes. Future SVG files added to the source folder are picked up automatically.
+- Validation: Astro check passed (0 errors, 0 warnings, 2 existing hints). Edge verified all 28 brand entries load, with no horizontal page overflow at 390 px. Dior and Miss Dior source files share identical artwork, so the asset pipeline deduplicates their image URL.
+
+## Curated popular catalog and demo inventory - Codex GPT-6.1 (2026-11-15)
+
+- Added 107 products from the approved popular-100 plus eight missing logo representatives; one of the 108 selected targets already existed. Catalog total: 207. All 28 logo searches have products. Old catalog and note dictionary backed up before import; see decantx/curated-catalog-import-report.json.
+- Downloaded 108 front and 81 back photos as local WebP images, with source URLs in decantx/curated-photo-report.json. Six unavailable optional back images were omitted. Corrected The One to the classic 2015 EDP and replaced mismatching Phantom Parfum / Bvlgari front images. Flat note lists are shown without invented tiers.
+- Set per-size demo stock: 190 products available with quantities 1�5, 17 sold out. Added 42 missing demo size prices; existing positive prices retained. Full 207-product snapshot before inventory changes is recorded in decantx/demo-inventory-report.json.
+- Stock limits apply to cards, product-page quantity controls, cart, finder, checkout refresh, and aggregated server order quantities. Demo stock does not decrement when orders are submitted.
+- Validation: Astro check passed (0 errors, 0 warnings, 2 existing hints); production build passed. Link check and JS budget passed after catalog import. Built-artifact browser check at 390x844: 207 cards, 28 nonempty brand searches, all local images loaded, no horizontal overflow, PDP and cart stock limits passed, no page errors. Snapshot comparison confirmed only size availability/stock and missing prices changed during demo seeding.
+- The Cloudflare dev runtime on localhost:4321 is stopped; restarting it required elevated local runtime access and that approval request was interrupted. Browser validation used local built artifacts with requests fulfilled from dist, without running the order API.
+
+## Bestseller selection - Codex GPT-6.1 (2026-11-15)
+
+- Replaced the old bestseller lineup with eight reviewed popular products: Le Male Elixir, Sauvage Elixir, Bleu de Chanel EDP, Uomo Born in Roma Intense, Donna Born in Roma, Good Girl, Baccarat Rouge 540 EDP, and Imagination.
+- src/data/bestsellers.json controls the exact home-page order. Cleared previous featured flags and marked only these eight featured. Products remain in the main catalog.
+- Validation: build passed; Edge checked both Mongolian and English built home pages render exactly the eight selected products in order.

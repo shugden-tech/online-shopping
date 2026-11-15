@@ -40,6 +40,8 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
   const [added, setAdded] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const moved = useRef(false);
+  /** True while the intensity slider is being dragged; keyboard changes stay manual. */
+  const sliderPointer = useRef(false);
 
   // restore from the hash (refresh keeps the step), and follow manual hash edits
   useEffect(() => {
@@ -74,6 +76,11 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
     setStep(Math.max(0, Math.min(RESULT_STEP, n)));
   };
   const set = (patch: Partial<Answers>) => setA((prev) => ({ ...prev, ...patch }));
+  /** Single-choice answers advance straight to the next question. */
+  const choose = (patch: Partial<Answers>) => {
+    set(patch);
+    go(step + 1);
+  };
   const canNext = step >= 1 && step <= STEPS ? answered(step, a) : true;
   const toggleNote = (id: string) =>
     set({ notes: a.notes.includes(id) ? a.notes.filter((n) => n !== id) : a.notes.length < MAX_NOTES ? [...a.notes, id] : a.notes });
@@ -91,7 +98,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
   const addAll = () => {
     results.forEach((m, i) => {
       const p = m.product;
-      addItem({ slug: p.slug, name: p.name, brand: p.brand, family: p.family, shape: p.shape, ml: p.addMl, price: p.addPrice, ...(p.img ? { img: p.img } : {}) }, 1, i === results.length - 1);
+      addItem({ slug: p.slug, name: p.name, brand: p.brand, family: p.family, shape: p.shape, ml: p.addMl, price: p.addPrice, stock: p.stock, ...(p.img ? { img: p.img } : {}) }, 1, i === results.length - 1);
     });
     setAdded(true);
   };
@@ -160,7 +167,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                 const hint = id === "women" ? tr.q1WomenHint : id === "men" ? tr.q1MenHint : tr.q1AnyHint;
                 return (
                   <label class="sf__opt sf__opt--row">
-                    <input type="radio" name="who" checked={a.who === id} onChange={() => set({ who: id })} />
+                    <input type="radio" name="who" checked={a.who === id} onChange={() => choose({ who: id })} />
                     <span class="sf__opt-box">
                       <span class="sf__opt-n" aria-hidden="true">0{i + 1}</span>
                       <span class="sf__opt-label">{label}</span>
@@ -181,7 +188,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                 const label = id === "day" ? tr.q2Day : id === "night" ? tr.q2Night : id === "office" ? tr.q2Office : tr.q2Date;
                 return (
                   <label class="sf__opt sf__opt--tile">
-                    <input type="radio" name="when" checked={a.when === id} onChange={() => set({ when: id })} />
+                    <input type="radio" name="when" checked={a.when === id} onChange={() => choose({ when: id })} />
                     <span class="sf__opt-box">
                       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d={WHEN_ICON[id]} />
@@ -203,7 +210,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                 const m = moods.find((x) => x.id === id)!;
                 return (
                   <label class="sf__opt sf__opt--band" style={`--tint:var(--fam-${id})`}>
-                    <input type="radio" name="mood" checked={a.mood === id} onChange={() => set({ mood: id })} />
+                    <input type="radio" name="mood" checked={a.mood === id} onChange={() => choose({ mood: id })} />
                     <span class="sf__opt-box">
                       <span class="sf__band-text">
                         <span class="sf__opt-label">{families[id]}</span>
@@ -268,7 +275,13 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                   aria-label={tr.intensityLabel}
                   aria-valuetext={intensityLevels[a.intensity - 1]}
                   aria-orientation="vertical"
+                  onPointerDown={() => { sliderPointer.current = true; }}
                   onInput={(e) => set({ intensity: Number((e.currentTarget as HTMLInputElement).value) })}
+                  onChange={() => {
+                    if (!sliderPointer.current) return;
+                    sliderPointer.current = false;
+                    go(step + 1);
+                  }}
                 />
               </div>
               <span class={`sf__pole${a.intensity <= 2 ? " on" : ""}`} aria-hidden="true">{tr.soft}</span>

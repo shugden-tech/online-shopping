@@ -1,0 +1,51 @@
+{
+  "slug": "mugler-alien-edp",
+  "brand": "Mugler",
+  "name": "Alien",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "jasmine"
+    ],
+    "heart": [
+      "woods"
+    ],
+    "base": [
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Mugler Alien: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: жасмин; зүрхний ноот: модлог ноот; суурь ноот: хув.",
+    "en": "Mugler Alien is a amber fragrance in EDP concentration. Its listed notes include jasmine, woods, amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-063-front.webp"
+  }
+}

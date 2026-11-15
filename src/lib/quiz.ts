@@ -29,6 +29,7 @@ export interface Answers {
 export const EMPTY_ANSWERS: Answers = { who: null, when: null, mood: null, notes: [], intensity: 3 };
 
 export interface QuizProduct {
+  stock?: number;
   slug: string;
   brand: string;
   name: string;

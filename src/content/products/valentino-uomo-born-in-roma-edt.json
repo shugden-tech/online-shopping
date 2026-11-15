@@ -1,0 +1,55 @@
+{
+  "slug": "valentino-uomo-born-in-roma-edt",
+  "brand": "Valentino",
+  "name": "Uomo Born in Roma",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "mineral-notes",
+      "violet-leaf",
+      "sea-salt"
+    ],
+    "heart": [
+      "ginger",
+      "sage"
+    ],
+    "base": [
+      "woods",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Valentino Uomo Born in Roma: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: эрдсийн ноот, нил цэцгийн навч, далайн давс; зүрхний ноот: цагаан гаа, мэргэн өвс; суурь ноот: модлог ноот, ветивер.",
+    "en": "Valentino Uomo Born in Roma is a woody fragrance in EDT concentration. Its listed notes include mineral notes, violet leaf, sea salt, ginger, sage."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-021-front.webp"
+  }
+}

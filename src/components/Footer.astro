@@ -67,6 +67,7 @@ const socials = [
     <div class="ftr__bottom">
       <p>© {year} genzst. {tr.footer.rights}</p>
       <p class="ftr__disc">{tr.footer.disclaimer}</p>
+      <p class="ftr__credit">{locale === "mn" ? "Вэб хөгжүүлсэн" : "Website by"} <a href="https://shugden.tech" target="_blank" rel="noopener noreferrer">shugden.tech</a></p>
     </div>
   </div>
 </footer>
@@ -91,6 +92,8 @@ const socials = [
     font-size: 12px; color: var(--text-dim);
   }
   .ftr__disc { max-width: 70ch; }
+  .ftr__credit a { color: var(--text); text-decoration: none; }
+  .ftr__credit a:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 900px) {
     .ftr__top { grid-template-columns: 1fr 1fr; }
     .ftr__brand { grid-column: 1 / -1; }

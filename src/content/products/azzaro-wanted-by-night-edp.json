@@ -1,0 +1,64 @@
+{
+  "slug": "azzaro-wanted-by-night-edp",
+  "brand": "Azzaro",
+  "name": "Wanted by Night",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "cinnamon",
+      "mandarin",
+      "lavender",
+      "lemon"
+    ],
+    "heart": [
+      "fruity-notes",
+      "incense",
+      "cedar",
+      "cumin"
+    ],
+    "base": [
+      "tobacco",
+      "vanilla",
+      "cedar",
+      "leather",
+      "benzoin",
+      "iso-e-super",
+      "cypress",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Azzaro Wanted by Night: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: шанцай, мандарин, лаванда, нимбэг; зүрхний ноот: жимсний ноот, хүж, хуш мод, зира; суурь ноот: тамхины навч, ваниль, хуш мод, арьс, бензойн, iso e super, кипарис, пачули.",
+    "en": "Azzaro Wanted by Night is a woody fragrance in EDP concentration. Its listed notes include cinnamon, mandarin, lavender, lemon, fruity notes."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-020-front.webp"
+  }
+}

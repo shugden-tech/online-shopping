@@ -1,0 +1,53 @@
+{
+  "slug": "maison-francis-kurkdjian-grand-soir-edp",
+  "brand": "Maison Francis Kurkdjian",
+  "name": "Grand Soir",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "labdanum"
+    ],
+    "heart": [
+      "benzoin"
+    ],
+    "base": [
+      "vanilla",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Maison Francis Kurkdjian Grand Soir: Хүйс харгалзахгүй хув үнэр (EDP). Эхний ноот: лабданум; зүрхний ноот: бензойн; суурь ноот: ваниль, хув.",
+    "en": "Maison Francis Kurkdjian Grand Soir is a amber fragrance in EDP concentration. Its listed notes include labdanum, benzoin, vanilla, amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 104000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 178000,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-073-front.webp",
+    "back": "/product-photos/curated-073-back.webp"
+  }
+}

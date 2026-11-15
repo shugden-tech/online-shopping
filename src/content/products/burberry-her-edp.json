@@ -1,0 +1,62 @@
+{
+  "slug": "burberry-her-edp",
+  "brand": "Burberry",
+  "name": "Her",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "blackberry",
+      "strawberry",
+      "mandarin",
+      "sour-cherry",
+      "raspberry",
+      "blackcurrant"
+    ],
+    "heart": [
+      "violet",
+      "jasmine"
+    ],
+    "base": [
+      "woods",
+      "vanilla",
+      "cashmeran",
+      "patchouli",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Burberry Her: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: хар бөөрөлзгөнө, гүзээлзгэнэ, мандарин, исгэлэн интоор, бөөрөлзгөнө, үхрийн нүд; зүрхний ноот: нил цэцэг, жасмин; суурь ноот: модлог ноот, ваниль, кашмеран, пачули, заар.",
+    "en": "Burberry Her is a floral fragrance in EDP concentration. Its listed notes include blackberry, strawberry, mandarin, sour cherry, raspberry."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": false,
+      "stock": 0
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-051-front.webp",
+    "back": "/product-photos/curated-051-back.webp"
+  }
+}

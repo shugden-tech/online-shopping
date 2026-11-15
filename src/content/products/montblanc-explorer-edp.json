@@ -1,0 +1,56 @@
+{
+  "slug": "montblanc-explorer-edp",
+  "brand": "Montblanc",
+  "name": "Explorer",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "bergamot"
+    ],
+    "heart": [
+      "vetiver",
+      "leather"
+    ],
+    "base": [
+      "ambroxan",
+      "akigalawood",
+      "patchouli",
+      "cacao"
+    ]
+  },
+  "description": {
+    "mn": "Montblanc Explorer: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: бергамот; зүрхний ноот: ветивер, арьс; суурь ноот: амброксан, акигалавүүд, пачули, какао.",
+    "en": "Montblanc Explorer is a woody fragrance in EDP concentration. Its listed notes include bergamot, vetiver, leather, ambroxan, akigalawood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-039-front.webp",
+    "back": "/product-photos/curated-039-back.webp"
+  }
+}

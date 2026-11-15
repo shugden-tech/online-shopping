@@ -26,7 +26,7 @@ const url = new URL(productPath(locale, p.slug), site).href;
 const title = `${p.name} — ${p.brand}`;
 const description = fill(tr.product.metaDescription, {
   brand: p.brand, name: p.name, conc: p.concentration, family: tr.families[p.family],
-  price: fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }),
+  price: fromPrice(p) > 0 ? fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }) : locale === "mn" ? "Үнэ лавлах" : "Price on request",
 });
 
 const seasonIcon = { spring: "flower", summer: "sun", autumn: "leaf", winter: "snow" } as const;
@@ -42,7 +42,7 @@ const jsonLd = {
   brand: { "@type": "Brand", name: p.brand },
   image: new URL("/og.jpg", site).href,
   url,
-  offers: {
+  offers: p.sizes.some((s) => s.price > 0) ? {
     "@type": "AggregateOffer",
     priceCurrency: "MNT",
     lowPrice: Math.min(...p.sizes.map((s) => s.price)),
@@ -58,7 +58,7 @@ const jsonLd = {
       availability: s.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       url,
     })),
-  },
+  } : undefined,
 };
 ---
 <Base locale={locale} title={title} description={description} current="shop" ogType="product">

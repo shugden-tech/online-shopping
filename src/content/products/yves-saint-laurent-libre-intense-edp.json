@@ -1,0 +1,60 @@
+{
+  "slug": "yves-saint-laurent-libre-intense-edp",
+  "brand": "Yves Saint Laurent",
+  "name": "Libre Intense",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "lavender",
+      "mandarin",
+      "bergamot"
+    ],
+    "heart": [
+      "lavender",
+      "orange-blossom",
+      "jasmine",
+      "orchid"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "ambergris",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Yves Saint Laurent Libre Intense: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: лаванда, мандарин, бергамот; зүрхний ноот: лаванда, жүржийн цэцэг, жасмин, цахирмаа; суурь ноот: ваниль, тонка шош, амбра, ветивер.",
+    "en": "Yves Saint Laurent Libre Intense is a amber fragrance in EDP concentration. Its listed notes include lavender, mandarin, bergamot, lavender, orange blossom."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-044-front.webp",
+    "back": "/product-photos/curated-044-back.webp"
+  }
+}

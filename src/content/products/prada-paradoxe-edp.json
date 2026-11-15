@@ -1,0 +1,59 @@
+{
+  "slug": "prada-paradoxe-edp",
+  "brand": "Prada",
+  "name": "Paradoxe",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "pear",
+      "mandarin",
+      "bergamot"
+    ],
+    "heart": [
+      "orange-blossom",
+      "neroli",
+      "jasmine"
+    ],
+    "base": [
+      "vanilla",
+      "amber",
+      "musk",
+      "benzoin"
+    ]
+  },
+  "description": {
+    "mn": "Prada Paradoxe: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: лийр, мандарин, бергамот; зүрхний ноот: жүржийн цэцэг, нероли, жасмин; суурь ноот: ваниль, хув, заар, бензойн.",
+    "en": "Prada Paradoxe is a floral fragrance in EDP concentration. Its listed notes include pear, mandarin, bergamot, orange blossom, neroli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-053-front.webp",
+    "back": "/product-photos/curated-053-back.webp"
+  }
+}

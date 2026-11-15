@@ -1,0 +1,60 @@
+{
+  "slug": "prada-lhomme-edt",
+  "brand": "Prada",
+  "name": "L'Homme",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "neroli",
+      "pepper",
+      "cardamom",
+      "carrot-seeds"
+    ],
+    "heart": [
+      "iris",
+      "violet",
+      "geranium",
+      "mate"
+    ],
+    "base": [
+      "amber",
+      "cedar",
+      "sandalwood",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Prada L'Homme: Эрэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDT). Эхний ноот: нероли, хар чинжүү, кардамон, луувангийн үр; зүрхний ноот: цахилдаг, нил цэцэг, герань, мате цай; суурь ноот: хув, хуш мод, зандан мод, пачули.",
+    "en": "Prada L'Homme is a floral fragrance in EDT concentration. Its listed notes include neroli, black pepper, cardamom, carrot seeds, iris."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-034-front.webp"
+  }
+}

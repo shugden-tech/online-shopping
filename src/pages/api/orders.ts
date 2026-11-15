@@ -157,7 +157,7 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
       const key = `${it.slug}:${it.ml}`;
       const prev = merged.get(key);
       const qty = (prev?.qty ?? 0) + it.qty;
-      if (qty > 10) return fail(422, { form: "items" });
+      if (qty > Math.min(10, size.stock ?? 10)) return fail(422, { form: "items" });
       merged.set(key, { slug: p.slug, brand: p.brand, name: p.name, ml: size.ml, qty, price: size.price });
     }
     const lines = [...merged.values()];

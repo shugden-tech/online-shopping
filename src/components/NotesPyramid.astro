@@ -27,6 +27,7 @@ const tiers = [
   { key: "top", label: tr.product.top, hint: tr.product.topHint, notes: await Promise.all(p.notes.top.map(chip)) },
   { key: "heart", label: tr.product.heart, hint: tr.product.heartHint, notes: await Promise.all(p.notes.heart.map(chip)) },
   { key: "base", label: tr.product.base, hint: tr.product.baseHint, notes: await Promise.all(p.notes.base.map(chip)) },
+  { key: "key", label: locale === "mn" ? "Үндсэн ноотууд" : "Fragrance notes", hint: "", notes: await Promise.all((p.notes.key ?? []).map(chip)) },
 ].filter((t) => t.notes.length);
 ---
 <div class="pyr">

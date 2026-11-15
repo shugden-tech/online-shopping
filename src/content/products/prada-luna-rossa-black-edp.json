@@ -1,0 +1,55 @@
+{
+  "slug": "prada-luna-rossa-black-edp",
+  "brand": "Prada",
+  "name": "Luna Rossa Black",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot"
+    ],
+    "heart": [
+      "angelica",
+      "patchouli"
+    ],
+    "base": [
+      "coumarin",
+      "amber",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Prada Luna Rossa Black: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: бергамот; зүрхний ноот: анжелика, пачули; суурь ноот: кумарин, хув, заар.",
+    "en": "Prada Luna Rossa Black is a amber fragrance in EDP concentration. Its listed notes include bergamot, angelica, patchouli, coumarin, amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-033-front.webp",
+    "back": "/product-photos/curated-033-back.webp"
+  }
+}

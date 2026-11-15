@@ -1,0 +1,54 @@
+{
+  "slug": "mugler-alien-goddess-edp",
+  "brand": "Mugler",
+  "name": "Alien Goddess",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "coconut-water",
+      "bergamot"
+    ],
+    "heart": [
+      "jasmine",
+      "heliotrope"
+    ],
+    "base": [
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Mugler Alien Goddess: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: кокосын ус, бергамот; зүрхний ноот: жасмин, гелиотроп; суурь ноот: ваниль.",
+    "en": "Mugler Alien Goddess is a amber fragrance in EDP concentration. Its listed notes include coconut water, bergamot, jasmine, heliotrope, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-064-front.webp",
+    "back": "/product-photos/curated-064-back.webp"
+  }
+}

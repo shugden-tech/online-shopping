@@ -1,0 +1,52 @@
+{
+  "slug": "maison-francis-kurkdjian-baccarat-rouge-540-extrait",
+  "brand": "Maison Francis Kurkdjian",
+  "name": "Baccarat Rouge 540",
+  "concentration": "Extrait",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "jasmine",
+      "cedar"
+    ],
+    "heart": [
+      "bitter-almond",
+      "saffron",
+      "jasmine",
+      "cedar"
+    ],
+    "base": [
+      "ambergris",
+      "woods",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Maison Francis Kurkdjian Baccarat Rouge 540: Хүйс харгалзахгүй хув үнэр (Extrait). Эхний ноот: жасмин, хуш мод; зүрхний ноот: гашуун бүйлс, гүргэм, жасмин, хуш мод; суурь ноот: амбра, модлог ноот, заар.",
+    "en": "Maison Francis Kurkdjian Baccarat Rouge 540 is a amber fragrance in Extrait concentration. Its listed notes include jasmine, cedar, bitter almond, saffron, jasmine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 112500,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 5,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-072-front.webp",
+    "back": "/product-photos/curated-072-back.webp"
+  }
+}

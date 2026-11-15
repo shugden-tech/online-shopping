@@ -5,10 +5,12 @@ import BottleArt from "../components/BottleArt.astro";
 import ProductCard from "../components/ProductCard.astro";
 import Icon from "../components/Icon.astro";
 import settings from "../data/settings.json";
+import bestsellerSlugs from "../data/bestsellers.json";
 import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
-import { NOTES, NOTE_GROUPS, getProducts, initialOf, photosOf, type Product } from "../lib/products";
-import { bannerImages, familyStrips, noteImages } from "../lib/images";
+import { NOTES, NOTE_GROUPS, getProducts, initialOf, type Product } from "../lib/products";
+import { bannerImages, brandLogos, familyStrips, genderImages, noteImages } from "../lib/images";
+import allNotesImg from "../../assets/families/all_notes.jpg";
 import "../styles/home.css";
 
 interface Props { locale: Locale }
@@ -18,6 +20,11 @@ const s = tr.store;
 const shop = route("shop", locale);
 const free = formatPrice(settings.delivery.freeThreshold, locale);
 const products = await getProducts();
+const bestsellers = bestsellerSlugs.map((slug) => {
+  const product = products.find((p) => p.slug === slug);
+  if (!product) throw new Error(`Unknown bestseller product: ${slug}`);
+  return product;
+});
 
 const byFeatured = [...products].sort(
   (a, b) => Number(b.featured ?? false) - Number(a.featured ?? false) || Number(b.isNew ?? false) - Number(a.isNew ?? false),
@@ -26,7 +33,7 @@ const fresh = [...products].sort((a, b) => Number(b.isNew ?? false) - Number(a.i
 const ofGender = (g: Product["gender"]) => byFeatured.filter((p) => p.gender === g);
 
 const tabs = [
-  { id: "best", label: s.tabs.best, items: byFeatured.slice(0, 8), href: shop },
+  { id: "best", label: s.tabs.best, items: bestsellers, href: shop },
   { id: "new", label: s.tabs.new, items: fresh.slice(0, 8), href: `${shop}?sort=newest` },
   { id: "women", label: s.tabs.women, items: ofGender("women").slice(0, 8), href: `${shop}?gender=women` },
   { id: "men", label: s.tabs.men, items: ofGender("men").slice(0, 8), href: `${shop}?gender=men` },
@@ -52,14 +59,12 @@ const bannerSets = [
 ].filter((set) => set.items.length > 0);
 const ratio = (b: (typeof bannerImages)[number]) => `${b.image.width} / ${b.image.height}`;
 
-/** A few random products of a gender that have a real photo (picked again on every build). */
-const shuffle = <T,>(list: T[]) => list.map((v) => [Math.random(), v] as const).sort((a, b) => a[0] - b[0]).map(([, v]) => v);
-const genderTiles = (["women", "men", "unisex"] as const).map((g) => ({
+/** Gender tiles: owner-approved images, ordered Unisex / Men / Women. */
+const genderTiles = (["unisex", "men", "women"] as const).map((g) => ({
   g, label: tr.genders[g], href: `${shop}?gender=${g}`,
-  picks: shuffle(ofGender(g).filter((p) => photosOf(p).length > 0)).slice(0, 3).map((p) => ({ p, photo: photosOf(p, 480)[0]! })),
+  image: genderImages[g]!,
 }));
 
-const brands = [...new Set(products.map((p) => p.brand))];
 const infoIcons = ["bag", "check", "briefcase"] as const;
 ---
 <Base locale={locale} title={tr.site.name}>
@@ -124,7 +129,7 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
   <!-- 2 · two promo tiles -->
   <section class="wrap promo">
     <a class="promo__tile promo__tile--big" href={shop} style="--a:#efe9df;--b:#d9cbb4">
-      <Image src={familyStrips.chypre!} alt="" widths={[480, 960, 1280]} sizes="(min-width: 900px) 66vw, 100vw" loading="lazy" />
+      <Image src={allNotesImg} alt="" widths={[480, 960, 1280]} sizes="(min-width: 900px) 66vw, 100vw" loading="lazy" />
       <span class="promo__label">{s.tileAll}</span>
     </a>
     <a class="promo__tile" href={`${shop}?sort=newest`} style="--a:#e7e3ef;--b:#b9aecb">
@@ -152,18 +157,11 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
     </div>
   </section>
 
-  <!-- 4 · women / men / unisex -->
+  <!-- 4 · gender tiles -->
   <section class="wrap gtiles">
     {genderTiles.map((t) => (
       <a class={`gtile gtile--${t.g}`} href={t.href}>
-        <span class="gtile__bottles" aria-hidden="true">
-          {t.picks.map(({ p, photo }) => (
-            <span class="gtile__bottle">
-              <img src={photo.src} srcset={photo.srcset} sizes="140px" alt="" width="480" height="480" loading="lazy" decoding="async" onerror="this.parentNode.remove()" />
-              <span class="sr-only">{p.brand} {p.name}</span>
-            </span>
-          ))}
-        </span>
+        <Image src={t.image} alt="" widths={[400, 800]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" class="gtile__img" />
         <span class="gtile__label">{t.label}</span>
       </a>
     ))}
@@ -174,7 +172,7 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
     <div class="tabs" role="tablist">
       {tabs.map((t, i) => (
         <button type="button" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>
-          {t.id === "new" && <span aria-hidden="true">✨ </span>}{t.label}
+          {t.label}
         </button>
       ))}
     </div>
@@ -194,8 +192,12 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
   <section class="brands" aria-label={tr.nav.shop}>
     <div class="brands__marquee">
       <ul class="brands__track">
-        {[...brands, ...brands].map((b, i) => (
-          <li aria-hidden={i >= brands.length ? "true" : undefined}><a href={`${shop}?q=${encodeURIComponent(b)}`} tabindex={i >= brands.length ? -1 : undefined}>{b}</a></li>
+        {[...brandLogos, ...brandLogos].map((b, i) => (
+          <li aria-hidden={i >= brandLogos.length ? "true" : undefined}>
+            <a href={`${shop}?q=${encodeURIComponent(b.name)}`} tabindex={i >= brandLogos.length ? -1 : undefined}>
+              <img src={b.src} alt={b.name} width="160" height="64" loading="lazy" decoding="async" />
+            </a>
+          </li>
         ))}
       </ul>
     </div>

@@ -1,0 +1,61 @@
+{
+  "slug": "lattafa-khamrah-edp",
+  "brand": "Lattafa",
+  "name": "Khamrah",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "cinnamon",
+      "nutmeg",
+      "bergamot"
+    ],
+    "heart": [
+      "dates",
+      "praline",
+      "tuberose",
+      "mahonial"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "amberwood",
+      "myrrh",
+      "benzoin",
+      "akigalawood"
+    ]
+  },
+  "description": {
+    "mn": "Lattafa Khamrah: Хүйс харгалзахгүй гурман үнэр (EDP). Эхний ноот: шанцай, задийн самар, бергамот; зүрхний ноот: хасарваань, пралине, тубероз, махониал; суурь ноот: ваниль, тонка шош, хув мод, мирра, бензойн, акигалавүүд.",
+    "en": "Lattafa Khamrah is a gourmand fragrance in EDP concentration. Its listed notes include cinnamon, nutmeg, bergamot, dates, praline."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-091-front.webp"
+  }
+}

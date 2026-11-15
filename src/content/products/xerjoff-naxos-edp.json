@@ -1,0 +1,53 @@
+{
+  "slug": "xerjoff-naxos-edp",
+  "brand": "Xerjoff",
+  "name": "Naxos",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "lavender",
+      "bergamot",
+      "lemon"
+    ],
+    "heart": [
+      "honey",
+      "cinnamon",
+      "cashmeran",
+      "jasmine"
+    ],
+    "base": [
+      "tobacco",
+      "tonka",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Xerjoff Naxos: Хүйс харгалзахгүй өвслөг үнэр (EDP). Эхний ноот: лаванда, бергамот, нимбэг; зүрхний ноот: зөгийн бал, шанцай, кашмеран, жасмин; суурь ноот: тамхины навч, тонка шош, ваниль.",
+    "en": "Xerjoff Naxos is a aromatic fragrance in EDP concentration. Its listed notes include lavender, bergamot, lemon, honey, cinnamon."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-079-front.webp",
+    "back": "/product-photos/curated-079-back.webp"
+  }
+}

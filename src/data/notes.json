@@ -673,5 +673,245 @@
   "whisky": {
     "mn": "Виски",
     "en": "Whisky"
+  },
+  "oriental-notes": {
+    "en": "Oriental notes",
+    "mn": "Дорно дахины ноот"
+  },
+  "caraway": {
+    "en": "caraway",
+    "mn": "Гоньд"
+  },
+  "aldehydes": {
+    "en": "Aldehydes",
+    "mn": "Альдегид"
+  },
+  "lemon-zest": {
+    "en": "Lemon Zest",
+    "mn": "Нимбэгийн хальс"
+  },
+  "iso-e-super": {
+    "en": "Iso E Super",
+    "mn": "Iso E Super"
+  },
+  "ambrofixtm": {
+    "en": "ambrofix™",
+    "mn": "Амброфикс"
+  },
+  "davana": {
+    "en": "Davana",
+    "mn": "Давана"
+  },
+  "chestnut": {
+    "en": "Chestnut",
+    "mn": "Туулайн бөөр"
+  },
+  "mineral-notes": {
+    "en": "Mineral notes",
+    "mn": "Эрдсийн ноот"
+  },
+  "pepperwoodtm": {
+    "en": "pepperwood™",
+    "mn": "Пеппервүүд"
+  },
+  "papyrus": {
+    "en": "Papyrus",
+    "mn": "Папирус"
+  },
+  "hyacinth": {
+    "en": "hyacinth",
+    "mn": "Гиацинт"
+  },
+  "tolu-balsam": {
+    "en": "tolu balsam",
+    "mn": "Толу бальзам"
+  },
+  "cistus": {
+    "en": "Cistus",
+    "mn": "Ладан бут"
+  },
+  "metallic-notes": {
+    "en": "Metallic notes",
+    "mn": "Металллаг ноот"
+  },
+  "coal": {
+    "en": "Coal",
+    "mn": "Нүүрс"
+  },
+  "soil-tincture": {
+    "en": "Soil tincture",
+    "mn": "Хөрсний ханд"
+  },
+  "angelica": {
+    "en": "Angelica",
+    "mn": "Анжелика"
+  },
+  "coumarin": {
+    "en": "Coumarin",
+    "mn": "Кумарин"
+  },
+  "carrot-seeds": {
+    "en": "Carrot Seeds",
+    "mn": "Луувангийн үр"
+  },
+  "mate": {
+    "en": "Mate",
+    "mn": "Мате цай"
+  },
+  "akigalawood": {
+    "en": "akigalawood",
+    "mn": "Акигалавүүд"
+  },
+  "cashmeran": {
+    "en": "cashmeran",
+    "mn": "Кашмеран"
+  },
+  "orchid": {
+    "en": "Orchid",
+    "mn": "Цахирмаа"
+  },
+  "bitter-almond": {
+    "en": "Bitter Almond",
+    "mn": "Гашуун бүйлс"
+  },
+  "vanilla-orchid": {
+    "en": "vanilla orchid",
+    "mn": "Ванилийн цахирмаа"
+  },
+  "blackberry": {
+    "en": "blackberry",
+    "mn": "Хар бөөрөлзгөнө"
+  },
+  "strawberry": {
+    "en": "strawberry",
+    "mn": "Гүзээлзгэнэ"
+  },
+  "sour-cherry": {
+    "en": "sour cherry",
+    "mn": "Исгэлэн интоор"
+  },
+  "serenolide": {
+    "en": "serenolide",
+    "mn": "Серенолид"
+  },
+  "gardenia": {
+    "en": "gardenia",
+    "mn": "Гардения"
+  },
+  "carnation": {
+    "en": "carnation",
+    "mn": "Лиш цэцэг"
+  },
+  "apricot": {
+    "en": "apricot",
+    "mn": "Чангаанз"
+  },
+  "red-berries": {
+    "en": "red berries",
+    "mn": "Улаан жимсгэнэ"
+  },
+  "frangipani": {
+    "en": "frangipani",
+    "mn": "Франжипани"
+  },
+  "brown-sugar": {
+    "en": "brown sugar",
+    "mn": "Бор сахар"
+  },
+  "pomegranate": {
+    "en": "pomegranate",
+    "mn": "Анар"
+  },
+  "ice": {
+    "en": "ice",
+    "mn": "Мөс"
+  },
+  "mahogany": {
+    "en": "mahogany",
+    "mn": "Зандан мод"
+  },
+  "floral-notes": {
+    "en": "floral notes",
+    "mn": "Цэцгийн ноот"
+  },
+  "petalia": {
+    "en": "petalia",
+    "mn": "Петалиа"
+  },
+  "chinese-black-tea": {
+    "en": "Chinese Black Tea",
+    "mn": "Хятад хар цай"
+  },
+  "tobacco-blossom": {
+    "en": "tobacco blossom",
+    "mn": "Тамхины цэцэг"
+  },
+  "black-cherry": {
+    "en": "black cherry",
+    "mn": "Хар интоор"
+  },
+  "cherry-liqueur": {
+    "en": "cherry liqueur",
+    "mn": "Интоорын ликёр"
+  },
+  "peru-balsam": {
+    "en": "peru balsam",
+    "mn": "Перу бальзам"
+  },
+  "dates": {
+    "en": "Dates",
+    "mn": "Хасарваань"
+  },
+  "mahonial": {
+    "en": "Mahonial",
+    "mn": "Махониал"
+  },
+  "candied-fruits": {
+    "en": "Candied Fruits",
+    "mn": "Чихэрлэсэн жимс"
+  },
+  "gourmand-accord": {
+    "en": "Gourmand Accord",
+    "mn": "Амттаны аккорд"
+  },
+  "caramel": {
+    "en": "Caramel",
+    "mn": "Карамель"
+  },
+  "sugar": {
+    "en": "Sugar",
+    "mn": "Сахар"
+  },
+  "milk": {
+    "en": "Milk",
+    "mn": "Сүү"
+  },
+  "creme-brulee": {
+    "en": "Creme Brulee",
+    "mn": "Крем брюле"
+  },
+  "turmeric": {
+    "en": "Turmeric",
+    "mn": "Куркума"
+  },
+  "wild-lavender": {
+    "en": "wild lavender",
+    "mn": "Зэрлэг лаванда"
+  },
+  "buchu": {
+    "en": "Buchu",
+    "mn": "Бучу"
+  },
+  "african-marigold": {
+    "en": "African Marigold",
+    "mn": "Африк хилэн цэцэг"
+  },
+  "cucumber": {
+    "en": "cucumber",
+    "mn": "Өргөст хэмх"
+  },
+  "passionfruit": {
+    "en": "Passionfruit",
+    "mn": "Маракуйя"
   }
 }

@@ -1,0 +1,58 @@
+{
+  "slug": "parfums-de-marly-delina-exclusif-edp",
+  "brand": "Parfums de Marly",
+  "name": "Delina Exclusif",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "lychee",
+      "pear",
+      "bergamot"
+    ],
+    "heart": [
+      "rose",
+      "oud",
+      "incense"
+    ],
+    "base": [
+      "vanilla",
+      "amber",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Parfums de Marly Delina Exclusif: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: личи, лийр, бергамот; зүрхний ноот: сарнай, агар мод, хүж; суурь ноот: ваниль, хув, модлог ноот.",
+    "en": "Parfums de Marly Delina Exclusif is a amber fragrance in EDP concentration. Its listed notes include lychee, pear, bergamot, rose, oud."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 104000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 178000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-078-front.webp",
+    "back": "/product-photos/curated-078-back.webp"
+  }
+}

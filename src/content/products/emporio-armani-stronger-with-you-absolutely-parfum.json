@@ -1,0 +1,58 @@
+{
+  "slug": "emporio-armani-stronger-with-you-absolutely-parfum",
+  "brand": "Emporio Armani",
+  "name": "Stronger With You Absolutely",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "rum",
+      "elemi",
+      "bergamot"
+    ],
+    "heart": [
+      "lavender",
+      "davana"
+    ],
+    "base": [
+      "chestnut",
+      "vanilla",
+      "cedar",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Emporio Armani Stronger With You Absolutely: Эрэгтэйчүүдэд зориулсан хув үнэр (Parfum). Эхний ноот: ром, элеми давирхай, бергамот; зүрхний ноот: лаванда, давана; суурь ноот: туулайн бөөр, ваниль, хуш мод, пачули.",
+    "en": "Emporio Armani Stronger With You Absolutely is a amber fragrance in Parfum concentration. Its listed notes include rum, elemi, bergamot, lavender, davana."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-017-front.webp",
+    "back": "/product-photos/curated-017-back.webp"
+  }
+}

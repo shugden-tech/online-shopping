@@ -1,0 +1,58 @@
+{
+  "slug": "lancome-la-vie-est-belle-edp",
+  "brand": "Lancôme",
+  "name": "La Vie Est Belle",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "blackcurrant",
+      "pear"
+    ],
+    "heart": [
+      "iris",
+      "jasmine",
+      "orange-blossom"
+    ],
+    "base": [
+      "praline",
+      "vanilla",
+      "patchouli",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Lancôme La Vie Est Belle: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: үхрийн нүд, лийр; зүрхний ноот: цахилдаг, жасмин, жүржийн цэцэг; суурь ноот: пралине, ваниль, пачули, тонка шош.",
+    "en": "Lancôme La Vie Est Belle is a floral fragrance in EDP concentration. Its listed notes include blackcurrant, pear, iris, jasmine, orange blossom."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-060-front.webp",
+    "back": "/product-photos/curated-060-back.webp"
+  }
+}

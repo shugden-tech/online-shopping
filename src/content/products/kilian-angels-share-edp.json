@@ -1,0 +1,49 @@
+{
+  "slug": "kilian-angels-share-edp",
+  "brand": "Kilian",
+  "name": "Angels' Share",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "cognac"
+    ],
+    "heart": [
+      "cinnamon",
+      "tonka"
+    ],
+    "base": [
+      "praline",
+      "vanilla",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Kilian Angels' Share: Хүйс харгалзахгүй хув үнэр (EDP). Эхний ноот: коньяк; зүрхний ноот: шанцай, тонка шош; суурь ноот: пралине, ваниль, зандан мод.",
+    "en": "Kilian Angels' Share is a amber fragrance in EDP concentration. Its listed notes include cognac, cinnamon, tonka bean, praline, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 112500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-088-front.webp",
+    "back": "/product-photos/curated-088-back.webp"
+  }
+}

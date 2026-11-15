@@ -119,10 +119,18 @@
 /* result */
 .sf[data-step="6"] .sf__stage { max-width: var(--maxw); align-content: start; padding-bottom: clamp(48px, 8vh, 96px); }
 .sf__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 1.6vw, 24px); }
-.sf__card { position: relative; display: grid; justify-items: start; align-content: start; gap: 6px; padding: 18px clamp(16px, 2vw, 28px) 20px; border: 1px solid var(--line-soft); background: rgba(13, 13, 12, .72); animation: sf-in .65s var(--ease-sine) var(--delay) both; }
+.sf__card { position: relative; display: grid; justify-items: start; align-content: start; gap: 6px; padding: 18px clamp(16px, 2vw, 28px) 20px; border: 1px solid var(--line-soft); border-radius: 8px; background: rgba(255, 255, 255, .82); backdrop-filter: blur(10px); animation: sf-in .65s var(--ease-sine) var(--delay) both; }
 .sf__card:first-child { border-color: var(--line); }
 .sf__rank { position: absolute; top: 14px; left: 18px; font-family: var(--font-head); font-style: italic; font-size: 22px; color: var(--gold); }
-.sf__card-art { justify-self: center; width: min(46%, 170px); margin: 8px 0 10px; background: radial-gradient(closest-side, color-mix(in srgb, var(--tint) 26%, transparent), transparent); }
+.sf__card-art {
+  position: relative; justify-self: center; width: min(46%, 170px); aspect-ratio: 1; margin: 8px 0 10px;
+  border-radius: 8px; overflow: hidden;
+  background:
+    radial-gradient(60% 50% at 50% 62%, color-mix(in srgb, var(--tint) 24%, transparent), transparent 100%),
+    linear-gradient(180deg, #faf9f7, #f1efec);
+}
+.sf__card-art .bottle-photo { position: absolute; inset: 7%; width: 86%; height: 86%; object-fit: contain; }
+.sf__card-art .bottle { width: 58%; margin-inline: auto; }
 .sf__match { font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
 .sf__brand { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim); }
 .sf__name { font-family: var(--font-head); font-weight: 300; font-size: clamp(26px, 1.6vw + 16px, 40px); line-height: 1.08; }

@@ -1,0 +1,62 @@
+{
+  "slug": "parfums-de-marly-layton-edp",
+  "brand": "Parfums de Marly",
+  "name": "Layton",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "apple",
+      "lavender",
+      "bergamot",
+      "mandarin"
+    ],
+    "heart": [
+      "geranium",
+      "violet",
+      "jasmine"
+    ],
+    "base": [
+      "vanilla",
+      "cardamom",
+      "sandalwood",
+      "pepper",
+      "guaiac-wood",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Parfums de Marly Layton: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: алим, лаванда, бергамот, мандарин; зүрхний ноот: герань, нил цэцэг, жасмин; суурь ноот: ваниль, кардамон, зандан мод, хар чинжүү, гваяк мод, пачули.",
+    "en": "Parfums de Marly Layton is a amber fragrance in EDP concentration. Its listed notes include apple, lavender, bergamot, mandarin, geranium."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-075-front.webp",
+    "back": "/product-photos/curated-075-back.webp"
+  }
+}

@@ -33,23 +33,16 @@ ok("kbd: step 1", (await step()) === 1);
 ok("kbd: focus moved to the question", await page.evaluate(() => document.activeElement?.classList.contains("sf__title")));
 ok("kbd: Next disabled until answered", await page.locator(".sf__navbtn--next").isDisabled());
 await tabTo('input[name="who"]');
-await page.keyboard.press("Space");
-await page.keyboard.press("ArrowDown"); // radio group: arrow moves to "men"
-ok("kbd: radio via arrows", await page.locator('input[name="who"]').nth(1).isChecked());
-await tabTo(".sf__navbtn--next");
-await page.keyboard.press("Enter");
-ok("kbd: step 2", (await step()) === 2);
+await page.keyboard.press("ArrowDown"); // radio group: arrow moves to "men" and auto-advances
+ok("kbd: who auto-advances", (await step()) === 2);
+ok("kbd: men chosen", (await page.evaluate(() => location.hash)).includes("g=men"));
 await tabTo('input[name="when"]');
-await page.keyboard.press("Space");
 await page.keyboard.press("ArrowRight"); // night
-await tabTo(".sf__navbtn--next");
-await page.keyboard.press("Enter");
-ok("kbd: step 3", (await step()) === 3);
+ok("kbd: when auto-advances", (await step()) === 3);
+ok("kbd: night chosen", (await page.evaluate(() => location.hash)).includes("o=night"));
 await tabTo('input[name="mood"]');
 await page.keyboard.press("Space"); // amber
-await tabTo(".sf__navbtn--next");
-await page.keyboard.press("Enter");
-ok("kbd: step 4", (await step()) === 4);
+ok("kbd: mood auto-advances", (await step()) === 4);
 await tabTo('.sf__notes input[type="checkbox"]');
 await page.keyboard.press("Space"); // amber accord
 await page.keyboard.press("Tab");
@@ -65,6 +58,7 @@ const before = await page.$eval(".sf__range input", (e) => e.value);
 await page.keyboard.press("ArrowUp");
 const after = await page.$eval(".sf__range input", (e) => e.value);
 ok("kbd: range responds to arrow keys", before === "3" && after === "4", `${before} -> ${after}`);
+ok("kbd: keyboard slider stays on the step", (await step()) === 5);
 ok("range has aria-valuetext", (await page.$eval(".sf__range input", (e) => e.getAttribute("aria-valuetext"))) === "Хүчтэй");
 await page.screenshot({ path: "docs/screens/p6-finder-slider-1440.png" });
 

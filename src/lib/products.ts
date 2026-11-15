@@ -20,7 +20,7 @@ export type NoteGroup = (typeof NOTE_GROUPS)[number];
 let cache: Product[] | null = null;
 
 export async function getProducts(): Promise<Product[]> {
-  if (cache) return cache;
+  if (cache && !import.meta.env.DEV) return cache;
   const entries = await getCollection("products");
   for (const e of entries) {
     if (e.data.slug !== e.id) {
@@ -35,7 +35,7 @@ export async function getProduct(slug: string): Promise<Product | undefined> {
   return (await getProducts()).find((p) => p.slug === slug);
 }
 
-export const allNotes = (p: Product): string[] => [...p.notes.top, ...p.notes.heart, ...p.notes.base];
+export const allNotes = (p: Product): string[] => [...p.notes.top, ...p.notes.heart, ...p.notes.base, ...(p.notes.key ?? [])];
 
 /** Photo accords a product belongs to (via each note's `image` in notes.json). */
 export function noteGroups(p: Product): string[] {
@@ -133,6 +133,7 @@ export async function cartBase(p: Product) {
     brand: p.brand,
     family: p.family,
     shape: p.bottleShape,
+    stock: defaultSize(p).stock,
     ...(img ? { img } : {}),
   };
 }

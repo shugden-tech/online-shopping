@@ -74,7 +74,7 @@ More detail, including editing products, secrets and deploying, is in `README.md
 | `scripts/` | E2E tests, screenshots, budget, link check, icon and font builders |
 | `assets/` | Original source images: logo, notes, families, and the reference screenshots |
 | `animation1.md` | Spec for the layering slider (scroll mask, staggered entrance, creative carousel) |
-| `decantx/products.json` | Scraped DecantX catalog. Used **only** as reference for categories, sizes and pricing. The site doesn't import it. Don't publish its text or images on the site. |
+| `decantx/products.json` | Scraped DecantX catalog. Used **only** as reference for categories, sizes and pricing. The site doesn't import it. Don't publish its text or images on the site — except the three owner-approved gender tile images (`decantx/men.jpg`, `decantx/women.jpg`, `decantx/unisex.jpg`) used on the home page. |
 
 **Not in the repo** (kept on the original computer only):
 - `decantx/products_full.json`: 356 MB, over GitHub's 100 MB limit.
@@ -125,7 +125,7 @@ More detail, including editing products, secrets and deploying, is in `README.md
 ## 8. Rules for whoever continues
 
 - Work on the `genzst` branch.
-- Don't put DecantX text or images, or any other brand's images, **on the site**.
+- Don't put DecantX text or images, or any other brand's images, **on the site** — except the three owner-approved gender tile images (`decantx/men.jpg`, `decantx/women.jpg`, `decantx/unisex.jpg`) used on the home page.
 - Verify changes in a real browser. A change that only compiles isn't done.
 - Keep `PROGRESS.md` updated, and record which model did the work.
 - Stay inside the JS budgets in `scripts/js-budget.mjs` (home ≤ 90 KB total, shop ≤ 40, product ≤ 50, finder and checkout ≤ 25, other pages ≤ 20).

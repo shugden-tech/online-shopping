@@ -1,0 +1,506 @@
+[
+  {
+    "index": 408,
+    "url": "https://www.15minutebeauty.com/bond-no-9-fire-island-perfume-review-notes.html",
+    "notes": {
+      "top": [
+        "Cardamom",
+        "Ozone"
+      ],
+      "middle": [
+        "Neroli",
+        "White Musk"
+      ],
+      "base": [
+        "Tuberose",
+        "Patchouli"
+      ]
+    }
+  },
+  {
+    "index": 501,
+    "url": "https://bortnikoff.com/product/dream/",
+    "notes": {
+      "top": [
+        "Mysore Sandalwood",
+        "Champaca"
+      ],
+      "middle": [
+        "Blackcurrant Absolute",
+        "Pistachio"
+      ],
+      "base": [
+        "Malaysian Vanilla Absolute",
+        "Caraway",
+        "Benzoin"
+      ]
+    }
+  },
+  {
+    "index": 710,
+    "url": "https://www.fragrantica.com/perfume/Byredo/Sister-Dreamer-128860.html",
+    "notes": {
+      "top": [
+        "Pink Pepper",
+        "Frankincense",
+        "Juniper Berry"
+      ],
+      "middle": [
+        "Freesia",
+        "Geranium",
+        "Turkish Rose"
+      ],
+      "base": [
+        "Amberwood",
+        "Sandalwood",
+        "Healingwood"
+      ]
+    }
+  },
+  {
+    "index": 1133,
+    "url": "https://www.fragrantica.com/perfume/Dior/Lucky-Esprit-De-Parfum-95987.html",
+    "notes": {
+      "top": [
+        "Lily-of-the-Valley"
+      ],
+      "middle": [
+        "Leather"
+      ],
+      "base": [
+        "Woody Notes"
+      ]
+    }
+  },
+  {
+    "index": 1283,
+    "url": "https://www.truworths.co.za/century-edp/product/prod3235627",
+    "notes": {
+      "top": [
+        "Bergamot",
+        "Grapefruit",
+        "Mandarin"
+      ],
+      "middle": [
+        "Neroli",
+        "Cardamom",
+        "Frankincense"
+      ],
+      "base": [
+        "Sandalwood",
+        "Musk",
+        "Cypriol"
+      ]
+    }
+  },
+  {
+    "index": 1121,
+    "url": "https://www.fragrantica.com/perfume/Dior/J-adore-Lumiere-Eau-de-Toilette-36495.html",
+    "notes": {
+      "top": [
+        "Blood Orange",
+        "Lemon"
+      ],
+      "middle": [
+        "Magnolia",
+        "Neroli",
+        "Damask Rose"
+      ],
+      "base": [
+        "Sandalwood",
+        "Vanilla"
+      ]
+    }
+  },
+  {
+    "index": 2591,
+    "url": "https://www.mizensir.ch/en/products/elixir-de-musc",
+    "notes": {
+      "middle": [
+        "Iris Concrete",
+        "Limbanol",
+        "Habanolide"
+      ],
+      "base": [
+        "Heliotrope",
+        "Muscenone",
+        "Cetalox"
+      ]
+    },
+    "replace_all": true,
+    "absent_tiers": [
+      "top"
+    ]
+  },
+  {
+    "index": 3194,
+    "url": "https://rojalondon.com/products/burlington-1819",
+    "notes": {
+      "top": [
+        "Grapefruit",
+        "Lime",
+        "Mandarin",
+        "Bitter Orange",
+        "Mint"
+      ],
+      "base": [
+        "Ginger",
+        "Cinnamon",
+        "Cumin",
+        "Saffron",
+        "Patchouli",
+        "Oakmoss",
+        "Rum",
+        "Tobacco",
+        "Cedarwood",
+        "Cashmere Wood",
+        "Benzoin",
+        "Vanilla",
+        "Labdanum",
+        "Ambergris",
+        "Musk"
+      ]
+    }
+  },
+  {
+    "index": 1125,
+    "url": "https://www.fragrantica.com/perfume/Dior/J-adore-L-Or-2023--84202.html",
+    "notes": {
+      "key": [
+        "Orange Blossom",
+        "Jasmine Grandiflorum",
+        "Centifolia Rose"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 1357,
+    "url": "https://www.escentric.com/en-us/products/molecule-04-100ml",
+    "notes": {
+      "key": [
+        "Javanol"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 1353,
+    "url": "https://www.escentric.com/en-eu/products/molecule-01-guaiac-wood",
+    "notes": {
+      "key": [
+        "Iso E Super",
+        "Guaiac Wood"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 595,
+    "url": "https://www.parfumo.com/Perfumes/Kilian/Amber_Oud",
+    "notes": {
+      "key": [
+        "Oud",
+        "Amber",
+        "Spices",
+        "Vanilla",
+        "Benzoin",
+        "Cedar"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 2068,
+    "url": "https://www.fragrantica.com/perfume/Jo-Malone-London/Rose-White-Musk-Absolu-49923.html",
+    "notes": {
+      "middle": [
+        "Damask Rose",
+        "Rose Essence",
+        "Rose Water"
+      ],
+      "base": [
+        "Oud",
+        "White Musk",
+        "Amber"
+      ]
+    },
+    "replace_all": true,
+    "absent_tiers": [
+      "top"
+    ]
+  },
+  {
+    "index": 3122,
+    "url": "https://www.parfumo.com/Perfumes/Ralph_Lauren/ralph-s-club-new-york-parfum",
+    "notes": {
+      "top": [
+        "Bergamot",
+        "Blackcurrant",
+        "Cardamom",
+        "Cypress"
+      ],
+      "middle": [
+        "Cognac",
+        "Diva Lavender",
+        "Geranium",
+        "Oud"
+      ],
+      "base": [
+        "Cashmeran",
+        "Fir Balsam Absolute",
+        "Oud",
+        "Sandalwood"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 3195,
+    "url": "https://www.bloomingdales.com/shop/product/roja-parfums-enigma-pour-homme-parfum-cologne-3.4-oz.?ID=4886724",
+    "notes": {
+      "top": [
+        "Bergamot",
+        "Lemon",
+        "Mandarin"
+      ],
+      "middle": [
+        "Geranium",
+        "May Rose",
+        "Neroli",
+        "Grasse Jasmine",
+        "Heliotrope"
+      ],
+      "base": [
+        "Cardamom",
+        "Ginger",
+        "Pepper",
+        "Patchouli",
+        "Cognac",
+        "Tobacco",
+        "Sandalwood",
+        "Benzoin",
+        "Vanilla",
+        "Ambergris"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 3678,
+    "url": "https://www.valentino.com/en-us/product-born-in-roma-purple-melancholia-eau-de-parfum-50ml-8LG025600_000",
+    "notes": {
+      "top": [
+        "Plum Accord"
+      ],
+      "middle": [
+        "Osmanthus Accord"
+      ],
+      "base": [
+        "Vanilla Extract"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 879,
+    "url": "https://scentadvice.com/ambre-nuit-new-look-edition-2022-dior%F0%9F%94%BA/",
+    "notes": {
+      "top": [
+        "Bergamot",
+        "Grapefruit"
+      ],
+      "middle": [
+        "Damask Rose",
+        "Pink Pepper"
+      ],
+      "base": [
+        "Guaiac Wood",
+        "Ambergris",
+        "Cedar",
+        "Patchouli"
+      ],
+      "key": []
+    }
+  },
+  {
+    "index": 1362,
+    "url": "https://www.fragrantica.com/perfume/Etat-Libre-d-Orange/Divin-Enfant-4514.html",
+    "notes": {
+      "top": [],
+      "middle": [],
+      "base": [],
+      "key": [
+        "Marshmallow",
+        "African Orange Flower",
+        "Tobacco",
+        "Leather",
+        "Musk",
+        "Coffee",
+        "Tonka Bean",
+        "Amber",
+        "Rose"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 1924,
+    "url": "https://us.initioparfums.com/products/high-frequency",
+    "notes": {
+      "top": [],
+      "middle": [],
+      "base": [],
+      "key": [
+        "Magnolia",
+        "Jasmine",
+        "Vanilla",
+        "Almond",
+        "Sandalwood",
+        "Heliotrope",
+        "Hedione"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 2206,
+    "url": "https://www.lelabofragrances.com/bergamote-22-131.html",
+    "notes": {
+      "top": [],
+      "middle": [],
+      "base": [],
+      "key": [
+        "Bergamot",
+        "Petitgrain",
+        "Grapefruit",
+        "Amber",
+        "Musk",
+        "Vetiver"
+      ]
+    },
+    "replace_all": true
+  },
+  {
+    "index": 2312,
+    "url": "https://scenters.com/unisex/maison-francis-kurkdjian/aqua-vitae-edt",
+    "notes": {
+      "top": [
+        "Calabrian Lemon",
+        "Sicilian Mandarin",
+        "Hedione"
+      ],
+      "middle": [
+        "Jasmine",
+        "Vanilla",
+        "Tonka Bean"
+      ],
+      "base": [
+        "Guaiac Wood",
+        "Tonka Bean",
+        "Vanilla"
+      ],
+      "key": []
+    },
+    "replace_all": true
+  },
+  {
+    "index": 2317,
+    "url": "https://www.fragrantica.com/parfum/Maison-Francis-Kurkdjian/Gentle-Fluidity-Gold-53401.html",
+    "notes": {
+      "top": [
+        "Juniper Berries",
+        "Nutmeg"
+      ],
+      "middle": [
+        "Coriander"
+      ],
+      "base": [
+        "Vanilla",
+        "Musk",
+        "Caramel",
+        "Amberwood"
+      ],
+      "key": []
+    },
+    "replace_all": true
+  },
+  {
+    "index": 2318,
+    "url": "https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Gentle-Fluidity-Silver-53400.html",
+    "notes": {
+      "top": [
+        "Juniper Berries",
+        "Nutmeg",
+        "Bergamot",
+        "Pineapple"
+      ],
+      "middle": [
+        "Coriander"
+      ],
+      "base": [
+        "Musk",
+        "Woody Notes",
+        "Cedar",
+        "Amber",
+        "Vanilla"
+      ],
+      "key": []
+    },
+    "replace_all": true
+  },
+  {
+    "index": 2335,
+    "url": "https://thescentbase.com/dk/perfumes/maison-martin-margiela/untitled-l-eau",
+    "notes": {
+      "top": [
+        "Amalfi Lemon",
+        "Citruses",
+        "Mandarin Orange"
+      ],
+      "middle": [
+        "African Orange Flower",
+        "Green Notes",
+        "Mint"
+      ],
+      "base": [],
+      "key": [
+        "Amalfi Lemon",
+        "Citruses",
+        "Mandarin Orange",
+        "African Orange Flower",
+        "Green Notes",
+        "Mint"
+      ]
+    }
+  },
+  {
+    "index": 3688,
+    "url": "https://www.fragrantica.com/perfume/Valentino/Born-in-Roma-Extradose-Uomo-101383.html",
+    "notes": {
+      "top": [],
+      "middle": [],
+      "base": [
+        "Woody Notes"
+      ],
+      "key": []
+    }
+  },
+  {
+    "index": 4053,
+    "url": "https://www.zarkoperfume.com/commodity/14-zarkoperfume-cloud-collection-no1",
+    "notes": {
+      "top": [
+        "Danish Sea-Buckthorn"
+      ],
+      "middle": [
+        "French Jasmin Absolute"
+      ],
+      "base": [
+        "Driftwood Accord"
+      ],
+      "key": []
+    },
+    "replace_all": true
+  }
+]

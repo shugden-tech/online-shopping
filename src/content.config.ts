@@ -15,10 +15,13 @@ const DECANT_ML = [2, 5, 10, 30];
 const size = z
   .object({
     ml: z.number().int().min(1).max(500),
-    price: z.number().int().positive().max(5_000_000), // MNT
+    price: z.number().int().min(0).max(5_000_000), // 0 means price not set; never purchasable
     inStock: z.boolean(),
+    stock: z.number().int().min(0).max(100000).optional(),
     full: z.boolean().optional(),
   })
+  .refine((s) => s.price > 0 || !s.inStock, "A size without a price cannot be in stock")
+  .refine((s) => s.stock === undefined || s.inStock === (s.stock > 0), "inStock must match the stock quantity")
   .refine((s) => (s.full ? s.ml >= 15 : DECANT_ML.includes(s.ml)), (s) => ({
     message: s.full
       ? `A full bottle must be at least 15 ml (got ${s.ml}).`
@@ -36,7 +39,7 @@ const products = defineCollection({
         concentration: z.enum(["EDT", "EDP", "Parfum", "Extrait", "Cologne"]),
         gender: z.enum(GENDERS),
         family: z.enum(FAMILIES),
-        notes: z.object({ top: noteList, heart: noteList, base: noteList }),
+        notes: z.object({ top: noteList, heart: noteList, base: noteList, key: noteList.optional() }),
         description: z.object({ mn: z.string().min(10), en: z.string().min(10) }),
         sizes: z
           .array(size)
@@ -49,8 +52,8 @@ const products = defineCollection({
         // `back` the bottle with its box. Either may be missing; never fill one with another product's photo.
         photos: z
           .object({
-            front: z.string().url().startsWith("https://").optional(),
-            back: z.string().url().startsWith("https://").optional(),
+            front: z.union([z.string().url().startsWith("https://"), z.string().regex(/^\/product-photos\/[a-z0-9-]+\.webp$/)]).optional(),
+            back: z.union([z.string().url().startsWith("https://"), z.string().regex(/^\/product-photos\/[a-z0-9-]+\.webp$/)]).optional(),
           })
           .strict()
           .optional(),

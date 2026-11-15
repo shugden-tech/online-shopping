@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { useSig } from "../lib/use-signal";
-import { cartItems, cartOpen, cartSubtotal, cartCount, setQty, removeItem, MAX_QTY } from "../lib/cart";
+import { cartItems, cartOpen, cartSubtotal, cartCount, setQty, removeItem, itemLimit } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import { fill, type Dict, type Locale } from "../i18n/lite";
 import { Bottle, initialOf } from "./Bottle";
@@ -134,7 +134,7 @@ export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, check
                           <span aria-hidden="true">−</span>
                         </button>
                         <output aria-live="polite">{i.qty}</output>
-                        <button type="button" onClick={() => setQty(i.slug, i.ml, i.qty + 1)} disabled={i.qty >= MAX_QTY} aria-label={tr.increase}>
+                        <button type="button" onClick={() => setQty(i.slug, i.ml, i.qty + 1)} disabled={i.qty >= itemLimit(i)} aria-label={tr.increase}>
                           <span aria-hidden="true">+</span>
                         </button>
                       </div>

@@ -1,0 +1,61 @@
+{
+  "slug": "chanel-bleu-de-chanel-parfum",
+  "brand": "Chanel",
+  "name": "Bleu de Chanel",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "lemon-zest",
+      "bergamot",
+      "mint",
+      "artemisia"
+    ],
+    "heart": [
+      "lavender",
+      "pineapple",
+      "geranium",
+      "green-notes"
+    ],
+    "base": [
+      "sandalwood",
+      "cedar",
+      "amberwood",
+      "iso-e-super",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Chanel Bleu de Chanel: Эрэгтэйчүүдэд зориулсан модлог үнэр (Parfum). Эхний ноот: нимбэгийн хальс, бергамот, гаа, шарилж; зүрхний ноот: лаванда, хан боргоцой, герань, ногоон ноот; суурь ноот: зандан мод, хуш мод, хув мод, iso e super, тонка шош.",
+    "en": "Chanel Bleu de Chanel is a woody fragrance in Parfum concentration. Its listed notes include lemon zest, bergamot, mint, artemisia, lavender."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-010-front.webp"
+  }
+}

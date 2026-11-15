@@ -1,9 +1,9 @@
 import { useState } from "preact/hooks";
-import { addItem, MAX_QTY, type CartItem } from "../lib/cart";
+import { addItem, itemLimit, type CartItem } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import type { Locale } from "../i18n/lite";
 
-interface Size { ml: number; price: number; inStock: boolean; full?: boolean }
+interface Size { ml: number; price: number; inStock: boolean; stock?: number; full?: boolean }
 interface Props {
   locale: Locale;
   base: Omit<CartItem, "qty" | "ml" | "price">;
@@ -21,6 +21,8 @@ export default function AddToCart({ locale, base, sizes, labels }: Props) {
   const [qty, setQty] = useState(1);
   const current = sizes.find((s) => s.ml === ml);
   const soldOut = !first;
+  const limit = current ? itemLimit(current) : 0;
+  const selectedQty = Math.min(qty, limit);
   const money = (n: number) => formatPrice(n, locale);
 
   return (
@@ -29,7 +31,7 @@ export default function AddToCart({ locale, base, sizes, labels }: Props) {
       data-warm-cart
       onSubmit={(e) => {
         e.preventDefault();
-        if (current?.inStock) addItem({ ...base, ml: current.ml, price: current.price }, qty);
+        if (current?.inStock) addItem({ ...base, ml: current.ml, price: current.price, stock: current.stock }, selectedQty);
       }}
     >
       <fieldset class="atc__sizes">
@@ -53,11 +55,11 @@ export default function AddToCart({ locale, base, sizes, labels }: Props) {
 
       <div class="atc__row">
         <div class="stepper" role="group" aria-label={labels.qty}>
-          <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))} disabled={qty <= 1 || soldOut} aria-label={labels.decrease}>
+          <button type="button" onClick={() => setQty(Math.max(1, selectedQty - 1))} disabled={selectedQty <= 1 || soldOut} aria-label={labels.decrease}>
             <span aria-hidden="true">−</span>
           </button>
-          <output aria-live="polite">{qty}</output>
-          <button type="button" onClick={() => setQty((q) => Math.min(MAX_QTY, q + 1))} disabled={qty >= MAX_QTY || soldOut} aria-label={labels.increase}>
+          <output aria-live="polite">{soldOut ? 1 : selectedQty}</output>
+          <button type="button" onClick={() => setQty(Math.min(limit, selectedQty + 1))} disabled={selectedQty >= limit || soldOut} aria-label={labels.increase}>
             <span aria-hidden="true">+</span>
           </button>
         </div>
@@ -67,8 +69,8 @@ export default function AddToCart({ locale, base, sizes, labels }: Props) {
           ) : (
             <>
               <span>{labels.add}</span>
-              <span class="atc__sum" aria-label={`${labels.total}: ${money((current?.price ?? 0) * qty)}`}>
-                {money((current?.price ?? 0) * qty)}
+              <span class="atc__sum" aria-label={`${labels.total}: ${money((current?.price ?? 0) * selectedQty)}`}>
+                {money((current?.price ?? 0) * selectedQty)}
               </span>
             </>
           )}

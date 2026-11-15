@@ -21,7 +21,7 @@ const products: QuizProduct[] = await Promise.all(
       slug: p.slug, brand: p.brand, name: p.name, family: p.family, gender: p.gender,
       groups: noteGroups(p), occasion: p.occasion, intensity: p.intensity, shape: p.bottleShape,
       ...(img ? { img } : {}),
-      featured: Boolean(p.featured), addMl: size.ml, addPrice: size.price, soldOut: isSoldOut(p),
+      featured: Boolean(p.featured), addMl: size.ml, addPrice: size.price, stock: size.stock, soldOut: isSoldOut(p),
       from: fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }),
     };
   }),

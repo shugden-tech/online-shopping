@@ -1,0 +1,60 @@
+{
+  "slug": "yves-saint-laurent-y-edp",
+  "brand": "Yves Saint Laurent",
+  "name": "Y",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "apple",
+      "ginger",
+      "bergamot"
+    ],
+    "heart": [
+      "sage",
+      "juniper",
+      "geranium"
+    ],
+    "base": [
+      "amberwood",
+      "tonka",
+      "cedar",
+      "vetiver",
+      "incense"
+    ]
+  },
+  "description": {
+    "mn": "Yves Saint Laurent Y: Эрэгтэйчүүдэд зориулсан өвслөг үнэр (EDP). Эхний ноот: алим, цагаан гаа, бергамот; зүрхний ноот: мэргэн өвс, арц, герань; суурь ноот: хув мод, тонка шош, хуш мод, ветивер, хүж.",
+    "en": "Yves Saint Laurent Y is a aromatic fragrance in EDP concentration. Its listed notes include apple, ginger, bergamot, sage, juniper."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-012-front.webp",
+    "back": "/product-photos/curated-012-back.webp"
+  }
+}
