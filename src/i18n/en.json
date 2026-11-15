@@ -75,7 +75,7 @@
   "genders": {
     "women": "Women",
     "men": "Men",
-    "unisex": "Unisex"
+    "unisex": "Gender-neutral"
   },
   "seasons": {
     "spring": "Spring",
@@ -242,8 +242,8 @@
     "q1Women": "For her",
     "q1Men": "For him",
     "q1Any": "Anyone",
-    "q1WomenHint": "Women's and unisex scents",
-    "q1MenHint": "Men's and unisex scents",
+    "q1WomenHint": "Women's and gender-neutral scents",
+    "q1MenHint": "Men's and gender-neutral scents",
     "q1AnyHint": "Every fragrance",
     "q2": "When will you wear it?",
     "q2Sub": "A fragrance reads differently depending on the setting.",
@@ -464,7 +464,7 @@
       "new": "New",
       "women": "Women",
       "men": "Men",
-      "unisex": "Unisex"
+      "unisex": "Gender-neutral"
     },
     "seeAll": "See all",
     "aboutTitle": "About genzst",
