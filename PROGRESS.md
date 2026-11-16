@@ -357,3 +357,9 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - `scripts/build-display-font.py` builds the site file (27 KB woff2, subset like the other faces) from `assets/fonts/UnboundedMN-Bold.ttf` and fixes lowercase ү: in the source it sat on the baseline and stood taller than the other lowercase letters, so "Дэлгүүр" read as "ДэлгҮҮр". The site copy lines its arms up with the x-height and gives it a descender like y. The source file is unchanged.
 - Also in this round: cursor, account badge and the checkout's order recorder load lazily, so the finder and checkout pages are back under their 25 KB initial JS budget.
 - Checks: font loads and applies; no horizontal overflow on home, shop, profile, English home or phone; 0 page errors; `astro check` 0 errors; build passes; JS budget PASS.
+
+## Round — Unbounded MN full family (Opus)
+- Owner pushed `assets/Unbounded-MN` (8 weights, 250–900). `scripts/build-display-font.py` builds one subset woff2 per weight + `src/styles/fonts-display.css`.
+- The new files already draw lowercase ү with a descender (bounds −165, like y), so the ү fix is skipped automatically.
+- `--font-sans` now uses Unbounded MN too (body, product names, menus); ₮ still falls back to Montserrat. Preloads: Unbounded 400 + 700 (Montserrat preload removed).
+- Checked: desktop + mobile, 0 overflow, 0 page errors; astro check 0 errors; JS budget PASS.
