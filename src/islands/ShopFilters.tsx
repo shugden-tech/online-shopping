@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
-  EMPTY_FILTERS, SORTS, activeCount, parseQuery, runFilters, toQuery, toggle,
+  EMPTY_FILTERS, SORTS, activeCount, normalize, parseQuery, runFilters, toQuery, toggle,
   type FilterState, type ListKey, type ShopItem, type SortKey,
 } from "../lib/filter";
 import { fill, type Dict } from "../i18n/lite";
@@ -15,6 +15,7 @@ interface Props {
   priceMax: number;
   options: {
     family: Option[];
+    brand: { id: string; label: string; count: number }[];
     gender: Option[];
     notes: Option[];
     size: number[];
@@ -22,6 +23,9 @@ interface Props {
     occasion: Option[];
   };
 }
+
+const BRAND_TOP = 10;   // tiles shown before "show all"
+const BRAND_SEARCH_MIN = 20; // search box appears once the full list is open and longer than this
 
 const SORT_LABEL: Record<SortKey, keyof Dict["shop"]> = {
   featured: "sortFeatured", newest: "sortNewest", "price-asc": "sortPriceAsc", "price-desc": "sortPriceDesc", az: "sortAz",
@@ -50,6 +54,8 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
   const urlTimer = useRef<number>();
   const panelRef = useRef<HTMLElement>(null);
   const openBtn = useRef<HTMLButtonElement>(null);
+  const [brandAll, setBrandAll] = useState(false);
+  const [brandQuery, setBrandQuery] = useState("");
 
   /** Show / hide / reorder the server-rendered cards. */
   const apply = (next: FilterState) => {
@@ -148,6 +154,56 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
     </fieldset>
   );
 
+  // Brand tiles: the top N (plus any brand already selected, so it can be unselected), or the full list.
+  const brands = options.brand;
+  const brandsCollapsed = brands.filter((b, i) => i < BRAND_TOP || state.brand.includes(b.id));
+  const brandPool = brandAll ? brands : brandsCollapsed;
+  const brandNeedle = normalize(brandQuery);
+  const brandShown = brandAll && brandNeedle ? brandPool.filter((b) => normalize(b.label).includes(brandNeedle)) : brandPool;
+  const brandHidden = brands.length - brandsCollapsed.length;
+
+  const brandGroup = () => (
+    <fieldset class="flt__group">
+      <legend>{tr.brand}</legend>
+      {brandAll && brands.length > BRAND_SEARCH_MIN && (
+        <input
+          class="input flt__brandsearch"
+          type="search"
+          autocomplete="off"
+          aria-label={tr.brandSearch}
+          placeholder={tr.brandSearch}
+          value={brandQuery}
+          onInput={(e) => setBrandQuery((e.currentTarget as HTMLInputElement).value)}
+        />
+      )}
+      <div class="brand-grid">
+        {brandShown.map((b) => (
+          <button
+            type="button"
+            class="brand-tile"
+            aria-pressed={state.brand.includes(b.id)}
+            onClick={() => flip("brand", b.id)}
+          >
+            <span class="brand-tile__n">{b.label}</span>
+          </button>
+        ))}
+      </div>
+      {(brands.length > brandsCollapsed.length || brandAll) && (
+        <button
+          type="button"
+          class="flt__more"
+          aria-expanded={brandAll}
+          onClick={() => {
+            setBrandAll(!brandAll);
+            setBrandQuery("");
+          }}
+        >
+          {brandAll ? tr.showLessBrands : fill(tr.showAllBrands, { n: brandHidden })}
+        </button>
+      )}
+    </fieldset>
+  );
+
   const priceInput = (key: "min" | "max", label: string, placeholder: number) => (
     <label class="flt__price">
       <span>{label}</span>
@@ -225,6 +281,7 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
 
         <div class="flt__body">
           {group("family", tr.family, options.family)}
+          {brandGroup()}
           {group("gender", tr.gender, options.gender)}
           {group("notes", tr.notes, options.notes)}
 

@@ -7,6 +7,7 @@ import LangToggle from "./LangToggle.astro";
 import settings from "../data/settings.json";
 import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
+import { brandId } from "../lib/filter";
 import { fromPrice, getProducts, photosOf, type Product } from "../lib/products";
 import { FAMILIES, SEASONS, OCCASIONS } from "../lib/taxonomy";
 
@@ -57,7 +58,7 @@ const megaFor = (g: Product["gender"]) => {
       { label: m.az, href: `${base}&sort=az` },
       { label: fill(m.allOf, { g: gl }), href: base },
     ],
-    brands: brands.map((b) => ({ label: b, href: `${base}&q=${encodeURIComponent(b)}` })),
+    brands: brands.map((b) => ({ label: b, href: `${base}&brand=${brandId(b)}` })),
     conc: concs.map((c) => ({ label: CONC_LABEL[c] ?? c, href: `${base}&q=${c}` })),
     fams: fams.map((f) => ({ label: tr.families[f], href: `${base}&family=${f}`, tint: `var(--fam-${f})` })),
     seasons: SEASONS.map((x) => ({ label: tr.seasons[x], href: `${base}&season=${x}` })),

@@ -331,3 +331,10 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - Opus review fix: dates show as `2026.11.16` in Mongolian (the browser's "mn" locale fell back to `11/16/2026`).
 - Checks (Haiku, screenshots reviewed by Opus): 37/37 at 1440 px and 390 px (form errors, sign in, header name, wishlist, opt-in survives reload, seeded order and total, sign out, English page), 0 page errors; `astro check` 0 errors; build passes; JS budget PASS.
 - Note: running several `astro dev` servers in the same folder at once leaves Vite's dependency cache stale ("Outdated Optimize Dep"), which can make a reload show the header unstyled. Restart with `npx astro dev --force` (or delete `node_modules/.vite`).
+
+## Brand filter (2026-11-16) — Haiku 5.5 (build), Opus (spec, review)
+
+- Shop sidebar has a **Brand** section: the 10 brands with most products as text "wordmark" tiles (no brand logos or images, per CLAUDE.md), "show all (+N)" expands to all 51 with a search box. URL param `brand=<id>` (id = slug of the name, `brandId()` in `src/lib/filter.ts`); combines with every other filter and with search; "clear" resets it.
+- The desktop mega-menu brand links now use `&brand=` instead of a text search.
+- Opus review fix: long names wrap to two lines instead of being cut off ("ACQUA DI PA…").
+- Checks (Haiku, 35/35 at 1440 px and 390 px incl. the mobile filter sheet, 0 page errors; re-checked by Opus after the fix): `astro check` 0 errors, build passes, JS budget PASS.

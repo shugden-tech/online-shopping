@@ -7,7 +7,7 @@ import { getDict, type Locale } from "../i18n";
 import { FAMILIES, GENDERS, SEASONS, OCCASIONS } from "../lib/taxonomy";
 import { NOTES, NOTE_GROUPS, allNotes, fromPrice, getProducts, noteGroups } from "../lib/products";
 import { noteImages } from "../lib/images";
-import { normalize, type ShopItem } from "../lib/filter";
+import { brandId, normalize, type ShopItem } from "../lib/filter";
 import "../styles/shop.css";
 
 interface Props { locale: Locale }
@@ -32,6 +32,7 @@ const data: ShopItem[] = products.map((p) => ({
     ].join(" "),
   ),
   f: p.family,
+  b: brandId(p.brand),
   g: p.gender,
   n: noteGroups(p),
   z: p.sizes.filter((s) => s.inStock).map((s) => s.ml),
@@ -44,6 +45,17 @@ const data: ShopItem[] = products.map((p) => ({
 
 const prices = data.map((d) => d.p);
 const usedFamilies = FAMILIES.filter((f) => products.some((p) => p.family === f));
+// brands used in the catalog, most products first (then A–Z)
+const brandCounts = new Map<string, { label: string; count: number }>();
+for (const p of products) {
+  const id = brandId(p.brand);
+  const e = brandCounts.get(id) ?? { label: p.brand, count: 0 };
+  e.count += 1;
+  brandCounts.set(id, e);
+}
+const brandOptions = [...brandCounts]
+  .map(([id, e]) => ({ id, label: e.label, count: e.count }))
+  .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 const usedSizes = [...new Set(products.flatMap((p) => p.sizes.map((s) => s.ml)))].sort((a, b) => a - b);
 const noteOptions = await Promise.all(
   NOTE_GROUPS.filter((g) => data.some((d) => d.n.includes(g))).map(async (g) => ({
@@ -55,6 +67,7 @@ const noteOptions = await Promise.all(
 
 const options = {
   family: usedFamilies.map((id) => ({ id, label: tr.families[id] })),
+  brand: brandOptions,
   gender: GENDERS.map((id) => ({ id, label: tr.genders[id] })),
   notes: noteOptions,
   size: usedSizes,

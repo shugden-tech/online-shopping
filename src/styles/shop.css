@@ -57,6 +57,19 @@
 .flt__chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .flt__chips .chip { min-height: 38px; position: relative; }
 .flt__chips .chip::after { content: ""; position: absolute; inset: -4px 0; } /* 44px+ tap height */
+.brand-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.brand-tile {
+  min-height: 44px; min-width: 0; padding: 8px 10px; display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 6px; background: #fff; color: #000;
+  font-family: var(--font-head); font-weight: 600; font-size: 13px; letter-spacing: .04em; text-transform: uppercase;
+  transition: background .3s, color .3s, border-color .3s;
+}
+.brand-tile:hover { border-color: #000; }
+.brand-tile[aria-pressed="true"] { background: #000; color: #fff; border-color: #000; }
+.brand-tile__n { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; width: 100%; min-width: 0; overflow: hidden; text-align: center; line-height: 1.2; overflow-wrap: break-word; }
+.flt__more { display: block; min-height: 44px; margin-top: 6px; font-size: 12px; color: var(--text-dim); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line); }
+.flt__more:hover { color: var(--text); }
+.flt__brandsearch { min-height: 40px; margin-bottom: 10px; font-size: 14px; padding: 8px 12px; }
 .chip--img { padding-left: 6px; }
 .chip--img img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
 

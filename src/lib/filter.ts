@@ -6,6 +6,7 @@ export interface ShopItem {
   nm: string; // name (for A–Z)
   h: string; // normalised search haystack: brand, name, family and note names in mn + en
   f: string; // family
+  b: string; // brand id (see brandId)
   g: string; // gender
   n: string[]; // note accords (photo groups)
   z: number[]; // sizes in stock (ml)
@@ -22,6 +23,7 @@ export type SortKey = (typeof SORTS)[number];
 export interface FilterState {
   q: string;
   family: string[];
+  brand: string[];
   gender: string[];
   notes: string[];
   size: number[];
@@ -33,10 +35,10 @@ export interface FilterState {
 }
 
 export const EMPTY_FILTERS: FilterState = {
-  q: "", family: [], gender: [], notes: [], size: [], season: [], occasion: [], min: null, max: null, sort: "featured",
+  q: "", family: [], brand: [], gender: [], notes: [], size: [], season: [], occasion: [], min: null, max: null, sort: "featured",
 };
 
-const LIST_KEYS = ["family", "gender", "notes", "season", "occasion"] as const;
+const LIST_KEYS = ["family", "brand", "gender", "notes", "season", "occasion"] as const;
 export type ListKey = (typeof LIST_KEYS)[number];
 
 /** Lowercase, strip Latin diacritics (Giò → gio) and fold Mongolian ү/ө so "унэр" finds "үнэр". */
@@ -49,6 +51,11 @@ export function normalize(text: string): string {
     .replace(/ө/g, "о")
     .replace(/[^a-z0-9а-я]+/g, " ")
     .trim();
+}
+
+/** URL-safe brand id: "Yves Saint Laurent" → "yves-saint-laurent", "Abercrombie & Fitch" → "abercrombie-fitch". */
+export function brandId(brand: string): string {
+  return normalize(brand).replace(/\s+/g, "-");
 }
 
 export function parseQuery(search: string): FilterState {
@@ -64,6 +71,7 @@ export function parseQuery(search: string): FilterState {
   return {
     q: (sp.get("q") ?? "").slice(0, 80),
     family: list("family"),
+    brand: list("brand"),
     gender: list("gender"),
     notes: list("notes"),
     size: list("size").map(Number).filter((n) => Number.isFinite(n) && n > 0),
@@ -89,7 +97,7 @@ export function toQuery(state: FilterState): string {
 
 export function activeCount(state: FilterState): number {
   return (
-    (state.q.trim() ? 1 : 0) + state.family.length + state.gender.length + state.notes.length + state.size.length +
+    (state.q.trim() ? 1 : 0) + state.family.length + state.brand.length + state.gender.length + state.notes.length + state.size.length +
     state.season.length + state.occasion.length + (state.min !== null ? 1 : 0) + (state.max !== null ? 1 : 0)
   );
 }
@@ -97,6 +105,7 @@ export function activeCount(state: FilterState): number {
 /** Groups are AND-ed together. Inside a group any value may match — except notes, which narrow (all must match). */
 export function matches(item: ShopItem, state: FilterState, tokens = normalize(state.q).split(" ").filter(Boolean)): boolean {
   if (state.family.length && !state.family.includes(item.f)) return false;
+  if (state.brand.length && !state.brand.includes(item.b)) return false;
   if (state.gender.length && !state.gender.includes(item.g)) return false;
   if (state.notes.length && !state.notes.every((n) => item.n.includes(n))) return false;
   if (state.size.length && !state.size.some((z) => item.z.includes(z))) return false;
