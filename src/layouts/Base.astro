@@ -98,6 +98,7 @@ const cartProps: CartDrawerProps = {
       <slot />
     </main>
     {!bare && <Footer locale={locale} />}
+    <script type="application/json" id="wish-i18n" is:inline set:html={JSON.stringify({ title: tr.store.wishlist, empty: tr.store.wishEmpty, emptySub: tr.store.wishEmptySub, add: tr.common.add, remove: tr.store.wishRemove, close: tr.nav.close }).replace(/</g, "\\u003c")}></script>
     <div id="cart-root" data-props={JSON.stringify(cartProps)}></div>
     <script>
       import "../scripts/shell";

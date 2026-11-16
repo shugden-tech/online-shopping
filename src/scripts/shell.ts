@@ -1,6 +1,7 @@
 // Global page behaviour: header state, mobile menu, cart badge, quick-add buttons, scroll reveal.
 // Loaded once; everything re-binds on `astro:page-load` because of view transitions.
 import { effect } from "@preact/signals-core";
+import "./wishlist";
 import { addItem, cartCount, cartOpen, cartPulse, type CartItem } from "../lib/cart";
 
 const doc = document;

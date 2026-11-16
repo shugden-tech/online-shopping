@@ -32,6 +32,12 @@ const altText = (kind: "front" | "back") => `${p.brand} ${p.name} — ${kind ===
 const imgSizes = "(min-width: 1100px) 280px, (min-width: 700px) 30vw, 46vw";
 const addLabel = (ml: number) => `${p.name}: ${fill(tr.common.addSize, { ml })}`;
 const item = JSON.stringify(base);
+// What the wishlist keeps for this card (see src/scripts/wishlist.ts).
+const wishItem = JSON.stringify({
+  slug: p.slug, brand: p.brand, name: p.name, href,
+  ...(main ? { img: main.src } : {}),
+  ml: start.ml, price: start.price, cart: base,
+});
 ---
 <article class:list={["pcard", cls]} data-card data-slug={p.slug} style={`--tint:var(--fam-${p.family})`}>
   <a class="pcard__media" href={href} tabindex="-1" aria-hidden="true">
@@ -58,6 +64,18 @@ const item = JSON.stringify(base);
   </a>
   {p.isNew && !soldOut && <span class="pcard__flag">{tr.common.new}</span>}
   {soldOut && <span class="pcard__flag pcard__flag--out">{tr.common.soldOut}</span>}
+  <button
+    type="button"
+    class="pcard__wish"
+    data-wish-toggle
+    data-wish-item={wishItem}
+    data-label-add={tr.store.wishAdd}
+    data-label-remove={tr.store.wishRemove}
+    aria-label={tr.store.wishAdd}
+    aria-pressed="false"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.2 4.2 0 0112 7.6 4.2 4.2 0 0119.5 10c0 5.4-7.5 10-7.5 10z"/></svg>
+  </button>
 
   <div class="pcard__body">
     <p class="pcard__brand">{p.brand}</p>
@@ -175,6 +193,19 @@ const item = JSON.stringify(base);
     font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1.4;
   }
   .pcard__flag--out { background: #8f8c86; }
+
+  /* wishlist heart, top-right of the photo; a sibling of the link so it is not inside it */
+  .pcard__wish {
+    position: absolute; top: 10px; right: 10px; z-index: 2; width: 36px; height: 36px; display: grid; place-items: center;
+    border-radius: 50%; background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+    transition: color .2s, transform .15s;
+  }
+  .pcard__wish::before { content: ""; position: absolute; inset: -4px; border-radius: 50%; }
+  .pcard__wish svg { width: 18px; height: 18px; transition: fill .2s, stroke .2s; }
+  .pcard__wish:active { transform: scale(.94); }
+  .pcard__wish:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+  .pcard__wish[aria-pressed="true"] { color: #c0392b; }
+  .pcard__wish[aria-pressed="true"] svg { fill: #c0392b; stroke: #c0392b; }
 
   .pcard__body { display: flex; flex-direction: column; flex: 1; padding-top: 14px; }
   .pcard__brand {

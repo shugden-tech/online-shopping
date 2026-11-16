@@ -309,3 +309,9 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - .nojekyll added so _astro assets are served.
 - LIMIT: /api/orders does not exist on Pages - checkout order submit will fail there. Use Cloudflare deploy for real orders.
 - Model: SWE-2 Flash (Devin)
+
+## Desktop mega-menu and wishlist (2026-11-16) — Opus (lead, mega-menu, review), Haiku 5.5 (wishlist)
+
+- **Mega-menu (Opus):** on desktop, Women / Men / Gender-neutral open a full-width white panel on hover or keyboard focus: shop links (bestsellers, new, A–Z, all), the six brands with most products for that gender, concentrations, seasons, scent families, occasions, "help me choose" links and two featured products with photos. All lists are built from the catalog. "About" opens a small dropdown (About, FAQ, delivery, Scent Finder, contact → footer). "Help" left the bar (it is in the dropdown) but stays in the phone menu. The phone menu is unchanged.
+- **Wishlist (Haiku, reviewed by Opus):** a heart on every product card, a heart with a count in the header, and a right-side wishlist drawer (add to cart, remove, empty state). Saved in `localStorage` (`gz_wish`), synced across tabs. Files: `src/scripts/wishlist.ts`, `src/styles/wishlist.css`, the card heart in `ProductCard.astro`, strings in `Base.astro` (`#wish-i18n`). Review fixes: the inline JSON escapes `<`; items read back from storage must have a site-path `href` and an https or site-path `img`.
+- **Checks:** wishlist browser test 24/24 at 1440 px and 390 px touch (heart, reload keeps it, drawer, add to cart, remove, close by Escape / button / backdrop, 0 page errors); cart close test still passes; mega-menu opens on hover and on focus, no horizontal overflow; `astro check` 0 errors, build passes, JS budget PASS.
