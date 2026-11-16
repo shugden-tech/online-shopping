@@ -338,3 +338,7 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - The desktop mega-menu brand links now use `&brand=` instead of a text search.
 - Opus review fix: long names wrap to two lines instead of being cut off ("ACQUA DI PA…").
 - Checks (Haiku, 35/35 at 1440 px and 390 px incl. the mobile filter sheet, 0 page errors; re-checked by Opus after the fix): `astro check` 0 errors, build passes, JS budget PASS.
+
+## Top 3 and reviews in the logo colours (2026-11-16) — Opus
+
+- The owner found the black panels too dark. Top 3 now uses the logo's green (#005848) as a radial background, maroon (#581418) podium blocks, amber (#c47a1c) top slabs, selected tab and glow, and gold laurel rings. Review cards are warm cream (#fbf7f0) with dark text, amber stars, maroon names and a green verified tick. Checked at 1440 px and 390 px, 0 page errors; build passes.
