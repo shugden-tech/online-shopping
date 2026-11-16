@@ -204,10 +204,14 @@ button.chip:hover, a.chip:hover, label.chip:hover { border-color: var(--gold); }
 /* ---------- scroll reveal (opacity + rise, per animation1.md timing) ---------- */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity .65s var(--ease-sine) var(--delay, 0ms), transform .65s var(--ease-sine) var(--delay, 0ms);
+  transform: translateY(22px);
+  filter: blur(8px);
+  transition:
+    opacity .8s var(--ease-sine) var(--delay, 0ms),
+    transform .9s var(--ease-out) var(--delay, 0ms),
+    filter .8s var(--ease-sine) var(--delay, 0ms);
 }
-[data-reveal].is-in { opacity: 1; transform: none; }
+[data-reveal].is-in { opacity: 1; transform: none; filter: none; }
 /* no-JS fallback: see the <noscript> style in Base.astro */
 
 /* ---------- bottle art ---------- */
@@ -227,6 +231,6 @@ button.chip:hover, a.chip:hover, label.chip:hover { border-color: var(--gold); }
     transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
-  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
 }

@@ -342,3 +342,11 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 ## Top 3 and reviews in the logo colours (2026-11-16) — Opus
 
 - The owner found the black panels too dark. Top 3 now uses the logo's green (#005848) as a radial background, maroon (#581418) podium blocks, amber (#c47a1c) top slabs, selected tab and glow, and gold laurel rings. Review cards are warm cream (#fbf7f0) with dark text, amber stars, maroon names and a green verified tick. Checked at 1440 px and 390 px, 0 page errors; build passes.
+
+## Motion layer and flower cursor (2026-11-16) — Opus
+
+- The owner wanted the site to feel less "vibe coded": more motion, fade and blur.
+- **Scroll reveal:** `[data-reveal]` now fades in, rises 22 px and un-blurs (8 px → 0). `src/scripts/motion.ts` tags the main blocks on each page (promo tiles, collections, gender tiles, product grid cards, Top 3, review cards, brands, about, info line, footer columns, shop grid, product page) with a stagger, so components need no markup changes. Cards in a newly opened home tab fade in again. The collection rail reveals as one block (its off-screen items would otherwise stay hidden). Nothing is hidden without JS; nothing is tagged under reduced motion.
+- **Other motion (`src/styles/motion.css`):** the banner blurs in on load; Top 3 podium blocks rise one after another (1st, 2nd, 3rd) and the rings pop; review cards and gender tiles lift on hover.
+- **Flower cursor (`src/scripts/cursor.ts`):** a small outlined six-petal flower in the logo colours trails the mouse and slowly turns; over anything clickable it opens and fills amber and spins faster; it shrinks on click; a maroon dot sits exactly on the pointer. Only for a real mouse; off on touch screens and under reduced motion; text fields keep the normal text cursor; re-added after view transitions.
+- **Checks:** after scrolling, no element is left hidden on home, shop or product pages; tabs re-reveal; touch: no cursor; reduced motion: nothing tagged and no cursor; 0 page errors; `astro check` 0 errors; build passes; JS budget PASS.
