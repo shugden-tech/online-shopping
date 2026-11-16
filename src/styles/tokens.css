@@ -18,6 +18,7 @@
 
   --font-head: "Cormorant Garamond", "Cormorant Fallback", "Times New Roman", serif;
   --font-sans: "Montserrat", "Montserrat Fallback", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Unbounded MN", "Montserrat", "Montserrat Fallback", "Helvetica Neue", Arial, sans-serif;
   --fs-head: clamp(34px, 3.5vw + 1rem, 60px);
   --fs-h2: clamp(26px, 1.6vw + 1rem, 38px);
   --fs-title: clamp(12px, 0.3vw + 11px, 14px);

@@ -8,6 +8,7 @@ import type { CartDrawerProps } from "../islands/CartDrawer";
 import settings from "../data/settings.json";
 import { getDict, route, alternatesFor, type Locale } from "../i18n";
 import headFont from "../assets/fonts/cormorant-garamond-300-normal.woff2?url";
+import displayFont from "../assets/fonts/unbounded-mn-700-normal.woff2?url";
 import sansFontMn from "../assets/fonts/montserrat-400-normal.woff2?url";
 import sansFontEn from "../assets/fonts/montserrat-300-normal.woff2?url";
 
@@ -73,6 +74,7 @@ const cartProps: CartDrawerProps = {
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={headFont} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={locale === "mn" ? sansFontMn : sansFontEn} as="font" type="font/woff2" crossorigin />
 

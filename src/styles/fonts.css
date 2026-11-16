@@ -7,6 +7,10 @@
 @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 400; font-display: swap; src: url("../assets/fonts/montserrat-400-normal.woff2") format("woff2"); }
 @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 500; font-display: swap; src: url("../assets/fonts/montserrat-500-normal.woff2") format("woff2"); }
 
+/* The owner's display face: Unbounded (SIL OFL) with Mongolian glyphs, bold only. Subset like the others.
+   Source: assets/fonts/UnboundedMN-Bold.ttf. size-adjust tames its wide letters. It has no ₮: that falls back to Montserrat. */
+@font-face { font-family: "Unbounded MN"; font-style: normal; font-weight: 500 900; font-display: swap; size-adjust: 88%; src: url("../assets/fonts/unbounded-mn-700-normal.woff2") format("woff2"); }
+
 /* Size-adjusted system fallbacks so the swap does not shift the layout. */
 @font-face { font-family: "Cormorant Fallback"; src: local("Times New Roman"), local("Times"); size-adjust: 90%; ascent-override: 103%; descent-override: 32%; line-gap-override: 0%; }
 @font-face { font-family: "Montserrat Fallback"; src: local("Arial"), local("Helvetica Neue"), local("Roboto"); size-adjust: 113%; ascent-override: 86%; descent-override: 22%; line-gap-override: 0%; }
