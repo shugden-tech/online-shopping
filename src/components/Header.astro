@@ -112,6 +112,10 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
 
     <div class="hdr__tools">
       <div class="hdr__lang"><LangToggle locale={locale} alternates={alternates} /></div>
+      <a class="hdr__acct" href={route("profile", locale)} aria-label={tr.account.account} title={tr.account.account}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg>
+        <span class="hdr__acct-name" data-acct-name></span>
+      </a>
       <button class="hdr__wish" type="button" data-wish-open aria-label={tr.store.wishlist} aria-haspopup="dialog" title={tr.store.wishlist}>
         <Icon name="heart" size={22} />
         <span class="hdr__badge hdr__badge--wish" data-wish-count data-empty aria-hidden="true">0</span>
@@ -227,6 +231,10 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
   .hdr__lang { margin-inline: 4px; }
   .hdr__wish { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; transition: background-color .2s; }
   .hdr__wish:hover { background: var(--soft); }
+  .hdr__acct { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 44px; min-width: 44px; padding: 0 8px; border-radius: 999px; transition: background-color .2s; }
+  .hdr__acct:hover { background: var(--soft); }
+  .hdr__acct-name { font-size: 13px; font-weight: 500; max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hdr__acct-name:empty { display: none; }
   .hdr__badge--wish { position: absolute; top: 2px; right: 0; }
   .hdr__cart {
     position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px 0 10px;
@@ -329,7 +337,7 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
     .hdr__word { height: 28px; }
     .hdr__logo { height: 38px; }
     .hdr__search { order: 5; flex-basis: 100%; max-width: none; height: 42px; }
-    .hdr__lang, .hdr__cart-label { display: none; }
+    .hdr__lang, .hdr__cart-label, .hdr__acct-name { display: none; }
     .hdr__cart { padding: 0 10px; }
     .hdr__badge { position: absolute; top: 2px; right: 0; }
     .hdr__nav { display: none; }

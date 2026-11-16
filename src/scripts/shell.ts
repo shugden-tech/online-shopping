@@ -2,6 +2,7 @@
 // Loaded once; everything re-binds on `astro:page-load` because of view transitions.
 import { effect } from "@preact/signals-core";
 import "./wishlist";
+import "./account-badge";
 import { addItem, cartCount, cartOpen, cartPulse, type CartItem } from "../lib/cart";
 
 const doc = document;

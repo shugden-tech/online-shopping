@@ -4,6 +4,7 @@ import { navigate } from "astro:transitions/client";
 import { cartItems, cartOpen, deliveryFor, type CartItem } from "../lib/cart";
 import { useSig } from "../lib/use-signal";
 import { formatPrice } from "../lib/price";
+import { recordOrder } from "../lib/account";
 import { Bottle, initialOf } from "./Bottle";
 import {
   FIELD_ORDER, validateOrderForm, type FieldErrorKey, type FormErrors, type OrderField, type OrderFormValues,
@@ -223,6 +224,16 @@ export default function CheckoutForm(props: CheckoutFormProps) {
     if (res.ok && data.ok && data.orderNo) {
       // the success page clears the cart; keep it until we know the order is stored
       const url = `${successHref}?no=${encodeURIComponent(data.orderNo)}&t=${encodeURIComponent(String(data.total ?? total))}`;
+      try {
+        // demo account history (browser only); must never block the checkout
+        recordOrder({
+          no: data.orderNo,
+          total: data.total ?? total,
+          items: cartItems.value.map((i) => ({ name: i.name, brand: i.brand, ml: i.ml, qty: i.qty, price: i.price })),
+        });
+      } catch {
+        /* ignore */
+      }
       try {
         await navigate(url);
       } catch {

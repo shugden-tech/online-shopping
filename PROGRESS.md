@@ -322,3 +322,12 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - Both read `src/data/demo-community.json`: fictional people, labelled "Жишээ өгөгдөл / Sample data" on the page. To be replaced by real D1 data (opt-in only for the leaderboard, verified buyers for reviews) when accounts move to Cloudflare.
 - Opus review fix: a review photo that fails to load removes its square instead of leaving a blank box.
 - Checks (Haiku, screenshots reviewed by Opus): renders at 1440 px and 390 px, tabs switch by click and arrow keys, no horizontal overflow, 0 page errors; `astro check` 0 errors; build passes.
+
+## Demo customer account and profile (2026-11-16) — Haiku 5.5 (build), Opus (spec, review)
+
+- Header person icon → `/profile/` (`/en/profile/`); shows the first name when signed in (desktop).
+- Profile page: demo sign-in (name + phone, validated), greeting, sign out, order history with total spent, wishlist, and an opt-in "show me on the top customers list" with a display name. Everything is kept in this browser only (`gz_account`, `gz_orders`); the page says so. `src/lib/account.ts` is the single storage module, so it can be swapped for Cloudflare D1 later.
+- Checkout records each successful order into the local history (in a try/catch, so it can never block checkout).
+- Opus review fix: dates show as `2026.11.16` in Mongolian (the browser's "mn" locale fell back to `11/16/2026`).
+- Checks (Haiku, screenshots reviewed by Opus): 37/37 at 1440 px and 390 px (form errors, sign in, header name, wishlist, opt-in survives reload, seeded order and total, sign out, English page), 0 page errors; `astro check` 0 errors; build passes; JS budget PASS.
+- Note: running several `astro dev` servers in the same folder at once leaves Vite's dependency cache stale ("Outdated Optimize Dep"), which can make a reload show the header unstyled. Restart with `npx astro dev --force` (or delete `node_modules/.vite`).
