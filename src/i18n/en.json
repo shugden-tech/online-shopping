@@ -516,5 +516,38 @@
       "delivery": "Delivery & payment",
       "contact": "Contact us"
     }
+  },
+  "account": {
+    "login": "Sign in",
+    "account": "My profile",
+    "title": "My profile",
+    "demoNote": "Demo: your details are kept only in this browser. Real accounts are coming soon.",
+    "name": "Name",
+    "phone": "Phone number",
+    "submit": "Sign in",
+    "logout": "Sign out",
+    "hello": "Hello, {name}",
+    "orders": "My orders",
+    "noOrders": "You have not placed an order yet.",
+    "wishlist": "Wishlist",
+    "board": "Top customers",
+    "showOnBoard": "Show me on the top customers list",
+    "displayName": "Display name",
+    "save": "Save",
+    "saved": "Saved",
+    "loginPrompt": "Sign in to see your profile and order history.",
+    "total": "Total spent",
+    "orderNo": "Order",
+    "items": "items"
+  },
+  "community": {
+    "topTitle": "Top 3 customers",
+    "topSub": "Customers with the most purchases",
+    "p7": "Last 7 days",
+    "p30": "Last month",
+    "all": "All time",
+    "reviewsTitle": "Customer reviews",
+    "verified": "Verified buyer",
+    "demo": "Sample data"
   }
 }

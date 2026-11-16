@@ -2,7 +2,7 @@
 // Plain .mjs so astro.config.mjs can import it too.
 
 /** @typedef {"mn" | "en"} Locale */
-/** @typedef {"home"|"shop"|"finder"|"checkout"|"success"|"about"|"help"} RouteKey */
+/** @typedef {"home"|"shop"|"finder"|"checkout"|"success"|"about"|"help"|"profile"} RouteKey */
 
 /** @type {Record<RouteKey, Record<Locale, string>>} */
 export const ROUTES = {
@@ -13,6 +13,7 @@ export const ROUTES = {
   success: { mn: "/zahialga/amjilttai/", en: "/en/checkout/success/" },
   about: { mn: "/bidnii-tuhai/", en: "/en/about/" },
   help: { mn: "/tuslamj/", en: "/en/help/" },
+  profile: { mn: "/profile/", en: "/en/profile/" },
 };
 
 /** @param {RouteKey} key @param {Locale} locale */
