@@ -1,50 +1,118 @@
 """
-Builds src/assets/fonts/unbounded-mn-700-normal.woff2 from the owner's assets/fonts/UnboundedMN-Bold.ttf.
+Builds the site's display font files from the owner's Unbounded MN sources.
 
-- Fixes lowercase ү (U+04AF): in the source it sits on the baseline and stands taller than the other
-  lowercase letters, so it reads as a capital Y. Here its arms are lined up with the x-height (571, as х)
-  and its stem goes down to the descender (-181, as y). The source file is left untouched.
-- Subsets to the characters the site uses (Latin, Mongolian Cyrillic incl. Ө ө Ү ү, punctuation).
-  The font has no ₮; the CSS stack falls back to Montserrat for it.
+Sources (first that exists):
+  assets/Unbounded-MN/*.ttf|*.otf   — the full family, every weight
+  assets/fonts/UnboundedMN-Bold.ttf — the single bold file used so far
+
+For every source file:
+- reads its weight (OS/2 usWeightClass) and style;
+- fixes lowercase ү (U+04AF): in the source it sits on the baseline and stands taller than the other
+  lowercase letters, so it reads as a capital Y. Its arms are lined up with the x-height (the top of х)
+  and its stem goes down to the descender (the bottom of y). The source files are left untouched;
+- subsets to the characters the site uses (Latin, Mongolian Cyrillic incl. Ө ө Ү ү, punctuation) and
+  writes src/assets/fonts/unbounded-mn-<weight>-<style>.woff2.
+
+Then writes src/styles/fonts-display.css with one @font-face per file. The fonts have no ₮; the CSS
+font stacks fall back to Montserrat for it.
 
 Run:  python scripts/build-display-font.py   (needs: pip install fonttools brotli)
 """
-import io, os
+import glob, io, os
 from fontTools.ttLib import TTFont
 from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools.pens.t2CharStringPen import T2CharStringPen
 from fontTools.pens.transformPen import TransformPen
 from fontTools.pens.boundsPen import BoundsPen
 from fontTools.subset import Subsetter, Options
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-SRC = os.path.join(ROOT, "assets", "fonts", "UnboundedMN-Bold.ttf")
-OUT = os.path.join(ROOT, "src", "assets", "fonts", "unbounded-mn-700-normal.woff2")
+FAMILY_DIR = os.path.join(ROOT, "assets", "Unbounded-MN")
+SINGLE = os.path.join(ROOT, "assets", "fonts", "UnboundedMN-Bold.ttf")
+OUT_DIR = os.path.join(ROOT, "src", "assets", "fonts")
+CSS = os.path.join(ROOT, "src", "styles", "fonts-display.css")
 UNICODES = set(range(0x20, 0x7F)) | set(range(0xA0, 0x100)) | {
     0x2013, 0x2014, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2026, 0x2116,
 } | set(range(0x0400, 0x0460)) | {0x04AE, 0x04AF, 0x04E8, 0x04E9}
 
-font = TTFont(SRC)
-gs = font.getGlyphSet()
-bp = BoundsPen(gs)
-gs["uni04AF"].draw(bp)
-y0, y1 = bp.bounds[1], bp.bounds[3]
-top, bottom = 571, -181
-pen = TTGlyphPen(gs)
-gs["uni04AF"].draw(TransformPen(pen, (1, 0, 0, (top - bottom) / (y1 - y0), 0, bottom - y0 * (top - bottom) / (y1 - y0))))
-font["glyf"]["uni04AF"] = pen.glyph()
 
-buf = io.BytesIO()
-font.save(buf)
-buf.seek(0)
-font = TTFont(buf)
-opts = Options()
-opts.layout_features = ["kern", "liga", "locl", "mark", "mkmk", "ccmp"]
-opts.flavor = "woff2"
-opts.notdef_outline = True
-opts.name_IDs = ["*"]
-sub = Subsetter(opts)
-sub.populate(unicodes=UNICODES)
-sub.subset(font)
-font.flavor = "woff2"
-font.save(OUT)
-print("wrote", OUT, os.path.getsize(OUT), "bytes")
+def bounds(gs, name):
+    pen = BoundsPen(gs)
+    gs[name].draw(pen)
+    return pen.bounds
+
+
+def fix_ue(font):
+    """Stretch ү so its arms meet the x-height and its stem reaches the descender."""
+    cmap = font.getBestCmap()
+    ue, x, y = cmap.get(0x04AF), cmap.get(0x0445), cmap.get(0x0079)
+    if not (ue and x and y):
+        return False
+    gs = font.getGlyphSet()
+    b_ue, b_x, b_y = bounds(gs, ue), bounds(gs, x), bounds(gs, y)
+    if not (b_ue and b_x and b_y) or b_ue[1] < -20:  # already has a descender: leave it
+        return False
+    top, bottom = b_x[3], b_y[1]
+    y0, y1 = b_ue[1], b_ue[3]
+    sy = (top - bottom) / (y1 - y0)
+    matrix = (1, 0, 0, sy, 0, bottom - y0 * sy)
+    if "glyf" in font:
+        pen = TTGlyphPen(gs)
+        gs[ue].draw(TransformPen(pen, matrix))
+        font["glyf"][ue] = pen.glyph()
+    else:  # CFF (.otf)
+        cff = font["CFF "].cff
+        top_dict = cff.topDictIndex[0]
+        cs = top_dict.CharStrings
+        width = font["hmtx"][ue][0]
+        pen = T2CharStringPen(width, gs)
+        gs[ue].draw(TransformPen(pen, matrix))
+        charstring = pen.getCharString(private=cs[ue].private, globalSubrs=cs[ue].globalSubrs)
+        cs[ue] = charstring
+    return True
+
+
+def build(path):
+    font = TTFont(path)
+    weight = font["OS/2"].usWeightClass
+    italic = bool(font["OS/2"].fsSelection & 1)
+    style = "italic" if italic else "normal"
+    fixed = fix_ue(font)
+    buf = io.BytesIO()
+    font.save(buf)
+    buf.seek(0)
+    font = TTFont(buf)
+    opts = Options()
+    opts.layout_features = ["kern", "liga", "locl", "mark", "mkmk", "ccmp"]
+    opts.flavor = "woff2"
+    opts.notdef_outline = True
+    opts.name_IDs = ["*"]
+    sub = Subsetter(opts)
+    sub.populate(unicodes=UNICODES)
+    sub.subset(font)
+    font.flavor = "woff2"
+    name = f"unbounded-mn-{weight}-{style}.woff2"
+    font.save(os.path.join(OUT_DIR, name))
+    print(f"{os.path.basename(path)} -> {name} ({os.path.getsize(os.path.join(OUT_DIR, name))} bytes){' [ү fixed]' if fixed else ''}")
+    return weight, style, name
+
+
+sources = sorted(glob.glob(os.path.join(FAMILY_DIR, "**", "*.[ot]tf"), recursive=True))
+sources = [s for s in sources if "variable" not in os.path.basename(s).lower()] or [SINGLE]
+faces = {}
+for src in sources:
+    w, st, name = build(src)
+    faces[(w, st)] = name  # one file per weight/style
+
+lines = [
+    "/* Generated by scripts/build-display-font.py — do not edit by hand.",
+    "   The owner's Unbounded MN (SIL OFL) with Mongolian glyphs. size-adjust tames its wide letters. */",
+]
+for (w, st), name in sorted(faces.items()):
+    lines.append(
+        f'@font-face {{ font-family: "Unbounded MN"; font-style: {st}; font-weight: {w}; font-display: swap; '
+        f'size-adjust: 88%; src: url("../assets/fonts/{name}") format("woff2"); }}'
+    )
+with open(CSS, "w", encoding="utf-8") as fh:
+    fh.write("\n".join(lines) + "\n")
+print("wrote", os.path.relpath(CSS, ROOT), "with", len(faces), "face(s):", ", ".join(f"{w} {st}" for w, st in sorted(faces)))
