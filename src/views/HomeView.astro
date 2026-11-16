@@ -3,6 +3,8 @@ import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import BottleArt from "../components/BottleArt.astro";
 import ProductCard from "../components/ProductCard.astro";
+import TopCustomers from "../components/TopCustomers.astro";
+import Reviews from "../components/Reviews.astro";
 import Icon from "../components/Icon.astro";
 import settings from "../data/settings.json";
 import bestsellerSlugs from "../data/bestsellers.json";
@@ -187,6 +189,10 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
       </div>
     ))}
   </section>
+
+  <!-- 5b · demo community: top customers + reviews -->
+  <TopCustomers locale={locale} />
+  <Reviews locale={locale} />
 
   <!-- 6 · brands -->
   <section class="brands" aria-label={tr.nav.shop}>

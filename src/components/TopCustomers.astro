@@ -1,0 +1,254 @@
+---
+import demo from "../data/demo-community.json";
+import { getDict, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const c = getDict(locale).community;
+
+const periods = [
+  { id: "p7", label: c.p7 },
+  { id: "p30", label: c.p30 },
+  { id: "all", label: c.all },
+] as const;
+const DEFAULT = "all";
+
+type Entry = { name: string; total: number };
+/** Podium order: 2nd (left), 1st (centre), 3rd (right). */
+const podium = (list: Entry[]) => [
+  { rank: 2, e: list[1]! },
+  { rank: 1, e: list[0]! },
+  { rank: 3, e: list[2]! },
+];
+const initial = (name: string) => name.trim().charAt(0).toUpperCase();
+---
+<section class="wrap top3" aria-labelledby="top3-title" data-community>
+  <div class="top3__panel">
+    <header class="top3__head">
+      <div class="top3__titles">
+        <div class="top3__row">
+          <h2 class="top3__title" id="top3-title">{c.topTitle}</h2>
+          <span class="pill">{c.demo}</span>
+        </div>
+        <p class="top3__sub">{c.topSub}</p>
+      </div>
+      <div class="seg" role="tablist" aria-label={c.topTitle}>
+        {periods.map((p) => (
+          <button
+            type="button" role="tab" id={`top3-tab-${p.id}`} aria-controls={`top3-panel-${p.id}`}
+            aria-selected={p.id === DEFAULT ? "true" : "false"} tabindex={p.id === DEFAULT ? 0 : -1}
+          >{p.label}</button>
+        ))}
+      </div>
+    </header>
+
+    {periods.map((p) => (
+      <div class="podium" role="tabpanel" id={`top3-panel-${p.id}`} aria-labelledby={`top3-tab-${p.id}`} hidden={p.id !== DEFAULT}>
+        <ol class="podium__row">
+          {podium(demo.leaderboard[p.id]).map(({ rank, e }) => (
+            <li class={`col col--${rank}`}>
+              {rank === 1 && <span class="glow" aria-hidden="true"></span>}
+              <span class="ring"><span class="ring__letter" aria-hidden="true">{initial(e.name)}</span></span>
+              <p class="col__name">{e.name}</p>
+              <p class="col__total">{formatPrice(e.total, locale)}</p>
+              <div class="block" aria-hidden="true"><span class="block__rank">{rank}</span></div>
+              <span class="sr-only">{rank}. {e.name}, {formatPrice(e.total, locale)}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  import "../scripts/community";
+</script>
+
+<style>
+  .top3 { padding-top: clamp(44px, 6vw, 72px); }
+  .top3__panel {
+    background: #111;
+    color: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    overflow: hidden;
+  }
+  .top3__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+    margin-bottom: 28px;
+  }
+  .top3__titles { min-width: 0; }
+  .top3__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .top3__title { margin: 0; font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; line-height: 1.2; color: #fff; }
+  .top3__sub { margin: 6px 0 0; color: #9a9a9a; font-size: 14px; }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border: 1px solid #3a3a3a;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: #9a9a9a;
+    white-space: nowrap;
+  }
+
+  .seg {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px;
+    background: #1c1c1c;
+    border-radius: 999px;
+  }
+  .seg [role="tab"] {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: #9a9a9a;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+  }
+  .seg [role="tab"]:hover { color: #fff; }
+  .seg [role="tab"]:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .seg [role="tab"][aria-selected="true"] { background: #000; color: #fff; box-shadow: 0 0 0 1px #3a3a3a inset; }
+
+  .podium[hidden] { display: none; }
+  .podium__row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: clamp(8px, 2vw, 24px);
+    max-width: 720px;
+    margin-inline: auto;
+    animation: rise 0.45s ease-out both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+  }
+  .glow {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 150%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -20%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Metallic laurel-style ring around the initial. */
+  .ring {
+    position: relative;
+    z-index: 1;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    background:
+      linear-gradient(#1c1c1c, #1c1c1c) padding-box,
+      conic-gradient(from 200deg, #8c9196, #f4f6f8, #9ea3a8, #e9ecef, #6f757a, #f4f6f8, #8c9196) border-box;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    display: grid;
+    place-items: center;
+  }
+  .ring__letter { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
+  .col--1 .ring { width: 80px; height: 80px; border-width: 4px; }
+  .col--1 .ring__letter { font-size: 28px; }
+
+  .col__name {
+    position: relative;
+    z-index: 1;
+    margin: 12px 0 0;
+    max-width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+  }
+  .col__total {
+    position: relative;
+    z-index: 1;
+    margin: 2px 0 22px;
+    font-size: 13px;
+    color: #9a9a9a;
+    white-space: nowrap;
+  }
+
+  /* Podium block: dark face with a light top slab for a 3D look. */
+  .block {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: var(--h, 105px);
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(#2a2a2a, #1c1c1c);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .block::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: -14px;
+    height: 14px;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(#d9d9d9, #9a9a9a);
+  }
+  .block__rank {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 44px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1;
+  }
+  .col--1 .block { --h: 150px; }
+  .col--2 .block { --h: 120px; }
+  .col--3 .block { --h: 105px; }
+  .col--1 .block__rank { font-size: 56px; }
+
+  @media (max-width: 640px) {
+    .top3__panel { padding: 20px 16px; border-radius: 16px; }
+    .top3__head { margin-bottom: 20px; }
+    .seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+    .seg [role="tab"] { padding: 8px 6px; font-size: 12px; line-height: 1.25; text-align: center; }
+    .ring { width: 48px; height: 48px; border-width: 2px; }
+    .ring__letter { font-size: 17px; }
+    .col--1 .ring { width: 60px; height: 60px; border-width: 3px; }
+    .col--1 .ring__letter { font-size: 22px; }
+    .col__name { font-size: 13px; margin-top: 10px; }
+    .col__total { font-size: 12px; }
+    .col--1 .block { --h: 110px; }
+    .col--2 .block { --h: 88px; }
+    .col--3 .block { --h: 76px; }
+    .block::before { height: 10px; top: -10px; }
+    .block__rank { font-size: 30px; }
+    .col--1 .block__rank { font-size: 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .podium__row { animation: none; } }
+</style>

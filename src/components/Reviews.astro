@@ -1,0 +1,170 @@
+---
+import demo from "../data/demo-community.json";
+import { getDict, type Locale } from "../i18n";
+import { getProducts, photosOf, initialOf } from "../lib/products";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const c = getDict(locale).community;
+
+const products = await getProducts();
+const reviews = demo.reviews.flatMap((r) => {
+  const product = products.find((p) => p.slug === r.slug);
+  return product ? [{ r, product, photo: photosOf(product, 240)[0] }] : [];
+});
+const initial = (name: string) => name.trim().charAt(0).toUpperCase();
+---
+<section class="wrap reviews" aria-labelledby="reviews-title">
+  <header class="reviews__head">
+    <h2 class="reviews__title" id="reviews-title">{c.reviewsTitle}</h2>
+    <span class="pill">{c.demo}</span>
+  </header>
+  <ul class="reviews__grid">
+    {reviews.map(({ r, product, photo }) => (
+      <li class="card">
+        <p class="stars">
+          <span class="sr-only">{r.rating}/5</span>
+          <span aria-hidden="true">
+            {Array.from({ length: 5 }, (_, i) => (
+              <span class={i < r.rating ? "on" : "off"}>{i < r.rating ? "★" : "☆"}</span>
+            ))}
+          </span>
+        </p>
+        <blockquote class="card__text">“{r.text[locale]}”</blockquote>
+        <footer class="card__foot">
+          <span class="ring"><span class="ring__letter" aria-hidden="true">{initial(r.name)}</span></span>
+          <div class="card__who">
+            <p class="card__name">
+              <span>{r.name}</span>
+              <svg class="check" viewBox="0 0 24 24" width="15" height="15" role="img" aria-label={c.verified}>
+                <title>{c.verified}</title>
+                <circle cx="12" cy="12" r="11" fill="currentColor" />
+                <path d="M7.5 12.5l3 3 6-6" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </p>
+            <p class="card__prod">{product.brand} {product.name}</p>
+          </div>
+          {photo && (
+            <span class="card__photo">
+              <img src={photo.src} srcset={photo.srcset} sizes="56px" loading="lazy" decoding="async" alt="" width="56" height="56" onerror="this.parentNode.remove()" />
+            </span>
+          )}
+        </footer>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .reviews { padding-top: clamp(44px, 6vw, 72px); }
+  .reviews__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: clamp(20px, 3vw, 28px);
+  }
+  .reviews__title { margin: 0; font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; line-height: 1.2; }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border: 1px solid #c9c9c9;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: #555;
+    white-space: nowrap;
+  }
+
+  .reviews__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: #111;
+    color: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  .stars { margin: 0; font-size: 16px; letter-spacing: 2px; line-height: 1; }
+  .stars .on { color: #f5b70a; }
+  .stars .off { color: #5a5a5a; }
+  .card__text {
+    margin: 0;
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #fff;
+    overflow-wrap: anywhere;
+  }
+  .card__foot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid #242424;
+  }
+  .card__who { min-width: 0; flex: 1; }
+  .card__name {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    min-width: 0;
+  }
+  .card__name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .check { flex: none; color: #fff; }
+  .card__prod {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: #9a9a9a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card__photo {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .card__photo img { width: 100%; height: 100%; object-fit: contain; }
+
+  /* Metallic laurel-style ring, same as the top-customers avatars. */
+  .ring {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background:
+      linear-gradient(#1c1c1c, #1c1c1c) padding-box,
+      conic-gradient(from 200deg, #8c9196, #f4f6f8, #9ea3a8, #e9ecef, #6f757a, #f4f6f8, #8c9196) border-box;
+    display: grid;
+    place-items: center;
+  }
+  .ring__letter { font-size: 15px; font-weight: 700; color: #fff; line-height: 1; }
+
+  @media (max-width: 1024px) {
+    .reviews__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .reviews__grid { grid-template-columns: minmax(0, 1fr); }
+    .card { padding: 20px; }
+  }
+</style>
