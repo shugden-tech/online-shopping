@@ -7,6 +7,8 @@ import LangToggle from "./LangToggle.astro";
 import settings from "../data/settings.json";
 import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
+import { fromPrice, getProducts, photosOf, type Product } from "../lib/products";
+import { FAMILIES, SEASONS, OCCASIONS } from "../lib/taxonomy";
 
 interface Props {
   locale: Locale;
@@ -27,8 +29,59 @@ const links = [
   { key: "new", href: `${shop}?sort=newest`, label: s.newIn, badge: true },
   { key: "finder", href: route("finder", locale), label: tr.nav.finder },
   { key: "about", href: route("about", locale), label: tr.nav.about },
-  { key: "help", href: route("help", locale), label: tr.nav.help },
+  { key: "help", href: route("help", locale), label: tr.nav.help, mobileOnly: true },
 ];
+// ---------- desktop mega-menus (Women / Men / Unisex) and the About dropdown ----------
+const m = s.mega;
+const products = await getProducts();
+const CONC_LABEL: Record<string, string> = { Cologne: "Eau de Cologne", EDT: "Eau de Toilette", EDP: "Eau de Parfum", Parfum: "Parfum", Extrait: "Extrait de Parfum" };
+const CONC_ORDER = ["Cologne", "EDT", "EDP", "Parfum", "Extrait"];
+const shuffle = <T,>(list: T[]) => list.map((v) => [Math.random(), v] as const).sort((a, b) => a[0] - b[0]).map(([, v]) => v);
+const megaFor = (g: Product["gender"]) => {
+  const list = products.filter((p) => p.gender === g);
+  const base = `${shop}?gender=${g}`;
+  const count = (key: (p: Product) => string) => {
+    const c = new Map<string, number>();
+    for (const p of list) c.set(key(p), (c.get(key(p)) ?? 0) + 1);
+    return c;
+  };
+  const brands = [...count((p) => p.brand)].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 6).map(([b]) => b);
+  const concs = CONC_ORDER.filter((c) => list.some((p) => p.concentration === c));
+  const fams = FAMILIES.filter((f) => list.some((p) => p.family === f));
+  const featured = shuffle(list.filter((p) => p.featured && photosOf(p).length)).concat(shuffle(list.filter((p) => !p.featured && photosOf(p).length))).slice(0, 2);
+  const gl = tr.genders[g].toLowerCase();
+  return {
+    shop: [
+      { label: m.best, href: `${base}&sort=featured` },
+      { label: m.newest, href: `${base}&sort=newest` },
+      { label: m.az, href: `${base}&sort=az` },
+      { label: fill(m.allOf, { g: gl }), href: base },
+    ],
+    brands: brands.map((b) => ({ label: b, href: `${base}&q=${encodeURIComponent(b)}` })),
+    conc: concs.map((c) => ({ label: CONC_LABEL[c] ?? c, href: `${base}&q=${c}` })),
+    fams: fams.map((f) => ({ label: tr.families[f], href: `${base}&family=${f}`, tint: `var(--fam-${f})` })),
+    seasons: SEASONS.map((x) => ({ label: tr.seasons[x], href: `${base}&season=${x}` })),
+    occasions: OCCASIONS.map((x) => ({ label: tr.occasions[x], href: `${base}&occasion=${x}` })),
+    help: [
+      { label: m.finder, href: route("finder", locale) },
+      { label: m.notes, href: `${shop}#search` },
+      { label: m.cheap, href: `${base}&sort=price-asc` },
+      { label: m.lux, href: `${base}&sort=price-desc` },
+      { label: m.faq, href: route("help", locale) },
+    ],
+    featured: featured.map((p) => ({ name: `${p.brand} ${p.name}`, href: `${shop}${p.slug}/`, price: formatPrice(fromPrice(p), locale), photo: photosOf(p, 240)[0]! })),
+    title: fill(m.shop, { g: tr.genders[g] }),
+  };
+};
+const mega: Record<string, ReturnType<typeof megaFor>> = { women: megaFor("women"), men: megaFor("men"), unisex: megaFor("unisex") };
+const aboutMenu = [
+  { label: tr.nav.about, href: route("about", locale) },
+  { label: m.faq, href: route("help", locale) },
+  { label: m.delivery, href: `${route("help", locale)}#delivery` },
+  { label: m.finder, href: route("finder", locale) },
+  { label: m.contact, href: "#footer-contact" },
+];
+
 const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThreshold, locale) });
 ---
 <!-- Announcement bar is hidden; remove the `hidden` attribute to re-enable it. -->
@@ -59,6 +112,10 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
 
     <div class="hdr__tools">
       <div class="hdr__lang"><LangToggle locale={locale} alternates={alternates} /></div>
+      <button class="hdr__wish" type="button" data-wish-open aria-label={tr.store.wishlist} aria-haspopup="dialog" title={tr.store.wishlist}>
+        <Icon name="heart" size={22} />
+        <span class="hdr__badge hdr__badge--wish" data-wish-count data-empty aria-hidden="true">0</span>
+      </button>
       <button class="hdr__cart" type="button" data-cart-open data-label={tr.nav.cartCount} aria-label={tr.nav.cart} aria-haspopup="dialog">
         <Icon name="bag" size={22} />
         <span class="hdr__cart-label">{tr.nav.cart}</span>
@@ -69,11 +126,63 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
 
   <nav class="hdr__nav" aria-label={tr.nav.main}>
     <div class="wrap hdr__nav-in">
-      {links.map((l) => (
-        <a href={l.href} aria-current={current === l.key ? "page" : undefined}>
-          {l.label}{l.badge && <span class="hdr__new">NEW</span>}
-        </a>
-      ))}
+      {links.filter((l) => !l.mobileOnly).map((l) => {
+        const mm = mega[l.key];
+        const isAbout = l.key === "about";
+        return (
+          <div class:list={["hdr__item", { "hdr__item--mega": mm, "hdr__item--drop": isAbout }]}>
+            <a href={l.href} aria-current={current === l.key ? "page" : undefined}>
+              {l.label}{l.badge && <span class="hdr__new">NEW</span>}
+              {(mm || isAbout) && <svg class="hdr__caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>}
+            </a>
+            {mm && (
+              <div class="mega">
+                <div class="wrap mega__in">
+                  <div class="mega__col">
+                    <p class="mega__h">{mm.title}</p>
+                    <ul>{mm.shop.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                    <p class="mega__h">{m.conc}</p>
+                    <ul>{mm.conc.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col">
+                    <p class="mega__h">{m.brands}</p>
+                    <ul>{mm.brands.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                    <p class="mega__h">{m.season}</p>
+                    <ul>{mm.seasons.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col">
+                    <p class="mega__h">{m.family}</p>
+                    <ul>{mm.fams.map((x) => <li><a href={x.href} class="mega__fam" style={`--tint:${x.tint}`}>{x.label}</a></li>)}</ul>
+                    <p class="mega__h">{m.occasion}</p>
+                    <ul>{mm.occasions.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col">
+                    <p class="mega__h">{m.help}</p>
+                    <ul class="mega__caps">{mm.help.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col mega__col--feat">
+                    <p class="mega__h">{m.featured}</p>
+                    <div class="mega__feat">
+                      {mm.featured.map((f) => (
+                        <a class="mega__prod" href={f.href}>
+                          <span class="mega__img"><img src={f.photo.src} alt="" width="240" height="240" loading="lazy" decoding="async" /></span>
+                          <span class="mega__pname">{f.name}</span>
+                          <span class="mega__price">{f.price}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {isAbout && (
+              <div class="drop">
+                <ul>{aboutMenu.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   </nav>
 </header>
@@ -116,6 +225,9 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
 
   .hdr__tools { display: flex; align-items: center; gap: 8px; flex: none; }
   .hdr__lang { margin-inline: 4px; }
+  .hdr__wish { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; transition: background-color .2s; }
+  .hdr__wish:hover { background: var(--soft); }
+  .hdr__badge--wish { position: absolute; top: 2px; right: 0; }
   .hdr__cart {
     position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px 0 10px;
     border-radius: 999px; transition: background-color .2s;
@@ -131,13 +243,49 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
   .hdr__cart:global(.is-pulse) .hdr__badge { animation: gz-pop .6s var(--ease-out); }
   @keyframes gz-pop { 40% { transform: scale(1.35); } }
 
-  .hdr__nav { background: var(--black); }
-  .hdr__nav-in { display: flex; align-items: center; gap: 4px; height: 44px; overflow-x: auto; scrollbar-width: none; }
+  .hdr__nav { position: relative; background: var(--black); }
+  .hdr__nav-in { display: flex; align-items: center; gap: 4px; height: 44px; }
+  .hdr__item { display: flex; align-items: center; height: 100%; }
+  .hdr__item--drop { position: relative; }
+  .hdr__caret { opacity: .7; margin-left: 2px; transition: transform .2s; }
+  .hdr__item:hover .hdr__caret, .hdr__item:focus-within .hdr__caret { transform: rotate(180deg); }
+
+  /* mega-menu: full-width white panel under the black bar (desktop only; the bar is hidden on phones) */
+  .mega, .drop {
+    position: absolute; top: 100%; z-index: 65; background: #fff; color: var(--text);
+    border-bottom: 1px solid var(--line); box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: opacity .18s, transform .18s, visibility 0s linear .18s;
+  }
+  .mega { left: 0; right: 0; }
+  .drop { left: 0; min-width: 230px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; padding: 10px 0; }
+  .hdr__item:hover > .mega, .hdr__item:focus-within > .mega,
+  .hdr__item:hover > .drop, .hdr__item:focus-within > .drop { opacity: 1; visibility: visible; transform: none; transition-delay: .08s, .08s, 0s; }
+  .mega__in { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 28px; padding-block: 30px 34px; }
+  .mega__h { font-size: 12.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 10px; }
+  .mega__h:not(:first-child) { margin-top: 22px; }
+  .mega ul, .drop ul { list-style: none; margin: 0; padding: 0; }
+  .hdr__nav .mega a, .hdr__nav .drop a {
+    display: flex; align-items: center; gap: 8px; min-height: 30px; padding: 0 8px; margin-left: -8px; border-radius: 4px;
+    color: #3d3b38; font-size: 14px; font-weight: 400; letter-spacing: 0; text-transform: none; white-space: normal; background: none;
+  }
+  .hdr__nav .mega a:hover, .hdr__nav .drop a:hover { background: var(--soft); color: var(--text); }
+  .hdr__nav .mega__caps a { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+  .mega__fam::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--tint); flex: none; }
+  .hdr__nav .drop a { margin: 0; padding: 0 18px; min-height: 36px; border-radius: 0; }
+  .mega__feat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .hdr__nav .mega a.mega__prod { display: grid; gap: 4px; align-items: start; justify-items: stretch; padding: 0; margin: 0; }
+  .hdr__nav .mega a.mega__prod:hover { background: none; }
+  .mega__img { display: block; aspect-ratio: 1; border-radius: 6px; background: #f6f5f3; overflow: hidden; }
+  .mega__img img { width: 100%; height: 100%; object-fit: contain; transition: transform .4s; }
+  .mega__prod:hover .mega__img img { transform: scale(1.05); }
+  .mega__pname { font-size: 13.5px; line-height: 1.35; margin-top: 6px; }
+  .mega__price { font-size: 14px; font-weight: 700; }
   .hdr__nav a {
     display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px; border-radius: 4px; white-space: nowrap;
     color: #fff; font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; transition: background-color .2s;
   }
-  .hdr__nav a:first-child { margin-left: -14px; }
+  .hdr__item:first-child > a { margin-left: -14px; }
   .hdr__nav a:hover, .hdr__nav a[aria-current] { background: rgba(255, 255, 255, .14); }
   .hdr__new { font-size: 9px; font-weight: 700; letter-spacing: .06em; padding: 2px 5px; border-radius: 3px; background: #c9a24f; color: #141414; }
 

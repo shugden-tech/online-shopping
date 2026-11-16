@@ -489,6 +489,32 @@
     "decants": "Choose a sample",
     "decantsShort": "Sample",
     "fromDecant": "Samples from {price}",
-    "addDecant": "Add {ml} ml sample"
+    "addDecant": "Add {ml} ml sample",
+    "wishlist": "Wishlist",
+    "wishAdd": "Add to wishlist",
+    "wishRemove": "Remove from wishlist",
+    "wishEmpty": "Your wishlist is empty.",
+    "wishEmptySub": "Tap ♡ on a fragrance you like to save it.",
+    "mega": {
+      "shop": "Shop {g}",
+      "best": "Bestsellers",
+      "newest": "New arrivals",
+      "az": "A to Z",
+      "brands": "Top brands",
+      "conc": "Concentration",
+      "family": "Scent family",
+      "season": "Season",
+      "occasion": "Occasion",
+      "help": "Help me choose",
+      "finder": "Scent Finder quiz",
+      "notes": "Shop by note",
+      "cheap": "Most affordable",
+      "lux": "Luxury picks",
+      "faq": "FAQ",
+      "featured": "Featured",
+      "allOf": "All {g} fragrances",
+      "delivery": "Delivery & payment",
+      "contact": "Contact us"
+    }
   }
 }
