@@ -97,3 +97,5 @@ document.addEventListener("astro:page-load", () => {
   ensure();
   document.documentElement.classList.remove("fc-bloom", "fc-press");
 });
+
+export {}; // a module, so shell.ts can import() it lazily

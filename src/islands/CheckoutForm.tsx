@@ -4,7 +4,6 @@ import { navigate } from "astro:transitions/client";
 import { cartItems, cartOpen, deliveryFor, type CartItem } from "../lib/cart";
 import { useSig } from "../lib/use-signal";
 import { formatPrice } from "../lib/price";
-import { recordOrder } from "../lib/account";
 import { Bottle, initialOf } from "./Bottle";
 import {
   FIELD_ORDER, validateOrderForm, type FieldErrorKey, type FormErrors, type OrderField, type OrderFormValues,
@@ -226,6 +225,8 @@ export default function CheckoutForm(props: CheckoutFormProps) {
       const url = `${successHref}?no=${encodeURIComponent(data.orderNo)}&t=${encodeURIComponent(String(data.total ?? total))}`;
       try {
         // demo account history (browser only); must never block the checkout
+        // loaded only now, so the account module stays out of the checkout page's initial JS
+        const { recordOrder } = await import("../lib/account");
         recordOrder({
           no: data.orderNo,
           total: data.total ?? total,
