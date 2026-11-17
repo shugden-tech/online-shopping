@@ -1,6 +1,5 @@
-// Server-only helpers shared by the API routes: JSON responses, client IP, the atomic D1 rate limiter,
-// admin bearer auth, inventory overrides and order status rules. Never import this from an island.
-import type { Product } from "./products";
+// Server-only helpers shared by the API routes: JSON responses, client IP, JSON body reading and the
+// atomic D1 rate limiter. Never import this from an island.
 
 type D1 = import("@cloudflare/workers-types").D1Database;
 
@@ -67,68 +66,4 @@ export function pruneRateLimits(db: D1, olderThanSec = 86_400): Promise<unknown>
   return db.prepare("DELETE FROM rate_limits WHERE window_start < ?1").bind(cutoff).run().catch(() => {});
 }
 
-/* ---------------- admin auth ---------------- */
-// Moved to ./auth.ts (roles + permissions). Kept as a thin wrapper for routes written before A0.
-
-/** @deprecated use authorize() from ./auth. Returns null when any valid admin token is sent. */
-export async function requireAdmin(request: Request, env: Env, ip: string): Promise<Response | null> {
-  const { authorize } = await import("./auth");
-  const r = await authorize(request, env, ip);
-  return r instanceof Response ? r : null;
-}
-
-/* ---------------- inventory ---------------- */
-
-export interface InventoryRow { product_id: string; ml: number; price: number | null; stock: number | null; updated_at: string }
-
-export interface EffectiveSize {
-  price: number;
-  inStock: boolean;
-  /** Units available, or undefined when not tracked. */
-  stock: number | undefined;
-  /** true when D1 holds a non-null stock that must be decremented on order. */
-  tracked: boolean;
-}
-
-/**
- * Inventory rule: when a D1 inventory row exists, its non-null price / stock override the build-time
- * product JSON; a NULL column (or no row) falls back to the JSON value, which is the old behaviour.
- */
-export function effectiveSize(size: Product["sizes"][number], row: InventoryRow | undefined): EffectiveSize {
-  const price = row?.price ?? size.price;
-  if (row && row.stock !== null) {
-    return { price, inStock: price > 0 && row.stock > 0, stock: row.stock, tracked: true };
-  }
-  return { price, inStock: price > 0 && size.inStock, stock: size.stock, tracked: false };
-}
-
-export async function loadInventory(db: D1, keys: { slug: string; ml: number }[]): Promise<Map<string, InventoryRow>> {
-  const out = new Map<string, InventoryRow>();
-  if (!keys.length) return out;
-  const slugs = [...new Set(keys.map((k) => k.slug))];
-  const res = await db
-    .prepare(`SELECT product_id, ml, price, stock, updated_at FROM inventory WHERE product_id IN (${slugs.map((_, i) => `?${i + 1}`).join(",")})`)
-    .bind(...slugs)
-    .all<InventoryRow>();
-  for (const r of res.results ?? []) out.set(`${r.product_id}:${r.ml}`, r);
-  return out;
-}
-
-/* ---------------- order status ---------------- */
-
-export const STATUSES = ["new", "confirmed", "paid", "shipped", "done", "cancelled"] as const;
-export type Status = (typeof STATUSES)[number];
-const FLOW: Status[] = ["new", "confirmed", "paid", "shipped", "done"];
-
-/** new → confirmed → paid → shipped → done, one step at a time; any non-cancelled status → cancelled. */
-export function canTransition(from: string, to: string): boolean {
-  if (from === to || from === "cancelled") return false;
-  if (to === "cancelled") return (STATUSES as readonly string[]).includes(from);
-  const i = FLOW.indexOf(from as Status);
-  return i >= 0 && FLOW[i + 1] === to;
-}
-
-/** A stored order line. `tracked` = its stock was decremented in D1 (and is restored on cancel). */
-export interface OrderLine { slug: string; brand: string; name: string; ml: number; qty: number; price: number; tracked?: boolean }
-
-export const ORDER_NO_RE = /^GZ-\d{6}-[A-Z2-9]{4}$/;
+// Admin auth lives in ./auth.ts; catalog, order and payment logic in ./catalog, ./orders, ./payments.
