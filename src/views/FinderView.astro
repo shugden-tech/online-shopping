@@ -2,9 +2,8 @@
 import { getImage } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import ScentFinder from "../islands/ScentFinder.tsx";
-import { getDict, route, fill, type Locale } from "../i18n";
-import { formatPrice } from "../lib/price";
-import { NOTES, NOTE_GROUPS, defaultSize, fromPrice, getProducts, isSoldOut, noteGroups, thumbOf } from "../lib/products";
+import { getDict, route, type Locale } from "../i18n";
+import { NOTES, NOTE_GROUPS, decantSizes, defaultSize, getProducts, noteGroups, thumbOf } from "../lib/products";
 import { familyStrips, noteImages } from "../lib/images";
 import { MOODS, type QuizProduct } from "../lib/quiz";
 import "../styles/finder.css";
@@ -15,14 +14,14 @@ const tr = getDict(locale);
 
 const products: QuizProduct[] = await Promise.all(
   (await getProducts()).map(async (p) => {
-    const size = defaultSize(p);
+    const size = decantSizes(p)[0] ?? defaultSize(p);
     const img = await thumbOf(p, 320);
     return {
       slug: p.slug, brand: p.brand, name: p.name, family: p.family, gender: p.gender,
       groups: noteGroups(p), occasion: p.occasion, intensity: p.intensity, shape: p.bottleShape,
       ...(img ? { img } : {}),
-      featured: Boolean(p.featured), addMl: size.ml, addPrice: size.price, stock: size.stock, soldOut: isSoldOut(p),
-      from: fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }),
+      // price, stock and sellability come from the live store state when the results show (ScentFinder)
+      featured: Boolean(p.featured), addMl: size.ml, addPrice: 0, soldOut: false, from: "",
     };
   }),
 );
@@ -51,6 +50,7 @@ const notes = await Promise.all(
     familyLines={tr.familyLines}
     intensityLevels={tr.product.intensityLevels}
     viewLabel={tr.common.view}
+    fromLabel={tr.common.from}
     productBase={route("shop", locale)}
     moods={moods}
     notes={notes}

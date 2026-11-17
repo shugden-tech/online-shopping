@@ -8,7 +8,7 @@ import settings from "../data/settings.json";
 import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
 import { brandId } from "../lib/filter";
-import { fromPrice, getProducts, photosOf, type Product } from "../lib/products";
+import { getProducts, photosOf, type Product } from "../lib/products";
 import { FAMILIES, SEASONS, OCCASIONS } from "../lib/taxonomy";
 
 interface Props {
@@ -70,7 +70,7 @@ const megaFor = (g: Product["gender"]) => {
       { label: m.lux, href: `${base}&sort=price-desc` },
       { label: m.faq, href: route("help", locale) },
     ],
-    featured: featured.map((p) => ({ name: `${p.brand} ${p.name}`, href: `${shop}${p.slug}/`, price: formatPrice(fromPrice(p), locale), photo: photosOf(p, 240)[0]! })),
+    featured: featured.map((p) => ({ id: p.slug, name: `${p.brand} ${p.name}`, href: `${shop}${p.slug}/`, photo: photosOf(p, 240)[0]! })),
     title: fill(m.shop, { g: tr.genders[g] }),
   };
 };
@@ -84,6 +84,10 @@ const aboutMenu = [
 ];
 
 const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThreshold, locale) });
+// Strings for the live price updater (src/scripts/live-prices.ts), on every page.
+const liveText = {
+  ...tr.live, add: tr.common.add, soldOut: tr.common.soldOut, ml: tr.common.ml, decantsShort: tr.store.decantsShort,
+};
 ---
 <!-- Announcement bar is hidden; remove the `hidden` attribute to re-enable it. -->
 <div class="ann" data-announce hidden>
@@ -172,7 +176,7 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
                         <a class="mega__prod" href={f.href}>
                           <span class="mega__img"><img src={f.photo.src} alt="" width="240" height="240" loading="lazy" decoding="async" /></span>
                           <span class="mega__pname">{f.name}</span>
-                          <span class="mega__price">{f.price}</span>
+                          <span class="mega__price" data-sp-from={f.id}></span>
                         </a>
                       ))}
                     </div>
@@ -191,6 +195,7 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
     </div>
   </nav>
 </header>
+<script type="application/json" id="live-i18n" is:inline set:html={JSON.stringify(liveText).replace(/</g, "\\u003c")}></script>
 
 <button class="mmenu__backdrop" type="button" data-menu-close aria-label={tr.nav.close} tabindex="-1" inert></button>
 <div class="mmenu" id="mobile-menu" inert>

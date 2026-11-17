@@ -8,20 +8,12 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const tr = getDict(locale);
 const s = tr.success;
-const pay = settings.payment;
+// Strings for src/scripts/order-status.ts (payment instructions, tracking, countdown).
+const text = { ...s, ml: tr.common.ml, bankNote: settings.payment.bankNote[locale] };
 ---
 <Base locale={locale} title={s.title} description={s.call} noindex>
-  <section
-    class="wrap page-top ok"
-    data-success
-    data-locale={locale}
-    data-copy={s.copy}
-    data-copied={s.copied}
-    data-track={JSON.stringify({
-      loading: s.trackLoading, notFound: s.trackNotFound, rate: s.trackRate, error: s.trackError,
-      statusLabel: s.statusLabel, itemsLabel: s.itemsLabel, amount: s.amount, status: s.status, ml: tr.common.ml,
-    })}
-  >
+  <script type="application/json" id="ok-i18n" is:inline set:html={JSON.stringify(text).replace(/</g, "\\u003c")}></script>
+  <section class="wrap page-top ok" data-success data-locale={locale} data-copy={s.copy} data-copied={s.copied}>
     <div class="ok__card" data-ok-found hidden>
       <p class="t-title t-gold ok__eyebrow">{s.eyebrow}</p>
       <h1 class="t-h2 ok__heading">{s.heading}</h1>
@@ -32,42 +24,9 @@ const pay = settings.payment;
       </div>
       <p class="t-body ok__call">{s.call}</p>
 
-      <div class="ok__pay" aria-labelledby="ok-pay-title">
-        <h2 class="t-title" id="ok-pay-title">{s.payTitle}</h2>
-        <dl class="ok__rows">
-          <div data-amount-row>
-            <dt>{s.amount}</dt>
-            <dd>
-              <span class="ok__amount" data-amount></span>
-              <button type="button" class="ok__copy" data-copy-value="">{s.copy}</button>
-            </dd>
-          </div>
-          <div>
-            <dt>{s.bank}</dt>
-            <dd><span>{pay.bank.name[locale]}</span></dd>
-          </div>
-          <div>
-            <dt>{s.account}</dt>
-            <dd>
-              <span class="ok__mono">{pay.bank.accountNumber}</span>
-              <button type="button" class="ok__copy" data-copy-value={pay.bank.accountNumber.replace(/\s+/g, "")}>{s.copy}</button>
-            </dd>
-          </div>
-          <div>
-            <dt>{s.accountName}</dt>
-            <dd><span>{pay.bank.accountName[locale]}</span></dd>
-          </div>
-          <div>
-            <dt>{s.reference}</dt>
-            <dd>
-              <span class="ok__mono" data-reference></span>
-              <button type="button" class="ok__copy" data-copy-value="" data-copy-ref>{s.copy}</button>
-            </dd>
-          </div>
-        </dl>
-        <p class="t-small ok__note">{pay.bankNote[locale]}</p>
-        <p class="t-small t-dim ok__note">{pay.qpayNote[locale]}</p>
-      </div>
+      <!-- filled from the order response: QPay QR / links, or the bank details -->
+      <div class="ok__pay" data-pay aria-live="polite" hidden></div>
+      <p class="ok__paystate" data-pay-state role="status" hidden></p>
     </div>
 
     <div class="ok__card ok__missing" data-ok-missing hidden>
@@ -103,24 +62,7 @@ const pay = settings.payment;
 </Base>
 
 <script>
-  import { clearCart } from "../lib/cart";
-  import { formatPrice } from "../lib/price";
-
-  const NO_RE = /^GZ-\d{6}-[A-Z2-9]{4}$/;
-  const LAST_ORDER_SLOT = "gz-last-order"; // written by the checkout island after a successful order
-
-  interface Lookup {
-    ok: boolean;
-    orderNo: string;
-    status: string;
-    items: { brand: string; name: string; ml: number; qty: number; price: number }[];
-    total: number;
-  }
-  type TrackCopy = {
-    loading: string; notFound: string; rate: string; error: string; statusLabel: string; itemsLabel: string;
-    amount: string; status: Record<string, string>; ml: string;
-  };
-
+  // The page logic (src/scripts/order-status.ts) loads on demand, keeping this page's initial JS small.
   async function copy(text: string): Promise<boolean> {
     try {
       await navigator.clipboard.writeText(text);
@@ -138,115 +80,21 @@ const pay = settings.payment;
     }
   }
 
-  /** Server-verified order data: needs the order number AND the phone used on the order. */
-  async function lookup(orderNo: string, phone: string): Promise<Lookup | number> {
-    try {
-      const res = await fetch("/api/orders/lookup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderNo, phone }),
-      });
-      if (!res.ok) return res.status;
-      return (await res.json()) as Lookup;
-    } catch {
-      return 0;
-    }
-  }
-
-  function readLastOrder(): { no: string; phone: string } | null {
-    try {
-      const v = JSON.parse(sessionStorage.getItem(LAST_ORDER_SLOT) ?? "null");
-      return v && typeof v.no === "string" && typeof v.phone === "string" ? v : null;
-    } catch {
-      return null;
-    }
-  }
-
   function init() {
     const root = document.querySelector<HTMLElement>("[data-success]");
     if (!root || root.dataset.ready) return;
     root.dataset.ready = "1";
-    const locale = root.dataset.locale === "en" ? "en" : "mn";
-    const t = JSON.parse(root.dataset.track ?? "{}") as TrackCopy;
-    const q = new URLSearchParams(location.search);
-    const no = (q.get("no") ?? "").trim().toUpperCase();
-
-    const form = root.querySelector<HTMLFormElement>("[data-track-form]")!;
-    const out = form.querySelector<HTMLElement>("[data-track-out]")!;
-    const noInput = form.elements.namedItem("no") as HTMLInputElement;
-    const phoneInput = form.elements.namedItem("phone") as HTMLInputElement;
-    const amountRow = root.querySelector<HTMLElement>("[data-amount-row]")!;
-    amountRow.hidden = true; // shown only with the server's total, never a number from the URL
-
-    const render = (r: Lookup) => {
-      out.replaceChildren();
-      const p = document.createElement("p");
-      p.className = "ok__track-status";
-      p.textContent = `${t.statusLabel}: ${t.status[r.status] ?? r.status}`;
-      const ul = document.createElement("ul");
-      ul.className = "ok__track-items t-small";
-      for (const i of r.items) {
-        const li = document.createElement("li");
-        li.textContent = `${i.brand} ${i.name} · ${i.ml} ${t.ml} × ${i.qty} — ${formatPrice(i.price * i.qty, locale)}`;
-        ul.append(li);
-      }
-      const total = document.createElement("p");
-      total.textContent = `${t.amount}: ${formatPrice(r.total, locale)}`;
-      out.append(p, ul, total);
-    };
-    const message = (code: number) => {
-      out.textContent = code === 404 || code === 422 ? t.notFound : code === 429 ? t.rate : t.error;
-    };
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const n = noInput.value.trim().toUpperCase();
-      const ph = phoneInput.value.replace(/\D/g, "");
-      if (!NO_RE.test(n) || ph.length < 4) return message(422);
-      out.textContent = t.loading;
-      const r = await lookup(n, ph);
-      if (typeof r === "number") message(r);
-      else render(r);
-    });
-
-    if (!NO_RE.test(no)) {
-      root.querySelector<HTMLElement>("[data-ok-missing]")!.hidden = false;
-      return;
-    }
-    noInput.value = no;
-
-    root.querySelector<HTMLElement>("[data-ok-found]")!.hidden = false;
-    root.querySelector("[data-order-no]")!.textContent = no;
-    root.querySelector("[data-reference]")!.textContent = no;
-    root.querySelector<HTMLElement>("[data-copy-ref]")!.dataset.copyValue = no;
-
-    // The order was placed in this tab: the cart can go, and the amount comes from the server.
-    const last = readLastOrder();
-    if (last?.no === no) {
-      clearCart();
-      phoneInput.value = last.phone;
-      lookup(no, last.phone).then((r) => {
-        if (typeof r === "number") return;
-        root.querySelector("[data-amount]")!.textContent = formatPrice(r.total, locale);
-        amountRow.querySelector<HTMLElement>("[data-copy-value]")!.dataset.copyValue = String(r.total);
-        amountRow.hidden = false;
-        render(r);
-      });
-    }
-
-    root.querySelectorAll<HTMLButtonElement>("[data-copy-value]").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const value = btn.dataset.copyValue ?? "";
-        if (!value) return;
-        const ok = await copy(value);
-        if (!ok) return;
-        btn.textContent = root.dataset.copied ?? "";
-        btn.dataset.done = "";
-        window.setTimeout(() => {
-          btn.textContent = root.dataset.copy ?? "";
-          delete btn.dataset.done;
-        }, 1800);
-      });
+    void import("../scripts/order-status").then((m) => m.init(root));
+    root.addEventListener("click", async (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-copy-value]");
+      const value = btn?.dataset.copyValue ?? "";
+      if (!btn || !value || !(await copy(value))) return;
+      btn.textContent = root.dataset.copied ?? "";
+      btn.dataset.done = "";
+      window.setTimeout(() => {
+        btn.textContent = root.dataset.copy ?? "";
+        delete btn.dataset.done;
+      }, 1800);
     });
   }
 

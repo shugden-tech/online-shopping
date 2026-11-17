@@ -6,9 +6,8 @@ import NotesPyramid from "../components/NotesPyramid.astro";
 import Icon from "../components/Icon.astro";
 import AddToCart from "../islands/AddToCart.tsx";
 import { getDict, route, productPath, fill, type Locale } from "../i18n";
-import { formatPrice } from "../lib/price";
 import { SEASONS, OCCASIONS } from "../lib/taxonomy";
-import { allNotes, cartBase, fromPrice, getProducts, initialOf, photosOf, similarTo, sortedSizes, type Product } from "../lib/products";
+import { allNotes, cartBase, getProducts, initialOf, photosOf, similarTo, sortedSizes, type Product } from "../lib/products";
 import "../styles/product.css";
 
 interface Props { locale: Locale; product: Product }
@@ -17,7 +16,8 @@ const tr = getDict(locale);
 const all = await getProducts();
 const similar = similarTo(p, all, 4);
 const sizes = sortedSizes(p);
-const base = await cartBase(p);
+// prices and stock come from the live store state; the product file's demo stock is not used
+const { stock: _demoStock, ...base } = await cartBase(p);
 // Gallery: the owner's own photo (`image`) wins; otherwise linked remote photos, front first, then back.
 const photos = p.image ? [] : photosOf(p);
 const photoAlt = (kind: "front" | "back") => `${p.brand} ${p.name} — ${kind === "front" ? tr.common.photoFront : tr.common.photoBack}`;
@@ -26,7 +26,6 @@ const url = new URL(productPath(locale, p.slug), site).href;
 const title = `${p.name} — ${p.brand}`;
 const description = fill(tr.product.metaDescription, {
   brand: p.brand, name: p.name, conc: p.concentration, family: tr.families[p.family],
-  price: fromPrice(p) > 0 ? fill(tr.common.from, { price: formatPrice(fromPrice(p), locale) }) : locale === "mn" ? "Үнэ лавлах" : "Price on request",
 });
 
 const seasonIcon = { spring: "flower", summer: "sun", autumn: "leaf", winter: "snow" } as const;
@@ -42,23 +41,7 @@ const jsonLd = {
   brand: { "@type": "Brand", name: p.brand },
   image: new URL("/og.jpg", site).href,
   url,
-  offers: p.sizes.some((s) => s.price > 0) ? {
-    "@type": "AggregateOffer",
-    priceCurrency: "MNT",
-    lowPrice: Math.min(...p.sizes.map((s) => s.price)),
-    highPrice: Math.max(...p.sizes.map((s) => s.price)),
-    offerCount: p.sizes.length,
-    availability: p.sizes.some((s) => s.inStock) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-    offers: sizes.map((s) => ({
-      "@type": "Offer",
-      name: `${s.ml} ml`,
-      sku: `${p.slug}-${s.ml}ml`,
-      price: s.price,
-      priceCurrency: "MNT",
-      availability: s.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      url,
-    })),
-  } : undefined,
+  // No offers: prices and stock live in the store database and are only known at runtime.
 };
 ---
 <Base locale={locale} title={title} description={description} current="shop" ogType="product">
@@ -128,12 +111,14 @@ const jsonLd = {
         <AddToCart
           client:load
           locale={locale}
+          pid={p.slug}
           base={base}
-          sizes={sizes}
+          sizes={sizes.map((s) => ({ ml: s.ml, ...(s.full ? { full: true } : {}) }))}
           labels={{
             chooseSize: tr.product.chooseSize, ml: tr.common.ml, qty: tr.common.qty, add: tr.common.add,
             soldOut: tr.common.soldOut, allSoldOut: tr.product.allSoldOut, fullBottle: tr.store.fullBottle,
             decrease: tr.product.decrease, increase: tr.product.increase, total: tr.product.total,
+            ...tr.live,
           }}
         />
 

@@ -2,21 +2,21 @@
 // Items live in localStorage (`gz_wish`), with a memory fallback when storage is blocked.
 import "../styles/wishlist.css";
 import type { CartItem } from "../lib/cart";
-import { formatPrice } from "../lib/price";
 
-interface WishItem {
+export interface WishItem {
   slug: string;
   brand: string;
   name: string;
   href: string;
   img?: string;
   ml: number;
-  price: number;
+  /** Old saves carried a build-time price; it is never shown (the drawer shows the live one). */
+  price?: number;
   /** The cart base object (what shell.ts needs to add this item to the cart). */
   cart: Omit<CartItem, "qty" | "ml" | "price">;
 }
 
-interface PanelText {
+export interface PanelText {
   title: string;
   empty: string;
   emptySub: string;
@@ -35,7 +35,7 @@ const isItem = (v: unknown): v is WishItem => {
   // href must be a site path (no javascript: or other-site links); img, when present, must be http(s) or a site path
   const safeHref = typeof i.href === "string" && i.href.startsWith("/") && !i.href.startsWith("//");
   const safeImg = i.img === undefined || (typeof i.img === "string" && /^(https:\/\/|\/(?!\/))/.test(i.img));
-  return typeof i.slug === "string" && typeof i.ml === "number" && typeof i.price === "number" && typeof i.cart === "object" && i.cart !== null && safeHref && safeImg;
+  return typeof i.slug === "string" && typeof i.ml === "number" && typeof i.cart === "object" && i.cart !== null && safeHref && safeImg;
 };
 
 function read(): WishItem[] {
@@ -170,85 +170,16 @@ function getPanel(): HTMLElement {
   return panel;
 }
 
+/** The saved rows (with live prices) are drawn by ./wish-list, loaded the first time the drawer opens. */
+let rows: typeof import("./wish-list") | null = null;
 function renderList() {
-  const panel = getPanel();
-  const list = panel.querySelector<HTMLElement>("[data-wish-list]");
+  const list = getPanel().querySelector<HTMLElement>("[data-wish-list]");
   if (!list) return;
-  const t = readText();
-  const locale = root.lang === "en" ? "en" : "mn";
-  list.replaceChildren();
-
-  if (!items.length) {
-    const empty = doc.createElement("div");
-    empty.className = "wish__empty";
-    const h = doc.createElement("p");
-    h.className = "wish__empty-title";
-    h.textContent = t.empty;
-    const sub = doc.createElement("p");
-    sub.className = "wish__empty-sub";
-    sub.textContent = t.emptySub;
-    empty.append(h, sub);
-    list.append(empty);
-    return;
-  }
-
-  for (const item of items) {
-    const row = doc.createElement("div");
-    row.className = "wish__row";
-
-    if (item.img) {
-      const thumb = doc.createElement("a");
-      thumb.className = "wish__thumb";
-      thumb.href = item.href;
-      thumb.tabIndex = -1;
-      thumb.setAttribute("aria-hidden", "true");
-      const img = doc.createElement("img");
-      img.className = "wish__img";
-      img.src = item.img;
-      img.alt = "";
-      img.width = 64;
-      img.height = 64;
-      img.loading = "lazy";
-      thumb.append(img);
-      row.append(thumb);
-    }
-
-    const info = doc.createElement("div");
-    const brand = doc.createElement("p");
-    brand.className = "wish__brand";
-    brand.textContent = item.brand;
-    const name = doc.createElement("a");
-    name.className = "wish__name";
-    name.href = item.href;
-    name.textContent = item.name;
-    const price = doc.createElement("p");
-    price.className = "wish__price";
-    price.textContent = formatPrice(item.price, locale);
-    info.append(brand, name, price);
-
-    const actions = doc.createElement("div");
-    actions.className = "wish__actions";
-    const add = doc.createElement("button");
-    add.type = "button";
-    add.className = "wish__add";
-    // shell.ts handles the click for [data-add]; this drawer only closes itself.
-    add.dataset.add = "";
-    add.dataset.item = JSON.stringify(item.cart);
-    add.dataset.ml = String(item.ml);
-    add.dataset.price = String(item.price);
-    add.textContent = t.add;
-    if (item.cart.stock === 0) add.disabled = true;
-    const remove = doc.createElement("button");
-    remove.type = "button";
-    remove.className = "wish__remove";
-    remove.dataset.wishRemove = item.slug;
-    remove.textContent = t.remove;
-    actions.append(add, remove);
-    info.append(actions);
-
-    row.append(info);
-    list.append(row);
-  }
+  if (rows) rows.render(list, items, readText(), () => isOpen() && renderList());
+  else void import("./wish-list").then((m) => {
+    rows = m;
+    renderList();
+  });
 }
 
 function openPanel(opener: HTMLElement | null) {

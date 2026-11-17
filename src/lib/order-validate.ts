@@ -22,7 +22,7 @@ export const LIMITS = {
 /** Keys of `checkout.errors.*` that a field can show. */
 export type FieldErrorKey =
   | "required" | "name" | "phone" | "district" | "province" | "address" | "tooLong" | "payment"
-  | "turnstile" | "turnstileMissing";
+  | "turnstile" | "turnstileMissing" | "paymentDisabled";
 
 export interface OrderFormValues {
   name: string;

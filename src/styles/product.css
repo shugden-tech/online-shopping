@@ -87,6 +87,12 @@
 .atc__btn { flex: 1; min-height: 54px; justify-content: space-between; padding-inline: 22px; }
 .atc__btn:disabled { justify-content: center; }
 .atc__sum { font-variant-numeric: tabular-nums; letter-spacing: .06em; white-space: nowrap; }
+/* live store state: loading, not for sale, few left */
+.atc__btn[data-wait]:disabled { opacity: .55; }
+.atc__state { margin-top: 12px; }
+.atc--off .atc__state { margin-top: 0; font-size: 15px; font-weight: 600; color: var(--text-dim); }
+.atc__left { margin-top: 10px; }
+.atc__price .live-was { margin-right: 4px; }
 
 /* specs */
 .pdp__specs { margin-top: 30px; border-top: 1px solid var(--line-soft); }
