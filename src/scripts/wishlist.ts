@@ -83,12 +83,26 @@ function sync() {
   });
 }
 
+/* A soft pulse on the header heart when something is added (wishlist.ts owns the badge sync). */
+function pulseHeaderWish() {
+  const btn = doc.querySelector<HTMLElement>(".hdr__wish");
+  if (!btn) return;
+  btn.classList.remove("is-glow");
+  void btn.offsetWidth; // restart if the hearts are clicked in quick succession
+  btn.classList.add("is-glow");
+  const done = () => btn.classList.remove("is-glow");
+  btn.addEventListener("animationend", done, { once: true });
+  setTimeout(done, 1200);
+}
+
 function toggle(btn: HTMLElement) {
   const item = parseItem(btn);
   if (!item) return;
-  items = has(item.slug) ? items.filter((i) => i.slug !== item.slug) : [...items, item];
+  const wasOn = has(item.slug);
+  items = wasOn ? items.filter((i) => i.slug !== item.slug) : [...items, item];
   write();
   sync();
+  if (!wasOn) pulseHeaderWish();
   if (isOpen()) renderList();
 }
 
