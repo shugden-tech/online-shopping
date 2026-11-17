@@ -197,8 +197,7 @@ const wishItem = JSON.stringify({
   /* wishlist heart, top-right of the photo; a sibling of the link so it is not inside it */
   .pcard__wish {
     position: absolute; top: 10px; right: 10px; z-index: 2; width: 36px; height: 36px; display: grid; place-items: center;
-    border-radius: 50%; background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
-    transition: color .2s, transform .15s;
+    color: var(--text); transition: color .2s, transform .15s;
   }
   .pcard__wish::before { content: ""; position: absolute; inset: -4px; border-radius: 50%; }
   .pcard__wish svg { width: 18px; height: 18px; transition: fill .2s, stroke .2s; }

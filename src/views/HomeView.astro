@@ -128,33 +128,24 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
     </section>
   )}
 
-  <!-- 2 · two promo tiles -->
-  <section class="wrap promo">
-    <a class="promo__tile promo__tile--big" href={shop} style="--a:#efe9df;--b:#d9cbb4">
-      <Image src={allNotesImg} alt="" widths={[480, 960, 1280]} sizes="(min-width: 900px) 66vw, 100vw" loading="lazy" />
-      <span class="promo__label">{s.tileAll}</span>
-    </a>
-    <a class="promo__tile" href={`${shop}?sort=newest`} style="--a:#e7e3ef;--b:#b9aecb">
-      <Image src={familyStrips.fresh!} alt="" widths={[480, 720]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" />
-      <span class="promo__label">{s.tileNew}</span>
-    </a>
-  </section>
 
   <!-- 3 · featured collections (scent notes) -->
   <section class="coll" aria-labelledby="coll-title">
     <div class="wrap">
       <h2 class="h-sec" id="coll-title">{s.collections}</h2>
       <ul class="coll__rail" tabindex="0" aria-labelledby="coll-title">
-        {NOTE_GROUPS.map((g) => (
-          <li>
-            <a class="coll__item" href={`${shop}?notes=${g}`}>
-              <span class="coll__img">
-                <Image src={noteImages[g]!} alt="" widths={[200, 400]} sizes="180px" loading="lazy" quality={62} />
-              </span>
-              <span class="coll__name">{NOTES[g]![locale]}</span>
-            </a>
-          </li>
-        ))}
+        {[false, true].map((copy) =>
+          NOTE_GROUPS.map((g) => (
+            <li aria-hidden={copy ? "true" : undefined}>
+              <a class="coll__item" href={`${shop}?notes=${g}`} tabindex={copy ? -1 : undefined}>
+                <span class="coll__img">
+                  <Image src={noteImages[g]!} alt="" widths={[200, 400]} sizes="180px" loading="lazy" quality={62} />
+                </span>
+                <span class="coll__name">{NOTES[g]![locale]}</span>
+              </a>
+            </li>
+          )),
+        )}
       </ul>
     </div>
   </section>
@@ -230,5 +221,6 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
 
   <script>
     import "../scripts/store-home";
+    import "../scripts/coll-rail";
   </script>
 </Base>

@@ -232,6 +232,10 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
   .hdr__lang { margin-inline: 4px; }
   .hdr__wish { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; transition: background-color .2s; }
   .hdr__wish:hover { background: var(--soft); }
+  .hdr__wish.is-glow { animation: hdr-wish-ring .9s var(--ease-out); }
+  .hdr__wish.is-glow svg { animation: hdr-wish-glow .9s var(--ease-sine); }
+  @keyframes hdr-wish-ring { from { box-shadow: 0 0 0 0 rgba(192, 57, 43, .4); } to { box-shadow: 0 0 0 14px rgba(192, 57, 43, 0); } }
+  @keyframes hdr-wish-glow { 0%, 100% { filter: none; } 35% { filter: drop-shadow(0 0 5px rgba(192, 57, 43, .9)); } }
   .hdr__acct { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 44px; min-width: 44px; padding: 0 8px; border-radius: 999px; transition: background-color .2s; }
   .hdr__acct:hover { background: var(--soft); }
   .hdr__acct-name { font-size: 13px; font-weight: 500; max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
