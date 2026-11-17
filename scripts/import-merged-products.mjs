@@ -221,7 +221,7 @@ function englishDescription(m, p) {
   return `${p.brand} ${p.name} is a ${p.family} ${p.concentration} for ${p.gender === "unisex" ? "everyone" : p.gender}.`;
 }
 function mongolianDescription(p, notesDict, mnDict) {
-  const gender = { men: "Эрэгтэйчүүдэд зориулсан", women: "Эмэгтэйчүүдэд зориулсан", unisex: "Хүйс харгалзахгүй" }[p.gender];
+  const gender = { men: "Эрэгтэйчүүдэд зориулсан", women: "Эмэгтэйчүүдэд зориулсан", unisex: "Unisex" }[p.gender];
   const fam = mnDict.families[p.family].toLowerCase();
   let s = `${p.brand} ${p.name}: ${gender} ${fam} үнэр (${p.concentration}).`;
   const label = (ids) => ids.map((id) => notesDict[id].mn.toLowerCase()).join(", ");
