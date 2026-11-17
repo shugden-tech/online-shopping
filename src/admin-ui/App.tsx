@@ -1,10 +1,10 @@
 // GenZst admin: one Preact island. Login (token -> GET /api/admin/me), hash routing, views loaded lazily.
-import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import type { ComponentType } from "preact";
 import type { Permission } from "../lib/contracts";
 import { api, getToken, setToken, setUnauthorizedHandler, type Session } from "./api";
 import { ROLE } from "./labels";
-import { Loading, Msg, SessionCtx, type Ctx } from "./ui";
+import { Loading, Msg, setSession as setCtx } from "./ui";
 
 type Loader = () => Promise<{ default: ComponentType<any> }>;
 interface Route { key: string; perm: Permission; load: Loader }
@@ -122,11 +122,10 @@ export default function App() {
     });
   }, []);
 
-  const ctx = useMemo<Ctx | null>(() => {
-    if (!session) return null;
-    const set = new Set(session.permissions);
-    return { role: session.role, can: (p: Permission) => set.has(p) };
-  }, [session]);
+  // plain computation (no useMemo): cheap, and the module-level session must be set before views render
+  const perms = new Set(session?.permissions ?? []);
+  const ctx = session ? { role: session.role, can: (p: Permission) => perms.has(p) } : null;
+  if (ctx) setCtx(ctx);
 
   const { route, props } = parseHash(hash);
   useEffect(() => { if (session) main.current?.focus({ preventScroll: true }); }, [hash]);
@@ -136,7 +135,7 @@ export default function App() {
 
   const allowed = ctx.can(route.perm);
   return (
-    <SessionCtx.Provider value={ctx}>
+    <>
       <a class="a-skip" href="#a-main" onClick={(e) => { e.preventDefault(); main.current?.focus(); }}>Үндсэн хэсэг рүү</a>
       <header class="a-head">
         <a class="a-brand" href="#/">genzst · админ</a>
@@ -151,6 +150,6 @@ export default function App() {
       <main id="a-main" class="a-main" ref={main} tabIndex={-1}>
         {allowed ? <Lazy key={hash} load={route.load} props={props} /> : <Msg kind="err" text="Эрх хүрэхгүй: энэ хэсгийг харах эрх танд алга." />}
       </main>
-    </SessionCtx.Provider>
+    </>
   );
 }

@@ -1,12 +1,15 @@
 // Small shared pieces for the admin views: session context, async loader, messages, badges, confirm.
-import { createContext, type ComponentChildren } from "preact";
-import { useCallback, useContext, useEffect, useRef, useState } from "preact/hooks";
+import type { ComponentChildren } from "preact";
+import { useEffect, useRef, useState } from "preact/hooks";
 import type { Permission, Role } from "../lib/contracts";
 import { api, rows, type Res } from "./api";
 
 export interface Ctx { role: Role; can: (p: Permission) => boolean }
-export const SessionCtx = createContext<Ctx>({ role: "staff", can: () => false });
-export const useSession = () => useContext(SessionCtx);
+// Module-level session (no Preact context: keeps the shared preact chunk identical to the storefront's).
+// It only changes on login/logout, when the shell re-renders and every view remounts.
+let session: Ctx = { role: "staff", can: () => false };
+export const setSession = (c: Ctx) => { session = c; };
+export const useSession = () => session;
 
 export const go = (hash: string) => { location.hash = hash; };
 
@@ -14,13 +17,15 @@ export const go = (hash: string) => { location.hash = hash; };
 export function useLoad<T>(fn: () => Promise<Res<T>>, deps: unknown[]) {
   const [state, set] = useState<{ loading: boolean; res: Res<T> | null }>({ loading: true, res: null });
   const seq = useRef(0);
-  const run = useCallback(async () => {
+  const latest = useRef(fn);
+  latest.current = fn;
+  const run = async () => {
     const n = ++seq.current;
     set((s) => ({ loading: true, res: s.res }));
-    const res = await fn();
+    const res = await latest.current();
     if (n === seq.current) set({ loading: false, res });
-  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { run(); }, [run]);
+  };
+  useEffect(() => { run(); }, deps); // eslint-disable-line react-hooks/exhaustive-deps
   return { loading: state.loading, res: state.res, data: state.res?.ok ? state.res.data : null, error: state.res && !state.res.ok ? state.res.error : "", reload: run };
 }
 
