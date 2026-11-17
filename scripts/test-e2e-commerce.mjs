@@ -116,7 +116,7 @@ r = await placeOrder([{ sku: SKU, qty: 2 }], "bank");
 ok("oversell -> 409 stock", r.status === 409 && r.data?.errors?.form === "stock", r);
 
 /* 6. customer pays in QPay -> callback -> order paid, stock committed */
-const pay = await fetch(QPAY + "/_control/pay", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ invoice_id: r && again.data?.payment?.invoiceId }) });
+const pay = await fetch(QPAY + "/_control/pay", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ invoice_id: again.data?.payment?.invoiceId }) });
 ok("mock QPay marks invoice paid", pay.ok, pay.status);
 const sig = createHmac("sha256", vars.QPAY_CALLBACK_SECRET).update(orderNo).digest("hex");
 const cb = await fetch(`${BASE}/api/payments/qpay/callback?order=${orderNo}&sig=${sig}`);
