@@ -46,34 +46,39 @@ genzst is a perfume **decant** shop for Mongolia: 2 / 5 / 10 / 30 ml samples of 
 
 ---
 
-## 3a. Backend (2026-11-17)
+## 3a. Commerce backend (A0–A6, 2026-11-17)
 
-| Route | What |
-|---|---|
-| `POST /api/orders` | Checks: content type → 32 KB → JSON → `Idempotency-Key` format → zod → honeypot → Turnstile → replay by key → rate limit → re-price → one D1 batch. |
-| `POST /api/orders/lookup` | `{ orderNo, phone }` (last 4–8 digits). Returns status, items and totals only. Not found and wrong phone are the same 404. 10 per IP per 10 min. |
-| `GET /api/admin/orders` | `?status=&limit=&cursor=`, newest first, keyset paging. |
-| `GET/PATCH /api/admin/orders/:no` | Order and its `order_events` history. PATCH `{status, note}` allows new → confirmed → paid → shipped → done, one step at a time, and any non-cancelled status → cancelled. Cancelled is final. |
-| `GET/PUT/DELETE /api/admin/inventory` | Every catalog size with its product-file values and D1 override. PUT `{product_id, ml, price, stock}` (null = use the file); DELETE removes the override. |
-| `/admin` | Plain owner page (noindex, not in the sitemap or any link). The token is kept in sessionStorage for the tab. |
+Full contract: **`docs/CONTRACTS.md`** (schema, every endpoint, permissions, state machines, stock arithmetic,
+file ownership). Schema: `migrations/0003_commerce.sql`. Shared types/state maps: `src/lib/contracts.ts`.
 
-- **Admin auth:** `Authorization: Bearer <ADMIN_TOKEN>` (a Worker secret of at least 24 characters), compared in constant time (SHA-256 of both sides). Without a valid token the API answers 401, or 503 if the secret is not set. Failed attempts are limited to 20 per IP per 10 minutes, and every response is `no-store`.
-- **Duplicate orders:** the checkout keeps one UUID per attempt in sessionStorage (`gz-checkout-key`) and sends it as `Idempotency-Key`. When the same key arrives again (a retry, a double click or a lost response), the server returns the original order number and inserts nothing. The UNIQUE index also handles two requests that arrive at the same moment.
-- **Stock:** the `inventory` table is **empty** by default, so prices and stock come from the product JSON as before. A non-null D1 `price`/`stock` overrides the JSON for orders. Tracked stock is decremented in the same D1 batch as the order insert. `CHECK (stock >= 0)` aborts the whole batch when stock would go negative, and the API answers 409 `{form:"stock", unavailable:[…]}`; no partial order is written. Cancelling an order restores the stock it took (lines marked `tracked` in `items_json`), at most once. The storefront is static, so it still shows the JSON prices and stock until the next build.
-- **Rate limits:** `rate_limits` uses one upsert … RETURNING per request, so the count is exact even under concurrent requests.
-- **Success page:** it no longer trusts `?no=`/`?t=`. The amount and status come from `/api/orders/lookup`, using the phone that the checkout stored for this tab (`gz-last-order`). The cart is cleared only for the order placed in this tab. A "check order status" form (order number + phone) is on the page for everyone else.
-- **Tests:** `npm run db:migrate:local`, start `npm run dev` or `npm run preview`, then `BASE=http://localhost:8788 npm run test:api`. The tests read `ADMIN_TOKEN` from `.dev.vars`. They need the always-pass Turnstile test secret, which the server accepts without a network call.
-- **Known stale test:** `scripts/e2e-checkout.mjs` still uses products from the old sample catalog (`sauvage`, `oud-wood`), so it no longer runs. Its success-page checks have been updated for the lookup.
+| Module | Code | What it does |
+|---|---|---|
+| Catalog (A1) | `src/lib/catalog/`, `/api/admin/products…`, `/api/admin/inventory…`, `/api/admin/media`, `/api/store/catalog-state` | Products (draft/active/hidden, sale lock, front/back photos), one SKU per size (price, compare-at, active), stock with reservations and a movement history, photo upload to R2 `MEDIA`, public live state for the storefront. |
+| Orders + payments (A2) | `src/lib/orders/`, `src/lib/payments/`, `/api/orders…`, `/api/payments/qpay/callback`, `/api/admin/orders…`, `/api/admin/payments` | Order = one D1 batch that reserves stock (CHECK constraint = no oversell); hold expires (QPay 30 min, bank 24 h); paid → stock committed; cancel → released/restored. QPay v2 invoice + signed callback verified with `payment/check`; bank transfer marked paid by the owner. |
+| Delivery (A3) | `src/lib/delivery/` (+ README), `/api/admin/shipments…`, `/api/delivery/webhook/{provider}` | Adapter interface with `manual` and `mock`; tracking, signed webhook, retry with backoff (8 attempts). Order → shipped / done follows the shipment. |
+| Admin UI (A4) | `src/pages/admin/`, `src/admin-ui/` | `/admin/` (Mongolian): dashboard, products + photos + SKUs + stock, orders, payments, shipments, store controls, audit log. Role-aware. |
+| Storefront (A5) | `src/lib/store-state.ts`, `src/scripts/live-prices.ts`, cart/checkout/success | Prices and buy buttons come from the live server state (no build-time price is shown); cart re-checked before checkout; QPay QR / bank instructions; order tracking. |
+| Lead (A0/A6) | `src/lib/{contracts,ids,auth,settings,audit,server}.ts`, `/api/admin/{me,settings,audit,jobs/run}` | Owner/staff tokens + permissions, store switches, audit log, housekeeping job (expire holds, retry shipments). |
 
-### Launch blockers (backend)
-- [ ] Real D1 `database_id` in `wrangler.jsonc` (now all zeros), then `npm run db:migrate:remote`.
-- [ ] Real Turnstile site key (`PUBLIC_TURNSTILE_SITE_KEY` in `wrangler.jsonc` / `settings.json`) and `TURNSTILE_SECRET` (now Cloudflare's always-pass test keys).
-- [ ] `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` secrets, if notifications are wanted.
-- [ ] `ADMIN_TOKEN` secret: `openssl rand -hex 32 | npx wrangler secret put ADMIN_TOKEN`. The `.dev.vars.example` value is dev-only.
-- [ ] Real prices and stock: either correct product JSON or `inventory` rows entered through `/admin`. Nothing has been seeded.
-- [ ] Bank account and QPay details in `src/data/settings.json` (still placeholders).
+**Hide / lock controls:** product hidden (status), product sale lock, payment method off (QPay / bank), checkout closed — all in `/admin/`.
+**Catalog data:** `npm run import:catalog -- --apply local|remote` loads the 1000-item R2 catalog + the 207 site products (1123 products, prices and stock empty). `--demo-prices` is local-only.
 
----
+**Tests** (local: `npx wrangler d1 migrations apply genzst --local --persist-to .wrangler/state-lead`, `npx astro build`,
+`node scripts/mock-qpay.mjs &`, `node scripts/mock-delivery.mjs &`, `npx wrangler dev --port 8788 --persist-to .wrangler/state-lead`, then
+`BASE=http://localhost:8788 PERSIST=.wrangler/state-lead D1_PERSIST=.wrangler/state-lead npm run test:<name>`):
+catalog 86, api 84, payments 45, delivery 85, storefront 57, admin-ui 94, e2e commerce 43 + browser 17 — all passing on the merged tree (2026-11-17).
+`.dev.vars` needs the QPay/delivery test values from `.dev.vars.example` pointed at the mocks.
+
+### Launch blockers (owner)
+- [ ] Real D1 `database_id` in `wrangler.jsonc`, then `npm run db:migrate:remote` and `npm run import:catalog -- --apply remote`.
+- [ ] R2 bucket name for `MEDIA` in `wrangler.jsonc` (the bucket behind `PUBLIC_MEDIA_BASE`).
+- [ ] `PUBLIC_SITE_URL` = the real domain (QPay callback URLs are built from it).
+- [ ] Secrets: `ADMIN_TOKEN` (and optional `STAFF_TOKEN`), `TURNSTILE_SECRET` + real site key, `QPAY_USERNAME`, `QPAY_PASSWORD`, `QPAY_INVOICE_CODE`, `QPAY_CALLBACK_SECRET`, optional Telegram.
+- [ ] QPay: switch `QPAY_BASE_URL` from sandbox to production; check the field names in `src/lib/payments/qpay.ts` against the official v2 doc (tested only against a local mock). Confirm QPay calls the callback with GET or JSON POST (a form-encoded POST would be refused by Astro's origin check).
+- [ ] Delivery company: name, API + webhook docs, sandbox → a real adapter in `src/lib/delivery/adapters/`.
+- [ ] Real prices and stock for every SKU (in `/admin/`); gender/family/description for the 916 draft catalog products before activating them.
+- [ ] Bank account details in `src/data/settings.json`.
+- [ ] Image rights: the R2 photos and the owner's brand banners are other brands' images — CLAUDE.md's rule needs the owner's decision.
 
 ## 4. Running it
 

@@ -2,7 +2,11 @@
 // (no API mocks). Only Cloudflare's Turnstile script is stubbed (it cannot be reached from CI).
 //   needs: wrangler dev on BASE with the catalog imported (scripts/test-catalog.mjs does that), mock-qpay.
 //   BASE=http://localhost:8788 node scripts/test-e2e-browser.mjs
-import { chromium } from "playwright";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+let pw;
+try { pw = require("playwright"); } catch { pw = require("playwright-core"); }
+const { chromium } = pw;
 import { readFileSync, readdirSync } from "node:fs";
 
 const BASE = (process.env.BASE ?? "http://localhost:8788").replace(/\/$/, "");
@@ -31,13 +35,15 @@ await api("PUT", "/api/admin/settings", { "checkout.open": true, "payments.bank.
 await api("PATCH", `/api/admin/products/${id}`, { status: "active", saleLocked: false });
 let r = await api("PUT", `/api/admin/products/${id}/skus/${ml}`, { price: PRICE, active: true });
 ok(`admin prices ${sku} at ${PRICE}`, r.data?.ok === true, JSON.stringify(r.data));
-r = await api("POST", "/api/admin/inventory/adjust", { sku, set: 2, reason: "restock" });
-ok("admin stocks it (2)", r.data?.ok === true, JSON.stringify(r.data));
+const held = (await api("GET", "/api/admin/inventory?low=100000")).data?.items?.find((i) => i.id === sku)?.reserved ?? 0;
+r = await api("POST", "/api/admin/inventory/adjust", { sku, set: held + 2, reason: "restock" });
+ok("admin stocks it (2 for sale)", r.data?.ok === true, JSON.stringify(r.data));
 
 const browser = await chromium.launch();
 const errors = [];
 for (const [label, viewport] of [["desktop", { width: 1440, height: 900 }], ["phone", { width: 390, height: 844 }]]) {
-  const ctx = await browser.newContext({ viewport });
+  // a fresh client IP per run, as the order API rate-limits 5 orders / IP / 10 min
+  const ctx = await browser.newContext({ viewport, extraHTTPHeaders: { "CF-Connecting-IP": `203.0.113.${(Date.now() % 200) + (label === "phone" ? 50 : 1)}` } });
   const page = await ctx.newPage();
   page.on("pageerror", (e) => errors.push(`${label}: ${e.message}`));
   await page.route("https://challenges.cloudflare.com/**", (rt) => rt.fulfill({ contentType: "text/javascript", body: TURNSTILE }));
@@ -59,8 +65,11 @@ for (const [label, viewport] of [["desktop", { width: 1440, height: 900 }], ["ph
   await page.waitForFunction(() => !document.querySelector(".co__submit").disabled, null, { timeout: 10000 });
   await page.locator(".co__submit").click();
   await page.waitForURL(/amjilttai/, { timeout: 20000 }).catch(() => {});
-  ok(`${label}: order placed -> success page`, /amjilttai/.test(page.url()), page.url());
-  const body = (await page.locator("main").textContent()) ?? "";
+  const alert = /amjilttai/.test(page.url()) ? "" : ((await page.locator(".co__alert").textContent().catch(() => "")) ?? "");
+  ok(`${label}: order placed -> success page`, /amjilttai/.test(page.url()), `${page.url()} ${alert}`);
+  await page.waitForFunction(() => /GZ-\d{6}-[A-Z2-9]{4}/.test(document.querySelector("main")?.innerText ?? ""), null, { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(500);
+  const body = await page.locator("main").innerText();
   const no = (body.match(/GZ-\d{6}-[A-Z2-9]{4}/) ?? [])[0];
   ok(`${label}: success page shows the order number`, !!no, body.slice(0, 200));
   ok(`${label}: success page shows the total`, body.includes(fmt(PRICE)), body.slice(0, 300));
