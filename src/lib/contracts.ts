@@ -11,15 +11,7 @@ export type Gender = (typeof GENDERS)[number];
 export const SKU_KINDS = ["decant", "full"] as const;
 export type SkuKind = (typeof SKU_KINDS)[number];
 
-/** SKU id = `${productId}:${ml}` (one offer per product size). */
-export const skuId = (productId: string, ml: number) => `${productId}:${ml}`;
-export function parseSkuId(id: string): { productId: string; ml: number } | null {
-  const i = id.lastIndexOf(":");
-  if (i <= 0) return null;
-  const ml = Number(id.slice(i + 1));
-  return Number.isInteger(ml) && ml > 0 ? { productId: id.slice(0, i), ml } : null;
-}
-export const PRODUCT_ID_RE = /^[a-z0-9][a-z0-9-]{0,119}$/;
+export { skuId, parseSkuId, PRODUCT_ID_RE } from "./ids";
 
 export interface Notes { top: string[]; heart: string[]; base: string[] }
 

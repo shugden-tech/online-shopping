@@ -1,5 +1,5 @@
 import { signal, computed, effect } from "@preact/signals-core";
-import { skuId } from "./contracts";
+import { skuId } from "./ids";
 
 /** One cart line. `price` / `stock` come from the live store state (see cart-sync.ts, which re-checks
  *  them before they are shown); the server always re-prices from D1 when the order is placed. */

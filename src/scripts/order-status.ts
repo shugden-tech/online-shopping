@@ -8,8 +8,10 @@ import type { PaymentInstructions } from "../lib/contracts";
 const NO_RE = /^GZ-\d{6}-[A-Z2-9]{4}$/;
 const LAST_ORDER_SLOT = "gz-last-order"; // { no, phone } from checkout-key.ts
 const LAST_PAY_SLOT = "gz-last-pay"; // LastPayment from cart-checkout.ts
-const POLL_MS = 5000;
-const POLL_FOR_MS = 10 * 60 * 1000;
+// QPay polling backs off: payment-check allows 10 calls per IP per 10 minutes, so 9 scheduled checks
+// (frequent first, while the customer is most likely paying) leave one for the manual "check" button.
+// The QPay callback normally marks the order paid long before polling would notice.
+const POLL_DELAYS_S = [5, 10, 15, 30, 45, 60, 90, 150, 195];
 
 interface Lookup {
   ok: boolean;
@@ -343,22 +345,20 @@ export function init(root: HTMLElement): void {
     if (r.paymentStatus === "paid" || r.status === "paid") paid();
   }
   function poll() {
-    window.clearInterval(pollTimer);
-    const until = Date.now() + POLL_FOR_MS;
+    window.clearTimeout(pollTimer);
     say(t.waiting);
-    let busy = false;
-    pollTimer = window.setInterval(async () => {
-      if (busy) return;
-      if (Date.now() > until) {
-        window.clearInterval(pollTimer);
-        say(t.pollStopped, checkButton(t.check, () => void checkOnce().then(() => !payState.dataset.paid && poll())));
+    const step = (i: number) => {
+      if (i >= POLL_DELAYS_S.length) {
+        say(t.pollStopped, checkButton(t.check, () => void checkOnce().then(() => payState.dataset.paid === undefined && poll())));
         return;
       }
-      busy = true;
-      await checkOnce();
-      busy = false;
-    }, POLL_MS);
-    timers.push(pollTimer);
+      pollTimer = window.setTimeout(async () => {
+        await checkOnce();
+        if (payState.dataset.paid === undefined) step(i + 1);
+      }, POLL_DELAYS_S[i]! * 1000);
+      timers.push(pollTimer);
+    };
+    step(0);
   }
 
   if (mine?.paymentError === "qpay_unavailable" || (mine && !mine.payment && mine.paymentError)) {

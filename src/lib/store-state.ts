@@ -3,7 +3,8 @@
 // - batches the product ids on the page (`data-pid` / `data-sp-from`) plus any ids asked for, ≤ 60 per request
 // - one fetch per id per page view, kept in memory; reset after an Astro view-transition swap
 // - never throws: a failed request marks its ids as "error" so the page can say so
-import { PRODUCT_ID_RE, skuId, type StoreProductState, type StoreState } from "./contracts";
+import type { StoreProductState, StoreState } from "./contracts";
+import { PRODUCT_ID_RE, skuId } from "./ids";
 
 export type SkuStatus = "loading" | "error" | "hidden" | "locked" | "soon" | "out" | "off" | "closed" | "ok";
 export interface SkuView {
