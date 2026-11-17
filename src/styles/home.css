@@ -62,7 +62,6 @@
   text-shadow: 0 1px 8px rgba(0, 0, 0, .25);
   transition: letter-spacing .3s var(--ease-out);
 }
-.promo__tile::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(0, 0, 0, .15), rgba(0, 0, 0, .45)); }
 .promo__tile:hover .promo__label { letter-spacing: .06em; }
 
 /* ---------- 3 · featured collections ---------- */
