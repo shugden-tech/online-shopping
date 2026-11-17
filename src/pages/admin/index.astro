@@ -1,0 +1,24 @@
+---
+// Owner/staff admin (A4). One Preact island; views load lazily. Not linked anywhere, noindex, no storefront
+// chrome, excluded from the sitemap (astro.config.mjs filters /admin/). Every action calls /api/admin/* with
+// the bearer token kept in this tab's sessionStorage.
+import "../../styles/tokens.css";
+import "../../styles/admin.css";
+import App from "../../admin-ui/App";
+---
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light" />
+    <title>genzst · админ</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body class="a-body">
+    <App client:only="preact" />
+    <noscript><p class="a-msg a-msg--err">Админ хэсэг JavaScript шаарддаг.</p></noscript>
+  </body>
+</html>
