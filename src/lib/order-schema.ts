@@ -2,17 +2,30 @@
 // Error messages ARE the `checkout.errors.*` keys, so the API can return them as-is.
 // Do not import this file from an island: it would bundle zod into the browser.
 import { z } from "astro/zod";
+import { parseSkuId, PRODUCT_ID_RE, skuId } from "./contracts";
 import { CITIES, DISTRICT_IDS, LIMITS, PAYMENTS, PHONE_RE } from "./order-validate";
 
 const req = { required_error: "required", invalid_type_error: "required" };
 const optionalText = (max: number) => z.string(req).trim().max(max, "tooLong").optional().default("");
 
-const item = z.object({
-  slug: z.string(req).trim().min(1).max(100),
-  ml: z.number(req).int().positive().max(1000),
-  qty: z.number(req).int().min(LIMITS.qty[0]).max(LIMITS.qty[1]),
-  // anything else the client sends (price, name, ...) is stripped and ignored
-});
+// An item is `{ sku, qty }` (sku = "<productId>:<ml>") or the legacy `{ slug, ml, qty }`; both resolve to a SKU id.
+// Anything else the client sends (price, name, ...) is stripped and ignored.
+const item = z
+  .object({
+    sku: z.string().trim().min(3).max(130).optional(),
+    slug: z.string().trim().min(1).max(120).optional(),
+    ml: z.number().int().positive().max(1000).optional(),
+    qty: z.number(req).int().min(LIMITS.qty[0]).max(LIMITS.qty[1]),
+  })
+  .transform((v, ctx) => {
+    const sku = v.sku ?? (v.slug !== undefined && v.ml !== undefined ? skuId(v.slug, v.ml) : "");
+    const parsed = parseSkuId(sku);
+    if (!parsed || !PRODUCT_ID_RE.test(parsed.productId) || parsed.ml > 1000) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "items" });
+      return z.NEVER;
+    }
+    return { sku: skuId(parsed.productId, parsed.ml), qty: v.qty };
+  });
 
 export const orderSchema = z
   .object({
