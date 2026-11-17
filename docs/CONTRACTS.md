@@ -106,6 +106,16 @@ All rows of one event go in one D1 batch.
 | `GET/PATCH /api/admin/shipments/{id}` [delivery.read / delivery.write] | A3 | PATCH `{ status?, trackingNo?, trackingUrl?, note? }` via SHIPMENT_TRANSITIONS (manual provider) |
 | `POST /api/admin/shipments/{id}/retry` [delivery.write] | A3 | failed → pending → provider call |
 
+### Clarifications (lead, after A1/A4)
+
+- All JSON fields are **camelCase** (`orderNo`, `createdAt`, `paymentStatus`, `holdExpiresAt`, `trackingNo`, …).
+- `GET /api/admin/orders` also filters by `paymentStatus=` (unpaid | pending | paid | refunded); rows include `paymentStatus`, `holdExpiresAt`, `total`, `payment`.
+- `GET /api/admin/orders/{no}` → `{ ok, order }` where `order` has `items`, `events[]`, `payments[]` (`id, provider, providerRef, amount, paidAmount, status, createdAt, paidAt`), `reservations[]` (`skuId, qty, tracked, status`), `shipments[]` (`id, provider, status, trackingNo, trackingUrl, createdAt`).
+- Shipment rows: `id, orderNo, provider, providerRef, trackingNo, trackingUrl, status, attempts, lastError, nextRetryAt, createdAt, updatedAt`; detail adds `events[]` (`at, fromStatus, toStatus, source, note`).
+- `GET /api/admin/inventory?low=N` = tracked SKUs whose `available ≤ N`.
+- SKU PUT → `{ ok, sku, created }`; `kind` required only on create; `compareAt` must be > `price`. Stock `delta` on an untracked SKU → 409 `{ stock: "untracked" }` (use `set`). Media → `{ ok, url, key }`, 404 unknown product.
+- Astro `checkOrigin`: multipart POSTs and body-less DELETEs need a same-site `Origin` header (browsers send it; scripts must).
+
 ### Shared module functions (signatures frozen)
 
 ```ts
