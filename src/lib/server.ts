@@ -68,39 +68,13 @@ export function pruneRateLimits(db: D1, olderThanSec = 86_400): Promise<unknown>
 }
 
 /* ---------------- admin auth ---------------- */
+// Moved to ./auth.ts (roles + permissions). Kept as a thin wrapper for routes written before A0.
 
-const enc = new TextEncoder();
-
-/** Constant-time comparison: both sides are hashed first, so length and content leak nothing. */
-export async function safeEqual(a: string, b: string): Promise<boolean> {
-  const [ha, hb] = await Promise.all([
-    crypto.subtle.digest("SHA-256", enc.encode(a)),
-    crypto.subtle.digest("SHA-256", enc.encode(b)),
-  ]);
-  const x = new Uint8Array(ha);
-  const y = new Uint8Array(hb);
-  let diff = 0;
-  for (let i = 0; i < x.length; i++) diff |= x[i]! ^ y[i]!;
-  return diff === 0;
-}
-
-export const ADMIN_MIN_TOKEN = 24;
-
-/**
- * `Authorization: Bearer <ADMIN_TOKEN>`. Returns null when authorised, otherwise the 401/429/503 Response.
- * Failed attempts are rate limited per IP (20 per 10 minutes).
- */
+/** @deprecated use authorize() from ./auth. Returns null when any valid admin token is sent. */
 export async function requireAdmin(request: Request, env: Env, ip: string): Promise<Response | null> {
-  const secret = env.ADMIN_TOKEN ?? "";
-  if (secret.length < ADMIN_MIN_TOKEN) {
-    console.error(`[admin] ADMIN_TOKEN is not set or shorter than ${ADMIN_MIN_TOKEN} characters`);
-    return fail(503, { form: "admin-disabled" });
-  }
-  const m = /^Bearer\s+(\S+)\s*$/i.exec(request.headers.get("Authorization") ?? "");
-  if (m && (await safeEqual(m[1]!, secret))) return null;
-  const allowed = await hitRateLimit(env.DB, `admin-fail:${ip}`, 20, 600);
-  if (!allowed) return fail(429, { form: "rate" });
-  return fail(401, { form: "unauthorized" }, { "WWW-Authenticate": 'Bearer realm="genzst-admin"' });
+  const { authorize } = await import("./auth");
+  const r = await authorize(request, env, ip);
+  return r instanceof Response ? r : null;
 }
 
 /* ---------------- inventory ---------------- */

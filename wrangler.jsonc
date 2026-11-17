@@ -13,8 +13,21 @@
   "vars": {
     // Public Turnstile site key. This is Cloudflare's official always-pass TEST key.
     // [[TODO owner]] replace with the real site key before deploying.
-    "PUBLIC_TURNSTILE_SITE_KEY": "1x00000000000000000000AA"
+    "PUBLIC_TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+    // [[TODO owner]] the real site origin (payment callback URLs are built from it).
+    "PUBLIC_SITE_URL": "http://localhost:8788",
+    // QPay merchant API v2 base. Sandbox until the owner has a live merchant account.
+    "QPAY_BASE_URL": "https://merchant-sandbox.qpay.mn",
+    // Public URL of the product photo bucket (the owner's R2 public bucket).
+    "PUBLIC_MEDIA_BASE": "https://pub-83d529150bc84a489ddcb74b42624830.r2.dev"
   },
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      // [[TODO owner]] the name of the R2 bucket behind PUBLIC_MEDIA_BASE.
+      "bucket_name": "genzst-media"
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
@@ -25,5 +38,8 @@
     }
   ]
   // Secrets (set with `npx wrangler secret put NAME`, never commit them):
-  //   TURNSTILE_SECRET, TELEGRAM_BOT_TOKEN (optional), TELEGRAM_CHAT_ID (optional)
+  //   TURNSTILE_SECRET, TELEGRAM_BOT_TOKEN (optional), TELEGRAM_CHAT_ID (optional),
+  //   ADMIN_TOKEN, STAFF_TOKEN (optional),
+  //   QPAY_USERNAME, QPAY_PASSWORD, QPAY_INVOICE_CODE, QPAY_CALLBACK_SECRET,
+  //   DELIVERY_BASE_URL, DELIVERY_API_KEY, DELIVERY_WEBHOOK_SECRET (when a delivery company is chosen)
 }

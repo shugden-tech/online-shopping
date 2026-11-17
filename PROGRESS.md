@@ -387,3 +387,10 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - Owner's request: desktop banner slide 6 (`6.jpg`) removed; the owner's three uploaded pictures take its place as `6-1.jpg`, `6-2.jpg`, `6-3.jpg` (desktop set now 11 slides; the phone set is unchanged).
 - Fitted to the banner's 2.18:1 frame: the two 2:1 pictures are centre-cropped by a sliver top and bottom; the 2.69:1 Armaf picture is padded with black that fades into its dark background, so the round logo on the right is not cut.
 - Follow-up (owner): the old desktop banner pictures (1–5', 7–9) were deleted; the three new pictures are now `1.jpg`–`3.jpg`, so the desktop banner has 3 slides. Phone banners unchanged (9 slides).
+
+## A0 — commerce contracts frozen (Opus, lead)
+- Audit: one `orders` table, a per-size `inventory` override table, one admin token with no roles, prices from build-time JSON, no payments/delivery/settings/audit.
+- Frozen: `migrations/0003_commerce.sql` (products, skus with atomic reservation CHECKs, stock_movements, reservations, payments, shipments + events, store_settings, audit_log; drops the unused `inventory` table), `src/lib/contracts.ts` (types, state machines, settings, roles), `src/lib/auth.ts` (owner/staff tokens + permissions), `src/lib/settings.ts`, `src/lib/audit.ts`, lead endpoints `/api/admin/{me,settings,audit}`, runtime config (QPay, delivery, R2 `MEDIA`), and `docs/CONTRACTS.md` (API, permissions, stock arithmetic, file ownership, test ports).
+- Verified: migrations 0001–0003 apply to a fresh local D1; over-reserving a SKU fails the CHECK; astro check 0 errors; build passes.
+- Known gap until A1/A2 land: the pre-A0 order and inventory routes still query the dropped `inventory` table.
+- Plan docs `ADMIN-COMMERCE-PLAN.mn.md` / `ADMIN-AGENT-TASKS.md` were not in the repo; contracts were derived from the owner's message.
