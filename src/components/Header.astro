@@ -267,7 +267,7 @@ const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThr
     transition: opacity .18s, transform .18s, visibility 0s linear .18s;
   }
   .mega { left: 0; right: 0; }
-  .drop { left: 0; min-width: 230px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; padding: 10px 0; }
+  .drop { left: auto; right: 0; min-width: 230px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; padding: 10px 0; }
   .hdr__item:hover > .mega, .hdr__item:focus-within > .mega,
   .hdr__item:hover > .drop, .hdr__item:focus-within > .drop { opacity: 1; visibility: visible; transform: none; transition-delay: .08s, .08s, 0s; }
   .mega__in { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 28px; padding-block: 30px 34px; }

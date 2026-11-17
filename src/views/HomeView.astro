@@ -73,15 +73,15 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
   <!-- 1 · banner slider: the owner's pictures (desktop + phone sets), else the illustrated slides -->
   {bannerSets.length > 0 && <h1 class="sr-only">{s.slides[0]!.title}</h1>}
   {bannerSets.map((set) => (
-    <section class:list={["wrap hb", set.only]} aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
+    <section class:list={["hb", set.only]} aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
       <div class="hb__track hb__track--img" style={`aspect-ratio:${ratio(set.items[0]!)}`}>
         {set.items.map((b, i) => (
           <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0 }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${set.items.length}`} aria-hidden={i === 0 ? undefined : "true"}>
             <a class="hb__link" href={shop} tabindex={i === 0 ? undefined : -1}>
               <Image
                 src={b.image} alt={`${tr.site.name} — ${i + 1}`}
-                widths={set.key === "mob" ? [480, 760, 1145] : [640, 960, 1320, 1852]}
-                sizes={set.key === "mob" ? "100vw" : "(min-width: 1320px) 1320px, 100vw"}
+                widths={set.key === "mob" ? [480, 760, 1145] : [768, 1280, 1920, 2560]}
+                sizes="100vw"
                 loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__img"
               />
             </a>
@@ -99,11 +99,11 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
   ))}
 
   {bannerSets.length === 0 && (
-    <section class="wrap hb" aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
+    <section class="hb" aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
       <div class="hb__track">
         {slides.map((sl, i) => (
           <div class:list={["hb__slide", { "is-on": i === 0 }]} data-slide style={`--a:${sl.bg.split(",")[0]};--b:${sl.bg.split(",")[1]}`} aria-roledescription="slide" aria-label={`${i + 1} / ${slides.length}`} aria-hidden={i === 0 ? undefined : "true"}>
-            <Image src={sl.img} alt="" widths={[640, 1280, 1920]} sizes="(min-width: 1320px) 1320px, 100vw" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__bg" />
+            <Image src={sl.img} alt="" widths={[640, 1280, 1920]} sizes="100vw" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__bg" />
             <div class="hb__text">
               <p class="hb__eyebrow">{sl.eyebrow}</p>
               {i === 0 ? <h1 class="hb__title">{sl.title}</h1> : <h2 class="hb__title">{sl.title}</h2>}

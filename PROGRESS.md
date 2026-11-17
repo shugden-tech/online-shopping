@@ -371,3 +371,9 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - Checkout: one idempotency key per attempt in sessionStorage, loaded lazily so the page stays within budget, plus a "stock" error message. The success page shows the amount and status only from the lookup, never from the URL, and adds a "check order status" form. New mn/en strings were written by Opus; Sonnet has not reviewed them yet.
 - Checks: `npm run test:api` 47/47 against `wrangler dev` (built Worker) and 46/46 on an earlier run against `astro dev`; a Playwright check of a lost response + retry (same order number), the success page lookup, a foreign link, and admin login/status/inventory: 18/18; `astro check` 0 errors; build passes; JS budget PASS (checkout 24.8 KB initial).
 - Not done: `scripts/e2e-checkout.mjs` was already stale (it uses old sample slugs) and was not run. Turnstile's script can't be reached from the test sandbox, so the browser check stubbed it.
+
+## Round — full-bleed banner (Opus)
+- Home banner now runs edge to edge (no side gutter, no rounded corners) on every width, like a brand flagship site; desktop pictures get 1920/2560 widths and `sizes="100vw"`, and the track never grows taller than the screen below the header.
+- Page container widened from 1320 to 1600 px for large screens.
+- Fixed a pre-existing 23 px sideways scroll at 1024 px: the About dropdown is now right-aligned to its menu item.
+- Checked at 1920, 1440, 1024 and 390 px: no overflow, no page errors.
