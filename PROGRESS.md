@@ -377,3 +377,8 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - Page container widened from 1320 to 1600 px for large screens.
 - Fixed a pre-existing 23 px sideways scroll at 1024 px: the About dropdown is now right-aligned to its menu item.
 - Checked at 1920, 1440, 1024 and 390 px: no overflow, no page errors.
+
+## Round — collections rail edge to edge (Opus)
+- "Онцлох цуглуулга" rail moved out of the page container so it runs across the full screen width; the heading stays in the container.
+- Both ends get a blurred, fading veil (backdrop-filter blur + gradient to the section colour, masked so the blur fades in).
+- Checked at 1920 and 390 px: rail spans 0 → full width, no overflow, no page errors.

@@ -72,6 +72,24 @@
   padding-bottom: 10px; scrollbar-width: none; overscroll-behavior-x: contain;
 }
 .coll__rail::-webkit-scrollbar { display: none; }
+/* the rail runs edge to edge; both sides melt away under a blurred, fading veil */
+.coll__band { position: relative; }
+.coll__band::before, .coll__band::after {
+  content: ""; position: absolute; top: 0; bottom: 0; z-index: 2; pointer-events: none;
+  width: clamp(48px, 12vw, 220px);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.coll__band::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--soft) 0%, rgba(245, 244, 242, 0) 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent); mask-image: linear-gradient(90deg, #000 30%, transparent);
+}
+.coll__band::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--soft) 0%, rgba(245, 244, 242, 0) 100%);
+  -webkit-mask-image: linear-gradient(270deg, #000 30%, transparent); mask-image: linear-gradient(270deg, #000 30%, transparent);
+}
+.coll__band .coll__rail { padding-top: 6px; }
 .coll__item {
   display: block; scroll-snap-align: start; background: #fff; border-radius: 8px; overflow: hidden; text-align: center;
   transition: transform .25s var(--ease-out), box-shadow .25s;

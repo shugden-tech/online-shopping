@@ -133,6 +133,8 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
   <section class="coll" aria-labelledby="coll-title">
     <div class="wrap">
       <h2 class="h-sec" id="coll-title">{s.collections}</h2>
+    </div>
+    <div class="coll__band">
       <ul class="coll__rail" tabindex="0" aria-labelledby="coll-title">
         {[false, true].map((copy) =>
           NOTE_GROUPS.map((g) => (
