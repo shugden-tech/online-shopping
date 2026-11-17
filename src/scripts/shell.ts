@@ -207,5 +207,4 @@ doc.addEventListener("astro:before-swap", () => {
 });
 
 // Not needed for first paint: loaded after the page so they stay out of the initial JS budget.
-void import("./cursor");
 void import("./account-badge");
