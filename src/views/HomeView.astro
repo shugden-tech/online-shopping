@@ -8,12 +8,13 @@ import Reviews from "../components/Reviews.astro";
 import Icon from "../components/Icon.astro";
 import settings from "../data/settings.json";
 import bestsellerSlugs from "../data/bestsellers.json";
-import { getDict, route, fill, type Locale } from "../i18n";
+import heroCopy from "../data/hero-banners.json";
+import { getDict, route, fill, productPath, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
 import { NOTES, NOTE_GROUPS, getProducts, initialOf, type Product } from "../lib/products";
-import { bannerImages, brandLogos, familyStrips, genderImages, noteImages } from "../lib/images";
-import allNotesImg from "../../assets/families/all_notes.jpg";
+import { bannerImages, perfumeHeroImages, brandLogos, familyStrips, genderImages, noteImages } from "../lib/images";
 import "../styles/home.css";
+import "../styles/hero-banners.css";
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -55,9 +56,27 @@ const slides = [
 // Files named "mobile …" are the tall phone versions; the rest are the wide desktop ones.
 const deskBanners = bannerImages.filter((b) => !/^mobile/i.test(b.name));
 const mobBanners = bannerImages.filter((b) => /^mobile/i.test(b.name));
+const perfumeBanners = heroCopy.map(({ file, slug, ...copy }) => {
+  const image = perfumeHeroImages[file];
+  if (!image) throw new Error(`Missing perfume hero image: ${file}`);
+  const product = slug ? products.find((p) => p.slug === slug) : undefined;
+  if (slug && !product) throw new Error(`Unknown perfume hero product: ${slug}`);
+  return { name: file, image, copy, href: product ? productPath(locale, product.slug) : shop, perfume: true };
+});
+const legacyBanner = (b: (typeof bannerImages)[number]) => ({
+  ...b, href: shop, perfume: false,
+  copy: {
+    eyebrow: "GENZST · ҮНЭРИЙН СОНГОЛТ",
+    title: "Өөрийн үнэрийг ол.",
+    product: b.name === "1" || b.name === "2" ? "JEAN PAUL GAULTIER · ЦУГЛУУЛГА" : b.name === "3" ? "ARMAF · ЦУГЛУУЛГА" : "GENZST · ЦУГЛУУЛГА",
+    text: "Өдөр бүрийн хэв маягтаа тохирох сонголт.",
+    cta: "Цуглуулгыг үзэх",
+  },
+});
+// One entry per source asset in each responsive set; retain all existing images and shop links.
 const bannerSets = [
-  { key: "desk", items: deskBanners.length ? deskBanners : mobBanners, only: mobBanners.length && deskBanners.length ? "hb--desk" : "" },
-  { key: "mob", items: deskBanners.length && mobBanners.length ? mobBanners : [], only: "hb--mob" },
+  { key: "desk", items: [...perfumeBanners, ...(deskBanners.length ? deskBanners : mobBanners).map(legacyBanner)], only: "hb--desk" },
+  { key: "mob", items: [...perfumeBanners, ...(mobBanners.length ? mobBanners : deskBanners).map(legacyBanner)], only: "hb--mob" },
 ].filter((set) => set.items.length > 0);
 const ratio = (b: (typeof bannerImages)[number]) => `${b.image.width} / ${b.image.height}`;
 
@@ -74,16 +93,23 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
   {bannerSets.length > 0 && <h1 class="sr-only">{s.slides[0]!.title}</h1>}
   {bannerSets.map((set) => (
     <section class:list={["hb", set.only]} aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
-      <div class="hb__track hb__track--img" style={`aspect-ratio:${ratio(set.items[0]!)}`}>
+      <div class="hb__track hb__track--img" style={`aspect-ratio:${set.key === "desk" && perfumeBanners.length ? "20 / 7" : ratio(set.items[0]!)}`}>
         {set.items.map((b, i) => (
-          <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0 }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${set.items.length}`} aria-hidden={i === 0 ? undefined : "true"}>
-            <a class="hb__link" href={shop} tabindex={i === 0 ? undefined : -1}>
+          <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0, "hb__slide--perfume": b.perfume }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${set.items.length}`} aria-hidden={i === 0 ? undefined : "true"} inert={i !== 0}>
+            <a class="hb__link" href={b.href} tabindex={i === 0 ? undefined : -1}>
               <Image
-                src={b.image} alt={`${tr.site.name} — ${i + 1}`}
+                src={b.image} alt={b.copy.product}
                 widths={set.key === "mob" ? [480, 760, 1145] : [768, 1280, 1920, 2560]}
                 sizes="100vw"
                 loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__img"
               />
+              <div class="hb__caption" lang="mn">
+                <p class="hb__caption-eyebrow">{b.copy.eyebrow}</p>
+                <h2 class="hb__caption-title">{b.copy.title}</h2>
+                <p class="hb__caption-product">{b.copy.product}</p>
+                <p class="hb__caption-description">{b.copy.text}</p>
+                <span class="hb__caption-cta">{b.copy.cta}<svg class="hb__caption-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              </div>
             </a>
           </div>
         ))}
@@ -95,6 +121,10 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
           <button type="button" data-dot={i} aria-label={`${i + 1} / ${set.items.length}`} aria-current={i === 0 ? "true" : undefined}></button>
         ))}
       </div>
+      <button class="hb__rotation" type="button" data-rotation aria-label={locale === "mn" ? "Автомат слайд солилтыг түр зогсоох" : "Pause automatic slides"} aria-pressed="false">
+        <svg class="hb__rot-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 2v10M10.5 2v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="hb__rot-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.5v9l7-4.5z" fill="currentColor"/></svg>
+      </button>
     </section>
   ))}
 

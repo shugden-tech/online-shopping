@@ -1,0 +1,68 @@
+[
+  {
+    "file": "br.jpg",
+    "eyebrow": "ЭРХ ЧӨЛӨӨНИЙ МЭДРЭМЖ",
+    "title": "Өөрийн замаар.",
+    "product": "BYREDO · GYPSY WATER",
+    "text": "Өөрийн өнгө аясыг илэрхийлэх нэгэн сонголт.",
+    "cta": "Үнэртэй танилцах"
+  },
+  {
+    "file": "creed.jpg",
+    "eyebrow": "ОНЦГОЙ СОНГОЛТ",
+    "title": "Өөрийн мөрийг үлдээ.",
+    "product": "CREED · AVENTUS",
+    "text": "Creed-ийн Aventus-тай ойроос танилцаарай.",
+    "cta": "Үнэртэй танилцах",
+    "slug": "creed-aventus-edp"
+  },
+  {
+    "file": "jpg.jpg",
+    "eyebrow": "ӨӨРИЙН ХЭВ МАЯГ",
+    "title": "Дүрмээ өөрөө тогтоо.",
+    "product": "JEAN PAUL GAULTIER",
+    "text": "Танил силуэт. Өөрийн сонголтоо олоорой.",
+    "cta": "Сонголтуудыг үзэх"
+  },
+  {
+    "file": "ns.jpg",
+    "eyebrow": "АЛТЛАГ АГШИН",
+    "title": "Агшнаа өөрийн болго.",
+    "product": "INSPIRED · VANILLA BLOOMS",
+    "text": "Алтлаг гэрэлд тодрох нэгэн дүр төрх.",
+    "cta": "Цуглуулгыг үзэх"
+  },
+  {
+    "file": "spicebomb.jpg",
+    "eyebrow": "ТОД ДҮР ТӨРХ",
+    "title": "Мэдрэмжээ тод илэрхийл.",
+    "product": "VIKTOR & ROLF · SPICEBOMB INFRARED",
+    "text": "Улаан өнгөөр тодотгосон Spicebomb Infrared.",
+    "cta": "Цуглуулгыг үзэх"
+  },
+  {
+    "file": "sw u.jpg",
+    "eyebrow": "ДОТНО АГШИН",
+    "title": "Үгээр хэлэхээс илүү.",
+    "product": "EMPORIO ARMANI · STRONGER WITH YOU ABSOLUTELY",
+    "text": "Дотнын хүндээ зориулж сонгох нэгэн бэлэг.",
+    "cta": "Үнэртэй танилцах",
+    "slug": "emporio-armani-stronger-with-you-absolutely-parfum"
+  },
+  {
+    "file": "tom ford.jpg",
+    "eyebrow": "ҮДШИЙН СОНГОЛТ",
+    "title": "Үдшийг өөрийн болго.",
+    "product": "TOM FORD · BLACK ORCHID",
+    "text": "Хар савлагаанд тодрох Black Orchid.",
+    "cta": "Цуглуулгыг үзэх"
+  },
+  {
+    "file": "tt.jpg",
+    "eyebrow": "ГЭРЭЛТ АГШИН",
+    "title": "Энгийнээс онцгойг ол.",
+    "product": "TWAAQ",
+    "text": "Гэрэл, сүүдрийн дунд тодрох алтлаг дүр төрх.",
+    "cta": "Цуглуулгыг үзэх"
+  }
+]

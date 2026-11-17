@@ -1,0 +1,89 @@
+/* Local Latin + Cyrillic fonts, scoped to hero copy; the site's other fonts stay intact. */
+@font-face {
+  font-family: "Oswald Hero"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../assets/fonts/oswald-mn-700-normal.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans Hero"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("../assets/fonts/noto-sans-mn-variable.ttf") format("truetype");
+}
+
+.hb--desk .hb__track--img { min-height: 340px; }
+.hb__slide--img { pointer-events: none; }
+.hb__slide--img.is-on { pointer-events: auto; }
+.hb__link { position: relative; isolation: isolate; color: #fff; }
+.hb__link::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgb(0 0 0 / .68), rgb(0 0 0 / .26) 40%, transparent 63%);
+}
+.hb__caption {
+  position: absolute; z-index: 1; left: clamp(76px, 7vw, 140px); top: 50%;
+  transform: translateY(-50%); width: 38%; max-width: 550px;
+  font-family: "Noto Sans Hero", sans-serif; text-shadow: 0 2px 16px rgb(0 0 0 / .24);
+}
+.hb__caption > * { opacity: 0; transform: translateY(8px); }
+.hb__caption-eyebrow { font-size: clamp(10px, .8vw, 12px); font-weight: 600; letter-spacing: .16em; margin-bottom: 14px; }
+.hb__caption-title {
+  font-family: "Oswald Hero", sans-serif; font-weight: 700; font-size: clamp(36px, 4vw, 68px);
+  line-height: 1.12; letter-spacing: -.015em; text-wrap: balance; margin: 0 0 15px;
+}
+.hb__caption-product { font-size: clamp(10px, .9vw, 13px); font-weight: 600; letter-spacing: .07em; line-height: 1.55; margin-bottom: 12px; }
+.hb__caption-description { font-size: clamp(12px, 1.1vw, 16px); line-height: 1.65; max-width: 34ch; margin-bottom: 24px; color: #eee8e1; }
+.hb__caption-cta {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 28px;
+  min-height: 44px; padding: 10px 0; border-bottom: 1px solid rgb(255 255 255 / .7);
+  font-size: 13px; font-weight: 600; line-height: 1.5;
+}
+.hb__caption-cta > svg { flex: none; }
+.hb__link:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+.hb__link:hover .hb__caption-cta { border-color: #fff; }
+
+/* Only .is-on starts these animations; outgoing copy disappears immediately. */
+.hb__slide.is-on .hb__caption > * { animation: hb-caption-in 400ms var(--ease-out) both; }
+.hb__slide.is-on .hb__caption > :nth-child(2) { animation-delay: 40ms; }
+.hb__slide.is-on .hb__caption > :nth-child(3) { animation-delay: 80ms; }
+.hb__slide.is-on .hb__caption > :nth-child(4) { animation-delay: 120ms; }
+.hb__slide.is-on .hb__caption > :nth-child(5) { animation-delay: 160ms; }
+@keyframes hb-caption-in { to { opacity: 1; transform: translateY(0); } }
+
+.hb__dots { padding-inline: 20px; flex-wrap: wrap; row-gap: 14px; }
+.hb__rotation {
+  position: absolute; right: 20px; bottom: 40px; color: #fff;
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgb(255 255 255 / .5);
+  background: rgb(0 0 0 / .3); font-family: "Noto Sans Hero", sans-serif; font-size: 12px;
+  display: grid; place-items: center;
+}
+.hb__rotation .hb__rot-play { display: none; }
+.hb__rotation[aria-pressed="true"] .hb__rot-pause { display: none; }
+.hb__rotation[aria-pressed="true"] .hb__rot-play { display: block; }
+
+@media (max-width: 1024px) and (min-width: 761px) {
+  .hb__caption { width: 40%; }
+  .hb__caption-eyebrow { margin-bottom: 10px; }
+  .hb__caption-title { margin-bottom: 10px; }
+  .hb__caption-product { margin-bottom: 8px; }
+  .hb__caption-description { margin-bottom: 12px; }
+}
+@media (max-width: 760px) {
+  .hb--mob .hb__track--img {
+    aspect-ratio: auto !important; height: clamp(600px, calc(100svh - var(--header-h, 116px)), 720px);
+  }
+  /* Crop only through CSS: keep the right-hand bottle in the upper image area. */
+  .hb__slide--perfume { background: #130b08; }
+  .hb__slide--perfume .hb__img { height: 59%; object-position: 74% center; }
+  .hb__link::after { background: linear-gradient(180deg, transparent 27%, rgb(0 0 0 / .16) 40%, rgb(0 0 0 / .86) 66%, #100b09); }
+  .hb__caption { top: auto; bottom: 65px; left: 24px; width: calc(100% - 48px); max-width: 440px; transform: none; }
+  .hb__caption-eyebrow { font-size: 10px; margin-bottom: 10px; }
+  .hb__caption-title { font-size: clamp(34px, 9vw, 46px); line-height: 1.1; margin-bottom: 12px; }
+  .hb__caption-product { font-size: 10px; max-width: 36ch; margin-bottom: 10px; }
+  .hb__caption-description { font-size: 13px; max-width: 34ch; margin-bottom: 13px; }
+  .hb__caption-cta { font-size: 12px; gap: 24px; }
+  .hb__dots { bottom: 24px; gap: 7px; row-gap: 14px; padding-inline: 24px; }
+  .hb__dots button { width: 7px; height: 7px; }
+  .hb__dots button[aria-current] { width: 22px; }
+  .hb__rotation { right: 16px; bottom: 57px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hb__slide, .hb__dots button { transition: none; }
+  .hb__slide.is-on .hb__caption > * { opacity: 1; transform: none; animation: none; }
+}
