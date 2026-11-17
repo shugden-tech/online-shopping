@@ -66,3 +66,5 @@ function init() {
 
 document.addEventListener("astro:page-load", init);
 init();
+
+export {}; // a module, so its init() does not clash with other scripts
