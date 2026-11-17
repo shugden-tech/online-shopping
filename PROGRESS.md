@@ -382,3 +382,7 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - "Онцлох цуглуулга" rail moved out of the page container so it runs across the full screen width; the heading stays in the container.
 - Both ends get a blurred, fading veil (backdrop-filter blur + gradient to the section colour, masked so the blur fades in).
 - Checked at 1920 and 390 px: rail spans 0 → full width, no overflow, no page errors.
+
+## Round — banner slide 6 replaced (Opus)
+- Owner's request: desktop banner slide 6 (`6.jpg`) removed; the owner's three uploaded pictures take its place as `6-1.jpg`, `6-2.jpg`, `6-3.jpg` (desktop set now 11 slides; the phone set is unchanged).
+- Fitted to the banner's 2.18:1 frame: the two 2:1 pictures are centre-cropped by a sliver top and bottom; the 2.69:1 Armaf picture is padded with black that fades into its dark background, so the round logo on the right is not cut.
