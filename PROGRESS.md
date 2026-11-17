@@ -386,3 +386,4 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 ## Round — banner slide 6 replaced (Opus)
 - Owner's request: desktop banner slide 6 (`6.jpg`) removed; the owner's three uploaded pictures take its place as `6-1.jpg`, `6-2.jpg`, `6-3.jpg` (desktop set now 11 slides; the phone set is unchanged).
 - Fitted to the banner's 2.18:1 frame: the two 2:1 pictures are centre-cropped by a sliver top and bottom; the 2.69:1 Armaf picture is padded with black that fades into its dark background, so the round logo on the right is not cut.
+- Follow-up (owner): the old desktop banner pictures (1–5', 7–9) were deleted; the three new pictures are now `1.jpg`–`3.jpg`, so the desktop banner has 3 slides. Phone banners unchanged (9 slides).
