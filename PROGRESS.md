@@ -363,3 +363,11 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - The new files already draw lowercase ү with a descender (bounds −165, like y), so the ү fix is skipped automatically.
 - `--font-sans` now uses Unbounded MN too (body, product names, menus); ₮ still falls back to Montserrat. Preloads: Unbounded 400 + 700 (Montserrat preload removed).
 - Checked: desktop + mobile, 0 overflow, 0 page errors; astro check 0 errors; JS budget PASS.
+
+## Backend hardening (2026-11-17) — Opus (subagent)
+- `migrations/0002_backend.sql` (additive only): `orders.idempotency_key` (UNIQUE) and `updated_at`; an `order_events` status history (created events backfilled); an `inventory` table (product_id + ml, nullable price/stock, `CHECK stock >= 0`, **empty**: nothing seeded); and `rate_limits`.
+- `/api/orders` gains an `Idempotency-Key` replay, an atomic rate limit, and D1 inventory overrides of the JSON price/stock. Tracked stock is decremented in the same batch as the insert, and an oversell gets 409 with no order row. The always-pass Turnstile test secret is accepted locally, without a network call.
+- New routes: `/api/orders/lookup` (order number + last digits of the phone), and `/api/admin/orders`, `/api/admin/orders/[no]` and `/api/admin/inventory`, all behind a bearer `ADMIN_TOKEN` with a constant-time compare. Cancelling an order restores its stock once. There is also a plain `/admin` page (noindex, not in the sitemap).
+- Checkout: one idempotency key per attempt in sessionStorage, loaded lazily so the page stays within budget, plus a "stock" error message. The success page shows the amount and status only from the lookup, never from the URL, and adds a "check order status" form. New mn/en strings were written by Opus; Sonnet has not reviewed them yet.
+- Checks: `npm run test:api` 47/47 against `wrangler dev` (built Worker) and 46/46 on an earlier run against `astro dev`; a Playwright check of a lost response + retry (same order number), the success page lookup, a foreign link, and admin login/status/inventory: 18/18; `astro check` 0 errors; build passes; JS budget PASS (checkout 24.8 KB initial).
+- Not done: `scripts/e2e-checkout.mjs` was already stale (it uses old sample slugs) and was not run. Turnstile's script can't be reached from the test sandbox, so the browser check stubbed it.

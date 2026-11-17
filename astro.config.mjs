@@ -25,7 +25,7 @@ export default defineConfig({
   integrations: [
     preact(),
     sitemap({
-      filter: (page) => !/\/(zahialga|en\/checkout)\//.test(page) && !page.includes("/404"),
+      filter: (page) => !/\/(zahialga|en\/checkout|admin)\//.test(page) && !page.includes("/404"),
       serialize(item) {
         const alt = alternatesFor(new URL(item.url).pathname);
         if (alt) {

@@ -184,3 +184,14 @@
   .ok__links { width: 100%; }
   .ok__links .btn { flex: 1 1 100%; }
 }
+
+/* order tracking (success page): status + items from /api/orders/lookup */
+.ok__track { gap: 16px; text-align: left; justify-items: stretch; }
+.ok__track > .btn { justify-self: start; }
+.ok__track > .t-title { color: var(--gold); padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.ok__track-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.ok__track-out:empty { display: none; }
+.ok__track-out { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.ok__track-status { font-weight: 500; color: var(--gold-soft); }
+.ok__track-items { display: grid; gap: 4px; padding: 0; margin: 0; list-style: none; color: var(--text-dim); }
+@media (max-width: 560px) { .ok__track-row { grid-template-columns: minmax(0, 1fr); } }

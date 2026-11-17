@@ -14,7 +14,8 @@
     "db:orders:local": "wrangler d1 execute genzst --local --command \"SELECT order_no, created_at, status, name, phone, total FROM orders ORDER BY id DESC LIMIT 20\"",
     "linkcheck": "node scripts/check-links.mjs",
     "budget": "node scripts/js-budget.mjs",
-    "deploy": "astro build && wrangler deploy"
+    "deploy": "astro build && wrangler deploy",
+    "test:api": "node scripts/test-api.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",

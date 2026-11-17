@@ -26,7 +26,10 @@ export interface CheckoutFormProps {
   successHref: string;
 }
 
-type FormError = "rate" | "items" | "server" | "network" | "empty" | "fix";
+type FormError = "rate" | "items" | "stock" | "server" | "network" | "empty" | "fix";
+
+/* Duplicate-order protection (Idempotency-Key) lives in ../lib/checkout-key, loaded on submit so it stays
+ * out of this page's initial JS. */
 
 /* ---------- Turnstile: load the script once per page session ---------- */
 interface TurnstileApi {
@@ -203,10 +206,12 @@ export default function CheckoutForm(props: CheckoutFormProps) {
       website,
     };
     let res: Response;
+    let ck: typeof import("../lib/checkout-key");
     try {
+      ck = await import("../lib/checkout-key");
       res = await fetch("/api/orders", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": ck.checkoutKey() },
         body: JSON.stringify(payload),
       });
     } catch {
@@ -222,7 +227,8 @@ export default function CheckoutForm(props: CheckoutFormProps) {
     }
     if (res.ok && data.ok && data.orderNo) {
       // the success page clears the cart; keep it until we know the order is stored
-      const url = `${successHref}?no=${encodeURIComponent(data.orderNo)}&t=${encodeURIComponent(String(data.total ?? total))}`;
+      const url = `${successHref}?no=${encodeURIComponent(data.orderNo)}`;
+      ck.orderPlaced(data.orderNo, v.phone.trim());
       try {
         // demo account history (browser only); must never block the checkout
         // loaded only now, so the account module stays out of the checkout page's initial JS
@@ -251,6 +257,7 @@ export default function CheckoutForm(props: CheckoutFormProps) {
     const form = se.form as FormError | undefined;
     if (res.status === 429 || form === "rate") showFormError("rate");
     else if (form === "items") showFormError("items");
+    else if (res.status === 409 || form === "stock") showFormError("stock");
     else if (Object.keys(fieldErrs).length) {
       setFormError("fix");
       focusFirst(fieldErrs);

@@ -17,6 +17,10 @@ const pay = settings.payment;
     data-locale={locale}
     data-copy={s.copy}
     data-copied={s.copied}
+    data-track={JSON.stringify({
+      loading: s.trackLoading, notFound: s.trackNotFound, rate: s.trackRate, error: s.trackError,
+      statusLabel: s.statusLabel, itemsLabel: s.itemsLabel, amount: s.amount, status: s.status, ml: tr.common.ml,
+    })}
   >
     <div class="ok__card" data-ok-found hidden>
       <p class="t-title t-gold ok__eyebrow">{s.eyebrow}</p>
@@ -71,6 +75,22 @@ const pay = settings.payment;
       <p class="t-h3">{s.missing}</p>
     </div>
 
+    <form class="ok__card ok__track" data-track-form novalidate>
+      <h2 class="t-title">{s.trackTitle}</h2>
+      <div class="ok__track-row">
+        <div class="field">
+          <label for="ok-track-no">{s.trackNo}</label>
+          <input class="input ok__mono" id="ok-track-no" name="no" autocomplete="off" maxlength="14" placeholder="GZ-000000-XXXX" required />
+        </div>
+        <div class="field">
+          <label for="ok-track-phone">{s.trackPhone}</label>
+          <input class="input" id="ok-track-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" minlength="4" maxlength="8" required />
+        </div>
+      </div>
+      <button type="submit" class="btn btn--gold">{s.trackSubmit}</button>
+      <div class="ok__track-out" data-track-out role="status" aria-live="polite"></div>
+    </form>
+
     <noscript>
       <div class="ok__card"><p class="t-h3">{s.call}</p></div>
     </noscript>
@@ -87,6 +107,19 @@ const pay = settings.payment;
   import { formatPrice } from "../lib/price";
 
   const NO_RE = /^GZ-\d{6}-[A-Z2-9]{4}$/;
+  const LAST_ORDER_SLOT = "gz-last-order"; // written by the checkout island after a successful order
+
+  interface Lookup {
+    ok: boolean;
+    orderNo: string;
+    status: string;
+    items: { brand: string; name: string; ml: number; qty: number; price: number }[];
+    total: number;
+  }
+  type TrackCopy = {
+    loading: string; notFound: string; rate: string; error: string; statusLabel: string; itemsLabel: string;
+    amount: string; status: Record<string, string>; ml: string;
+  };
 
   async function copy(text: string): Promise<boolean> {
     try {
@@ -105,33 +138,100 @@ const pay = settings.payment;
     }
   }
 
+  /** Server-verified order data: needs the order number AND the phone used on the order. */
+  async function lookup(orderNo: string, phone: string): Promise<Lookup | number> {
+    try {
+      const res = await fetch("/api/orders/lookup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderNo, phone }),
+      });
+      if (!res.ok) return res.status;
+      return (await res.json()) as Lookup;
+    } catch {
+      return 0;
+    }
+  }
+
+  function readLastOrder(): { no: string; phone: string } | null {
+    try {
+      const v = JSON.parse(sessionStorage.getItem(LAST_ORDER_SLOT) ?? "null");
+      return v && typeof v.no === "string" && typeof v.phone === "string" ? v : null;
+    } catch {
+      return null;
+    }
+  }
+
   function init() {
     const root = document.querySelector<HTMLElement>("[data-success]");
     if (!root || root.dataset.ready) return;
     root.dataset.ready = "1";
     const locale = root.dataset.locale === "en" ? "en" : "mn";
+    const t = JSON.parse(root.dataset.track ?? "{}") as TrackCopy;
     const q = new URLSearchParams(location.search);
     const no = (q.get("no") ?? "").trim().toUpperCase();
-    const tRaw = (q.get("t") ?? "").trim();
-    const total = /^\d{1,9}$/.test(tRaw) ? Number(tRaw) : NaN;
+
+    const form = root.querySelector<HTMLFormElement>("[data-track-form]")!;
+    const out = form.querySelector<HTMLElement>("[data-track-out]")!;
+    const noInput = form.elements.namedItem("no") as HTMLInputElement;
+    const phoneInput = form.elements.namedItem("phone") as HTMLInputElement;
+    const amountRow = root.querySelector<HTMLElement>("[data-amount-row]")!;
+    amountRow.hidden = true; // shown only with the server's total, never a number from the URL
+
+    const render = (r: Lookup) => {
+      out.replaceChildren();
+      const p = document.createElement("p");
+      p.className = "ok__track-status";
+      p.textContent = `${t.statusLabel}: ${t.status[r.status] ?? r.status}`;
+      const ul = document.createElement("ul");
+      ul.className = "ok__track-items t-small";
+      for (const i of r.items) {
+        const li = document.createElement("li");
+        li.textContent = `${i.brand} ${i.name} · ${i.ml} ${t.ml} × ${i.qty} — ${formatPrice(i.price * i.qty, locale)}`;
+        ul.append(li);
+      }
+      const total = document.createElement("p");
+      total.textContent = `${t.amount}: ${formatPrice(r.total, locale)}`;
+      out.append(p, ul, total);
+    };
+    const message = (code: number) => {
+      out.textContent = code === 404 || code === 422 ? t.notFound : code === 429 ? t.rate : t.error;
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const n = noInput.value.trim().toUpperCase();
+      const ph = phoneInput.value.replace(/\D/g, "");
+      if (!NO_RE.test(n) || ph.length < 4) return message(422);
+      out.textContent = t.loading;
+      const r = await lookup(n, ph);
+      if (typeof r === "number") message(r);
+      else render(r);
+    });
 
     if (!NO_RE.test(no)) {
       root.querySelector<HTMLElement>("[data-ok-missing]")!.hidden = false;
       return;
     }
-    // the order is stored: empty the cart
-    clearCart();
+    noInput.value = no;
 
     root.querySelector<HTMLElement>("[data-ok-found]")!.hidden = false;
     root.querySelector("[data-order-no]")!.textContent = no;
     root.querySelector("[data-reference]")!.textContent = no;
     root.querySelector<HTMLElement>("[data-copy-ref]")!.dataset.copyValue = no;
-    const amountRow = root.querySelector<HTMLElement>("[data-amount-row]")!;
-    if (Number.isFinite(total) && total > 0) {
-      root.querySelector("[data-amount]")!.textContent = formatPrice(total, locale);
-      amountRow.querySelector<HTMLElement>("[data-copy-value]")!.dataset.copyValue = String(total);
-    } else {
-      amountRow.hidden = true;
+
+    // The order was placed in this tab: the cart can go, and the amount comes from the server.
+    const last = readLastOrder();
+    if (last?.no === no) {
+      clearCart();
+      phoneInput.value = last.phone;
+      lookup(no, last.phone).then((r) => {
+        if (typeof r === "number") return;
+        root.querySelector("[data-amount]")!.textContent = formatPrice(r.total, locale);
+        amountRow.querySelector<HTMLElement>("[data-copy-value]")!.dataset.copyValue = String(r.total);
+        amountRow.hidden = false;
+        render(r);
+      });
     }
 
     root.querySelectorAll<HTMLButtonElement>("[data-copy-value]").forEach((btn) => {

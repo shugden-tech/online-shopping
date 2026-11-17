@@ -7,6 +7,8 @@ interface Env {
   TURNSTILE_SECRET?: string;
   TELEGRAM_BOT_TOKEN?: string;
   TELEGRAM_CHAT_ID?: string;
+  /** Bearer token for /api/admin/* and the /admin page (Worker secret, at least 24 characters). */
+  ADMIN_TOKEN?: string;
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;

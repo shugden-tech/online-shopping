@@ -2,7 +2,7 @@
 
 This file is for anyone (person or AI agent) picking up the project on another computer or in a new session. It covers what genzst is, what has been done, and how to carry on. The detailed logs are in the files linked below.
 
-_Last updated: 2026-11-14_
+_Last updated: 2026-11-17_
 
 ---
 
@@ -26,6 +26,7 @@ genzst is a perfume **decant** shop for Mongolia: 2 / 5 / 10 / 30 ml samples of 
 | E2E tests (shop, home, finder, checkout, keyboard) | ✅ all pass against `wrangler dev` |
 | Lighthouse mobile | Home 100/100/100/100 · Shop 100/100/100/100 · Product 97/100/100/100 |
 | Test order | ✅ `GZ-261113-NEAJ` saved in local D1 with server-calculated prices |
+| Backend hardening (idempotency, stock, admin, lookup) | ✅ `npm run test:api` 47/47 against `wrangler dev` (see §3a) |
 | Deployment | ❌ Not deployed (needs the owner's Cloudflare login) |
 | Real products, prices and photos | ⚠️ 100 products imported from `decantx/merged.json` (prices converted from USD; see PROGRESS.md) |
 | Logo SVG | ⏸ Dropped by the owner: the logo PNG is used as-is |
@@ -35,13 +36,42 @@ genzst is a perfume **decant** shop for Mongolia: 2 / 5 / 10 / 30 ml samples of 
 ## 3. Tech stack
 
 - **Astro 5** + TypeScript (strict), with **Preact** islands and `@preact/signals-core`.
-- **Cloudflare Workers** (`@astrojs/cloudflare`): static pages plus one server route, `/api/orders`.
-- **Cloudflare D1** (SQLite) for orders, set up in `migrations/0001_orders.sql`.
-- **Turnstile** anti-spam, plus a honeypot and a rate limit of 5 orders per IP per 10 minutes.
+- **Cloudflare Workers** (`@astrojs/cloudflare`): static pages plus the server routes in §3a.
+- **Cloudflare D1** (SQLite): `migrations/0001_orders.sql` (orders) and `0002_backend.sql` (idempotency, order_events, inventory, rate_limits).
+- **Turnstile** anti-spam, plus a honeypot and an atomic D1 rate limit of 5 orders per IP per 10 minutes.
 - **Telegram** bot notification on each new order (optional, configured by env vars).
 - **Animation:** home is driven by `position: sticky` plus a scroll-progress helper writing CSS variables. GSAP and Swiper were removed to save JS: home went from 116 KB to 26 KB.
 - **Fonts:** Cormorant Garamond (headings) and Montserrat (titles and body), self-hosted and subset so Mongolian Ө/Ү and ₮ render.
 - **Design:** dark-first; `--ink #070707`, `--gold #CC9E48`, hairline gold rules, wide tracking.
+
+---
+
+## 3a. Backend (2026-11-17)
+
+| Route | What |
+|---|---|
+| `POST /api/orders` | Checks: content type → 32 KB → JSON → `Idempotency-Key` format → zod → honeypot → Turnstile → replay by key → rate limit → re-price → one D1 batch. |
+| `POST /api/orders/lookup` | `{ orderNo, phone }` (last 4–8 digits). Returns status, items and totals only. Not found and wrong phone are the same 404. 10 per IP per 10 min. |
+| `GET /api/admin/orders` | `?status=&limit=&cursor=`, newest first, keyset paging. |
+| `GET/PATCH /api/admin/orders/:no` | Order and its `order_events` history. PATCH `{status, note}` allows new → confirmed → paid → shipped → done, one step at a time, and any non-cancelled status → cancelled. Cancelled is final. |
+| `GET/PUT/DELETE /api/admin/inventory` | Every catalog size with its product-file values and D1 override. PUT `{product_id, ml, price, stock}` (null = use the file); DELETE removes the override. |
+| `/admin` | Plain owner page (noindex, not in the sitemap or any link). The token is kept in sessionStorage for the tab. |
+
+- **Admin auth:** `Authorization: Bearer <ADMIN_TOKEN>` (a Worker secret of at least 24 characters), compared in constant time (SHA-256 of both sides). Without a valid token the API answers 401, or 503 if the secret is not set. Failed attempts are limited to 20 per IP per 10 minutes, and every response is `no-store`.
+- **Duplicate orders:** the checkout keeps one UUID per attempt in sessionStorage (`gz-checkout-key`) and sends it as `Idempotency-Key`. When the same key arrives again (a retry, a double click or a lost response), the server returns the original order number and inserts nothing. The UNIQUE index also handles two requests that arrive at the same moment.
+- **Stock:** the `inventory` table is **empty** by default, so prices and stock come from the product JSON as before. A non-null D1 `price`/`stock` overrides the JSON for orders. Tracked stock is decremented in the same D1 batch as the order insert. `CHECK (stock >= 0)` aborts the whole batch when stock would go negative, and the API answers 409 `{form:"stock", unavailable:[…]}`; no partial order is written. Cancelling an order restores the stock it took (lines marked `tracked` in `items_json`), at most once. The storefront is static, so it still shows the JSON prices and stock until the next build.
+- **Rate limits:** `rate_limits` uses one upsert … RETURNING per request, so the count is exact even under concurrent requests.
+- **Success page:** it no longer trusts `?no=`/`?t=`. The amount and status come from `/api/orders/lookup`, using the phone that the checkout stored for this tab (`gz-last-order`). The cart is cleared only for the order placed in this tab. A "check order status" form (order number + phone) is on the page for everyone else.
+- **Tests:** `npm run db:migrate:local`, start `npm run dev` or `npm run preview`, then `BASE=http://localhost:8788 npm run test:api`. The tests read `ADMIN_TOKEN` from `.dev.vars`. They need the always-pass Turnstile test secret, which the server accepts without a network call.
+- **Known stale test:** `scripts/e2e-checkout.mjs` still uses products from the old sample catalog (`sauvage`, `oud-wood`), so it no longer runs. Its success-page checks have been updated for the lookup.
+
+### Launch blockers (backend)
+- [ ] Real D1 `database_id` in `wrangler.jsonc` (now all zeros), then `npm run db:migrate:remote`.
+- [ ] Real Turnstile site key (`PUBLIC_TURNSTILE_SITE_KEY` in `wrangler.jsonc` / `settings.json`) and `TURNSTILE_SECRET` (now Cloudflare's always-pass test keys).
+- [ ] `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` secrets, if notifications are wanted.
+- [ ] `ADMIN_TOKEN` secret: `openssl rand -hex 32 | npx wrangler secret put ADMIN_TOKEN`. The `.dev.vars.example` value is dev-only.
+- [ ] Real prices and stock: either correct product JSON or `inventory` rows entered through `/admin`. Nothing has been seeded.
+- [ ] Bank account and QPay details in `src/data/settings.json` (still placeholders).
 
 ---
 
@@ -70,7 +100,8 @@ More detail, including editing products, secrets and deploying, is in `README.md
 | `src/data/notes.json` | Scent notes (mn/en) |
 | `src/i18n/mn.json`, `en.json` | All UI text. `[[TODO owner]]` marks text that needs real business info. |
 | `src/islands/` | Cart drawer, shop filters, Scent Finder quiz, checkout form, layering slider |
-| `src/pages/api/orders.ts` | Order API. Order of checks: content type → size → JSON → zod → honeypot → Turnstile → rate limit → insert. Prices are recalculated on the server. |
+| `src/pages/api/` | Order, lookup and admin APIs (§3a). Shared server helpers are in `src/lib/server.ts`. |
+| `src/pages/admin.astro` | Owner admin page (§3a). |
 | `scripts/` | E2E tests, screenshots, budget, link check, icon and font builders |
 | `assets/` | Original source images: logo, notes, families, and the reference screenshots |
 | `animation1.md` | Spec for the layering slider (scroll mask, staggered entrance, creative carousel) |
@@ -118,7 +149,7 @@ More detail, including editing products, secrets and deploying, is in `README.md
 - [ ] Decide on the declined copy suggestions: the formal register, and the "Таван аяс" headline versus 8 families (see `PROGRESS.md`).
 - [ ] Unverified: 60 fps smoothness on real hardware. The test machine's headless browser ran at 30 fps.
 
-**Out of scope for v1:** online payment, user accounts, an admin panel (read orders via `wrangler d1 execute` or Telegram), and reviews.
+**Out of scope for v1:** online payment, user accounts and reviews. A minimal `/admin` exists (orders, status, inventory), see §3a.
 
 ---
 

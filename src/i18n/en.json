@@ -348,7 +348,8 @@
       "empty": "Your cart is empty.",
       "server": "Something went wrong. Your cart is safe — please try again.",
       "network": "Network error. Check your connection and try again.",
-      "fix": "Please correct the highlighted fields."
+      "fix": "Please correct the highlighted fields.",
+      "stock": "Sorry, some items in your cart just ran out. Please lower the quantity and try again."
     }
   },
   "success": {
@@ -367,7 +368,25 @@
     "copied": "Copied",
     "home": "Back to home",
     "shop": "Continue shopping",
-    "missing": "No order number found. If you placed an order, we will contact you by phone."
+    "missing": "No order number found. If you placed an order, we will contact you by phone.",
+    "trackTitle": "Check your order status",
+    "trackNo": "Order number",
+    "trackPhone": "Phone number (the last 4 digits are enough)",
+    "trackSubmit": "Check",
+    "trackLoading": "Checking…",
+    "trackNotFound": "No order found with this number and phone.",
+    "trackRate": "Too many attempts. Please try again in 10 minutes.",
+    "trackError": "Something went wrong. Please try again.",
+    "statusLabel": "Status",
+    "itemsLabel": "Items",
+    "status": {
+      "new": "Received",
+      "confirmed": "Confirmed",
+      "paid": "Paid",
+      "shipped": "Out for delivery",
+      "done": "Delivered",
+      "cancelled": "Cancelled"
+    }
   },
   "about": {
     "title": "About",

@@ -162,7 +162,7 @@ const valid = (name, extra = {}) => ({
   ok("API: unknown / sold-out item -> 422 form=items",
     r4.status === 422 && r4.body.errors?.form === "items" && r5.status === 422 && r5.body.errors?.form === "items", J(r4) + J(r5));
   const r6 = await fetch(base + "/api/orders");
-  ok("API: GET -> 405", r6.status === 405 && r6.headers.get("cache-control") === "no-store");
+  ok("API: GET -> 405", r6.status === 405 && /^no-store\b/.test(r6.headers.get("cache-control") ?? ""));
   const raw = (body, headers) => fetch(base + "/api/orders", { method: "POST", body, headers: { "CF-Connecting-IP": freshIp(), ...headers } });
   const r7 = await raw("{nope", { "Content-Type": "application/json" });
   ok("API: bad JSON -> 400", r7.status === 400, String(r7.status));
@@ -203,6 +203,8 @@ let orderNo = "";
   await page.waitForSelector("[data-order-no]:not(:empty)");
   orderNo = (await page.locator("[data-order-no]").innerText()).trim();
   ok("success page shows order number", NO_RE.test(orderNo), orderNo);
+  // the amount now comes from /api/orders/lookup (server data), not from the URL
+  await page.waitForSelector("[data-amount-row]:not([hidden]) [data-amount]:not(:empty)", { timeout: 10000 });
   const amount = await page.locator("[data-amount]").innerText();
   ok("success page shows amount", amount === `${fmt(TOTAL)}₮`, amount);
   ok("success page reference = order no", (await page.locator("[data-reference]").innerText()) === orderNo);
