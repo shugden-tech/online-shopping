@@ -30,6 +30,12 @@ export const bannerImages: Array<{ name: string; image: ImageMetadata }> = Objec
   .sort(([a], [b]) => a.localeCompare(b, "en", { numeric: true }))
   .map(([path, mod]) => ({ name: path.split("/").pop()!.replace(/\.\w+$/, ""), image: mod.default }));
 
+// Keep uploaded originals intact; Astro generates responsive derivatives at build time.
+const heroFiles = import.meta.glob<{ default: ImageMetadata }>("../../pic_chat/*.{jpg,jpeg,png,webp,avif}", { eager: true });
+export const perfumeHeroImages = Object.fromEntries(
+  Object.entries(heroFiles).map(([path, mod]) => [path.split("/").pop()!, mod.default]),
+);
+
 /** Owner-approved gender tile images (home page). */
 const genderFiles = import.meta.glob<{ default: ImageMetadata }>("../assets/gender/*.{jpg,jpeg,png,webp,avif}", { eager: true });
 export const genderImages = byName(genderFiles);

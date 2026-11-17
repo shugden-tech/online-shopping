@@ -6,7 +6,12 @@ function initSlider(root: HTMLElement) {
   const slides = [...root.querySelectorAll<HTMLElement>("[data-slide]")];
   const dots = [...root.querySelectorAll<HTMLElement>("[data-dot]")];
   if (slides.length < 2) return;
-  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const breakpoint = window.matchMedia("(max-width: 760px)");
+  const rotation = root.querySelector<HTMLButtonElement>("[data-rotation]");
+  let hovered = false;
+  let focused = false;
+  let userPaused = false;
   let cur = 0;
   let timer = 0;
 
@@ -15,7 +20,9 @@ function initSlider(root: HTMLElement) {
     slides.forEach((el, j) => {
       const on = j === cur;
       el.classList.toggle("is-on", on);
-      el.toggleAttribute("aria-hidden", !on);
+      if (on) el.removeAttribute("aria-hidden");
+      else el.setAttribute("aria-hidden", "true");
+      el.inert = !on;
       el.querySelectorAll("a").forEach((a) => (on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")));
     });
     dots.forEach((d, j) => (j === cur ? d.setAttribute("aria-current", "true") : d.removeAttribute("aria-current")));
@@ -23,12 +30,20 @@ function initSlider(root: HTMLElement) {
   };
   const restart = () => {
     window.clearInterval(timer);
-    if (!still && !document.hidden) timer = window.setInterval(() => go(cur + 1), 6500);
+    // Each responsive carousel keeps only its existing timer; the hidden set stays paused.
+    if (!motion.matches && !document.hidden && !hovered && !focused && !userPaused && root.getClientRects().length) {
+      timer = window.setInterval(() => go(cur + 1), 6500);
+    }
   };
 
   const onClick = (e: Event) => {
     const t = e.target as HTMLElement;
-    if (t.closest("[data-prev]")) go(cur - 1);
+    if (t.closest("[data-rotation]")) {
+      userPaused = !userPaused;
+      rotation?.setAttribute("aria-pressed", String(userPaused));
+      restart();
+    }
+    else if (t.closest("[data-prev]")) go(cur - 1);
     else if (t.closest("[data-next]")) go(cur + 1);
     else {
       const d = t.closest<HTMLElement>("[data-dot]");
@@ -36,23 +51,38 @@ function initSlider(root: HTMLElement) {
     }
   };
   let x0: number | null = null;
-  const onStart = (e: TouchEvent) => (x0 = e.touches[0]?.clientX ?? null);
+  let y0 = 0;
+  const onStart = (e: TouchEvent) => { x0 = e.touches[0]?.clientX ?? null; y0 = e.touches[0]?.clientY ?? 0; pause(); };
   const onEnd = (e: TouchEvent) => {
     if (x0 === null) return;
     const dx = (e.changedTouches[0]?.clientX ?? x0) - x0;
-    if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
+    const dy = (e.changedTouches[0]?.clientY ?? y0) - y0;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(cur + (dx < 0 ? 1 : -1));
     x0 = null;
+    restart();
   };
   const pause = () => window.clearInterval(timer);
+  const onEnter = () => { hovered = true; pause(); };
+  const onLeave = () => { hovered = false; restart(); };
+  const onFocus = () => { focused = true; pause(); };
+  const onBlur = (e: FocusEvent) => {
+    if (e.relatedTarget instanceof Node && root.contains(e.relatedTarget)) return;
+    focused = false; restart();
+  };
+  const onCancel = () => { x0 = null; restart(); };
   const onVis = () => (document.hidden ? pause() : restart());
 
   root.addEventListener("click", onClick);
   root.addEventListener("touchstart", onStart, { passive: true });
   root.addEventListener("touchend", onEnd);
-  root.addEventListener("mouseenter", pause);
-  root.addEventListener("mouseleave", restart);
-  root.addEventListener("focusin", pause);
+  root.addEventListener("touchcancel", onCancel);
+  root.addEventListener("mouseenter", onEnter);
+  root.addEventListener("mouseleave", onLeave);
+  root.addEventListener("focusin", onFocus);
+  root.addEventListener("focusout", onBlur);
   document.addEventListener("visibilitychange", onVis);
+  motion.addEventListener("change", restart);
+  breakpoint.addEventListener("change", restart);
   restart();
 
   cleanups.push(() => {
@@ -60,10 +90,14 @@ function initSlider(root: HTMLElement) {
     root.removeEventListener("click", onClick);
     root.removeEventListener("touchstart", onStart);
     root.removeEventListener("touchend", onEnd);
-    root.removeEventListener("mouseenter", pause);
-    root.removeEventListener("mouseleave", restart);
-    root.removeEventListener("focusin", pause);
+    root.removeEventListener("touchcancel", onCancel);
+    root.removeEventListener("mouseenter", onEnter);
+    root.removeEventListener("mouseleave", onLeave);
+    root.removeEventListener("focusin", onFocus);
+    root.removeEventListener("focusout", onBlur);
     document.removeEventListener("visibilitychange", onVis);
+    motion.removeEventListener("change", restart);
+    breakpoint.removeEventListener("change", restart);
   });
 }
 

@@ -394,3 +394,11 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 - Verified: migrations 0001–0003 apply to a fresh local D1; over-reserving a SKU fails the CHECK; astro check 0 errors; build passes.
 - Known gap until A1/A2 land: the pre-A0 order and inventory routes still query the dropped `inventory` table.
 - Plan docs `ADMIN-COMMERCE-PLAN.mn.md` / `ADMIN-AGENT-TASKS.md` were not in the repo; contracts were derived from the owner's message.
+
+## Round — hero carousel finish (SWE-2 Flash)
+- Finished the previous agent's hero-banner work: created `src/assets/fonts/noto-sans-mn-variable.ttf` (subset of the downloaded Noto Sans [wght,wdth] variable font to Latin + Cyrillic + punctuation, 315 KB, OFL licence kept); verified Ө ө Ү ү and every banner glyph with fontTools.
+- The hero fonts lacked ↗ and Ⅱ, so the CTA arrow and the pause/play rotation button are now inline SVG (rotation toggles via `aria-pressed`, no text swap).
+- Labels read with OCR (RapidOCR): br=Byredo Gypsy Water, creed=Creed Aventus, spicebomb=Viktor&Rolf Spicebomb Infrared, tom ford=Tom Ford Black Orchid EDT, sw u=Emporio Armani Stronger With You Absolutely, ns=Vanilla Blooms ("Inspired"-style clone house, notes = Mancera Roses Vanille), tt=Twaaq (product name unclear), jpg=Jean Paul Gaultier (brand only). Only `creed-aventus-edp` and `emporio-armani-stronger-with-you-absolutely-parfum` exist in the catalog, so only those two link to product pages; all others keep the shop URL.
+- `hero-banners.json`: ns product line now "INSPIRED · VANILLA BLOOMS". `productPath` import moved to the `../i18n` index; unused `allNotesImg` import removed.
+- Carousel verified live (Playwright-core + Edge, `output/playwright/verify.mjs`): at 1440/1024 the desktop set (11 slides) is active, at 390 the phone set (17 slides) is active; only the visible carousel runs a timer (`getClientRects` guard); dots, arrows, rotation pause, swipe, hover/focus/hidden-tab pause all work; caption children animate `hb-caption-in` (400 ms, staggered) only on `.is-on`; `document.fonts` shows both hero fonts loaded (no fallback); 0 console errors at all three widths.
+- `astro check` 0 errors; `astro build` passes (hero webp derivatives generated).
