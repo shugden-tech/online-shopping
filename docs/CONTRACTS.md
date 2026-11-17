@@ -114,6 +114,7 @@ All rows of one event go in one D1 batch.
 - Shipment rows: `id, orderNo, provider, providerRef, trackingNo, trackingUrl, status, attempts, lastError, nextRetryAt, createdAt, updatedAt`; detail adds `events[]` (`at, fromStatus, toStatus, source, note`).
 - `GET /api/admin/inventory?low=N` = tracked SKUs whose `available ≤ N`.
 - SKU PUT → `{ ok, sku, created }`; `kind` required only on create; `compareAt` must be > `price`. Stock `delta` on an untracked SKU → 409 `{ stock: "untracked" }` (use `set`). Media → `{ ok, url, key }`, 404 unknown product.
+- A3 adds `POST /api/admin/shipments/run-retries` [delivery.write] → `{ ok, retried, failed }`; shipment rows also carry `orderStatus`. Errors: 409 `has-shipment` / `not-paid`, 422 unknown/unconfigured provider, 502 provider cancel failed. Delivery webhooks must send `Content-Type: application/json`.
 - Astro `checkOrigin`: multipart POSTs and body-less DELETEs need a same-site `Origin` header (browsers send it; scripts must).
 
 ### Shared module functions (signatures frozen)
