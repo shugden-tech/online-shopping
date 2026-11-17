@@ -1,72 +1,50 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import type { JSX } from "preact";
 import { navigate } from "astro:transitions/client";
-import { cartItems, cartOpen, deliveryFor, type CartItem } from "../lib/cart";
+import { cartCheck, cartItems, cartOpen, deliveryFor, type CartItem } from "../lib/cart";
 import { useSig } from "../lib/use-signal";
 import { formatPrice } from "../lib/price";
 import { Bottle, initialOf } from "./Bottle";
 import {
-  FIELD_ORDER, validateOrderForm, type FieldErrorKey, type FormErrors, type OrderField, type OrderFormValues,
+  FIELD_ORDER, validateOrderForm, type FormErrors, type OrderField, type OrderFormValues,
 } from "../lib/order-validate";
-import type { Dict, Locale } from "../i18n/lite";
+import { fill, type Dict, type Locale } from "../i18n/lite";
+import type { StoreMeta } from "../lib/store-state";
 
 type Tr = Dict["checkout"];
-/** `{ [slug]: { [ml]: [price, inStock] } }` from the product collection at build time. */
-export type PriceCatalog = Record<string, Record<string, [number, boolean, number?]>>;
+type CartTr = Pick<Dict["cart"], "removed" | "capped" | "priceUpdated" | "checking">;
 
 export interface CheckoutFormProps {
   locale: Locale;
   tr: Tr;
   ml: string;
   districts: { id: string; label: string }[];
-  catalog: PriceCatalog;
+  cartTr: CartTr;
   delivery: { fee: number; freeThreshold: number };
   siteKey: string;
   shopHref: string;
   successHref: string;
 }
 
-type FormError = "rate" | "items" | "stock" | "server" | "network" | "empty" | "fix";
+type FormError = keyof Tr["errors"];
+const PAYS = ["bank", "qpay"] as const;
 
-/* Duplicate-order protection (Idempotency-Key) lives in ../lib/checkout-key, loaded on submit so it stays
- * out of this page's initial JS. */
+/* Submitting (live re-check, Idempotency-Key, POST /api/orders, error mapping) lives in ../lib/cart-checkout,
+ * loaded on submit so it stays out of this page's initial JS. Prices come from the live store state. */
 
-/* ---------- Turnstile: load the script once per page session ---------- */
-interface TurnstileApi {
-  render(el: HTMLElement, opts: Record<string, unknown>): string;
-  reset(id: string): void;
-  remove(id: string): void;
-}
-declare global {
-  interface Window { turnstile?: TurnstileApi }
-}
-let tsLoading: Promise<TurnstileApi> | null = null;
-function loadTurnstile(): Promise<TurnstileApi> {
-  if (window.turnstile) return Promise.resolve(window.turnstile);
-  tsLoading ??= new Promise((resolve, reject) => {
-    const s = document.createElement("script");
-    s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-    s.async = true;
-    s.defer = true;
-    s.onload = () => (window.turnstile ? resolve(window.turnstile) : reject(new Error("turnstile missing")));
-    s.onerror = () => {
-      tsLoading = null;
-      reject(new Error("turnstile failed to load"));
-    };
-    document.head.appendChild(s);
-  });
-  return tsLoading;
-}
-
+/* Turnstile (the challenge widget) is loaded by ../scripts/turnstile on demand. */
 const EMPTY: OrderFormValues = {
   name: "", phone: "", phone2: "", city: "ub", district: "", khoroo: "", address: "", note: "", payment: "bank",
 };
 
 export default function CheckoutForm(props: CheckoutFormProps) {
-  const { locale, tr, ml, districts, catalog, delivery, siteKey, shopHref, successHref } = props;
+  const { locale, tr, ml, districts, cartTr, delivery, siteKey, shopHref, successHref } = props;
   const items = useSig(cartItems);
+  const check = useSig(cartCheck);
   const [mounted, setMounted] = useState(false);
-  const [priceChanged, setPriceChanged] = useState(false);
+  /** Live switches (checkout open, payment methods); null until the store state loads. */
+  const [meta, setMeta] = useState<StoreMeta | null>(null);
+  const [lineErr, setLineErr] = useState<{ sku: string; kind: string; name: string } | null>(null);
   const [values, setValues] = useState<OrderFormValues>(EMPTY);
   const [province, setProvince] = useState("");
   const [ubDistrict, setUbDistrict] = useState("");
@@ -78,36 +56,37 @@ export default function CheckoutForm(props: CheckoutFormProps) {
   const tsId = useRef<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
-  const money = (n: number) => formatPrice(n, locale);
+  const live = check.status === "ok";
+  const money = (n: number) => (live ? formatPrice(n, locale) : <i class="live-ph live-ph--sm" aria-hidden="true" />);
+  const sync = () => import("../lib/cart-sync");
+  const refresh = (fresh = false) =>
+    sync().then(async (m) => {
+      await m.revalidateCart(ml, fresh);
+      setMeta(m.storeMeta());
+    });
 
-  /* refresh stale cart snapshot prices from the catalog */
+  /* re-check the cart against the live store state: prices, stock, lines that can no longer be bought */
   useEffect(() => {
     setMounted(true);
-    let changed = false;
-    let priceChanged = false;
-    const next = cartItems.value.map((i) => {
-      const entry = catalog[i.slug]?.[String(i.ml)];
-      if (entry && (entry[0] !== i.price || entry[2] !== i.stock || i.qty > (entry[2] ?? 10))) {
-        changed = true;
-        priceChanged ||= entry[0] !== i.price;
-        return { ...i, price: entry[0], stock: entry[2], qty: Math.min(i.qty, Math.max(1, entry[2] ?? 10)) };
-      }
-      return i;
-    });
-    if (changed) {
-      cartItems.value = next;
-      if (priceChanged) setPriceChanged(true);
-    }
+    void refresh();
   }, []);
 
   const empty = mounted && items.length === 0;
-  const unavailable = mounted && items.some((i) => !catalog[i.slug]?.[String(i.ml)]?.[1]);
+  const closed = meta?.checkoutOpen === false;
+  const pays = PAYS.filter((p) => !meta || meta.payments[p]);
+  const noPay = meta !== null && pays.length === 0;
+  const blocked = closed || noPay;
+  // keep the chosen payment method one that is switched on
+  useEffect(() => {
+    if (pays.length && !pays.includes(values.payment as (typeof PAYS)[number])) setValues((s) => ({ ...s, payment: pays[0]! }));
+  }, [meta]);
 
   /* Turnstile widget: render explicitly, clean up on unmount (view transitions swap the page) */
   useEffect(() => {
     if (!mounted || empty) return;
     let cancelled = false;
-    loadTurnstile()
+    import("../scripts/turnstile")
+      .then((m) => m.loadTurnstile())
       .then((ts) => {
         if (cancelled || !tsBox.current || tsId.current) return;
         tsId.current = ts.render(tsBox.current, {
@@ -184,7 +163,7 @@ export default function CheckoutForm(props: CheckoutFormProps) {
     e.preventDefault();
     if (sending) return;
     if (empty) return showFormError("empty");
-    if (unavailable) return showFormError("items");
+    if (closed) return showFormError("closed");
     const v = current();
     const errs = validateOrderForm(v);
     if (!token) errs.turnstile = "turnstileMissing";
@@ -196,51 +175,19 @@ export default function CheckoutForm(props: CheckoutFormProps) {
     }
     setErrors({});
     setFormError(null);
+    setLineErr(null);
     setSending(true);
     const website = (formRef.current?.elements.namedItem("website") as HTMLInputElement | null)?.value ?? "";
-    const payload = {
-      ...v,
-      locale,
-      items: cartItems.value.map((i) => ({ slug: i.slug, ml: i.ml, qty: i.qty })),
-      turnstileToken: token,
-      website,
-    };
-    let res: Response;
-    let ck: typeof import("../lib/checkout-key");
+    let r: Awaited<ReturnType<typeof import("../lib/cart-checkout").placeOrder>>;
     try {
-      ck = await import("../lib/checkout-key");
-      res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": ck.checkoutKey() },
-        body: JSON.stringify(payload),
-      });
+      const m = await import("../lib/cart-checkout");
+      r = await m.placeOrder(v, { locale, turnstileToken: token, website, ml, fields: FIELD_ORDER });
     } catch {
-      setSending(false);
-      resetTurnstile();
-      return showFormError("network");
+      r = { ok: false, form: "network", meta: null };
     }
-    let data: { ok?: boolean; orderNo?: string; total?: number; errors?: Record<string, string> } = {};
-    try {
-      data = await res.json();
-    } catch {
-      /* non-JSON error page */
-    }
-    if (res.ok && data.ok && data.orderNo) {
+    if (r.ok) {
       // the success page clears the cart; keep it until we know the order is stored
-      const url = `${successHref}?no=${encodeURIComponent(data.orderNo)}`;
-      ck.orderPlaced(data.orderNo, v.phone.trim());
-      try {
-        // demo account history (browser only); must never block the checkout
-        // loaded only now, so the account module stays out of the checkout page's initial JS
-        const { recordOrder } = await import("../lib/account");
-        recordOrder({
-          no: data.orderNo,
-          total: data.total ?? total,
-          items: cartItems.value.map((i) => ({ name: i.name, brand: i.brand, ml: i.ml, qty: i.qty, price: i.price })),
-        });
-      } catch {
-        /* ignore */
-      }
+      const url = `${successHref}?no=${encodeURIComponent(r.orderNo)}`;
       try {
         await navigate(url);
       } catch {
@@ -250,18 +197,13 @@ export default function CheckoutForm(props: CheckoutFormProps) {
     }
     setSending(false);
     resetTurnstile();
-    const se = data.errors ?? {};
-    const fieldErrs: FormErrors = {};
-    for (const f of FIELD_ORDER) if (se[f]) fieldErrs[f] = se[f] as FieldErrorKey;
-    setErrors(fieldErrs);
-    const form = se.form as FormError | undefined;
-    if (res.status === 429 || form === "rate") showFormError("rate");
-    else if (form === "items") showFormError("items");
-    else if (res.status === 409 || form === "stock") showFormError("stock");
-    else if (Object.keys(fieldErrs).length) {
+    if (r.meta) setMeta(r.meta);
+    if (r.sku) setLineErr({ sku: r.sku, kind: r.form, name: r.name ?? "" });
+    setErrors(r.fields ?? {});
+    if (r.form === "fix") {
       setFormError("fix");
-      focusFirst(fieldErrs);
-    } else showFormError("server");
+      focusFirst(r.fields ?? {});
+    } else showFormError(r.form in tr.errors ? (r.form as FormError) : "server");
   }
 
   /* ---------- small render helpers ---------- */
@@ -305,16 +247,19 @@ export default function CheckoutForm(props: CheckoutFormProps) {
         </div>
       ) : (
         <>
-          {priceChanged && (
-            <p class="co__notice t-small" role="status">
-              {tr.priceChanged}
-            </p>
+          {(check.removed.length > 0 || check.capped.length > 0 || check.priceChanged) && (
+            <div class="co__notice t-small" role="status">
+              {check.removed.length > 0 && <p>{fill(cartTr.removed, { items: check.removed.join(", ") })}</p>}
+              {check.capped.length > 0 && <p>{fill(cartTr.capped, { items: check.capped.join(", ") })}</p>}
+              {check.priceChanged && <p>{cartTr.priceUpdated}</p>}
+            </div>
           )}
+          {check.status === "checking" && <p class="sr-only" role="status">{cartTr.checking}</p>}
           <ul class="co__lines">
             {items.map((i: CartItem) => {
-              const ok = catalog[i.slug]?.[String(i.ml)]?.[1];
+              const bad = lineErr?.sku === i.sku ? lineErr.kind : null;
               return (
-                <li class="co__line" key={`${i.slug}-${i.ml}`} data-unavailable={ok ? undefined : ""}>
+                <li class="co__line" key={i.sku} data-sku={i.sku} data-unavailable={bad ? "" : undefined}>
                   <div class="co__thumb">
                     <Bottle shape={i.shape} family={i.family} initial={initialOf(i.brand)} img={i.img} />
                     <span class="co__qty" aria-hidden="true">{i.qty}</span>
@@ -325,6 +270,7 @@ export default function CheckoutForm(props: CheckoutFormProps) {
                     <p class="co__meta">
                       {i.ml} {ml} × {i.qty}
                     </p>
+                    {bad && <p class="co__line-err">{bad === "stockLine" ? tr.lineStock : tr.lineUnavailable}</p>}
                   </div>
                   <p class="co__line-sum">{money(i.price * i.qty)}</p>
                 </li>
@@ -368,8 +314,13 @@ export default function CheckoutForm(props: CheckoutFormProps) {
       {summary}
 
       <form class="co__form" ref={formRef} noValidate onSubmit={onSubmit} aria-busy={sending ? "true" : undefined}>
+        {blocked && (
+          <p class="co__closed" role="status">
+            {closed ? tr.closed : tr.noPayment}
+          </p>
+        )}
         <div class="co__alert" ref={alertRef} role="alert" aria-live="assertive">
-          {formError && <p>{tr.errors[formError]}</p>}
+          {formError && <p>{fill(tr.errors[formError], { name: lineErr?.name ?? "" })}</p>}
         </div>
 
         <fieldset class="co__set">
@@ -548,7 +499,7 @@ export default function CheckoutForm(props: CheckoutFormProps) {
         <fieldset class="co__set" aria-describedby={errors.payment ? errId("payment") : undefined}>
           <legend class="t-title">{tr.payment}</legend>
           <div class="co__pays">
-            {(["bank", "qpay"] as const).map((p, n) => (
+            {pays.map((p, n) => (
               <label class="co__pay">
                 <input
                   type="radio"
@@ -591,9 +542,9 @@ export default function CheckoutForm(props: CheckoutFormProps) {
           <Err f="turnstile" />
         </div>
 
-        <button type="submit" class="btn btn--gold btn--block co__submit" disabled={sending || !mounted}>
+        <button type="submit" class="btn btn--gold btn--block co__submit" disabled={sending || !mounted || blocked || check.status === "checking"}>
           <span>{sending ? tr.sending : tr.submit}</span>
-          {mounted && !sending && <span class="co__submit-sum">{money(total)}</span>}
+          {live && !sending && <span class="co__submit-sum">{money(total)}</span>}
         </button>
       </form>
     </div>

@@ -23,7 +23,6 @@ interface WishCard {
   href: string;
   img?: string;
   ml: number;
-  price: number;
 }
 
 const doc = document;
@@ -53,7 +52,7 @@ function readWish(): WishCard[] {
       const i = x as Record<string, unknown>;
       return (
         typeof i.slug === "string" && typeof i.brand === "string" && typeof i.name === "string" &&
-        typeof i.ml === "number" && typeof i.price === "number" && safeHref(i.href) &&
+        typeof i.ml === "number" && safeHref(i.href) &&
         (i.img === undefined || safeImg(i.img))
       );
     });
@@ -217,7 +216,8 @@ function renderWish(body: HTMLElement) {
     const brand = el("p", "pf-brand", w.brand);
     const name = el("a", "pf-card-item__name", w.name);
     name.href = w.href;
-    const price = el("p", "pf-muted", `${w.ml} ${S.ml} · ${formatPrice(w.price, S.locale)}`);
+    // size only: the saved build-time price is never shown (the product page has the live one)
+    const price = el("p", "pf-muted", `${w.ml} ${S.ml}`);
     li.append(brand, name, price);
     grid.append(li);
   }

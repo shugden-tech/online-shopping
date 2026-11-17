@@ -195,3 +195,30 @@
 .ok__track-status { font-weight: 500; color: var(--gold-soft); }
 .ok__track-items { display: grid; gap: 4px; padding: 0; margin: 0; list-style: none; color: var(--text-dim); }
 @media (max-width: 560px) { .ok__track-row { grid-template-columns: minmax(0, 1fr); } }
+
+/* live store state: checkout closed / no payment method, a line the server refused */
+.co__closed { padding: 12px 14px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 4px; font-size: 14px; line-height: 1.5; }
+.co__line-err { font-size: 12px; font-weight: 600; color: var(--danger-text); margin-top: 2px; }
+.co__line[data-unavailable] { opacity: 1; }
+.co__line[data-unavailable] .co__line-text, .co__line[data-unavailable] .co__line-sum { opacity: .6; }
+.co__notice p + p { margin-top: 4px; }
+
+/* success page: QPay / bank instructions, payment state, hold countdown, tracking rows */
+.ok__pay[data-method="qpay"] { justify-items: center; text-align: center; }
+.ok__pay[data-method="qpay"] .ok__rows { width: 100%; text-align: left; }
+.ok__pay[data-method="qpay"] > .t-title { width: 100%; }
+.ok__qr { display: grid; justify-items: center; gap: 8px; margin: 0; }
+.ok__qr img { width: min(220px, 60vw); height: auto; aspect-ratio: 1; background: #fff; padding: 8px; border: 1px solid var(--line); border-radius: 6px; }
+.ok__apps { width: 100%; text-align: left; border-top: 1px solid var(--line); padding-top: 4px; }
+.ok__apps summary { cursor: pointer; font-size: 13px; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+.ok__apps ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.ok__app { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; min-width: 0; }
+.ok__app span { min-width: 0; overflow-wrap: anywhere; }
+.ok__app img { width: 28px; height: 28px; border-radius: 6px; flex: none; }
+.ok__paystate { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; font-weight: 500; color: var(--gold-soft); }
+.ok__paystate[data-paid] { color: var(--text); }
+.ok__hold { font-size: 13px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.ok__track-rows { display: grid; gap: 6px; margin: 0; }
+.ok__track-rows > div { display: grid; grid-template-columns: minmax(110px, auto) minmax(0, 1fr); gap: 12px; font-size: 14px; }
+.ok__track-rows dt { color: var(--text-dim); }
+.ok__track-rows dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }

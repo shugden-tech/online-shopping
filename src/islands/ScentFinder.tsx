@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { addItem } from "../lib/cart";
+import { formatPrice } from "../lib/price";
+import type { SkuView } from "../lib/store-state";
 import {
   EMPTY_ANSWERS, MAX_NOTES, MOODS, RESULT_STEP, STEPS, WHEN, WHO, answered, parseHash, recommend, toHash,
   type Answers, type Match, type Mood, type QuizProduct,
@@ -13,6 +15,8 @@ interface Props {
   familyLines: Dict["familyLines"];
   intensityLevels: string[];
   viewLabel: string;
+  /** "{price}-с" — the result cards show the lowest live price. */
+  fromLabel: string;
   productBase: string;
   moods: { id: Mood; strip: string; w: number; h: number }[];
   notes: { id: string; label: string; img: string }[];
@@ -33,7 +37,9 @@ const WHEN_ICON: Record<(typeof WHEN)[number], string> = {
 };
 
 /** The Scent Finder: intro → 5 questions → top-3 result. State lives in the URL hash. */
-export default function ScentFinder({ tr, families, familyLines, intensityLevels, viewLabel, productBase, moods, notes, products }: Props) {
+export default function ScentFinder({ tr, families, familyLines, intensityLevels, viewLabel, fromLabel, productBase, moods, notes, products }: Props) {
+  const [live, setLive] = useState<typeof import("../lib/store-state") | null>(null);
+  const [, setTick] = useState(0);
   const [step, setStep] = useState(0);
   const [a, setA] = useState<Answers>(EMPTY_ANSWERS);
   const [ready, setReady] = useState(false);
@@ -95,10 +101,31 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
     if (m.intensityExact) parts.push(tr.whyIntensity);
     return `${tr.whyLead} ${(parts.length ? parts : [tr.whyFallback]).join(", ")}.`;
   };
+  // live prices for the result cards (loaded only when the results show)
+  const slugs = results.map((m) => m.product.slug).join();
+  useEffect(() => {
+    if (!slugs) return;
+    let off = () => {};
+    void import("../lib/store-state").then((m) => {
+      setLive(m);
+      off = m.subscribe(() => setTick((n) => n + 1));
+      void m.load(slugs.split(",")).then(() => setTick((n) => n + 1));
+    });
+    return () => off();
+  }, [slugs]);
+  /** Sizes that can be bought now, cheapest first. */
+  const buyable = (slug: string): SkuView[] => live?.buyable(slug) ?? [];
+  const fromText = (slug: string) => {
+    if (!live || live.productState(slug) === undefined) return live?.loadFailed(slug) ? "" : <i class="live-ph live-ph--sm" aria-hidden="true" />;
+    const v = buyable(slug)[0];
+    return v ? fill(fromLabel, { price: formatPrice(v.price!, document.documentElement.lang === "en" ? "en" : "mn") }) : "";
+  };
   const addAll = () => {
-    results.forEach((m, i) => {
-      const p = m.product;
-      addItem({ slug: p.slug, name: p.name, brand: p.brand, family: p.family, shape: p.shape, ml: p.addMl, price: p.addPrice, stock: p.stock, ...(p.img ? { img: p.img } : {}) }, 1, i === results.length - 1);
+    const picks = results.map((m) => ({ p: m.product, v: buyable(m.product.slug).find((x) => x.sku.endsWith(`:${m.product.addMl}`)) ?? buyable(m.product.slug)[0] }));
+    picks.forEach(({ p, v }, i) => {
+      if (!v) return;
+      const ml = Number(v.sku.slice(v.sku.lastIndexOf(":") + 1));
+      addItem({ slug: p.slug, sku: v.sku, name: p.name, brand: p.brand, family: p.family, shape: p.shape, ml, price: v.price!, ...(v.available !== null ? { stock: v.available } : {}), ...(p.img ? { img: p.img } : {}) }, 1, i === picks.length - 1);
     });
     setAdded(true);
   };
@@ -315,7 +342,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                   </h2>
                   <p class="sf__meta">
                     <span class="chip chip--fam">{families[m.product.family as keyof typeof families]}</span>
-                    <span>{m.product.from}</span>
+                    <span>{fromText(m.product.slug)}</span>
                   </p>
                   <p class="sf__why">{why(m)}</p>
                   <a class="link-arrow" href={`${productBase}${m.product.slug}/`} aria-label={`${viewLabel}: ${m.product.name}`}>
@@ -326,7 +353,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
               ))}
             </ol>
             <div class="sf__result-actions">
-              <button type="button" class="btn btn--gold" data-warm-cart onClick={addAll} disabled={added || results.length === 0}>
+              <button type="button" class="btn btn--gold" data-warm-cart onClick={addAll} disabled={added || !results.some((m) => buyable(m.product.slug).length)}>
                 {added ? tr.addedAll : tr.addAll}
               </button>
               <button type="button" class="btn" onClick={() => go(STEPS)}>

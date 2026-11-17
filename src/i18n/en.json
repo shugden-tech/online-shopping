@@ -52,6 +52,17 @@
     "photoFront": "main image",
     "photoBack": "with box"
   },
+  "live": {
+    "loading": "Loading price",
+    "failed": "Couldn't load the price",
+    "soon": "Price coming soon",
+    "soonShort": "Soon",
+    "locked": "Temporarily closed",
+    "off": "Unavailable",
+    "notSold": "Not currently for sale",
+    "was": "Was",
+    "left": "{n} left"
+  },
   "families": {
     "amber": "Amber",
     "woody": "Woody",
@@ -206,7 +217,7 @@
     "increase": "Increase by one",
     "allSoldOut": "Currently sold out",
     "deliveryHint": "Delivered in Ulaanbaatar within 24–48 hours.",
-    "metaDescription": "{brand} {name} {conc} — 2, 5 and 10 ml decants. {family} family. {price} at genzst."
+    "metaDescription": "{brand} {name} {conc} — 2, 5 and 10 ml decants. {family} family, at genzst."
   },
   "cart": {
     "title": "Your cart",
@@ -227,7 +238,13 @@
     "qtyOf": "{name} — quantity",
     "continue": "Continue browsing",
     "deliveryNote": "Delivery is calculated at checkout.",
-    "items": "{n} items"
+    "items": "{n} items",
+    "checking": "Checking prices…",
+    "checkFailed": "Couldn't check prices. Please try again.",
+    "retry": "Try again",
+    "removed": "No longer available, removed from your cart: {items}",
+    "capped": "Not enough in stock, quantity lowered: {items}",
+    "priceUpdated": "Some prices were updated."
   },
   "finder": {
     "title": "Scent Finder",
@@ -316,8 +333,8 @@
     "bank": "Bank transfer",
     "bankHint": "Account details are shown on the next page",
     "qpay": "QPay",
-    "qpayHint": "We'll send you a QPay invoice",
-    "paymentNote": "There is no online payment yet. We confirm every payment manually.",
+    "qpayHint": "Pay right away with a QR code or your bank app",
+    "paymentNote": "QPay payments are confirmed automatically. We confirm bank transfers by hand.",
     "countrysideNote": "Intercity carrier fees are paid by the recipient.",
     "submit": "Place order",
     "sending": "Sending…",
@@ -349,8 +366,18 @@
       "server": "Something went wrong. Your cart is safe — please try again.",
       "network": "Network error. Check your connection and try again.",
       "fix": "Please correct the highlighted fields.",
-      "stock": "Sorry, some items in your cart just ran out. Please lower the quantity and try again."
-    }
+      "stock": "Sorry, some items in your cart just ran out. Please lower the quantity and try again.",
+      "stockLine": "{name}: not enough in stock. Lower the quantity and send again.",
+      "unavailable": "{name} is not available right now. Remove it from your cart and send again.",
+      "closed": "Ordering is paused for now. Please check back soon.",
+      "paymentDisabled": "This payment method isn't available right now. Please choose another.",
+      "changed": "Prices or stock in your cart changed. Please review and send again.",
+      "state": "Couldn't load prices. Refresh the page and try again."
+    },
+    "closed": "Ordering is paused for now. Please check back soon.",
+    "noPayment": "No payment method is available right now. Please try again soon.",
+    "lineStock": "Not enough stock",
+    "lineUnavailable": "Not available"
   },
   "success": {
     "title": "Order received",
@@ -386,7 +413,38 @@
       "shipped": "Out for delivery",
       "done": "Delivered",
       "cancelled": "Cancelled"
-    }
+    },
+    "qpayTitle": "Pay with QPay",
+    "qpayScan": "Scan the QR code with your banking app.",
+    "qpayApps": "Open in your bank app",
+    "qpayLink": "Pay via QPay link",
+    "qpayError": "We couldn't create the QPay invoice.",
+    "retry": "Try again",
+    "waiting": "Waiting for payment…",
+    "paid": "Payment received. Thank you!",
+    "check": "Check payment",
+    "pollStopped": "If you have paid, press “Check payment”.",
+    "holdLeft": "Time left to pay: {time}",
+    "holdExpired": "The time to pay has run out.",
+    "paymentLabel": "Payment",
+    "payment": {
+      "unpaid": "Not paid",
+      "pending": "Processing",
+      "paid": "Paid",
+      "refunded": "Refunded"
+    },
+    "shipLabel": "Delivery",
+    "ship": {
+      "pending": "Preparing",
+      "created": "Booked",
+      "picked_up": "Picked up",
+      "in_transit": "On the way",
+      "delivered": "Delivered",
+      "failed": "Delivery failed",
+      "cancelled": "Cancelled"
+    },
+    "trackingNo": "Tracking number",
+    "trackLink": "Track delivery"
   },
   "about": {
     "title": "About",

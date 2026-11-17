@@ -11,8 +11,6 @@ interface Props {
   closeLabel: string;
   ml: string;
   total: number;
-  priceMin: number;
-  priceMax: number;
   options: {
     family: Option[];
     brand: { id: string; label: string; count: number }[];
@@ -45,8 +43,12 @@ function writeUrl(state: FilterState, mode: "push" | "replace") {
   }
 }
 
-export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, priceMax, options }: Props) {
+/** What src/scripts/live-prices.ts sends after each live update. */
+interface LiveDetail { hidden: string[]; from: Record<string, number | null>; sizes: Record<string, number[]> }
+
+export default function ShopFilters({ tr, closeLabel, ml, total, options }: Props) {
   const [state, setState] = useState<FilterState>(EMPTY_FILTERS);
+  const stateRef = useRef<FilterState>(EMPTY_FILTERS);
   const [count, setCount] = useState(total);
   const [sheet, setSheet] = useState(false);
   const items = useRef<ShopItem[] | null>(null);
@@ -84,6 +86,7 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
   };
 
   const update = (next: FilterState, mode: "push" | "replace" = "push") => {
+    stateRef.current = next;
     setState(next);
     apply(next);
     window.clearTimeout(urlTimer.current);
@@ -98,8 +101,21 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
       items.current = [];
     }
     const initial = parseQuery(location.search);
+    stateRef.current = initial;
     setState(initial);
     apply(initial);
+    // live prices / sizes / hidden products (the page is built without prices)
+    const onLive = (e: Event) => {
+      const d = (e as CustomEvent<LiveDetail>).detail;
+      if (!items.current || !d) return;
+      items.current = items.current
+        .filter((i) => !d.hidden.includes(i.s))
+        .map((i) => (i.s in d.from ? { ...i, p: d.from[i.s] ?? 0, z: d.sizes[i.s] ?? [] } : i));
+      apply(stateRef.current);
+    };
+    document.addEventListener("gz:live", onLive);
+    const last = (window as unknown as { gzLive?: LiveDetail }).gzLive;
+    if (last) onLive(new CustomEvent("gz:live", { detail: last }));
     if (location.hash === "#search") searchRef.current?.focus();
 
     const onClick = (e: MouseEvent) => {
@@ -109,6 +125,7 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
     document.addEventListener("click", onClick);
     window.addEventListener("hashchange", onHash);
     return () => {
+      document.removeEventListener("gz:live", onLive);
       document.removeEventListener("click", onClick);
       window.removeEventListener("hashchange", onHash);
       window.clearTimeout(urlTimer.current);
@@ -204,7 +221,7 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
     </fieldset>
   );
 
-  const priceInput = (key: "min" | "max", label: string, placeholder: number) => (
+  const priceInput = (key: "min" | "max", label: string) => (
     <label class="flt__price">
       <span>{label}</span>
       <input
@@ -213,7 +230,7 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
         inputMode="numeric"
         min={0}
         step={1000}
-        placeholder={String(placeholder)}
+        placeholder="₮"
         value={state[key] ?? ""}
         onChange={(e) => {
           const raw = (e.currentTarget as HTMLInputElement).value;
@@ -290,9 +307,9 @@ export default function ShopFilters({ tr, closeLabel, ml, total, priceMin, price
               {tr.price} <small>· {tr.priceHint}</small>
             </legend>
             <div class="flt__prices">
-              {priceInput("min", tr.min, priceMin)}
+              {priceInput("min", tr.min)}
               <i aria-hidden="true" />
-              {priceInput("max", tr.max, priceMax)}
+              {priceInput("max", tr.max)}
             </div>
           </fieldset>
 

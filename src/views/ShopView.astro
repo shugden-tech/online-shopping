@@ -5,7 +5,7 @@ import ProductCard from "../components/ProductCard.astro";
 import ShopFilters from "../islands/ShopFilters.tsx";
 import { getDict, type Locale } from "../i18n";
 import { FAMILIES, GENDERS, SEASONS, OCCASIONS } from "../lib/taxonomy";
-import { NOTES, NOTE_GROUPS, allNotes, fromPrice, getProducts, noteGroups } from "../lib/products";
+import { NOTES, NOTE_GROUPS, allNotes, getProducts, noteGroups } from "../lib/products";
 import { noteImages } from "../lib/images";
 import { brandId, normalize, type ShopItem } from "../lib/filter";
 import "../styles/shop.css";
@@ -35,15 +35,15 @@ const data: ShopItem[] = products.map((p) => ({
   b: brandId(p.brand),
   g: p.gender,
   n: noteGroups(p),
-  z: p.sizes.filter((s) => s.inStock).map((s) => s.ml),
+  // sizes and prices come from the live store state (ShopFilters listens to `gz:live`); none are baked in
+  z: p.sizes.map((s) => s.ml),
   se: p.season,
   o: p.occasion,
-  p: fromPrice(p),
+  p: 0,
   ft: p.featured ? 1 : 0,
   nw: p.isNew ? 1 : 0,
 }));
 
-const prices = data.map((d) => d.p);
 const usedFamilies = FAMILIES.filter((f) => products.some((p) => p.family === f));
 // brands used in the catalog, most products first (then A–Z)
 const brandCounts = new Map<string, { label: string; count: number }>();
@@ -89,8 +89,6 @@ const options = {
         closeLabel={tr.nav.close}
         ml={tr.common.ml}
         total={products.length}
-        priceMin={Math.min(...prices)}
-        priceMax={Math.max(...prices)}
         options={options}
       />
 

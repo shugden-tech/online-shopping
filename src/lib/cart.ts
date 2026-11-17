@@ -1,8 +1,11 @@
 import { signal, computed, effect } from "@preact/signals-core";
+import { skuId } from "./contracts";
 
-/** One cart line. Display fields are a snapshot taken when the item was added;
- *  the server always re-prices from the product collection. */
+/** One cart line. `price` / `stock` come from the live store state (see cart-sync.ts, which re-checks
+ *  them before they are shown); the server always re-prices from D1 when the order is placed. */
 export interface CartItem {
+  /** `${slug}:${ml}` — what the order API receives. */
+  sku: string;
   slug: string;
   ml: number;
   qty: number;
@@ -32,6 +35,7 @@ function sanitize(raw: unknown): CartItem[] {
     if (stock === 0) continue;
     const qty = Math.min(itemLimit({ stock }), Math.max(1, Math.floor(Number(i.qty) || 1)));
     out.push({
+      sku: typeof i.sku === "string" && i.sku ? i.sku : skuId(i.slug, i.ml),
       slug: i.slug,
       ml: i.ml,
       qty,
@@ -61,6 +65,16 @@ export const cartItems = signal<CartItem[]>(read());
 export const cartOpen = signal(false);
 /** Bumped on every add; the header listens to it to pulse the cart icon. */
 export const cartPulse = signal(0);
+/** Live re-check of the cart against the store state (cart-sync.ts). Prices are shown only when "ok". */
+export interface CartCheck {
+  status: "idle" | "checking" | "ok" | "error";
+  /** Lines taken out because they can no longer be bought ("Brand Name 5 мл"). */
+  removed: string[];
+  /** Lines whose quantity was lowered to what is left. */
+  capped: string[];
+  priceChanged: boolean;
+}
+export const cartCheck = signal<CartCheck>({ status: "idle", removed: [], capped: [], priceChanged: false });
 
 export const cartCount = computed(() => cartItems.value.reduce((n, i) => n + i.qty, 0));
 export const cartSubtotal = computed(() => cartItems.value.reduce((n, i) => n + i.qty * i.price, 0));
@@ -87,7 +101,8 @@ if (typeof window !== "undefined") {
 
 const same = (a: { slug: string; ml: number }, b: { slug: string; ml: number }) => a.slug === b.slug && a.ml === b.ml;
 
-export function addItem(item: Omit<CartItem, "qty">, qty = 1, open = true): void {
+export function addItem(input: Omit<CartItem, "qty" | "sku"> & { sku?: string }, qty = 1, open = true): void {
+  const item = { ...input, sku: input.sku || skuId(input.slug, input.ml) };
   const limit = itemLimit(item);
   if (limit < 1) return;
   const items = cartItems.value;

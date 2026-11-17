@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { useSig } from "../lib/use-signal";
-import { cartItems, cartOpen, cartSubtotal, cartCount, setQty, removeItem, itemLimit } from "../lib/cart";
+import { cartItems, cartOpen, cartSubtotal, cartCount, cartCheck, setQty, removeItem, itemLimit } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import { fill, type Dict, type Locale } from "../i18n/lite";
 import { Bottle, initialOf } from "./Bottle";
@@ -29,8 +29,33 @@ export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, check
   const items = useSig(cartItems);
   const subtotal = useSig(cartSubtotal);
   const count = useSig(cartCount);
-  const money = (n: number) => formatPrice(n, locale);
+  const check = useSig(cartCheck);
+  // Prices are shown only once the cart was re-checked against the live store state.
+  const live = check.status === "ok";
+  const money = (n: number) => (live ? formatPrice(n, locale) : <i class="live-ph live-ph--sm" aria-hidden="true" />);
   const close = () => (cartOpen.value = false);
+  const recheck = () => void import("../lib/cart-sync").then((m) => m.revalidateCart(ml));
+
+  // re-check on every open (prices, stock, lines that can no longer be bought)
+  useEffect(() => {
+    if (open) recheck();
+  }, [open]);
+
+  const notice = (check.removed.length > 0 || check.capped.length > 0 || check.priceChanged || check.status === "error") && (
+    <div class="cd__notice" role="status">
+      {check.removed.length > 0 && <p>{fill(tr.removed, { items: check.removed.join(", ") })}</p>}
+      {check.capped.length > 0 && <p>{fill(tr.capped, { items: check.capped.join(", ") })}</p>}
+      {check.priceChanged && <p>{tr.priceUpdated}</p>}
+      {check.status === "error" && (
+        <p>
+          {tr.checkFailed}{" "}
+          <button type="button" class="cd__retry" onClick={recheck}>
+            {tr.retry}
+          </button>
+        </p>
+      )}
+    </div>
+  );
 
   useEffect(() => {
     const id = requestAnimationFrame(() => requestAnimationFrame(() => setReady(true)));
@@ -103,6 +128,7 @@ export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, check
 
         {items.length === 0 ? (
           <div class="cd__empty">
+            {notice}
             <svg class="cd__empty-art" viewBox="0 0 200 280" aria-hidden="true" style="--tint:transparent">
               <use href="#gz-b-classic" />
             </svg>
@@ -114,9 +140,11 @@ export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, check
           </div>
         ) : (
           <>
+            {notice}
+            {check.status === "checking" && <p class="sr-only" role="status">{tr.checking}</p>}
             <ul class="cd__list">
               {items.map((i) => (
-                <li class="cd__item" key={`${i.slug}-${i.ml}`}>
+                <li class="cd__item" key={i.sku} data-sku={i.sku}>
                   <a class="cd__thumb" href={`${productBase}${i.slug}/`} tabIndex={-1} aria-hidden="true" onClick={close}>
                     <Bottle shape={i.shape} family={i.family} initial={initialOf(i.brand)} img={i.img} />
                   </a>
@@ -150,9 +178,9 @@ export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, check
 
             <footer class="cd__foot">
               <div class="cd__free" data-reached={remaining === 0 ? "" : undefined}>
-                <p>{remaining === 0 ? tr.freeReached : fill(tr.freeHint, { amount: money(remaining) })}</p>
+                <p>{!live ? " " : remaining === 0 ? tr.freeReached : fill(tr.freeHint, { amount: formatPrice(remaining, locale) })}</p>
                 <div class="cd__bar" aria-hidden="true">
-                  <i style={`transform:scaleX(${progress})`} />
+                  <i style={`transform:scaleX(${live ? progress : 0})`} />
                 </div>
               </div>
               <div class="cd__sum">

@@ -42,8 +42,18 @@ function loadDrawer() {
 effect(() => {
   if (cartOpen.value) void loadDrawer().then((m) => m.mountCart());
 });
+/* ---------- live prices: product cards and the header's featured items get their numbers from the API ---------- */
+let livePage = false;
+function livePrices() {
+  if (livePage) return;
+  livePage = true;
+  void import("./live-prices").then((m) => m.run());
+}
+
 const warm = (e: Event) => {
-  if ((e.target as HTMLElement | null)?.closest?.("[data-cart-open],[data-add],[data-warm-cart]")) void loadDrawer();
+  const t = e.target as HTMLElement | null;
+  if (t?.closest?.("[data-cart-open],[data-add],[data-warm-cart]")) void loadDrawer();
+  if (t?.closest?.("[data-header]")) livePrices();
 };
 doc.addEventListener("pointerover", warm, { passive: true });
 doc.addEventListener("focusin", warm);
@@ -156,7 +166,8 @@ doc.addEventListener("click", (e) => {
       const ml = Number(add.dataset.ml);
       const price = Number(add.dataset.price);
       const stock = add.dataset.stock === undefined ? undefined : Number(add.dataset.stock);
-      if (base.slug && ml > 0 && price > 0) addItem({ ...base, ml, price, ...(stock !== undefined ? { stock } : {}) });
+      // data-price is set only from the live store state (live-prices.ts): no live price, no add
+      if (base.slug && ml > 0 && price > 0) addItem({ ...base, ml, price, sku: add.dataset.sku, ...(stock !== undefined ? { stock } : {}) });
     } catch {
       /* malformed data attribute: ignore */
     }
@@ -197,6 +208,8 @@ function initReveal() {
 doc.addEventListener("astro:page-load", () => {
   // the drawer root is replaced on every navigation: re-mount it if the code is already here
   if (drawer) void drawer.then((m) => m.mountCart());
+  livePage = false;
+  if (doc.querySelector("[data-pid]")) livePrices();
   syncBadge();
   syncHeader();
   initReveal();
