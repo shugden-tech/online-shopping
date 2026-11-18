@@ -14,3 +14,8 @@ QPAY_CALLBACK_SECRET=dev-only-qpay-callback-secret-0123456789
 DELIVERY_BASE_URL=
 DELIVERY_API_KEY=
 DELIVERY_WEBHOOK_SECRET=dev-only-delivery-webhook-secret-0123456789
+# DEV/DEMO ONLY username + password logins for /admin/ (exchanged for the tokens above). Production: unset or use strong values.
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=demo-admin-pass-2026
+STAFF_USERNAME=staff
+STAFF_PASSWORD=demo-staff-pass-2026

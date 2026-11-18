@@ -71,12 +71,20 @@ function Login({ onIn, message }: { onIn: (s: Session) => void; message: string 
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(message);
   const input = useRef<HTMLInputElement>(null);
-  useEffect(() => { input.current?.focus(); }, []);
+  const user = useRef<HTMLInputElement>(null);
+  useEffect(() => { user.current?.focus(); }, []);
   async function submit(e: Event) {
     e.preventDefault();
-    const token = input.current!.value.trim();
-    if (!token) { setErr("Токеноо оруулна уу."); return; }
+    let token = input.current!.value.trim();
+    const username = user.current!.value.trim();
+    if (!token) { setErr(username ? "Нууц үгээ оруулна уу." : "Токеноо оруулна уу."); return; }
     setBusy(true);
+    if (username) {
+      // username + password -> the server answers with the matching admin token (see /api/admin/login)
+      const lg = await api<{ token: string }>("/api/admin/login", { method: "POST", body: { username, password: token } });
+      if (!lg.ok) { setBusy(false); setErr(lg.status === 401 ? "Нэр эсвэл нууц үг буруу байна." : lg.status === 503 ? "Нэвтрэх нэр, нууц үг тохируулаагүй байна. Токеноор нэвтэрнэ үү." : lg.error); return; }
+      token = lg.data.token;
+    }
     const res = await api<Session>("/api/admin/me", { token });
     setBusy(false);
     if (res.ok) {
@@ -92,9 +100,13 @@ function Login({ onIn, message }: { onIn: (s: Session) => void; message: string 
       <h1 class="a-title">genzst · админ</h1>
       <form onSubmit={submit} class="a-login__form" data-testid="login">
         <label class="a-field">
-          <span class="a-field__label">Нэвтрэх токен</span>
+          <span class="a-field__label">Нэвтрэх нэр</span>
+          <input ref={user} class="a-input" type="text" name="username" autocomplete="username" />
+        </label>
+        <label class="a-field">
+          <span class="a-field__label">Нууц үг эсвэл токен</span>
           <input ref={input} class="a-input" type="password" name="token" autocomplete="current-password" required />
-          <span class="a-field__hint">Токен зөвхөн энэ цонхонд (sessionStorage) хадгалагдана.</span>
+          <span class="a-field__hint">Нэрээ хоосон орхивол токеноор нэвтэрнэ. Токен зөвхөн энэ цонхонд (sessionStorage) хадгалагдана.</span>
         </label>
         <button class="a-btn a-btn--primary" type="submit" disabled={busy}>{busy ? "Шалгаж байна…" : "Нэвтрэх"}</button>
         <Msg kind="err" text={err} />

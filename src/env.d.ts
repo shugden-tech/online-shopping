@@ -11,6 +11,11 @@ interface Env {
   ADMIN_TOKEN?: string;
   /** Optional second token -> role "staff" (fewer permissions, see ROLE_PERMISSIONS). */
   STAFF_TOKEN?: string;
+  /** Optional username + password logins; they are exchanged for ADMIN_TOKEN / STAFF_TOKEN by /api/admin/login. */
+  ADMIN_USERNAME?: string;
+  ADMIN_PASSWORD?: string;
+  STAFF_USERNAME?: string;
+  STAFF_PASSWORD?: string;
   /** Public site origin, e.g. https://genzst.mn — used to build payment callback URLs. */
   PUBLIC_SITE_URL?: string;
   /** R2 bucket for product photos uploaded from the admin (front/back). */
