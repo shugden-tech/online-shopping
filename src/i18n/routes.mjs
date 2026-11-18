@@ -2,7 +2,10 @@
 // Plain .mjs so astro.config.mjs can import it too.
 
 /** @typedef {"mn" | "en"} Locale */
-/** @typedef {"home"|"shop"|"finder"|"checkout"|"success"|"about"|"help"|"profile"} RouteKey */
+/** @typedef {"home"|"shop"|"finder"|"checkout"|"success"|"about"|"help"|"profile"|"bundles"} RouteKey */
+
+// "/online-shopping" on the GitHub Pages preview, empty on the real domain.
+const BASE = process.env.GH_PAGES === "1" ? "/online-shopping" : "";
 
 /** @type {Record<RouteKey, Record<Locale, string>>} */
 export const ROUTES = {
@@ -14,16 +17,17 @@ export const ROUTES = {
   about: { mn: "/bidnii-tuhai/", en: "/en/about/" },
   help: { mn: "/tuslamj/", en: "/en/help/" },
   profile: { mn: "/profile/", en: "/en/profile/" },
+  bundles: { mn: "/bundles/", en: "/en/bundles/" },
 };
 
 /** @param {RouteKey} key @param {Locale} locale */
 export function route(key, locale) {
-  return ROUTES[key][locale];
+  return BASE + ROUTES[key][locale];
 }
 
 /** @param {Locale} locale @param {string} slug */
 export function productPath(locale, slug) {
-  return `${ROUTES.shop[locale]}${slug}/`;
+  return `${BASE}${ROUTES.shop[locale]}${slug}/`;
 }
 
 /**

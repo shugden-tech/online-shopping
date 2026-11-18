@@ -21,7 +21,7 @@ const { locale } = Astro.props;
 const tr = getDict(locale);
 const s = tr.store;
 const shop = route("shop", locale);
-const bundlesHref = locale === "en" ? "/en/bundles" : "/bundles";
+const bundlesHref = route("bundles", locale);
 const free = formatPrice(settings.delivery.freeThreshold, locale);
 const products = await getProducts();
 const bestsellers = bestsellerSlugs.map((slug) => {

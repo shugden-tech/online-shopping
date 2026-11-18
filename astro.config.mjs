@@ -7,9 +7,12 @@ import { alternatesFor } from "./src/i18n/routes.mjs";
 
 // [[TODO owner]] set the real production domain here.
 const SITE = "https://genzst.mn";
+// GitHub Pages preview (.github/workflows/pages.yml sets GH_PAGES=1): served under /online-shopping.
+const PAGES = process.env.GH_PAGES === "1";
 
 export default defineConfig({
-  site: SITE,
+  site: PAGES ? "https://shugden-tech.github.io" : SITE,
+  base: PAGES ? "/online-shopping" : "/",
   output: "static",
   trailingSlash: "ignore",
   devToolbar: { enabled: false },
