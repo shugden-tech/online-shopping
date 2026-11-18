@@ -101,6 +101,18 @@
 .coll__name { display: block; padding: 11px 8px; font-size: 14px; font-weight: 600; transition: background-color .2s, color .2s; }
 .coll__item:hover .coll__name { background: var(--black); color: #fff; }
 
+/* ---------- 3b · bundles window ---------- */
+.bundles { margin-top: clamp(36px, 5vw, 56px); }
+.bundles__head { text-align: center; }
+.bundles__sub { margin-top: 6px; font-size: 15px; opacity: .7; }
+.bundles__rail { grid-auto-columns: clamp(200px, 26vw, 260px); gap: 16px; margin-top: clamp(20px, 3vw, 32px); }
+.bundles__item { display: block; border-radius: 8px; overflow: hidden; background: #111; transition: transform .3s var(--ease-out), box-shadow .3s; }
+.bundles__item img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .6s var(--ease-out); }
+.bundles__item:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(0, 0, 0, .18); }
+.bundles__item:hover img { transform: scale(1.04); }
+.bundles__foot { text-align: center; margin-top: clamp(20px, 3vw, 28px); }
+.bundles__cta { font-size: 14px; font-weight: 600; letter-spacing: .04em; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+
 /* ---------- 4 · gender tiles ---------- */
 .gtiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: clamp(36px, 5vw, 56px); }
 .gtile { aspect-ratio: 3 / 2; }

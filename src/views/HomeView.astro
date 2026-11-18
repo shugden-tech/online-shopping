@@ -21,6 +21,7 @@ const { locale } = Astro.props;
 const tr = getDict(locale);
 const s = tr.store;
 const shop = route("shop", locale);
+const bundlesHref = locale === "en" ? "/en/bundles" : "/bundles";
 const free = formatPrice(settings.delivery.freeThreshold, locale);
 const products = await getProducts();
 const bestsellers = bestsellerSlugs.map((slug) => {
@@ -86,7 +87,10 @@ const genderTiles = (["unisex", "men", "women"] as const).map((g) => ({
   image: genderImages[g]!,
 }));
 
-const infoIcons = ["bag", "check", "briefcase"] as const;
+/** The eight bundle pictures, copied into public/bundles/1..8.webp. */
+const bundleImages = Array.from({ length: 8 }, (_, i) => `/bundles/${i + 1}.webp`);
+
+const infoIcons =["bag", "check", "briefcase"] as const;
 ---
 <Base locale={locale} title={tr.site.name}>
   <!-- 1 · banner slider: the owner's pictures (desktop + phone sets), else the illustrated slides -->
@@ -179,6 +183,28 @@ const infoIcons = ["bag", "check", "briefcase"] as const;
           )),
         )}
       </ul>
+    </div>
+  </section>
+
+  <!-- 3b · bundles window -->
+  <section class="wrap bundles" aria-labelledby="bundles-title">
+    <div class="bundles__head">
+      <h2 class="h-sec" id="bundles-title">{s.bundles}</h2>
+      <p class="bundles__sub">{s.bundlesSub}</p>
+    </div>
+    <ul class="coll__rail bundles__rail" tabindex="0" aria-labelledby="bundles-title">
+      {[false, true].map((copy) =>
+        bundleImages.map((src) => (
+          <li aria-hidden={copy ? "true" : undefined}>
+            <a class="bundles__item" href={bundlesHref} tabindex={copy ? -1 : undefined}>
+              <img src={src} alt="" loading="lazy" decoding="async" />
+            </a>
+          </li>
+        )),
+      )}
+    </ul>
+    <div class="bundles__foot">
+      <a class="bundles__cta" href={bundlesHref}>{s.bundlesCta} →</a>
     </div>
   </section>
 

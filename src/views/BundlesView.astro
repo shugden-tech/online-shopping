@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import { getDict, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { BUNDLES, BUNDLE_PRICE, BUNDLE_ML, BUNDLE_PART_ML } from "../data/bundles";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+const s = tr.store;
+const price = formatPrice(BUNDLE_PRICE, locale);
+const unit = locale === "en" ? "ml" : "мл";
+const sizeLine = `${BUNDLE_ML} ${unit} · 3 × ${BUNDLE_PART_ML} ${unit}`;
+---
+
+<Base locale={locale} title={`${s.bundles} · ${tr.site.name}`}>
+  <section class="wrap bundles-page">
+    <header class="bundles-page__head">
+      <h1 class="h-sec">{s.bundles}</h1>
+      <p class="bundles-page__sub">{s.bundlesSub}</p>
+    </header>
+    <ul class="bundles-page__grid">
+      {BUNDLES.map((b) => (
+        <li class="bundles-page__card">
+          <img src={b.image} alt="" loading="lazy" decoding="async" />
+          <div class="bundles-page__body">
+            <ul class="bundles-page__parts">
+              {b.parts.map((p) => <li>{p}</li>)}
+            </ul>
+            <div class="bundles-page__meta">
+              <span class="bundles-page__size">{sizeLine}</span>
+              <span class="bundles-page__price">{price}</span>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .bundles-page { padding-block: clamp(36px, 5vw, 64px); }
+  .bundles-page__head { text-align: center; margin-bottom: clamp(24px, 3vw, 40px); }
+  .bundles-page__sub { margin-top: 6px; font-size: 15px; opacity: .7; }
+  .bundles-page__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .bundles-page__card { border-radius: 8px; overflow: hidden; background: var(--soft); }
+  .bundles-page__card img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .bundles-page__body { padding: 16px; display: grid; gap: 12px; }
+  .bundles-page__parts { display: grid; gap: 4px; font-size: 14px; list-style: none; padding: 0; margin: 0; }
+  .bundles-page__meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .bundles-page__size { font-size: 13px; opacity: .7; }
+  .bundles-page__price { font-size: 18px; font-weight: 700; }
+</style>
