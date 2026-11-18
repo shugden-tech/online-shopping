@@ -128,10 +128,12 @@ const liveText = {
       </a>
       <button class="hdr__wish" type="button" data-wish-open aria-label={tr.store.wishlist} aria-haspopup="dialog" title={tr.store.wishlist}>
         <Icon name="heart" size={22} />
+        <svg class="xmas-heart" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 21 C5 15.5 2.5 12.5 2.5 8.6 C2.5 5.7 4.7 3.5 7.5 3.5 C9.4 3.5 11 4.6 12 6.2 C13 4.6 14.6 3.5 16.5 3.5 C19.3 3.5 21.5 5.7 21.5 8.6 C21.5 12.5 19 15.5 12 21 Z" fill="#b3202a" /><path d="M7.2 6.6 Q9 5.6 10.2 7" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".9" /></svg>
         <span class="hdr__badge hdr__badge--wish" data-wish-count data-empty aria-hidden="true">0</span>
       </button>
       <button class="hdr__cart" type="button" data-cart-open data-label={tr.nav.cartCount} aria-label={tr.nav.cart} aria-haspopup="dialog">
         <Icon name="bag" size={22} />
+        <img class="xmas-sack" src={`${import.meta.env.BASE_URL}holiday/sack.png`} alt="" width="26" height="31" loading="eager" decoding="async" />
         <span class="hdr__cart-label">{tr.nav.cart}</span>
         <span class="hdr__badge" data-cart-count data-empty aria-hidden="true">0</span>
       </button>

@@ -88,3 +88,10 @@
 :root[data-theme="christmas"] .xmas-ico > svg:not(.xmas-grinch):not(.xmas-hat) { display: none; }
 :root[data-theme="christmas"] .xmas-grinch { display: block; }
 :root[data-theme="christmas"] .xmas-hat { display: none; }
+
+/* ---- Header wishlist and cart: holiday heart and Santa's sack ---- */
+.xmas-heart, .xmas-sack { display: none; }
+:root[data-theme="christmas"] .hdr__wish > svg:not(.xmas-heart) { display: none; }
+:root[data-theme="christmas"] .hdr__cart > svg:not(.xmas-sack) { display: none; }
+:root[data-theme="christmas"] .xmas-heart, :root[data-theme="christmas"] .xmas-sack { display: block; }
+:root[data-theme="christmas"] .hdr__badge { background: #b3202a; color: #fffdf8; }
