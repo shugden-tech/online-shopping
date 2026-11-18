@@ -1,6 +1,7 @@
 ---
 import { ClientRouter, fade } from "astro:transitions";
 import "../styles/global.css";
+import "../styles/holiday.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BottleSprite from "../components/BottleSprite.astro";
@@ -61,6 +62,9 @@ const cartProps: CartDrawerProps = {
     <meta name="description" content={desc} />
     <meta name="theme-color" content="#ffffff" />
     <meta name="color-scheme" content="light" />
+    <script is:inline>
+      try { if (localStorage.getItem("gz-theme") === "christmas") document.documentElement.dataset.theme = "christmas"; } catch (e) {}
+    </script>
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     {hasTwin && (
@@ -103,6 +107,7 @@ const cartProps: CartDrawerProps = {
     <div id="cart-root" data-props={JSON.stringify(cartProps)}></div>
     <script>
       import "../scripts/shell";
+      import "../scripts/holiday";
     </script>
   </body>
 </html>
