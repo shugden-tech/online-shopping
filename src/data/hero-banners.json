@@ -1,6 +1,7 @@
 [
   {
     "file": "br.jpg",
+    "mobileFile": "Byredo_Gypsy_Water_mobile.jpg",
     "eyebrow": "ЭРХ ЧӨЛӨӨНИЙ МЭДРЭМЖ",
     "title": "Өөрийн замаар.",
     "product": "BYREDO · GYPSY WATER",
@@ -9,6 +10,7 @@
   },
   {
     "file": "creed.jpg",
+    "mobileFile": "Creed_Aventus_mobile.jpg",
     "eyebrow": "ОНЦГОЙ СОНГОЛТ",
     "title": "Өөрийн мөрийг үлдээ.",
     "product": "CREED · AVENTUS",
@@ -18,6 +20,7 @@
   },
   {
     "file": "jpg.jpg",
+    "mobileFile": "Jean_Paul_Gaultier_Le_Male_mobile.jpg",
     "eyebrow": "ӨӨРИЙН ХЭВ МАЯГ",
     "title": "Дүрмээ өөрөө тогтоо.",
     "product": "JEAN PAUL GAULTIER",
@@ -26,6 +29,7 @@
   },
   {
     "file": "ns.jpg",
+    "mobileFile": "Vanilla_Blooms_mobile.jpg",
     "eyebrow": "АЛТЛАГ АГШИН",
     "title": "Агшнаа өөрийн болго.",
     "product": "INSPIRED · VANILLA BLOOMS",
@@ -34,6 +38,7 @@
   },
   {
     "file": "spicebomb.jpg",
+    "mobileFile": "Spicebomb_Infrared_mobile.jpg",
     "eyebrow": "ТОД ДҮР ТӨРХ",
     "title": "Мэдрэмжээ тод илэрхийл.",
     "product": "VIKTOR & ROLF · SPICEBOMB INFRARED",
@@ -42,6 +47,7 @@
   },
   {
     "file": "sw u.jpg",
+    "mobileFile": "Stronger_With_You_Absolutely_mobile.jpg",
     "eyebrow": "ДОТНО АГШИН",
     "title": "Үгээр хэлэхээс илүү.",
     "product": "EMPORIO ARMANI · STRONGER WITH YOU ABSOLUTELY",
@@ -51,6 +57,7 @@
   },
   {
     "file": "tom ford.jpg",
+    "mobileFile": "Tom_Ford_Black_Orchid_mobile.jpg",
     "eyebrow": "ҮДШИЙН СОНГОЛТ",
     "title": "Үдшийг өөрийн болго.",
     "product": "TOM FORD · BLACK ORCHID",
@@ -59,6 +66,7 @@
   },
   {
     "file": "tt.jpg",
+    "mobileFile": "Twaaq_mobile.jpg",
     "eyebrow": "ГЭРЭЛТ АГШИН",
     "title": "Энгийнээс онцгойг ол.",
     "product": "TWAAQ",

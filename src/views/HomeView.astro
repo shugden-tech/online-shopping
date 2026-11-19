@@ -12,7 +12,7 @@ import heroCopy from "../data/hero-banners.json";
 import { getDict, route, fill, productPath, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
 import { NOTES, NOTE_GROUPS, getProducts, initialOf, type Product } from "../lib/products";
-import { bannerImages, perfumeHeroImages, brandLogos, familyStrips, genderImages, noteImages } from "../lib/images";
+import { bannerImages, perfumeHeroImages, perfumeHeroMobileImages, brandLogos, familyStrips, genderImages, noteImages } from "../lib/images";
 import "../styles/home.css";
 import "../styles/hero-banners.css";
 
@@ -57,13 +57,17 @@ const slides = [
 // Files named "mobile …" are the tall phone versions; the rest are the wide desktop ones.
 const deskBanners = bannerImages.filter((b) => !/^mobile/i.test(b.name));
 const mobBanners = bannerImages.filter((b) => /^mobile/i.test(b.name));
-const perfumeBanners = heroCopy.map(({ file, slug, ...copy }) => {
+const perfumeBanners = heroCopy.map(({ file, mobileFile, slug, ...copy }) => {
   const image = perfumeHeroImages[file];
   if (!image) throw new Error(`Missing perfume hero image: ${file}`);
+  const mobileImage = mobileFile ? perfumeHeroMobileImages[mobileFile] : undefined;
+  if (mobileFile && !mobileImage) throw new Error(`Missing perfume hero phone image: ${mobileFile}`);
   const product = slug ? products.find((p) => p.slug === slug) : undefined;
   if (slug && !product) throw new Error(`Unknown perfume hero product: ${slug}`);
-  return { name: file, image, copy, href: product ? productPath(locale, product.slug) : shop, perfume: true };
+  return { name: file, image, mobileImage, copy, href: product ? productPath(locale, product.slug) : shop, perfume: true };
 });
+// Phone set: the tall phone picture (pic_chat/mobile/) replaces the cropped desktop one.
+const perfumeBannersMob = perfumeBanners.map((b) => (b.mobileImage ? { ...b, image: b.mobileImage, tall: true } : b));
 const legacyBanner = (b: (typeof bannerImages)[number]) => ({
   ...b, href: shop, perfume: false,
   copy: {
@@ -77,7 +81,7 @@ const legacyBanner = (b: (typeof bannerImages)[number]) => ({
 // One entry per source asset in each responsive set; retain all existing images and shop links.
 const bannerSets = [
   { key: "desk", items: [...perfumeBanners, ...(deskBanners.length ? deskBanners : mobBanners).map(legacyBanner)], only: "hb--desk" },
-  { key: "mob", items: [...perfumeBanners, ...(mobBanners.length ? mobBanners : deskBanners).map(legacyBanner)], only: "hb--mob" },
+  { key: "mob", items: [...perfumeBannersMob, ...(mobBanners.length ? mobBanners : deskBanners).map(legacyBanner)], only: "hb--mob" },
 ].filter((set) => set.items.length > 0);
 const ratio = (b: (typeof bannerImages)[number]) => `${b.image.width} / ${b.image.height}`;
 
@@ -99,7 +103,7 @@ const infoIcons =["bag", "check", "briefcase"] as const;
     <section class:list={["hb", set.only]} aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
       <div class="hb__track hb__track--img" style={`aspect-ratio:${set.key === "desk" && perfumeBanners.length ? "20 / 7" : ratio(set.items[0]!)}`}>
         {set.items.map((b, i) => (
-          <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0, "hb__slide--perfume": b.perfume }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${set.items.length}`} aria-hidden={i === 0 ? undefined : "true"} inert={i !== 0}>
+          <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0, "hb__slide--perfume": b.perfume, "hb__slide--tall": "tall" in b && b.tall }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${set.items.length}`} aria-hidden={i === 0 ? undefined : "true"} inert={i !== 0}>
             <a class="hb__link" href={b.href} tabindex={i === 0 ? undefined : -1}>
               <Image
                 src={b.image} alt={b.copy.product}

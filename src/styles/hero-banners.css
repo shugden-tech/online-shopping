@@ -74,6 +74,8 @@
   /* Crop only through CSS: keep the right-hand bottle in the upper image area. */
   .hb__slide--perfume { background: #130b08; }
   .hb__slide--perfume .hb__img { height: 59%; object-position: 74% center; }
+  /* Phone pictures are already portrait: fill the slide, keep the bottle (upper middle) in view. */
+  .hb__slide--perfume.hb__slide--tall .hb__img { height: 100%; object-position: center 30%; }
   .hb__link::after { background: linear-gradient(180deg, transparent 27%, rgb(0 0 0 / .16) 40%, rgb(0 0 0 / .86) 66%, #100b09); }
   .hb__caption { top: auto; bottom: 65px; left: 24px; width: calc(100% - 48px); max-width: 440px; transform: none; }
   .hb__caption-eyebrow { font-size: 10px; margin-bottom: 10px; }

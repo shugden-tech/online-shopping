@@ -36,6 +36,12 @@ export const perfumeHeroImages = Object.fromEntries(
   Object.entries(heroFiles).map(([path, mod]) => [path.split("/").pop()!, mod.default]),
 );
 
+/** Tall phone versions of the perfume hero banners (pic_chat/mobile/), keyed by file name. */
+const heroMobileFiles = import.meta.glob<{ default: ImageMetadata }>("../../pic_chat/mobile/*.{jpg,jpeg,png,webp,avif}", { eager: true });
+export const perfumeHeroMobileImages = Object.fromEntries(
+  Object.entries(heroMobileFiles).map(([path, mod]) => [path.split("/").pop()!, mod.default]),
+);
+
 /** Owner-approved gender tile images (home page). */
 const genderFiles = import.meta.glob<{ default: ImageMetadata }>("../assets/gender/*.{jpg,jpeg,png,webp,avif}", { eager: true });
 export const genderImages = byName(genderFiles);
