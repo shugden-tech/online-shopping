@@ -72,24 +72,24 @@ const socials = [
   </div>
 </footer>
 
-<script>
+<script is:inline>
   // Live contact details and store notice from the admin settings (GET /api/store/info). The built values stay
-  // when a setting is empty or the request fails.
+  // when a setting is empty or the request fails. Inline (plain JS) so it adds nothing to the page bundles.
   fetch("/api/store/info", { headers: { Accept: "application/json" } })
-    .then((r) => (r.ok ? r.json() : null))
-    .then((d) => {
-      if (!d?.ok) return;
-      const lang = document.documentElement.lang === "en" ? "en" : "mn";
-      for (const el of document.querySelectorAll<HTMLElement>("[data-contact]")) {
-        const v = d.contact?.[el.dataset.contact!];
-        if (typeof v !== "string" || !v.trim()) continue;
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.ok) return;
+      var lang = document.documentElement.lang === "en" ? "en" : "mn";
+      document.querySelectorAll("[data-contact]").forEach(function (el) {
+        var v = d.contact && d.contact[el.dataset.contact];
+        if (typeof v !== "string" || !v.trim()) return;
         if (el.dataset.contact === "phone") { el.textContent = v; el.setAttribute("href", "tel:" + v.replace(/[^+\d]/g, "")); }
-        else if (el instanceof HTMLAnchorElement) { if (/^https:\/\//.test(v)) el.href = v; }
+        else if (el.tagName === "A") { if (/^https:\/\//.test(v)) el.href = v; }
         else el.textContent = v;
-      }
-      const notice = d.notice?.[lang];
+      });
+      var notice = d.notice && d.notice[lang];
       if (typeof notice === "string" && notice.trim() && !document.querySelector(".store-notice")) {
-        const n = document.createElement("p");
+        var n = document.createElement("p");
         n.className = "store-notice";
         n.setAttribute("role", "status");
         n.textContent = notice;
@@ -97,7 +97,7 @@ const socials = [
         document.body.prepend(n);
       }
     })
-    .catch(() => {});
+    .catch(function () {});
 </script>
 
 <style>
