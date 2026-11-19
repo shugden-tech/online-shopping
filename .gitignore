@@ -19,3 +19,6 @@ decantx/products_full.json
 
 # Windows junk
 desktop.ini
+
+# Local copies of Worker secrets (never commit)
+.secrets/
