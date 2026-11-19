@@ -25,6 +25,8 @@
     "test:delivery": "node scripts/test-delivery.mjs",
     "test:storefront": "node scripts/test-storefront.mjs",
     "test:admin-ui": "node scripts/test-admin-ui.mjs",
+    "test:admin-api": "node scripts/test-admin-api.mjs",
+    "shots:admin": "node scripts/shot-admin.mjs",
     "test:e2e": "node scripts/test-e2e-commerce.mjs && node scripts/test-e2e-browser.mjs",
     "import:catalog": "node scripts/import-catalog.mjs"
   },

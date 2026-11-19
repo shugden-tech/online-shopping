@@ -412,3 +412,23 @@ The owner asked to drop the sample products and use the first 100 perfumes with 
 ## Demo login for /admin/ (Opus → Sonnet session)
 - `POST /api/admin/login` exchanges `ADMIN_USERNAME`/`ADMIN_PASSWORD` (owner) or `STAFF_USERNAME`/`STAFF_PASSWORD` (staff) for the matching bearer token; disabled (503) unless a password ≥ 12 chars is set; failed tries share the 20/10 min limit. The login screen has a username field (empty = token as before). Dev values are in `.dev.vars.example`.
 - Verified: API 200 owner / 200 staff / 401 wrong; real browser login, 0 page errors; admin-ui tests 94/94; astro check 0 errors; admin JS 15.2 KB.
+
+## Admin rebuild — 2026-11-19 (Opus lead; Sonnet copy review; Haiku test sweep)
+Brief: `docs/ADMIN-REBUILD.md`. Models: **Opus** wrote all code (backend, UI, storefront, tests). **Sonnet** reviewed and
+edited the Mongolian admin copy (strings only). **Haiku** ran the existing test suites as a mechanical sweep.
+- §0 Login: `ADMIN_USERNAME` / `ADMIN_PASSWORD` (24-char random) set as Worker secrets from `.secrets/admin-login.txt`
+  (gitignored); `DELIVERY_WEBHOOK_SECRET` set from `.secrets/delivery-webhook-secret.txt`. Login UI: username + password or token,
+  with clear Mongolian messages for 401, 429, 503 (login disabled vs admin disabled) and network errors.
+- §1 Brand: dark ink + gold, Cormorant Garamond + Montserrat (self-hosted), logo, favicon; sidebar on desktop, bottom bar on phones.
+- §2 Dashboard (`/api/admin/stats`, SQL aggregates, inline SVG chart), latest orders, order detail (notes, packing slip,
+  shipment form), filters incl. a date range, new-order poll (badge, title flash, optional sound).
+- §3 Shipments with courier / fee / notes and `returned`; inbound webhook log + replay; outbound webhooks (outbox, HMAC, retry, log, test).
+- §4 Products: filters, sort, bulk, create with a generated unique id, chip notes, front/back drag-and-drop → 1600 px WebP → R2.
+  Storefront: live photos via catalog-state; D1-only products render on demand at `/delguur/p/{id}`.
+- §5 Payments (QPay check), settings in D1 (bank, contacts, notice), roles table, delivery-provider guide, readable audit log.
+- Tests (local D1 `.wrangler/state-admin`): admin-api 65/65, admin-ui 96/96, api 84/84, payments 45/45, delivery 83/83,
+  e2e-commerce 43/43, catalog 85/86 (the one FAIL expects a fresh DB without prices; this DB has local demo prices).
+  e2e-browser and storefront: the checkout submit is flaky under load (the fake Turnstile token is sometimes not ready, so the
+  form reports "fix the red fields"); it passes on a re-run and is unrelated to the admin. JS budget: finder / checkout are
+  0.1–0.3 KB over 25 KB, the same on 9fef058 before this work.
+- Screenshots: `docs/screens/admin-*-{1440,360}.png` (14 views at each width).

@@ -2,7 +2,7 @@
 
 This file is for anyone (person or AI agent) picking up the project on another computer or in a new session. It covers what genzst is, what has been done, and how to carry on. The detailed logs are in the files linked below.
 
-_Last updated: 2026-11-17_
+_Last updated: 2026-11-19_
 
 ---
 
@@ -59,6 +59,13 @@ file ownership). Schema: `migrations/0003_commerce.sql`. Shared types/state maps
 | Admin UI (A4) | `src/pages/admin/`, `src/admin-ui/` | `/admin/` (Mongolian): dashboard, products + photos + SKUs + stock, orders, payments, shipments, store controls, audit log. Role-aware. |
 | Storefront (A5) | `src/lib/store-state.ts`, `src/scripts/live-prices.ts`, cart/checkout/success | Prices and buy buttons come from the live server state (no build-time price is shown); cart re-checked before checkout; QPay QR / bank instructions; order tracking. |
 | Lead (A0/A6) | `src/lib/{contracts,ids,auth,settings,audit,server}.ts`, `/api/admin/{me,settings,audit,jobs/run}` | Owner/staff tokens + permissions, store switches, audit log, housekeeping job (expire holds, retry shipments). |
+
+**Admin rebuild (2026-11-19, migration 0004):** branded admin (dark ink + gold), username/password login (secrets set; local copy
+`.secrets/admin-login.txt`), dashboard stats + chart, order notes / packing slip / date filters / new-order badge, shipments with
+courier / fee / notes / `returned`, inbound webhook log + replay, outbound webhooks (signed, retried), product filters / bulk /
+create with front + back photos (WebP ≤ 1600 px), a stock page, live bank / contact settings, and on-demand pages `/delguur/p/{id}`
+for D1-only products. Contract: `docs/CONTRACTS.md` §8. Tests: `npm run test:admin-api`, `npm run test:admin-ui`; screenshots:
+`npm run shots:admin` → `docs/screens/admin-*`.
 
 **Hide / lock controls:** product hidden (status), product sale lock, payment method off (QPay / bank), checkout closed — all in `/admin/`.
 **Catalog data:** `npm run import:catalog -- --apply local|remote` loads the 1000-item R2 catalog + the 207 site products (1123 products, prices and stock empty). `--demo-prices` is local-only.

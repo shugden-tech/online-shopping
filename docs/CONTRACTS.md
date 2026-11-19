@@ -166,3 +166,50 @@ npx astro build && npx wrangler dev --port <port> --persist-to .wrangler/state-<
 Ports: A1 8791, A2 8792, A3 8793, A4 8794, A5 8795, lead 8788. Tests are plain `node` scripts
 (`BASE=http://localhost:<port> node scripts/test-*.mjs`), print `N passed, M failed`, exit 1 on failure.
 Turnstile uses the always-pass test secret in `.dev.vars`.
+
+## 8. Admin rebuild (lead, 2026-11-19, migration 0004)
+
+Schema `migrations/0004_admin.sql`:
+- `shipments` rebuilt (rows copied): status adds **`returned`**; new columns `courier`, `fee` (₮), `note`.
+  Transitions (contracts.ts): pending → created | picked_up | in_transit | failed | cancelled; picked_up / in_transit /
+  failed → returned (terminal; the owner decides about the order). Order side effects unchanged.
+- `order_notes` (internal, admin only), `webhook_events` (every inbound delivery-webhook call: signature ok, HTTP status,
+  event ids, result, payload ≤ 16 KB), `webhook_endpoints` + `webhook_deliveries` (outbound outbox).
+- Settings (contracts.ts `SETTINGS`): `bank.name`, `bank.account`, `bank.holder`, `contact.phone`, `contact.hours_mn`,
+  `contact.hours_en`, `contact.instagram`, `contact.facebook`, `contact.telegram` (empty = settings.json value).
+- `StoreProductState` gains optional `imageFront` / `imageBack`.
+
+Outbound webhooks: the event row is written **in the same D1 batch** as the change (`emitStatement`, src/lib/webhooks.ts):
+`order.created` (orders/create), `order.paid` (payments.markPaid), `order.cancelled` (orders/state.transitionOrder),
+`shipment.updated` (delivery/service.transition). Sent by `deliverDue()` (POST /api/orders via waitUntil, and jobs/run, which
+the admin calls every few minutes while open). Request: POST JSON `{ id, event, createdAt, data }`, headers `X-Genzst-Event`,
+`X-Genzst-Delivery`, `X-Genzst-Timestamp`, `X-Genzst-Signature: sha256=<hex HMAC-SHA256(endpoint secret, "<timestamp>.<body>")>`.
+2xx = delivered, else backoff 2^n min (≤ 6 h), 8 attempts. Payloads hold order numbers, statuses, totals and SKUs only
+(no name / phone / address).
+
+| Method & path | Permission | Contract |
+|---|---|---|
+| `GET /api/admin/stats?range=today\|7d\|30d` | orders.read | `{ kpi:{orders,cancelled,paidOrders,revenue,aov}, now:{pendingPayments,toShip,lowStock,outOfStock,failedShipments,failedWebhooks,draftProducts,unpricedActive}, series[30]:{day,orders,revenue}, latest[10] }`; days are UTC+8 |
+| `GET /api/admin/orders/poll` | orders.read | `{ latestId, newCount }` |
+| `GET /api/admin/orders?from=&to=` | orders.read | adds a Mongolia-day date range (YYYY-MM-DD, inclusive) |
+| `POST /api/admin/orders/{no}/notes { note }` | orders.write | 201 `{ note }`; the order detail adds `notes[]` |
+| `GET /api/admin/products?gender=&family=&hasPrice=&hasPhoto=&lowStock=&sort=` | catalog.read | gender/family `none` = NULL; sort default, name, brand, updated, created |
+| `GET /api/admin/products/facets` | catalog.read | `{ brands[], families[], counts }` |
+| `POST /api/admin/products/bulk { ids ≤ 100, action }` | catalog.write | action activate, hide, draft, or price `{ ml, price, kind? }` (creates the size) |
+| `GET /api/admin/inventory?q=&tracked=1&active=1` | catalog.read | search and filters added |
+| `POST /api/admin/shipments` | delivery.write | also `{ courier?, fee?, notes?, trackingNo?, trackingUrl? }` |
+| `PATCH /api/admin/shipments/{id}` | delivery.write | also `{ courier?, fee?, notes? }`; rows carry `courier, fee, notes` |
+| `POST /api/admin/payments/{id}/check` | payments.write | QPay re-check of that payment's order → `{ results, paymentStatus, status }`; 422 not-qpay / not-configured, 502 unreachable |
+| `GET /api/admin/webhooks/inbound?provider=&cursor=` | delivery.read | inbound log |
+| `POST /api/admin/webhooks/inbound/{id}/replay` | delivery.write | re-applies a signed call (de-duplicated by event id); unsigned → 409 |
+| `GET/POST /api/admin/webhooks/endpoints` | settings.read / settings.write | POST `{ url (https), events[], description? }` → 201 `{ endpoint, secret }` (the secret is shown once, never listed) |
+| `PATCH/DELETE /api/admin/webhooks/endpoints/{id}` | settings.write | |
+| `POST /api/admin/webhooks/endpoints/{id}/test` | settings.write | signed `ping`, sent now → `{ delivery:{status,httpStatus,error} }` |
+| `GET /api/admin/webhooks/deliveries?endpoint=&status=` | settings.read | outbound log |
+| `POST /api/admin/webhooks/deliveries/{id}` | settings.write | send again now |
+| `POST /api/admin/jobs/run` | orders.write | also sends due webhooks and prunes logs older than 90 days → `{ …, webhooks:{delivered,failed} }` |
+| `GET /api/store/info` (public) | — | `{ contact, notice }`, max-age 60 |
+| `GET /delguur/p/{id}`, `/en/shop/p/{id}` (public page) | — | on-demand page for D1-only products (active only; built ones 301 to the static page) |
+
+Dev only: `WEBHOOK_ALLOW_LOCAL=1` lets an endpoint be `http://127.0.0.1:port` (tests). Never set it in production.
+Tests: `scripts/test-admin-api.mjs` (65 checks), `scripts/test-admin-ui.mjs` (96); screenshots: `scripts/shot-admin.mjs`.
