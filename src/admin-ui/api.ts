@@ -115,8 +115,12 @@ export const paymentView = (p: any): PaymentView => ({
 export interface ShipmentView {
   id: number; orderNo: string; provider: string; providerRef: string; trackingNo: string; trackingUrl: string; status: string;
   attempts: number; lastError: string; nextRetryAt: string; createdAt: string; updatedAt: string;
+  courier: string; fee: number | null; notes: string;
 }
 export const shipmentView = (s: any): ShipmentView => ({
+  courier: pick(s, "courier") ?? "",
+  fee: pick(s, "fee") ?? null,
+  notes: pick(s, "notes") ?? "",
   id: pick(s, "id"),
   orderNo: pick(s, "orderNo", "order_no") ?? "",
   provider: pick(s, "provider") ?? "",

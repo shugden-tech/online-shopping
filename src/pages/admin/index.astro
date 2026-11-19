@@ -1,24 +1,31 @@
 ---
-// Owner/staff admin (A4). One Preact island; views load lazily. Not linked anywhere, noindex, no storefront
+// Owner/staff admin. One Preact island; views load lazily. Not linked anywhere, noindex, no storefront
 // chrome, excluded from the sitemap (astro.config.mjs filters /admin/). Every action calls /api/admin/* with
-// the bearer token kept in this tab's sessionStorage.
-import "../../styles/tokens.css";
+// the bearer token kept in this tab's sessionStorage. Branded like the storefront: same self-hosted fonts,
+// logo and favicon; the admin's own dark ink + gold palette lives in admin.css.
+import { getImage } from "astro:assets";
+import "../../styles/fonts.css";
 import "../../styles/admin.css";
+import logoSrc from "../../assets/brand/logo.png";
 import App from "../../admin-ui/App";
+
+const logo = await getImage({ src: logoSrc, width: 192, format: "webp" });
 ---
 <!doctype html>
 <html lang="mn">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="referrer" content="no-referrer" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#070707" />
     <title>genzst · админ</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body class="a-body">
-    <App client:only="preact" />
+    <App client:only="preact" logo={logo.src} />
     <noscript><p class="a-msg a-msg--err">Админ хэсэг JavaScript шаарддаг.</p></noscript>
   </body>
 </html>

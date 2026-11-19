@@ -71,7 +71,8 @@ const ok = (name, cond, extra = "") => {
   console.log(`${cond ? "PASS" : "FAIL"}  ${name}${cond ? "" : `  ${extra}`}`);
 };
 const errors = [];
-const browser = await chromium.launch({ headless: true });
+const EDGE_EXE = process.env.EDGE ?? (process.platform === "win32" ? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" : "");
+const browser = await chromium.launch({ headless: true, ...(EDGE_EXE && (await import("node:fs")).existsSync(EDGE_EXE) ? { executablePath: EDGE_EXE } : {}) });
 
 const PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
 // Always-pass Turnstile stand-in: renders → token; reset → a fresh token (like the real test key).

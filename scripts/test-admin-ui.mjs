@@ -40,7 +40,8 @@ if (!BASE) {
 import { ORDER_TRANSITIONS, OWNER_TOKEN, STAFF_TOKEN, PNG, MEDIA, makeOrder, makeMock } from "./lib/admin-preview-fixtures.mjs";
 
 /* ---------------- harness ---------------- */
-const browser = await chromium.launch();
+const EDGE_EXE = process.env.EDGE ?? (process.platform === "win32" ? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" : "");
+const browser = await chromium.launch({ headless: true, ...(EDGE_EXE && (await import("node:fs")).existsSync(EDGE_EXE) ? { executablePath: EDGE_EXE } : {}) });
 let passed = 0, failed = 0;
 const pageErrors = [];
 const ok = (name, cond, extra = "") => {
@@ -62,9 +63,10 @@ async function open(viewport = { width: 1280, height: 900 }) {
 async function login(page, token, hash = "") {
   await page.goto(`${BASE}/admin/${hash}`);
   await page.waitForSelector('[data-testid="login"]');
+  await page.click('[data-testid="mode-token"]');
   await page.fill('input[name="token"]', token);
   await page.click('[data-testid="login"] button[type="submit"]');
-  await page.waitForSelector(".a-nav");
+  await page.waitForSelector(".a-main");
 }
 const go = async (page, hash, sel) => { await page.evaluate((h) => { location.hash = h; }, hash); if (sel) await page.waitForSelector(sel); };
 const shot = (page, name) => page.screenshot({ path: join(SHOTS, `${name}.png`), fullPage: true });
@@ -79,6 +81,7 @@ try {
     ok("fresh load shows the login screen", await page.isVisible('input[name="token"]'));
     ok("page is noindex", (await page.getAttribute('meta[name="robots"]', "content"))?.includes("noindex"));
     ok("no storefront header/footer", (await page.locator("header.site-header, footer, .site-footer").count()) === 0);
+    await page.click('[data-testid="mode-token"]');
     await page.fill('input[name="token"]', "wrong-token");
     await page.click('[data-testid="login"] button[type="submit"]');
     await page.waitForSelector(".a-msg--err");
@@ -90,11 +93,13 @@ try {
     ok("token kept in sessionStorage", (await page.evaluate(() => sessionStorage.getItem("gz-admin-token"))) === OWNER_TOKEN);
     await page.waitForFunction(() => [...document.querySelectorAll(".a-card__n")].every((n) => n.textContent !== "…"));
     const cards = await page.$$eval("[data-card]", (els) => Object.fromEntries(els.map((e) => [e.dataset.card, e.querySelector(".a-card__n").textContent])));
-    ok("dashboard counts (new 1, paid 1, failed shipments 1, draft 1)", cards.new === "1" && cards.paid === "1" && cards.failedShip === "1" && cards.draft === "1", JSON.stringify(cards));
-    ok("dashboard awaiting payment = new+confirmed unpaid (1)", cards.awaiting === "1", cards.awaiting);
-    ok("dashboard low stock (5 ml available 3) counted", cards.low === "1" && cards.zero === "0", JSON.stringify(cards));
+    ok("dashboard: GET /api/admin/stats?range=7d", mock.log.some((r) => r.path === "/api/admin/stats" && r.search === "?range=7d"));
+    ok("dashboard counts from stats (pending 1, to ship 1, failed shipments 1, draft 1)", cards.pendingPayments === "1" && cards.toShip === "1" && cards.failedShipments === "1" && cards.draftProducts === "1", JSON.stringify(cards));
+    ok("dashboard KPIs (orders 3, revenue 45,000₮)", cards.orders === "3" && cards.revenue === "45,000₮", JSON.stringify(cards));
+    ok("dashboard low stock 1, out of stock 0", cards.lowStock === "1" && cards.outOfStock === "0", JSON.stringify(cards));
+    ok("dashboard chart is an inline SVG with 30 bars", (await page.locator(".a-chart rect").count()) === 30);
     const nav = await page.$$eval(".a-nav__link", (els) => els.map((e) => e.textContent));
-    ok("owner nav includes settings + audit", nav.includes("Дэлгүүрийн тохиргоо") && nav.includes("Үйлдлийн түүх"), nav.join());
+    ok("owner nav includes settings + audit", nav.includes("Тохиргоо") && nav.includes("Түүх"), nav.join());
     await shot(page, "owner-dashboard");
     // reload keeps the session
     await page.reload();
@@ -129,7 +134,7 @@ try {
     ok("staff: SKU save buttons hidden", (await page.locator('[data-action="save-sku"]').count()) === 0);
     ok("staff: inventory adjust allowed", await page.isVisible('[data-testid="adjust-form"]'));
     await go(page, "#/audit", ".a-msg--err");
-    ok("staff: audit route shows 'Эрх хүрэхгүй'", (await page.textContent(".a-main")).includes("Эрх хүрэхгүй"));
+    ok("staff: audit route shows a no-permission message", /эрх/i.test(await page.textContent(".a-main")));
     await shot(page, "staff-forbidden-audit");
     await ctx.close();
   }
@@ -155,7 +160,7 @@ try {
     const media = after.find((r) => r.method === "POST" && r.path === "/api/admin/media");
     ok("upload: POST /api/admin/media is multipart", media?.ct.startsWith("multipart/form-data"), media?.ct);
     ok("upload: multipart has file, productId, side=front",
-      !!media && /name="file"; filename="front.png"/.test(media.raw) && /name="productId"\r\n\r\nmugler-alien-edp/.test(media.raw) && /name="side"\r\n\r\nfront/.test(media.raw));
+      !!media && /name="file"; filename="front\.(webp|jpg|png)"/.test(media.raw) && /name="productId"\r\n\r\nmugler-alien-edp/.test(media.raw) && /name="side"\r\n\r\nfront/.test(media.raw));
     const imgPatch = after.find((r) => r.method === "PATCH");
     ok("upload: then PATCH { imageFront: url }", JSON.stringify(imgPatch?.body) === JSON.stringify({ imageFront: `${MEDIA}/products/mugler-alien-edp/front-0123456789ab.png` }), JSON.stringify(imgPatch?.body));
     ok("upload: media POST before PATCH", after.indexOf(media) < after.indexOf(imgPatch));
@@ -277,7 +282,7 @@ try {
     await go(page, "#/orders/GZ-261110-AAAA", '[data-testid="to-confirmed"]');
     await page.click('[data-testid="to-confirmed"]');
     await page.waitForSelector('[data-testid="order-actions"] .a-msg--err');
-    ok("403 -> 'Эрх хүрэхгүй'", (await page.textContent('[data-testid="order-actions"] .a-msg--err')).includes("Эрх хүрэхгүй"));
+    ok("403 -> no-permission message", /Эрх хүрэлцэхгүй/.test(await page.textContent('[data-testid="order-actions"] .a-msg--err')));
     // staff per-status buttons match the map minus 'paid'
     await ctx.close();
   }
@@ -306,10 +311,10 @@ try {
     ok("failed shipment: retry -> POST /shipments/7/retry", !!last(mock.log, "POST", /^\/api\/admin\/shipments\/7\/retry$/));
     await page.fill('input[name="trackingNo"]', "TRK-1");
     await page.click('[data-testid="shipment-actions"] form button[type="submit"]');
-    await page.waitForFunction(() => document.querySelector('[data-testid="shipment-actions"] .a-msg--ok')?.textContent.includes("Трак"));
+    await page.waitForFunction(() => document.querySelector('[data-testid="shipment-actions"] .a-msg--ok')?.textContent.includes("Хяналт"));
     ok("tracking PATCH { trackingNo, trackingUrl:null }", JSON.stringify(last(mock.log, "PATCH", /shipments\/7$/)?.body) === JSON.stringify({ trackingNo: "TRK-1", trackingUrl: null }));
     const shipBtns = await page.$$eval('[data-testid="shipment-actions"] [data-to]', (els) => els.map((e) => e.dataset.to).sort());
-    ok("pending shipment buttons = created, failed (+ cancel)", shipBtns.join() === "created,failed" && (await page.locator('[data-testid="ship-cancel"]').count()) === 1, shipBtns.join());
+    ok("pending shipment buttons = created, failed, in_transit, picked_up (+ cancel)", shipBtns.join() === "created,failed,in_transit,picked_up" && (await page.locator('[data-testid="ship-cancel"]').count()) === 1, shipBtns.join());
 
     await go(page, "#/settings", '[data-testid="save-settings"]');
     await page.click('input[name="checkout.open"]');
@@ -326,7 +331,7 @@ try {
     await page.waitForFunction(() => document.querySelector('[data-testid="settings-form"] .a-msg--ok')?.textContent.includes("(1"));
     ok("settings: empty fee -> null (default)", JSON.stringify(last(mock.log, "PUT", /settings$/)?.body) === JSON.stringify({ "delivery.fee_ub": null }));
     const explain = await page.textContent(".a-explain");
-    ok("settings explains the 4 hide/lock controls", ["Бараа нуух", "Худалдаа түгжих", "Төлбөрийн арга унтраах", "Захиалга хаах"].every((t) => explain.includes(t)));
+    ok("settings explains the 4 hide/lock controls", ["Бараа нуух", "Худалдаа түгжих", "Төлбөрийн арга унтраах", "Захиалга зогсоох"].every((t) => explain.includes(t)));
     await shot(page, "owner-settings");
 
     await go(page, "#/audit?entity=product&entityId=mugler-alien-edp", "[data-audit]");

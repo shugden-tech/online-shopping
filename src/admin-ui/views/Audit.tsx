@@ -1,10 +1,40 @@
 // Audit log viewer (GET /api/admin/audit?entity=&entityId=&cursor=).
 import { useState } from "preact/hooks";
 import { qs } from "../api";
-import { ENTITY, when } from "../labels";
+import { ACTION, ACTOR, ENTITY, when } from "../labels";
 import { Empty, Field, Loading, Msg, Table, useKeyset } from "../ui";
 
 interface Row { id: number; at: string; actor: string; action: string; entity: string; entityId: string | null; data: unknown }
+
+const KEY: Record<string, string> = {
+  from: "өмнө", to: "болсон", status: "төлөв", price: "үнэ", compareAt: "хуучин үнэ", active: "идэвхтэй", kind: "төрөл", reason: "шалтгаан",
+  delta: "өөрчлөлт", set: "тоо", total: "дүн", amount: "дүн", payment: "төлбөр", provider: "үйлчилгээ", trackingNo: "хяналтын дугаар", fee: "зардал",
+  courier: "хүргэгч", saleLocked: "түгжсэн", imageFront: "урд зураг", imageBack: "ар зураг", bulk: "бөөнөөр", url: "хаяг", events: "үйл явдал",
+  name: "нэр", brand: "брэнд", fromStatus: "өмнөх төлөв", side: "тал", bytes: "файлын хэмжээ", orderNo: "захиалга", source: "эх үүсвэр",
+};
+
+/** Turns an audit row's JSON into "key: value · key: value" (long or nested values are shortened). */
+function summary(d: unknown): string {
+  if (d === null || d === undefined) return "";
+  if (typeof d !== "object") return String(d);
+  return Object.entries(d as Record<string, unknown>)
+    .filter(([k, v]) => v !== undefined && k !== "before")
+    .map(([k, v]) => {
+      let s = typeof v === "object" && v !== null ? JSON.stringify(v) : String(v);
+      if (s.length > 60) s = s.slice(0, 57) + "…";
+      return `${KEY[k] ?? k}: ${s}`;
+    })
+    .join(" · ");
+}
+
+function link(r: Row) {
+  if (!r.entityId) return "—";
+  if (r.entity === "order") return <a href={`#/orders/${encodeURIComponent(r.entityId)}`}>{r.entityId}</a>;
+  if (r.entity === "product") return <a href={`#/products/${encodeURIComponent(r.entityId)}`}>{r.entityId}</a>;
+  if (r.entity === "sku") return <a href={`#/products/${encodeURIComponent(r.entityId.split(":")[0]!)}`}>{r.entityId}</a>;
+  if (r.entity === "shipment") return <a href={`#/shipments/${encodeURIComponent(r.entityId)}`}>#{r.entityId}</a>;
+  return r.entityId;
+}
 
 export default function Audit(props: { entity?: string; entityId?: string }) {
   const [f, setF] = useState({ entity: props.entity ?? "", entityId: props.entityId ?? "" });
@@ -13,6 +43,7 @@ export default function Audit(props: { entity?: string; entityId?: string }) {
   return (
     <section aria-labelledby="au-h">
       <h1 id="au-h" class="a-title">Үйлдлийн түүх</h1>
+      <p class="a-dim a-small" style="margin-top:-8px">Хэн, хэзээ, юуг өөрчилсөн. Хэрэглэгчийн хувийн мэдээлэл энд хадгалагдахгүй.</p>
       <form class="a-filters" onSubmit={(e) => { e.preventDefault(); setF({ ...f, entityId: idDraft.trim() }); }}>
         <Field label="Төрөл">
           <select class="a-input" name="entity" value={f.entity} onChange={(e) => setF({ ...f, entity: e.currentTarget.value })}>
@@ -30,11 +61,11 @@ export default function Audit(props: { entity?: string; entityId?: string }) {
         {list.items.map((r) => (
           <tr data-audit={r.id}>
             <td class="a-mono a-small">{when(r.at)}</td>
-            <td class="a-small">{r.actor}</td>
-            <td class="a-mono a-small">{r.action}</td>
+            <td class="a-small">{ACTOR[r.actor] ?? r.actor}</td>
+            <td class="a-small">{ACTION[r.action] ?? r.action}</td>
             <td>{ENTITY[r.entity] ?? r.entity}</td>
-            <td class="a-mono a-small a-break">{r.entityId ?? "—"}</td>
-            <td><code class="a-code">{r.data === null || r.data === undefined ? "" : JSON.stringify(r.data)}</code></td>
+            <td class="a-mono a-small a-break">{link(r)}</td>
+            <td class="a-small">{summary(r.data)}</td>
           </tr>
         ))}
       </Table>

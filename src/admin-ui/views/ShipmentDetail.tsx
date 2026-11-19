@@ -2,8 +2,8 @@
 import { useEffect, useState } from "preact/hooks";
 import { SHIPMENT_TRANSITIONS, type ShipmentStatus } from "../../lib/contracts";
 import { api, enc, pick, shipmentView } from "../api";
-import { PROVIDER, SHIPMENT_STATUS, when } from "../labels";
-import { Badge, ConfirmButton, Field, Loading, Msg, useMsg, useSession } from "../ui";
+import { PROVIDER, SHIPMENT_STATUS, money, when } from "../labels";
+import { Badge, ConfirmButton, Field, Loading, Msg, intOrNull, useMsg, useSession } from "../ui";
 
 export default function ShipmentDetail({ id }: { id: string }) {
   const { can } = useSession();
@@ -12,6 +12,7 @@ export default function ShipmentDetail({ id }: { id: string }) {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [track, setTrack] = useState({ trackingNo: "", trackingUrl: "", note: "" });
+  const [det, setDet] = useState({ courier: "", fee: "", notes: "" });
   const msg = useMsg();
 
   async function load() {
@@ -20,6 +21,7 @@ export default function ShipmentDetail({ id }: { id: string }) {
     setData(res.data);
     const s = shipmentView(res.data.shipment ?? res.data);
     setTrack({ trackingNo: s.trackingNo, trackingUrl: s.trackingUrl, note: "" });
+    setDet({ courier: s.courier, fee: s.fee === null ? "" : String(s.fee), notes: s.notes });
   }
   useEffect(() => { load(); }, [id]);
 
@@ -31,7 +33,7 @@ export default function ShipmentDetail({ id }: { id: string }) {
 
   async function patch(body: Record<string, unknown>, okText: string) {
     setBusy(true);
-    const res = await api(`/api/admin/shipments/${enc(id)}`, { method: "PATCH", body, conflict: "хүргэлтийн төлөв өөрчлөгдсөн байна. Сэргээгээд дахин оролдоно уу." });
+    const res = await api(`/api/admin/shipments/${enc(id)}`, { method: "PATCH", body, conflict: "хүргэлтийн төлөв өөрчлөгдсөн байна. Хуудсаа шинэчлээд дахин оролдоно уу." });
     setBusy(false);
     if (res.ok) { msg.ok(okText); await load(); } else msg.err(res.error);
   }
@@ -46,8 +48,8 @@ export default function ShipmentDetail({ id }: { id: string }) {
   function saveTracking(e: Event) {
     e.preventDefault();
     const url = track.trackingUrl.trim();
-    if (url && !/^https?:\/\//.test(url)) { msg.err("Трак холбоос http(s):// -ээр эхэлнэ."); return; }
-    patch(withNote({ trackingNo: track.trackingNo.trim() || null, trackingUrl: url || null }), "Трак мэдээлэл хадгалагдлаа.");
+    if (url && !/^https?:\/\//.test(url)) { msg.err("Хяналтын холбоос http:// эсвэл https:// -ээр эхлэх ёстой."); return; }
+    patch(withNote({ trackingNo: track.trackingNo.trim() || null, trackingUrl: url || null }), "Хяналтын мэдээлэл хадгалагдлаа.");
   }
 
   return (
@@ -59,21 +61,35 @@ export default function ShipmentDetail({ id }: { id: string }) {
         <span class="a-small a-dim">{PROVIDER[s.provider] ?? s.provider} · захиалга {s.orderNo ? (can("orders.read") ? <a class="a-mono" href={`#/orders/${enc(s.orderNo)}`}>{s.orderNo}</a> : s.orderNo) : "—"}</span>
       </div>
       <dl class="a-dl a-panel">
-        <dt>Компанийн дугаар</dt><dd class="a-mono">{s.providerRef || "—"}</dd>
-        <dt>Трак</dt><dd class="a-mono">{s.trackingUrl ? <a href={s.trackingUrl} target="_blank" rel="noopener noreferrer">{s.trackingNo || s.trackingUrl}</a> : s.trackingNo || "—"}</dd>
-        <dt>Оролдлого</dt><dd class="a-mono">{s.attempts}{s.nextRetryAt ? ` · дараагийнх ${when(s.nextRetryAt)}` : ""}</dd>
+        <dt>Хүргэгч</dt><dd>{s.courier || "—"}</dd>
+        <dt>Зардал</dt><dd class="a-mono">{s.fee === null ? "—" : money(s.fee)}</dd>
+        {s.notes && <><dt>Тэмдэглэл</dt><dd>{s.notes}</dd></>}
+        <dt>Компанийн лавлах дугаар</dt><dd class="a-mono">{s.providerRef || "—"}</dd>
+        <dt>Хяналт</dt><dd class="a-mono">{s.trackingUrl ? <a href={s.trackingUrl} target="_blank" rel="noopener noreferrer">{s.trackingNo || s.trackingUrl}</a> : s.trackingNo || "—"}</dd>
+        <dt>Оролдсон тоо</dt><dd class="a-mono">{s.attempts}{s.nextRetryAt ? ` · дараагийнх ${when(s.nextRetryAt)}` : ""}</dd>
         {s.lastError && <><dt>Сүүлийн алдаа</dt><dd class="a-warn">{s.lastError}</dd></>}
-        <dt>Үүссэн / шинэчилсэн</dt><dd class="a-mono a-small">{when(s.createdAt)} / {when(s.updatedAt)}</dd>
+        <dt>Үүссэн / шинэчлэгдсэн</dt><dd class="a-mono a-small">{when(s.createdAt)} / {when(s.updatedAt)}</dd>
       </dl>
 
       {canWrite ? (
         <section class="a-panel" aria-labelledby="sa-h" data-testid="shipment-actions">
           <h2 id="sa-h" class="a-h2">Үйлдэл</h2>
           <form class="a-addsku" onSubmit={saveTracking}>
-            <Field label="Трак дугаар"><input class="a-input" name="trackingNo" maxLength={120} value={track.trackingNo} onInput={(e) => setTrack({ ...track, trackingNo: e.currentTarget.value })} /></Field>
-            <Field label="Трак холбоос"><input class="a-input" name="trackingUrl" type="url" value={track.trackingUrl} onInput={(e) => setTrack({ ...track, trackingUrl: e.currentTarget.value })} /></Field>
+            <Field label="Хяналтын дугаар"><input class="a-input" name="trackingNo" maxLength={120} value={track.trackingNo} onInput={(e) => setTrack({ ...track, trackingNo: e.currentTarget.value })} /></Field>
+            <Field label="Хяналтын холбоос"><input class="a-input" name="trackingUrl" type="url" value={track.trackingUrl} onInput={(e) => setTrack({ ...track, trackingUrl: e.currentTarget.value })} /></Field>
             <Field label="Тэмдэглэл (заавал биш)"><input class="a-input" name="note" maxLength={300} value={track.note} onInput={(e) => setTrack({ ...track, note: e.currentTarget.value })} /></Field>
-            <button class="a-btn" type="submit" disabled={busy}>Трак хадгалах</button>
+            <button class="a-btn" type="submit" disabled={busy}>Хяналт хадгалах</button>
+          </form>
+          <form class="a-addsku" data-testid="shipment-details" onSubmit={(e) => {
+            e.preventDefault();
+            const fee = intOrNull(det.fee);
+            if (Number.isNaN(fee) || (fee !== null && fee < 0)) { msg.err("Зардал: 0 буюу түүнээс их бүхэл тоо (₮)."); return; }
+            patch({ courier: det.courier.trim() || null, fee, notes: det.notes.trim() || null }, "Хүргэлтийн мэдээлэл хадгалагдлаа.");
+          }}>
+            <Field label="Хүргэгч / компани"><input class="a-input" name="courier" maxLength={80} value={det.courier} onInput={(e) => setDet({ ...det, courier: e.currentTarget.value })} /></Field>
+            <Field label="Зардал ₮"><input class="a-input" name="fee" inputMode="numeric" value={det.fee} onInput={(e) => setDet({ ...det, fee: e.currentTarget.value })} /></Field>
+            <Field label="Дотоод тэмдэглэл"><input class="a-input" name="notes" maxLength={500} value={det.notes} onInput={(e) => setDet({ ...det, notes: e.currentTarget.value })} /></Field>
+            <button class="a-btn" type="submit" disabled={busy}>Хадгалах</button>
           </form>
           {next.length ? (
             <div class="a-row">

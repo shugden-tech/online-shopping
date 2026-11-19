@@ -44,21 +44,11 @@ export default function OrderDetail({ no }: { no: string }) {
     setBusy(true);
     const body: Record<string, string> = { status: to };
     if (note.trim()) body.note = note.trim();
-    const res = await api(`/api/admin/orders/${enc(no)}`, { method: "PATCH", body, conflict: "захиалгын төлөв өөр газар өөрчлөгдсөн байна. Хуудсыг сэргээгээд дахин оролдоно уу." });
+    const res = await api(`/api/admin/orders/${enc(no)}`, { method: "PATCH", body, conflict: "захиалгын төлөв өөр газар өөрчлөгдсөн байна. Хуудсаа шинэчлээд дахин оролдоно уу." });
     setBusy(false);
     if (res.ok) { setNote(""); msg.ok(`Төлөв: ${ORDER_STATUS[to] ?? to}.`); await load(); } else msg.err(res.error);
   }
 
-  async function createShipment() {
-    setBusy(true);
-    const res = await api("/api/admin/shipments", { method: "POST", body: { orderNo: o.no }, conflict: "захиалга төлөгдсөн төлөвт биш эсвэл хүргэлт аль хэдийн үүссэн байна." });
-    setBusy(false);
-    if (res.ok) {
-      const s = res.data.shipment ? shipmentView(res.data.shipment) : null;
-      msg.ok(`Хүргэлт үүслээ${s ? ` (#${s.id}, ${SHIPMENT_STATUS[s.status] ?? s.status})` : ""}.`);
-      await load();
-    } else msg.err(res.error);
-  }
 
   return (
     <section aria-labelledby="od-h" class="a-stack">
@@ -72,7 +62,7 @@ export default function OrderDetail({ no }: { no: string }) {
         <Badge value={o.paymentStatus} labels={ORDER_PAY_STATUS} tone={`pay-${o.paymentStatus}`} />
         <span class="a-dim a-small">{when(o.createdAt)} · {PROVIDER[o.payment] ?? o.payment}{o.locale ? ` · ${o.locale}` : ""}</span>
       </div>
-      {o.status === "new" && o.holdExpiresAt && <p class="a-small">Нөөц {when(o.holdExpiresAt)} хүртэл хадгалагдана (төлөгдөхгүй бол цуцлагдана).</p>}
+      {o.status === "new" && o.holdExpiresAt && <p class="a-small">Нөөцлөлт {when(o.holdExpiresAt)} хүртэл хүчинтэй (төлөгдөхгүй бол цуцлагдана).</p>}
       {o.cancelReason && <p class="a-small">Цуцалсан шалтгаан: {o.cancelReason}</p>}
 
       <section class="a-panel" aria-labelledby="act-h" data-testid="order-actions">
@@ -97,8 +87,9 @@ export default function OrderDetail({ no }: { no: string }) {
         )}
         {(o.status === "new" || o.status === "confirmed") && can("payments.write") && <MarkPaid no={o.no} total={o.total} onDone={async (t) => { msg.ok(t); await load(); }} />}
         {o.status === "paid" && can("delivery.write") && !activeShipment && (
-          <div class="a-row"><button type="button" class="a-btn a-btn--primary" data-testid="create-shipment" disabled={busy} onClick={createShipment}>Хүргэлт үүсгэх</button></div>
+          <NewShipment no={o.no} onDone={async (t) => { msg.ok(t); await load(); }} />
         )}
+        <div class="a-row" style="margin-top:12px"><button type="button" class="a-btn a-btn--sm" data-testid="print-slip" onClick={() => print()}>Савлагааны хуудас хэвлэх</button></div>
         {msg.node}
       </section>
 
@@ -159,7 +150,7 @@ export default function OrderDetail({ no }: { no: string }) {
       {reservations && (
         <section class="a-panel" aria-labelledby="res-h">
           <h2 id="res-h" class="a-h2">Нөөцлөлт</h2>
-          <Table label="Нөөцлөлт" head={["SKU", "Тоо", "Хянадаг", "Төлөв"]}>
+          <Table label="Нөөцлөлт" head={["SKU", "Тоо", "Тоолдог", "Төлөв"]}>
             {reservations.map((r) => (
               <tr>
                 <td class="a-mono">{pick(r, "sku", "skuId", "sku_id")}</td>
@@ -183,6 +174,8 @@ export default function OrderDetail({ no }: { no: string }) {
         </section>
       )}
 
+      <Notes no={o.no} initial={raw.notes ?? []} canWrite={can("orders.write")} />
+
       <section class="a-panel" aria-labelledby="ev-h">
         <h2 id="ev-h" class="a-h2">Төлвийн түүх</h2>
         {events.length ? (
@@ -194,7 +187,7 @@ export default function OrderDetail({ no }: { no: string }) {
                 <li>
                   <span class="a-mono a-small">{when(pick(e, "at"))}</span>{" "}
                   {from ? `${ORDER_STATUS[from] ?? from} → ` : ""}<b>{ORDER_STATUS[to] ?? to}</b>
-                  <span class="a-dim a-small"> · {pick(e, "actor")}</span>
+                  <span class="a-dim a-small"> · {ACTOR[pick(e, "actor")] ?? pick(e, "actor")}</span>
                   {pick(e, "note") && <div class="a-small">“{pick(e, "note")}”</div>}
                 </li>
               );
@@ -203,7 +196,110 @@ export default function OrderDetail({ no }: { no: string }) {
         ) : <p class="a-dim">Түүх алга.</p>}
       </section>
       <p><button type="button" class="a-btn a-btn--ghost" onClick={() => go("#/orders")}>‹ Жагсаалт руу</button></p>
+      <Slip o={o} />
     </section>
+  );
+}
+
+const ACTOR: Record<string, string> = { "admin:owner": "Эзэмшигч", "admin:staff": "Ажилтан", system: "Систем", customer: "Хэрэглэгч", admin: "Админ" };
+
+/* ---------------- packing slip (printed; hidden on screen) ---------------- */
+
+function Slip({ o }: { o: OrderView }) {
+  return (
+    <div class="a-slip" aria-hidden="true">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+        <div>
+          <h1>genzst</h1>
+          <div>Савлагааны хуудас · {o.no}</div>
+          <div>{when(o.createdAt)}</div>
+        </div>
+        <div style="text-align:right">
+          <b>{o.name}</b><br />{o.phone}{o.phone2 ? ` / ${o.phone2}` : ""}<br />
+          {[CITY[o.city] ?? o.city, o.district, o.khoroo].filter(Boolean).join(", ")}<br />{o.address}
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>✓</th><th>Бараа</th><th>Хэмжээ</th><th>Тоо</th></tr></thead>
+        <tbody>
+          {o.items.map((i) => <tr><td>☐</td><td>{[i.brand, i.name].filter(Boolean).join(" — ") || i.sku || i.slug}</td><td>{i.ml ? `${i.ml} мл` : "—"}</td><td>{i.qty}</td></tr>)}
+        </tbody>
+      </table>
+      {o.note && <p>Хэрэглэгчийн тэмдэглэл: “{o.note}”</p>}
+      <p>Төлбөр: {ORDER_PAY_STATUS[o.paymentStatus] ?? o.paymentStatus} · Нийт {money(o.total)}</p>
+    </div>
+  );
+}
+
+/* ---------------- internal notes ---------------- */
+
+function Notes({ no, initial, canWrite }: { no: string; initial: any[]; canWrite: boolean }) {
+  const [list, setList] = useState<any[]>(initial);
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const msg = useMsg();
+  async function add(e: Event) {
+    e.preventDefault();
+    if (!text.trim()) { msg.err("Тэмдэглэлээ бичнэ үү."); return; }
+    setBusy(true);
+    const res = await api(`/api/admin/orders/${enc(no)}/notes`, { method: "POST", body: { note: text.trim() } });
+    setBusy(false);
+    if (res.ok) { setList([...list, res.data.note]); setText(""); msg.clear(); } else msg.err(res.error);
+  }
+  return (
+    <section class="a-panel" aria-labelledby="notes-h" data-testid="order-notes">
+      <h2 id="notes-h" class="a-h2">Дотоод тэмдэглэл</h2>
+      <p class="a-dim a-small" style="margin-top:-6px">Зөвхөн админд харагдана, хэрэглэгчид харагдахгүй.</p>
+      {list.length ? (
+        <ol class="a-timeline">
+          {list.map((n) => <li><span class="a-mono a-small">{when(pick(n, "at"))}</span> <span class="a-dim a-small">· {ACTOR[pick(n, "actor")] ?? pick(n, "actor")}</span><div>{pick(n, "note")}</div></li>)}
+        </ol>
+      ) : <p class="a-dim">Тэмдэглэл алга.</p>}
+      {canWrite && (
+        <form class="a-addsku" onSubmit={add}>
+          <Field label="Шинэ тэмдэглэл" wide><textarea class="a-input" name="note" rows={2} maxLength={1000} value={text} onInput={(e) => setText(e.currentTarget.value)} /></Field>
+          <button class="a-btn" type="submit" disabled={busy}>Нэмэх</button>
+        </form>
+      )}
+      {msg.node}
+    </section>
+  );
+}
+
+/* ---------------- create shipment ---------------- */
+
+function NewShipment({ no, onDone }: { no: string; onDone: (msg: string) => Promise<void> }) {
+  const [f, setF] = useState({ courier: "", trackingNo: "", fee: "", notes: "" });
+  const [busy, setBusy] = useState(false);
+  const msg = useMsg();
+  async function submit(e: Event) {
+    e.preventDefault();
+    const fee = intOrNull(f.fee);
+    if (Number.isNaN(fee) || (fee !== null && fee < 0)) { msg.err("Хүргэлтийн зардал: 0 буюу түүнээс их бүхэл тоо (₮)."); return; }
+    const body: Record<string, unknown> = { orderNo: no };
+    if (f.courier.trim()) body.courier = f.courier.trim();
+    if (f.trackingNo.trim()) body.trackingNo = f.trackingNo.trim();
+    if (fee !== null) body.fee = fee;
+    if (f.notes.trim()) body.notes = f.notes.trim();
+    setBusy(true);
+    const res = await api("/api/admin/shipments", { method: "POST", body, conflict: "захиалга төлөгдсөн төлөвт биш, эсвэл хүргэлт аль хэдийн үүссэн байна." });
+    setBusy(false);
+    if (res.ok) {
+      const s = res.data.shipment ? shipmentView(res.data.shipment) : null;
+      await onDone(`Хүргэлт үүслээ${s ? ` (#${s.id}, ${SHIPMENT_STATUS[s.status] ?? s.status})` : ""}.`);
+    } else msg.err(res.error);
+  }
+  const set = (k: keyof typeof f) => (e: Event) => setF({ ...f, [k]: (e.currentTarget as HTMLInputElement).value });
+  return (
+    <form class="a-addsku" onSubmit={submit} data-testid="new-shipment">
+      <h3 class="a-h3">Хүргэлт үүсгэх</h3>
+      <Field label="Хүргэгч / компани"><input class="a-input" name="courier" maxLength={80} value={f.courier} onInput={set("courier")} placeholder="ж: Өөрсдөө, такси" /></Field>
+      <Field label="Хяналтын дугаар"><input class="a-input" name="trackingNo" maxLength={64} value={f.trackingNo} onInput={set("trackingNo")} /></Field>
+      <Field label="Хүргэлтийн зардал ₮"><input class="a-input" name="fee" inputMode="numeric" value={f.fee} onInput={set("fee")} /></Field>
+      <Field label="Тэмдэглэл"><input class="a-input" name="notes" maxLength={500} value={f.notes} onInput={set("notes")} /></Field>
+      <button class="a-btn a-btn--primary" type="submit" data-testid="create-shipment" disabled={busy}>Хүргэлт үүсгэх</button>
+      {msg.node}
+    </form>
   );
 }
 

@@ -73,6 +73,20 @@ function makeMock() {
     let m;
 
     if (path === "/api/admin/me") return J(route, 200, { ok: true, role, permissions: perms });
+    if (path === "/api/admin/stats") {
+      if (deny("orders.read")) return;
+      const day = (i) => new Date(Date.now() - (29 - i) * 864e5).toISOString().slice(0, 10);
+      return J(route, 200, {
+        ok: true, range: "7d", lowStockThreshold: 3,
+        kpi: { orders: 3, cancelled: 0, paidOrders: 1, revenue: 45000, aov: 45000 },
+        now: { pendingPayments: 1, toShip: 1, lowStock: 1, outOfStock: 0, failedShipments: 1, failedWebhooks: 0, draftProducts: 1, unpricedActive: 0 },
+        series: Array.from({ length: 30 }, (_, i) => ({ day: day(i), orders: i === 29 ? 3 : 0, revenue: i === 29 ? 45000 : 0 })),
+        latest: [],
+      });
+    }
+    if (path === "/api/admin/orders/poll") return J(route, 200, { ok: true, latestId: 3, newCount: 1 });
+    if (path === "/api/admin/jobs/run") return J(route, 200, { ok: true, expired: 0, retried: 0, failed: 0 });
+    if (path === "/api/admin/products/facets") return J(route, 200, { ok: true, brands: [{ value: "Mugler", n: 1 }], families: [], counts: { active: 1, draft: 1 } });
 
     if (path === "/api/admin/settings") {
       if (method === "GET") { if (deny("settings.read")) return; return J(route, 200, { ok: true, settings: state.settings }); }

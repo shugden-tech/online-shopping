@@ -39,40 +39,52 @@ export const SHIPMENT_STATUS: Record<string, string> = {
   delivered: "Хүргэгдсэн",
   failed: "Амжилтгүй",
   cancelled: "Цуцлагдсан",
+  returned: "Буцаж ирсэн",
 };
 export const PRODUCT_STATUS: Record<string, string> = { draft: "Ноорог", active: "Идэвхтэй (харагдана)", hidden: "Нуусан" };
-export const GENDER: Record<string, string> = { women: "Эмэгтэй", men: "Эрэгтэй", unisex: "Хүйсгүй" };
+export const GENDER: Record<string, string> = { women: "Эмэгтэй", men: "Эрэгтэй", unisex: "Юнисекс" };
 export const SKU_KIND: Record<string, string> = { decant: "Задаргаа (decant)", full: "Бүтэн шил" };
 export const STOCK_REASON: Record<string, string> = {
-  restock: "Нөөц нэмсэн",
+  restock: "Үлдэгдэл нэмсэн",
   correction: "Засвар",
   sale: "Борлуулалт",
   cancel_after_paid: "Төлөгдсөний дараа цуцалсан",
-  import: "Импорт",
+  import: "Импортлосон",
 };
 export const ENTITY: Record<string, string> = {
-  product: "Бараа", sku: "Хэмжээ (SKU)", order: "Захиалга", payment: "Төлбөр", shipment: "Хүргэлт", settings: "Тохиргоо", media: "Зураг",
+  product: "Бараа", sku: "Хэмжээ (SKU)", order: "Захиалга", payment: "Төлбөр", shipment: "Хүргэлт", settings: "Тохиргоо", media: "Зураг", webhook: "Webhook",
+};
+export const ACTOR: Record<string, string> = { "admin:owner": "Эзэмшигч", "admin:staff": "Ажилтан", system: "Систем", customer: "Хэрэглэгч" };
+/** Readable names for audit actions. Unknown ones are shown as-is. */
+export const ACTION: Record<string, string> = {
+  "product.create": "Бараа үүсгэсэн", "product.update": "Бараа зассан", "sku.create": "Хэмжээ нэмсэн", "sku.update": "Үнэ / хэмжээ зассан",
+  "sku.delete": "Хэмжээ устгасан", "inventory.adjust": "Үлдэгдэл тохируулсан", "media.upload": "Зураг оруулсан",
+  "order.create": "Захиалга үүссэн", "order.status": "Захиалгын төлөв", "order.paid": "Төлбөр баталгаажсан", "order.note": "Тэмдэглэл нэмсэн",
+  "payment.late": "Хоцорсон төлбөр", "payment.extra": "Илүү төлбөр", "shipment.create": "Хүргэлт үүсгэсэн", "shipment.status": "Хүргэлтийн төлөв",
+  "shipment.update": "Хяналтын дугаар зассан", "shipment.details": "Хүргэлтийн мэдээлэл", "settings.update": "Тохиргоо өөрчилсөн", "jobs.run": "Автомат ажил",
+  "webhook.create": "Webhook нэмсэн", "webhook.update": "Webhook зассан", "webhook.delete": "Webhook устгасан", "webhook.test": "Туршилтын webhook",
+  "webhook.redeliver": "Webhook дахин илгээсэн", "webhook.replay": "Webhook дахин боловсруулсан",
 };
 export const ROLE: Record<string, string> = { owner: "Эзэмшигч", staff: "Ажилтан" };
 
 const CODES: Record<string, string> = {
   unauthorized: "токен буруу эсвэл хугацаа дууссан",
-  forbidden: "эрх хүрэхгүй",
+  forbidden: "эрх хүрэлцэхгүй",
   rate: "хэт олон оролдлого, түр хүлээгээд дахин оролдоно уу",
   "admin-disabled": "админ хэсэг идэвхгүй (серверт ADMIN_TOKEN тохируулаагүй)",
   server: "серверийн алдаа",
   notFound: "олдсонгүй",
   invalid: "буруу утга",
   unknown: "үл мэдэгдэх талбар",
-  required: "заавал бөглөнө",
+  required: "заавал бөглөх ёстой",
   exists: "аль хэдийн байна",
   duplicate: "давхардсан",
   conflict: "зөрчил үүслээ",
   transition: "энэ төлөвт шилжүүлэх боломжгүй",
-  stock: "нөөц хүрэлцэхгүй",
-  unavailable: "зарагдахгүй",
+  stock: "үлдэгдэл хүрэлцэхгүй",
+  unavailable: "зарагдах боломжгүй",
   closed: "захиалга хаалттай",
-  disabled: "унтраалттай",
+  disabled: "унтраасан",
   reserved: "захиалгад нөөцлөгдсөн",
   method: "энэ үйлдэл зөвшөөрөгдөөгүй",
   type: "файлын төрөл буруу (jpeg/png/webp)",
@@ -80,27 +92,43 @@ const CODES: Record<string, string> = {
   too_large: "файл хэт том (≤ 5 MB)",
   below_reserved: "нөөцлөгдсөн тооноос бага болгох боломжгүй",
   not_paid: "захиалга төлөгдөөгүй байна",
-  untracked: "үлдэгдэл хянагддаггүй SKU — “Тоог тогтоох (=)”-оор эхлээд тоо оруулна уу",
+  untracked: "үлдэгдэл тоолдоггүй хэмжээ — эхлээд “Тоог тогтоох (=)”-оор тоо оруулна уу",
   compare_at: "хуучин үнэ одоогийн үнээс их байх ёстой",
-};
+  not_above_price: "хуучин үнэ одоогийн үнээс их байх ёстой",
+  taken: "ийм ID аль хэдийн бүртгэлтэй",
+  not_found: "олдсонгүй",
+  "media-disabled": "зургийн сан (R2) тохируулаагүй",
+  "has-shipment": "энэ захиалгад хүргэлт аль хэдийн үүссэн",
+  "not-paid": "захиалга төлөгдөөгүй",
+  "not-configured": "тохируулаагүй",
+  "not-qpay": "QPay төлбөр биш",
+  unreachable: "холбогдож чадсангүй",
+  unsigned: "гарын үсэг баталгаажаагүй дуудлагыг дахин боловсруулахгүй",
+  limit: "хязгаарт хүрсэн",
+  empty: "өөрчлөлт алга",
+  stale: "өөр газар өөрчлөгдсөн, хуудсаа шинэчлээд дахин оролдоно уу",
+  "use-retry": "“Дахин оролдох” товчийг ашиглана уу",
+}
 const FIELDS: Record<string, string> = {
   form: "", stock: "Үлдэгдэл", status: "Төлөв", price: "Үнэ", compareAt: "Хуучин үнэ", kind: "Төрөл", ml: "мл", active: "Идэвхтэй",
   sku: "SKU", set: "Тоо", delta: "Өөрчлөлт", reason: "Шалтгаан", note: "Тэмдэглэл", amount: "Дүн", reference: "Гүйлгээний утга",
   id: "ID", brand: "Брэнд", name: "Нэр", file: "Файл", side: "Тал", imageFront: "Урд зураг", imageBack: "Ар зураг",
-  trackingNo: "Трак дугаар", trackingUrl: "Трак холбоос", orderNo: "Захиалгын дугаар", entity: "Төрөл", payment: "Төлбөр",
-  releaseYear: "Он", gender: "Хүйс", concentration: "Төрөл", family: "Үнэрийн бүл",
+  trackingNo: "Хяналтын дугаар", trackingUrl: "Хяналтын холбоос", orderNo: "Захиалгын дугаар", entity: "Төрөл", payment: "Төлбөр",
+  releaseYear: "Гарсан он", gender: "Хүйс", concentration: "Концентраци", family: "Үнэрийн бүл",
+  courier: "Хүргэгч", fee: "Зардал", notes: "Тэмдэглэл", url: "Хаяг (URL)", events: "Үйл явдал", ids: "Бараа", action: "Үйлдэл",
+  productId: "Бараа", provider: "Үйлчилгээ", shipment: "Хүргэлт", signature: "Гарын үсэг", description: "Тайлбар",
 };
 
 /** `{ ok:false, errors }` -> one readable Mongolian sentence. */
 export function errorText(status: number, errors: Record<string, string> | undefined, conflict?: string): string {
-  if (status === 403) return "Эрх хүрэхгүй: таны эрх энэ үйлдлийг хийхэд хүрэлцэхгүй.";
+  if (status === 403) return "Эрх хүрэлцэхгүй: энэ үйлдлийг хийх эрх танд алга.";
   const parts = Object.entries(errors ?? {}).map(([field, code]) => {
     const f = FIELDS[field] ?? field;
     const c = CODES[code] ?? code;
     return f ? `${f}: ${c}` : c;
   });
   const codes = parts.length ? parts.join("; ") : "";
-  if (status === 409) return `Зөрчил (409): ${conflict ?? "өгөгдөл өөрчлөгдсөн байна, дахин ачаална уу."}${codes ? ` [${codes}]` : ""}`;
+  if (status === 409) return `Зөрчил (409): ${conflict ?? "өгөгдөл өөрчлөгдсөн байна, хуудсаа шинэчилнэ үү."}${codes ? ` [${codes}]` : ""}`;
   if (status === 404) return `Олдсонгүй (404).${codes ? ` ${codes}` : ""}`;
   if (status === 429) return "Хэт олон хүсэлт. Түр хүлээгээд дахин оролдоно уу.";
   if (status >= 500) return `Серверийн алдаа (${status}).${codes ? ` ${codes}` : ""}`;

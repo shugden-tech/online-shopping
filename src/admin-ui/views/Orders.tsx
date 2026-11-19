@@ -1,14 +1,16 @@
-// Orders list: status filter + search (server), payment-status filter (on the loaded rows), keyset "load more".
+// Orders list: search (number, phone, name), order / payment status, date range (server-side), keyset
+// "load more". Reloads by itself when the poll in the shell sees a new order.
 import { useEffect, useState } from "preact/hooks";
 import { ORDER_STATUSES, PAYMENT_STATUSES_ORDER } from "../../lib/contracts";
 import { api, enc, orderView, qs, rows, type OrderView } from "../api";
-import { ORDER_PAY_STATUS, ORDER_STATUS, money, when } from "../labels";
-import { Badge, Empty, Field, Loading, Msg, Table } from "../ui";
+import { ORDER_PAY_STATUS, ORDER_STATUS, PROVIDER, money, when } from "../labels";
+import { Badge, Empty, Field, Loading, Msg, Table, go } from "../ui";
 
-export default function Orders(props: { status?: string; q?: string }) {
-  const [f, setF] = useState({ status: props.status ?? "", q: props.q ?? "" });
-  const [pay, setPay] = useState("");
-  const [q, setQ] = useState(f.q);
+interface F { status: string; paymentStatus: string; q: string; from: string; to: string }
+
+export default function Orders(props: Partial<F>) {
+  const [f, setF] = useState<F>({ status: props.status ?? "", paymentStatus: props.paymentStatus ?? "", q: props.q ?? "", from: props.from ?? "", to: props.to ?? "" });
+  const [draft, setDraft] = useState(f.q);
   const [items, setItems] = useState<OrderView[]>([]);
   const [cursor, setCursor] = useState<string | number | null>(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +18,7 @@ export default function Orders(props: { status?: string; q?: string }) {
 
   async function load(reset: boolean) {
     setLoading(true);
-    const res = await api(`/api/admin/orders${qs({ status: f.status, q: f.q, cursor: reset ? null : cursor, limit: 50 })}`);
+    const res = await api(`/api/admin/orders${qs({ ...f, cursor: reset ? null : cursor, limit: 50 })}`);
     setLoading(false);
     if (!res.ok) { setError(res.error); return; }
     setError("");
@@ -24,52 +26,66 @@ export default function Orders(props: { status?: string; q?: string }) {
     setItems((cur) => (reset ? list : [...cur, ...list]));
     setCursor(res.data.nextCursor ?? null);
   }
-  useEffect(() => { load(true); }, [f.status, f.q]);
+  useEffect(() => {
+    load(true);
+    // keep the filters in the address so a reload or a shared link shows the same list
+    const q = qs({ ...f });
+    if (location.hash !== `#/orders${q}`) history.replaceState(null, "", `#/orders${q}`);
+  }, [f.status, f.paymentStatus, f.q, f.from, f.to]);
+  useEffect(() => {
+    const on = () => load(true);
+    addEventListener("gz:new-order", on);
+    return () => removeEventListener("gz:new-order", on);
+  }, [f.status, f.paymentStatus, f.q, f.from, f.to]);
 
-  const shown = pay ? items.filter((o) => o.paymentStatus === pay) : items;
+  const set = (k: keyof F) => (e: Event) => setF({ ...f, [k]: (e.currentTarget as HTMLInputElement).value });
+  const filtered = Boolean(f.status || f.paymentStatus || f.q || f.from || f.to);
 
   return (
     <section aria-labelledby="ord-h">
       <h1 id="ord-h" class="a-title">Захиалга</h1>
-      <form class="a-filters" role="search" onSubmit={(e) => { e.preventDefault(); setF({ ...f, q: q.trim() }); }}>
+      <form class="a-filters" role="search" onSubmit={(e) => { e.preventDefault(); setF({ ...f, q: draft.trim() }); }}>
         <Field label="Хайх (дугаар, утас, нэр)">
-          <input class="a-input" type="search" name="q" value={q} onInput={(e) => setQ(e.currentTarget.value)} />
+          <input class="a-input" type="search" name="q" value={draft} placeholder="GZ-… / 9911… / нэр" onInput={(e) => setDraft(e.currentTarget.value)} />
         </Field>
         <Field label="Төлөв">
-          <select class="a-input" name="status" value={f.status} onChange={(e) => setF({ ...f, status: e.currentTarget.value })}>
+          <select class="a-input" name="status" value={f.status} onChange={set("status")}>
             <option value="">Бүгд</option>
             {ORDER_STATUSES.map((s) => <option value={s}>{ORDER_STATUS[s]}</option>)}
           </select>
         </Field>
-        <Field label="Төлбөрийн төлөв">
-          <select class="a-input" name="payment" value={pay} onChange={(e) => setPay(e.currentTarget.value)}>
+        <Field label="Төлбөр">
+          <select class="a-input" name="payment" value={f.paymentStatus} onChange={set("paymentStatus")}>
             <option value="">Бүгд</option>
             {PAYMENT_STATUSES_ORDER.map((s) => <option value={s}>{ORDER_PAY_STATUS[s]}</option>)}
           </select>
         </Field>
-        <button class="a-btn" type="submit">Хайх</button>
-        <button class="a-btn a-btn--ghost" type="button" onClick={() => load(true)}>Сэргээх</button>
+        <Field label="Эхлэх огноо"><input class="a-input" type="date" name="from" value={f.from} max={f.to || undefined} onChange={set("from")} /></Field>
+        <Field label="Дуусах огноо"><input class="a-input" type="date" name="to" value={f.to} min={f.from || undefined} onChange={set("to")} /></Field>
+        <button class="a-btn a-btn--primary" type="submit">Хайх</button>
+        {filtered && <button class="a-btn a-btn--ghost" type="button" onClick={() => { setDraft(""); setF({ status: "", paymentStatus: "", q: "", from: "", to: "" }); }}>Цэвэрлэх</button>}
       </form>
       <Msg kind="err" text={error} />
-      <p class="a-dim a-small" role="status">{loading ? "Ачаалж байна…" : `${shown.length} захиалга харагдаж байна${pay ? " (төлбөрийн шүүлтүүр ачаалсан мөрөнд)" : ""}`}</p>
-      <Table label="Захиалгын жагсаалт" head={["Дугаар", "Огноо", "Төлөв", "Төлбөр", "Хэрэглэгч", "Дүн"]}>
-        {shown.map((o) => (
-          <tr data-order={o.no}>
+      <p class="a-dim a-small" role="status">{loading ? "Ачаалж байна…" : `${items.length}${cursor !== null ? "+" : ""} захиалга`}</p>
+      <Table label="Захиалгын жагсаалт" head={["Дугаар", "Огноо", "Хэрэглэгч", "Дүн", "Төлбөр", "Төлөв"]}>
+        {items.map((o) => (
+          <tr data-order={o.no} data-href onClick={(e) => { if (!(e.target as Element).closest("a")) go(`#/orders/${enc(o.no)}`); }}>
             <td class="a-mono"><a href={`#/orders/${enc(o.no)}`}>{o.no}</a></td>
             <td class="a-mono a-small">{when(o.createdAt)}</td>
-            <td><Badge value={o.status} labels={ORDER_STATUS} /></td>
+            <td>{o.name}<div class="a-mono a-small a-dim">{o.phone}</div></td>
+            <td class="a-mono a-r">{money(o.total)}</td>
             <td>
               <Badge value={o.paymentStatus} labels={ORDER_PAY_STATUS} tone={`pay-${o.paymentStatus}`} />
-              {o.status === "new" && o.holdExpiresAt && <div class="a-small a-dim">нөөц {when(o.holdExpiresAt)} хүртэл</div>}
+              <div class="a-small a-dim">{PROVIDER[o.payment] ?? o.payment}</div>
+              {o.status === "new" && o.holdExpiresAt && <div class="a-small a-dim">Нөөцлөлт {when(o.holdExpiresAt)} хүртэл</div>}
             </td>
-            <td>{o.name}<div class="a-mono a-small">{o.phone}</div></td>
-            <td class="a-mono">{money(o.total)}</td>
+            <td><Badge value={o.status} labels={ORDER_STATUS} /></td>
           </tr>
         ))}
       </Table>
       <Loading on={loading && !items.length} />
-      <Empty show={!loading && !error && !shown.length} text="Захиалга алга." />
-      {cursor !== null && <button type="button" class="a-btn" disabled={loading} onClick={() => load(false)}>Цааш ачаалах</button>}
+      <Empty show={!loading && !error && !items.length} text={filtered ? "Шүүлтүүрт тохирох захиалга олдсонгүй." : "Одоогоор захиалга алга. Шинэ захиалга орж ирэхэд энд харагдана."} />
+      {cursor !== null && <p><button type="button" class="a-btn" disabled={loading} onClick={() => load(false)}>Цааш ачаалах</button></p>}
     </section>
   );
 }

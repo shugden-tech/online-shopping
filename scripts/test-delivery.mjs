@@ -82,7 +82,7 @@ async function mock(method, path, body) {
 }
 
 function sql(command) {
-  const out = execFileSync("npx", ["wrangler", "d1", "execute", "genzst", "--local", "--persist-to", PERSIST, "--json", "--command", command], {
+  const out = execFileSync(process.execPath, ["node_modules/wrangler/bin/wrangler.js", "d1", "execute", "genzst", "--local", "--persist-to", PERSIST, "--json", "--command", command], {
     cwd: root,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],

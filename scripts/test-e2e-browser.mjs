@@ -39,7 +39,8 @@ const held = (await api("GET", "/api/admin/inventory?low=100000")).data?.items?.
 r = await api("POST", "/api/admin/inventory/adjust", { sku, set: held + 2, reason: "restock" });
 ok("admin stocks it (2 for sale)", r.data?.ok === true, JSON.stringify(r.data));
 
-const browser = await chromium.launch();
+const EDGE_EXE = process.env.EDGE ?? (process.platform === "win32" ? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" : "");
+const browser = await chromium.launch({ headless: true, ...(EDGE_EXE && (await import("node:fs")).existsSync(EDGE_EXE) ? { executablePath: EDGE_EXE } : {}) });
 const errors = [];
 for (const [label, viewport] of [["desktop", { width: 1440, height: 900 }], ["phone", { width: 390, height: 844 }]]) {
   // a fresh client IP per run, as the order API rate-limits 5 orders / IP / 10 min
@@ -94,11 +95,12 @@ for (const [label, viewport] of [["desktop", { width: 1440, height: 900 }], ["ph
   const page = await browser.newPage();
   page.on("pageerror", (e) => errors.push(`admin: ${e.message}`));
   await page.goto(`${BASE}/admin/`, { waitUntil: "domcontentloaded" });
+  await page.click('[data-testid="mode-token"]');
   await page.locator('input[type="password"]').first().fill(ADMIN);
   await page.keyboard.press("Enter");
   await page.waitForTimeout(2500);
   const txt = (await page.locator("body").textContent()) ?? "";
-  ok("admin: logs in with the real API and shows the dashboard", !/Нэвтрэх/.test(txt.slice(0, 60)) && /Захиалга/.test(txt), txt.slice(0, 200));
+  ok("admin: logs in with the real API and shows the dashboard", (await page.locator('[data-testid="dashboard"]').count()) === 1 && /Захиалга/.test(txt), txt.slice(0, 200));
   await page.close();
 }
 ok("no page errors", errors.length === 0, errors.join(" | "));

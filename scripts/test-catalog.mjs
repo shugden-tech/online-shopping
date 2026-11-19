@@ -72,8 +72,8 @@ const staff = (m, p, o = {}) => api(m, p, { ...o, token: STAFF });
 
 function sql(command) {
   const out = execFileSync(
-    "npx",
-    ["wrangler", "d1", "execute", "genzst", "--local", "--persist-to", PERSIST, "--json", "--command", command],
+    process.execPath,
+    ["node_modules/wrangler/bin/wrangler.js", "d1", "execute", "genzst", "--local", "--persist-to", PERSIST, "--json", "--command", command],
     { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
   );
   // wrangler may print notices (e.g. about proxy variables) before the JSON

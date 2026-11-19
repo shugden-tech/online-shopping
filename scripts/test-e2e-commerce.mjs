@@ -47,7 +47,7 @@ async function call(method, path, { body, auth, headers = {}, ip } = {}) {
 }
 const admin = (m, p, b) => call(m, p, { body: b, auth: ADMIN });
 const staff = (m, p, b) => call(m, p, { body: b, auth: STAFF });
-const sql = (q) => execFileSync("npx", ["wrangler", "d1", "execute", "genzst", "--local", "--persist-to", PERSIST, "--command", q], { stdio: "pipe" });
+const sql = (q) => execFileSync(process.execPath, ["node_modules/wrangler/bin/wrangler.js", "d1", "execute", "genzst", "--local", "--persist-to", PERSIST, "--command", q], { stdio: "pipe" });
 const state = async () => (await call("GET", `/api/store/catalog-state?ids=${PID}`)).data;
 const skuState = async () => (await state())?.products?.[0]?.skus?.find((s) => s.sku === SKU);
 const orderBody = (items, payment, extra = {}) => ({
