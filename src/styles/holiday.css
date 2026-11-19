@@ -45,7 +45,7 @@
 
 /* ---- Holiday theme details (only when data-theme="christmas") ---- */
 /* Page: warm snow-white paper with a faint snowflake dot pattern. */
-:root[data-theme="christmas"] body {
+:root[data-theme="christmas"] html {
   background-color: var(--ink);
   background-image:
     radial-gradient(circle at 12% 18%, rgba(255, 255, 255, .9) 0 1.5px, transparent 2px),
@@ -55,6 +55,8 @@
     linear-gradient(180deg, #fbf4e6 0%, #fffdf8 40%);
   background-size: 260px 260px, 300px 300px, 340px 340px, 280px 280px, 100% 100%;
 }
+/* The body is see-through so the background pattern behind it shows in the open gaps. */
+:root[data-theme="christmas"] body { background: transparent; }
 
 /* Header: snow-white bar with a candy-cane ribbon along its bottom edge. */
 :root[data-theme="christmas"] .hdr { background: var(--ink-2); }
@@ -104,3 +106,35 @@
 :root[data-theme="christmas"] .hdr__cart > svg:not(.xmas-sack) { display: none; }
 :root[data-theme="christmas"] .xmas-heart, :root[data-theme="christmas"] .xmas-sack { display: block; }
 :root[data-theme="christmas"] .hdr__badge { background: #b3202a; color: #fffdf8; }
+
+
+/* ---- Background pattern: a faint tile behind the whole page (holiday only) ---- */
+.holiday-pattern { display: none; }
+:root[data-theme="christmas"] .holiday-pattern {
+  display: block; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-size: cover; background-position: center; background-repeat: no-repeat; opacity: .14;
+}
+
+/* Open gaps show the pattern: the featured-collections band is see-through in holiday mode. */
+:root[data-theme="christmas"] .coll { background: transparent; }
+
+/* Text and product areas stay on a solid background; the pattern shows only in the open gaps. */
+:root[data-theme="christmas"] .tabs-sec,
+:root[data-theme="christmas"] .about,
+:root[data-theme="christmas"] .info,
+:root[data-theme="christmas"] .top3,
+:root[data-theme="christmas"] .reviews { background: var(--ink); }
+
+/* Bundles and featured-collections blocks: solid cream, full width, so the pattern is hidden there. */
+:root[data-theme="christmas"] .bundles,
+:root[data-theme="christmas"] .coll {
+  background: var(--soft);
+  box-shadow: 0 0 0 100vmax var(--soft);
+  clip-path: inset(0 -100vmax);
+}
+:root[data-theme="christmas"] .bundles__track { background: var(--soft); }
+
+/* Shop page: the title, search and filter area sits on a solid background (no pattern behind it). */
+:root[data-theme="christmas"] .shop__head,
+:root[data-theme="christmas"] .shop__layout > div:first-child,
+:root[data-theme="christmas"] .shop__filters { background: var(--ink); }

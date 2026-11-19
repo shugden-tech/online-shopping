@@ -15,13 +15,32 @@ const periods = [
 const DEFAULT = "all";
 
 type Entry = { name: string; total: number };
-/** Podium order: 2nd (left), 1st (centre), 3rd (right). */
-const podium = (list: Entry[]) => [
-  { rank: 2, e: list[1]! },
-  { rank: 1, e: list[0]! },
-  { rank: 3, e: list[2]! },
-];
-const initial = (name: string) => name.trim().charAt(0).toUpperCase();
+/** Line chart geometry (SVG user units). */
+const W = 720, H = 280, PX = 56, PT = 44, PB = 64;
+const MAX_POINTS = 5;
+
+/** Left-to-right slots: Top 1 in the middle, Top 2 to its right, Top 3 to its left, then Top 4 and Top 5 outside. */
+const SLOT_ORDER = [5, 3, 1, 2, 4];
+
+/** Points for the top entries, placed by slot. The highest amount sits at the top of the plot. */
+const points = (list: Entry[]) => {
+  const top = list.slice(0, MAX_POINTS);
+  const max = Math.max(...top.map((e) => e.total), 1);
+  const ranks = SLOT_ORDER.filter((r) => r <= top.length);
+  const n = ranks.length;
+  const span = W - PX * 2;
+  return ranks.map((rank, slot) => {
+    const e = top[rank - 1]!;
+    return {
+      rank,
+      e,
+      x: n > 1 ? PX + (slot * span) / (n - 1) : W / 2,
+      y: PT + (H - PT - PB) * (1 - e.total / max),
+    };
+  });
+};
+const shortName = (name: string) => (name.length > 16 ? name.slice(0, 15) + "…" : name);
+const gridRows = [0, 1, 2, 3];
 ---
 <section class="wrap top3" aria-labelledby="top3-title" data-community>
   <div class="top3__panel">
@@ -43,22 +62,37 @@ const initial = (name: string) => name.trim().charAt(0).toUpperCase();
       </div>
     </header>
 
-    {periods.map((p) => (
-      <div class="podium" role="tabpanel" id={`top3-panel-${p.id}`} aria-labelledby={`top3-tab-${p.id}`} hidden={p.id !== DEFAULT}>
-        <ol class="podium__row">
-          {podium(demo.leaderboard[p.id]).map(({ rank, e }) => (
-            <li class={`col col--${rank}`}>
-              {rank === 1 && <span class="glow" aria-hidden="true"></span>}
-              <span class="ring"><span class="ring__letter" aria-hidden="true">{initial(e.name)}</span></span>
-              <p class="col__name">{e.name}</p>
-              <p class="col__total">{formatPrice(e.total, locale)}</p>
-              <div class="block" aria-hidden="true"><span class="block__rank">{rank}</span></div>
-              <span class="sr-only">{rank}. {e.name}, {formatPrice(e.total, locale)}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
-    ))}
+    {periods.map((p) => {
+      const pts = points(demo.leaderboard[p.id]);
+      const line = pts.map((q) => `${q.x.toFixed(1)},${q.y.toFixed(1)}`).join(" ");
+      const area = pts.length
+        ? `${pts[0]!.x.toFixed(1)},${H - PB} ${line} ${pts[pts.length - 1]!.x.toFixed(1)},${H - PB}`
+        : "";
+      return (
+        <div class="chart" role="tabpanel" id={`top3-panel-${p.id}`} aria-labelledby={`top3-tab-${p.id}`} hidden={p.id !== DEFAULT}>
+          <svg class="chart__svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={c.topTitle}>
+            {gridRows.map((g) => {
+              const y = PT + ((H - PT - PB) * g) / 3;
+              return <line class="chart__grid" x1={PX} x2={W - PX} y1={y} y2={y} />;
+            })}
+            <line class="chart__axis" x1={PX} x2={W - PX} y1={H - PB} y2={H - PB} />
+            {pts.length > 0 && <polygon class="chart__area" points={area} />}
+            {pts.length > 1 && <polyline class="chart__line" points={line} />}
+            {pts.map((q) => (
+              <g class={`chart__point chart__point--${q.rank}`}>
+                <circle cx={q.x} cy={q.y} r={q.rank === 1 ? 7 : 5.5} />
+                <text class="chart__value" x={q.x} y={q.y - 14} text-anchor="middle">{shortName(q.e.name)}</text>
+                <text class="chart__rank" x={q.x} y={H - PB + 24} text-anchor="middle">Top {q.rank}</text>
+                <text class="chart__name" x={q.x} y={H - PB + 44} text-anchor="middle">{formatPrice(q.e.total, locale)}</text>
+              </g>
+            ))}
+          </svg>
+          <ol class="sr-only">
+            {pts.map((q) => <li>{q.rank}. {q.e.name}, {formatPrice(q.e.total, locale)}</li>)}
+          </ol>
+        </div>
+      );
+    })}
   </div>
 </section>
 
@@ -69,186 +103,58 @@ const initial = (name: string) => name.trim().charAt(0).toUpperCase();
 <style>
   .top3 { padding-top: clamp(44px, 6vw, 72px); }
   .top3__panel {
-    background: radial-gradient(120% 90% at 50% 0%, #0b6f5c 0%, #005848 45%, #003b31 100%);
-    color: #fff;
-    border-radius: 16px;
-    padding: 32px;
-    overflow: hidden;
+    background: var(--ink-2);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: clamp(20px, 3vw, 32px);
   }
   .top3__head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px 24px;
-    margin-bottom: 28px;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 16px 24px; margin-bottom: 24px;
   }
   .top3__titles { min-width: 0; }
   .top3__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-  .top3__title { margin: 0; font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; line-height: 1.2; color: #fff; }
-  .top3__sub { margin: 6px 0 0; color: #b7d8d0; font-size: 14px; }
+  .top3__title { margin: 0; font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; line-height: 1.2; color: var(--text); }
+  .top3__sub { margin: 6px 0 0; color: var(--text-dim); font-size: 14px; }
   .pill {
-    display: inline-block;
-    padding: 3px 10px;
-    border: 1px solid rgba(246, 208, 138, .45);
-    border-radius: 999px;
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    color: #f6d08a;
-    white-space: nowrap;
+    display: inline-block; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px;
+    font-size: 11px; letter-spacing: .04em; color: var(--text-dim); white-space: nowrap;
   }
 
   .seg {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding: 4px;
-    background: rgba(0, 0, 0, .2);
-    border-radius: 999px;
+    display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: var(--soft); border-radius: 999px;
   }
   .seg [role="tab"] {
-    appearance: none;
-    border: 0;
-    background: transparent;
-    color: #cfe5df;
-    font: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 8px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: color 0.2s, background-color 0.2s;
+    appearance: none; border: 0; background: transparent; color: var(--text-dim); font: inherit;
+    font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; cursor: pointer;
+    transition: color .2s, background-color .2s;
   }
-  .seg [role="tab"]:hover { color: #fff; }
-  .seg [role="tab"]:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-  .seg [role="tab"][aria-selected="true"] { background: #c47a1c; color: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, .25); }
+  .seg [role="tab"]:hover { color: var(--text); }
+  .seg [role="tab"]:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+  .seg [role="tab"][aria-selected="true"] { background: var(--black); color: var(--on-accent); }
 
-  .podium[hidden] { display: none; }
-  .podium__row {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: end;
-    gap: clamp(8px, 2vw, 24px);
-    max-width: 720px;
-    margin-inline: auto;
-    animation: rise 0.45s ease-out both;
-  }
-  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-  .col {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 0;
-  }
-  .glow {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 150%;
-    aspect-ratio: 1;
-    transform: translate(-50%, -20%);
-    background: radial-gradient(circle, rgba(246, 208, 138, 0.38), rgba(246, 208, 138, 0) 65%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Metallic laurel-style ring around the initial. */
-  .ring {
-    position: relative;
-    z-index: 1;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    background:
-      linear-gradient(#004a3d, #004a3d) padding-box,
-      conic-gradient(from 200deg, #8a5512, #f6d08a, #c47a1c, #ffe6b3, #7a4a10, #f6d08a, #8a5512) border-box;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    display: grid;
-    place-items: center;
-  }
-  .ring__letter { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
-  .col--1 .ring { width: 80px; height: 80px; border-width: 4px; }
-  .col--1 .ring__letter { font-size: 28px; }
-
-  .col__name {
-    position: relative;
-    z-index: 1;
-    margin: 12px 0 0;
-    max-width: 100%;
-    font-size: 15px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #fff;
-  }
-  .col__total {
-    position: relative;
-    z-index: 1;
-    margin: 2px 0 22px;
-    font-size: 13px;
-    color: #f6d08a;
-    white-space: nowrap;
-  }
-
-  /* Podium block: dark face with a light top slab for a 3D look. */
-  .block {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: var(--h, 105px);
-    border-radius: 6px 6px 0 0;
-    background: linear-gradient(#6e1a20, #450d12);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
-  .block::before {
-    content: "";
-    position: absolute;
-    left: -2px;
-    right: -2px;
-    top: -14px;
-    height: 14px;
-    border-radius: 6px 6px 0 0;
-    background: linear-gradient(#f6d08a, #c47a1c);
-  }
-  .block__rank {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-size: 44px;
-    font-weight: 800;
-    color: #fbe9c8;
-    line-height: 1;
-  }
-  .col--1 .block { --h: 150px; }
-  .col--2 .block { --h: 120px; }
-  .col--3 .block { --h: 105px; }
-  .col--1 .block__rank { font-size: 56px; }
+  /* ---- line chart ---- */
+  .chart[hidden] { display: none; }
+  .chart { animation: rise .45s ease-out both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .chart__svg { display: block; width: 100%; height: auto; max-width: 760px; margin-inline: auto; overflow: visible; }
+  .chart__grid { stroke: var(--line-soft); stroke-width: 1; stroke-dasharray: 4 5; }
+  .chart__axis { stroke: var(--line); stroke-width: 1.2; }
+  .chart__area { fill: var(--gold); opacity: .08; }
+  .chart__line { fill: none; stroke: var(--black); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+  .chart__point circle { fill: var(--ink-2); stroke: var(--black); stroke-width: 2.5; }
+  .chart__point--1 circle { fill: var(--gold); stroke: var(--gold); }
+  .chart__value { fill: var(--text); font-size: 15px; font-weight: 700; font-family: var(--font-sans, sans-serif); }
+  .chart__rank { fill: var(--gold); font-size: 13px; font-weight: 700; letter-spacing: .04em; font-family: var(--font-sans, sans-serif); }
+  .chart__name { fill: var(--text-dim); font-size: 13px; font-family: var(--font-sans, sans-serif); }
 
   @media (max-width: 640px) {
-    .top3__panel { padding: 20px 16px; border-radius: 16px; }
-    .top3__head { margin-bottom: 20px; }
     .seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
     .seg [role="tab"] { padding: 8px 6px; font-size: 12px; line-height: 1.25; text-align: center; }
-    .ring { width: 48px; height: 48px; border-width: 2px; }
-    .ring__letter { font-size: 17px; }
-    .col--1 .ring { width: 60px; height: 60px; border-width: 3px; }
-    .col--1 .ring__letter { font-size: 22px; }
-    .col__name { font-size: 13px; margin-top: 10px; }
-    .col__total { font-size: 12px; }
-    .col--1 .block { --h: 110px; }
-    .col--2 .block { --h: 88px; }
-    .col--3 .block { --h: 76px; }
-    .block::before { height: 10px; top: -10px; }
-    .block__rank { font-size: 30px; }
-    .col--1 .block__rank { font-size: 40px; }
+    .chart__value { font-size: 20px; }
+    .chart__rank { font-size: 18px; }
+    .chart__name { font-size: 18px; }
   }
-  @media (prefers-reduced-motion: reduce) { .podium__row { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .chart { animation: none; } }
 </style>
