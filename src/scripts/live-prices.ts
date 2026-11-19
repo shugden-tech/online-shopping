@@ -91,6 +91,7 @@ function updateCard(card: HTMLElement, detail: LiveDetail) {
     detail.hidden.push(id);
     return;
   }
+  if (p) livePhotos(card, p.imageFront, p.imageBack);
   const opts = [...card.querySelectorAll<HTMLButtonElement>(".pcard__dec-opt[data-ml]")];
   const views = opts.map((o) => skuView(id, Number(o.dataset.ml)));
   opts.forEach((o, k) => {
@@ -140,6 +141,95 @@ function updateCard(card: HTMLElement, detail: LiveDetail) {
   detail.sizes[id] = [...new Set([...(fullMl ? [fullMl] : []), ...opts.map((o) => Number(o.dataset.ml))])].filter((m) => skuView(id, m).status === "ok");
 }
 
+/** Copies Astro's scoped-style attributes so elements created here pick up the component's CSS. */
+function scoped(from: Element, to: Element) {
+  for (const a of from.attributes) if (a.name.startsWith("data-astro-cid")) to.setAttribute(a.name, "");
+}
+
+/**
+ * Photos the owner set in the admin (catalog-state imageFront / imageBack) replace the built ones without a
+ * rebuild: the front is the main photo, the back the hover photo.
+ */
+function livePhotos(card: HTMLElement, front?: string, back?: string) {
+  if (!front || card.dataset.livePhotos === front + "|" + (back ?? "")) return;
+  card.dataset.livePhotos = front + "|" + (back ?? "");
+  const media = card.querySelector<HTMLElement>(".pcard__media");
+  if (!media) return;
+  let box = media.querySelector<HTMLElement>("[data-photos]");
+  if (!box) {
+    box = doc.createElement("span");
+    box.className = "pcard__photos";
+    box.dataset.photos = "";
+    scoped(card, box);
+    media.replaceChildren(box);
+  }
+  const put = (cls: string, src: string | undefined) => {
+    let img = box!.querySelector<HTMLImageElement>(`.${cls}`);
+    if (!src) return void img?.remove();
+    if (!img) {
+      img = doc.createElement("img");
+      img.className = `pcard__img ${cls}`;
+      img.width = img.height = 800;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.alt = card.querySelector(".pcard__name")?.textContent?.trim() ?? "";
+      scoped(card, img);
+      box!.append(img);
+    }
+    if (img.getAttribute("src") === src) return;
+    img.removeAttribute("srcset");
+    img.removeAttribute("sizes");
+    if (cls.endsWith("alt")) img.onload = () => (img!.dataset.ok = "");
+    img.src = src;
+  };
+  delete box.dataset.main;
+  delete box.dataset.alt;
+  put("pcard__img--main", front);
+  put("pcard__img--alt", back && back !== front ? back : undefined);
+}
+
+/** Product page gallery (`[data-gallery-pid]`): the admin's front / back photos replace the built ones. */
+function updateGallery(stage: HTMLElement) {
+  const p = productState(stage.dataset.galleryPid ?? "");
+  const front = p?.imageFront;
+  if (!front) return;
+  const back = p?.imageBack && p.imageBack !== front ? p.imageBack : undefined;
+  const key = front + "|" + (back ?? "");
+  if (stage.dataset.livePhotos === key) return;
+  stage.dataset.livePhotos = key;
+  const imgs = [...stage.querySelectorAll<HTMLImageElement>("[data-slide] img, .pdp__thumb img")];
+  if (imgs.length) {
+    // built gallery: slide 0 = front, slide 1 = back (when there is one)
+    stage.querySelectorAll<HTMLImageElement>("[data-slide] img").forEach((img, i) => {
+      const src = i === 0 ? front : back;
+      if (!src) return;
+      img.removeAttribute("srcset");
+      img.removeAttribute("sizes");
+      img.src = src;
+    });
+    stage.querySelectorAll<HTMLImageElement>(".pdp__thumb img").forEach((img, i) => {
+      const src = i === 0 ? front : back;
+      if (src) img.src = src;
+    });
+    return;
+  }
+  // illustrated bottle only: show the photo(s) instead
+  const float = stage.querySelector<HTMLElement>(".pdp__float");
+  if (!float) return;
+  const fig = doc.createElement("div");
+  fig.className = "pdp__live-photos";
+  fig.style.cssText = "display:grid;gap:12px;grid-template-columns:" + (back ? "1fr 1fr" : "1fr");
+  for (const src of back ? [front, back] : [front]) {
+    const img = doc.createElement("img");
+    img.src = src;
+    img.alt = doc.querySelector("h1")?.textContent?.trim() ?? "";
+    img.width = img.height = 1200;
+    img.style.cssText = "width:100%;height:auto;border-radius:var(--radius);background:#fff";
+    fig.append(img);
+  }
+  float.replaceChildren(fig);
+}
+
 /** Header mega-menu "featured" items: the lowest live price, or nothing. */
 function updateFeatured(span: HTMLElement) {
   const id = span.dataset.spFrom ?? "";
@@ -174,6 +264,7 @@ export function update(): void {
   const detail: LiveDetail = { hidden: [], from: {}, sizes: {} };
   doc.querySelectorAll<HTMLElement>("[data-card][data-pid]").forEach((c) => updateCard(c, detail));
   doc.querySelectorAll<HTMLElement>("[data-sp-from]").forEach(updateFeatured);
+  doc.querySelectorAll<HTMLElement>("[data-gallery-pid]").forEach(updateGallery);
   // kept for islands that hydrate after this ran (ShopFilters reads it on mount)
   (window as unknown as { gzLive?: LiveDetail }).gzLive = detail;
   doc.dispatchEvent(new CustomEvent<LiveDetail>("gz:live", { detail }));

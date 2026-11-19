@@ -49,13 +49,13 @@ const socials = [
       <div class="ftr__col" id="footer-contact">
         <h2 class="t-title">{tr.footer.contact}</h2>
         <ul>
-          <li><span class="ftr__k">{tr.footer.phone}</span> <a href={`tel:${tel}`}>{contact.phone}</a></li>
-          <li><span class="ftr__k">{tr.footer.hours}</span> {pick(contact.hours, locale)}</li>
+          <li><span class="ftr__k">{tr.footer.phone}</span> <a href={`tel:${tel}`} data-contact="phone">{contact.phone}</a></li>
+          <li><span class="ftr__k">{tr.footer.hours}</span> <span data-contact={`hours_${locale}`}>{pick(contact.hours, locale)}</span></li>
         </ul>
         <ul class="ftr__social">
           {socials.map((s) => (
             <li>
-              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} data-contact={s.name}>
                 <Icon name={s.name} size={20} />
               </a>
             </li>
@@ -71,6 +71,34 @@ const socials = [
     </div>
   </div>
 </footer>
+
+<script>
+  // Live contact details and store notice from the admin settings (GET /api/store/info). The built values stay
+  // when a setting is empty or the request fails.
+  fetch("/api/store/info", { headers: { Accept: "application/json" } })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d) => {
+      if (!d?.ok) return;
+      const lang = document.documentElement.lang === "en" ? "en" : "mn";
+      for (const el of document.querySelectorAll<HTMLElement>("[data-contact]")) {
+        const v = d.contact?.[el.dataset.contact!];
+        if (typeof v !== "string" || !v.trim()) continue;
+        if (el.dataset.contact === "phone") { el.textContent = v; el.setAttribute("href", "tel:" + v.replace(/[^+\d]/g, "")); }
+        else if (el instanceof HTMLAnchorElement) { if (/^https:\/\//.test(v)) el.href = v; }
+        else el.textContent = v;
+      }
+      const notice = d.notice?.[lang];
+      if (typeof notice === "string" && notice.trim() && !document.querySelector(".store-notice")) {
+        const n = document.createElement("p");
+        n.className = "store-notice";
+        n.setAttribute("role", "status");
+        n.textContent = notice;
+        n.style.cssText = "margin:0;padding:8px 16px;text-align:center;font-size:13px;background:var(--black);color:var(--on-accent)";
+        document.body.prepend(n);
+      }
+    })
+    .catch(() => {});
+</script>
 
 <style>
   .ftr { border-top: 1px solid var(--line); background: var(--ink); padding-top: clamp(48px, 7vw, 88px); margin-top: auto; }

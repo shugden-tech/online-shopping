@@ -50,7 +50,7 @@ const jsonLd = {
   <article class="pdp" style={`--tint:var(--fam-${p.family})`}>
     <div class="wrap pdp__top page-top">
       {photos.length ? (
-        <div class="pdp__stage pdp__stage--photos" data-gallery>
+        <div class="pdp__stage pdp__stage--photos" data-gallery data-gallery-pid={p.slug}>
           <div class="pdp__slides" data-slides tabindex="0" aria-label={`${p.brand} ${p.name}`}>
             {photos.map((ph, i) => (
               <figure class="pdp__slide" data-slide={i}>
@@ -77,7 +77,7 @@ const jsonLd = {
           </div>
         </div>
       ) : (
-        <div class="pdp__stage">
+        <div class="pdp__stage" data-gallery-pid={p.slug}>
           <div class="pdp__glow" aria-hidden="true"></div>
           <div class="pdp__float">
             <BottleArt

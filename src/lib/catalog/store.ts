@@ -36,9 +36,9 @@ export async function getStoreState(
   if (!ids.length) return state;
   const [prodRes, skus] = await Promise.all([
     db
-      .prepare("SELECT id, status, sale_locked FROM products WHERE id IN (SELECT value FROM json_each(?1))")
+      .prepare("SELECT id, status, sale_locked, image_front, image_back FROM products WHERE id IN (SELECT value FROM json_each(?1))")
       .bind(JSON.stringify(ids))
-      .all<{ id: string; status: ProductStatus; sale_locked: number }>(),
+      .all<{ id: string; status: ProductStatus; sale_locked: number; image_front: string | null; image_back: string | null }>(),
     skusFor(db, ids),
   ]);
   const byId = new Map((prodRes.results ?? []).map((r) => [r.id, r]));
@@ -50,6 +50,9 @@ export async function getStoreState(
       id,
       visible: p.status === "active",
       saleLocked: prod.saleLocked,
+      // the admin's photos (0004): the storefront swaps them in without a rebuild
+      ...(p.image_front ? { imageFront: p.image_front } : {}),
+      ...(p.image_back ? { imageBack: p.image_back } : {}),
       skus: skus
         .filter((s) => s.product_id === id)
         .sort((a, b) => a.ml - b.ml)
