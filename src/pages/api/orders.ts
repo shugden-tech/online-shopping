@@ -13,6 +13,7 @@ import { issuesToErrors, orderSchema } from "../../lib/order-schema";
 import { ensureQpayInvoice, qpayEnabled } from "../../lib/payments";
 import { clientIp, fail, hitRateLimit, json, pruneRateLimits, readJson } from "../../lib/server";
 import { getSettings } from "../../lib/settings";
+import { deliverDue } from "../../lib/webhooks";
 
 export const prerender = false;
 
@@ -102,6 +103,9 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
     } else {
       console.log(`[orders] ${placed.orderNo}: Telegram notification skipped (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set)`);
     }
+
+    // the owner's outbound webhooks (order.created was queued in the order batch)
+    background(deliverDue(env, 10).catch((err) => console.error("[orders] webhook delivery failed", String(err))));
 
     return json(201, await checkoutResponse(env, fresh, payment));
   } catch (err) {

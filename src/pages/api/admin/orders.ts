@@ -1,4 +1,4 @@
-// GET /api/admin/orders?status=&paymentStatus=&q=&limit=&cursor= [orders.read]
+// GET /api/admin/orders?status=&paymentStatus=&q=&from=&to=&limit=&cursor= [orders.read]
 // Newest first, keyset paging: { ok, items, nextCursor }. Items include paymentStatus and holdExpiresAt.
 // q matches part of the order number, phone or name.
 import type { APIRoute } from "astro";
@@ -24,6 +24,12 @@ export const GET: APIRoute = async ({ request, locals, clientAddress, url }) => 
     const q = (url.searchParams.get("q") ?? "").trim().slice(0, 80);
     const limit = Math.min(100, Math.max(1, Number(url.searchParams.get("limit")) || 50));
     const cursor = Number(url.searchParams.get("cursor")) || 0;
+    // from / to: Mongolia calendar days (YYYY-MM-DD, inclusive), 0004
+    const from = url.searchParams.get("from") ?? "";
+    const to = url.searchParams.get("to") ?? "";
+    const DAY = /^\d{4}-\d{2}-\d{2}$/;
+    if (from && !DAY.test(from)) return fail(400, { from: "invalid" });
+    if (to && !DAY.test(to)) return fail(400, { to: "invalid" });
 
     const where: string[] = [];
     const args: (string | number)[] = [];
@@ -34,6 +40,8 @@ export const GET: APIRoute = async ({ request, locals, clientAddress, url }) => 
       const n = args.length;
       where.push(`(instr(order_no, ?${n - 2}) > 0 OR instr(phone, ?${n - 1}) > 0 OR instr(lower(name), ?${n}) > 0)`);
     }
+    if (from) { args.push(from); where.push(`date(created_at, '+8 hours') >= ?${args.length}`); }
+    if (to) { args.push(to); where.push(`date(created_at, '+8 hours') <= ?${args.length}`); }
     if (cursor > 0) { args.push(cursor); where.push(`id < ?${args.length}`); }
     args.push(limit + 1);
     const res = await env.DB.prepare(

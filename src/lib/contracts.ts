@@ -57,6 +57,9 @@ export interface StoreProductState {
   id: string;
   visible: boolean;          // status === 'active'
   saleLocked: boolean;
+  /** Admin photos (0004), present only when set. */
+  imageFront?: string;
+  imageBack?: string;
   skus: StoreSkuState[];
 }
 export interface StoreSkuState {
@@ -143,16 +146,18 @@ export type PaymentInstructions =
 
 /* ---------------- delivery ---------------- */
 
-export const SHIPMENT_STATUSES = ["pending", "created", "picked_up", "in_transit", "delivered", "failed", "cancelled"] as const;
+export const SHIPMENT_STATUSES = ["pending", "created", "picked_up", "in_transit", "delivered", "failed", "cancelled", "returned"] as const;
 export type ShipmentStatus = (typeof SHIPMENT_STATUSES)[number];
 export const SHIPMENT_TRANSITIONS: Record<ShipmentStatus, readonly ShipmentStatus[]> = {
-  pending: ["created", "failed", "cancelled"],
+  // manual delivery may skip `created` (pending -> picked_up / in_transit); 0004 added `returned`
+  pending: ["created", "picked_up", "in_transit", "failed", "cancelled"],
   created: ["picked_up", "in_transit", "delivered", "failed", "cancelled"],
-  picked_up: ["in_transit", "delivered", "failed"],
-  in_transit: ["delivered", "failed"],
+  picked_up: ["in_transit", "delivered", "failed", "returned"],
+  in_transit: ["delivered", "failed", "returned"],
   delivered: [],
-  failed: ["pending", "cancelled"],   // failed -> pending = retry
+  failed: ["pending", "cancelled", "returned"],   // failed -> pending = retry
   cancelled: [],
+  returned: [],                                   // parcel came back to the shop; the owner decides about the order
 };
 export const canShipmentTransition = (from: string, to: string) =>
   (SHIPMENT_TRANSITIONS as Record<string, readonly string[]>)[from]?.includes(to) ?? false;
@@ -182,9 +187,25 @@ export const SETTINGS = {
   /** Short notice shown on the storefront when set (e.g. holiday closure). */
   "store.notice_mn": "" as string,
   "store.notice_en": "" as string,
+  /** Bank transfer details shown to customers (0004). Empty = fall back to src/data/settings.json. */
+  "bank.name": "" as string,
+  "bank.account": "" as string,
+  "bank.holder": "" as string,
+  /** Contact info (0004). Empty = fall back to src/data/settings.json. */
+  "contact.phone": "" as string,
+  "contact.hours_mn": "" as string,
+  "contact.hours_en": "" as string,
+  "contact.instagram": "" as string,
+  "contact.facebook": "" as string,
+  "contact.telegram": "" as string,
 };
 export type SettingKey = keyof typeof SETTINGS;
 export type Settings = { [K in SettingKey]: (typeof SETTINGS)[K] };
+
+/* ---------------- outbound webhooks (0004) ---------------- */
+
+export const WEBHOOK_EVENTS = ["order.created", "order.paid", "order.cancelled", "shipment.updated"] as const;
+export type WebhookEvent = (typeof WEBHOOK_EVENTS)[number];
 
 /* ---------------- admin auth ---------------- */
 

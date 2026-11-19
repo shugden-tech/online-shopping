@@ -5,14 +5,36 @@ import type { Actor, PaymentInstructions, PaymentProvider } from "../contracts";
 import { commitReservations, errText, eventStatement, guard, guardOrderStatus, isGuardError } from "../orders/state";
 import { loadOrder, type D1, type OrderRow, type PaymentRow, type Stmt } from "../orders/types";
 import { checkInvoice, createInvoice, qpayConfigured, type QpayInvoice } from "./qpay";
+import { emitStatement } from "../webhooks";
 
 export { qpayConfigured, qpayEnabled } from "./qpay";
 
 /* ---------------- instructions ---------------- */
 
-export function bankInstructions(orderNo: string, locale: "mn" | "en"): PaymentInstructions {
+export function bankInstructions(orderNo: string, locale: "mn" | "en", live?: Partial<Record<"bank.name" | "bank.account" | "bank.holder", string>>): PaymentInstructions {
   const b = fileSettings.payment.bank;
-  return { method: "bank", bank: b.name[locale], account: b.accountNumber, holder: b.accountName[locale], reference: orderNo };
+  // the owner's live values (admin settings, 0004) win over the build-time file
+  return {
+    method: "bank",
+    bank: live?.["bank.name"] || b.name[locale],
+    account: live?.["bank.account"] || b.accountNumber,
+    holder: live?.["bank.holder"] || b.accountName[locale],
+    reference: orderNo,
+  };
+}
+
+async function liveBank(db: D1) {
+  const res = await db
+    .prepare("SELECT key, value_json FROM store_settings WHERE key IN ('bank.name', 'bank.account', 'bank.holder')")
+    .all<{ key: "bank.name" | "bank.account" | "bank.holder"; value_json: string }>();
+  const out: Partial<Record<"bank.name" | "bank.account" | "bank.holder", string>> = {};
+  for (const r of res.results ?? []) {
+    try {
+      const v = JSON.parse(r.value_json);
+      if (typeof v === "string" && v.trim()) out[r.key] = v.trim();
+    } catch { /* ignore */ }
+  }
+  return out;
 }
 
 function qpayInstructions(row: Pick<PaymentRow, "provider_ref" | "data_json">): PaymentInstructions | null {
@@ -35,7 +57,7 @@ function qpayInstructions(row: Pick<PaymentRow, "provider_ref" | "data_json">): 
 
 /** The instructions a customer needs to pay this order now (null when nothing is payable / no invoice yet). */
 export async function instructionsFor(db: D1, order: OrderRow): Promise<PaymentInstructions | null> {
-  if (order.payment === "bank") return bankInstructions(order.order_no, order.locale);
+  if (order.payment === "bank") return bankInstructions(order.order_no, order.locale, await liveBank(db));
   const row = await db
     .prepare("SELECT provider_ref, data_json FROM payments WHERE order_id = ?1 AND provider = 'qpay' AND status = 'pending' AND provider_ref IS NOT NULL ORDER BY id DESC LIMIT 1")
     .bind(order.id)
@@ -228,6 +250,7 @@ export async function markPaid(env: Env, order: OrderRow, p: PaidInput, actor: A
         .bind(order.id, from),
       eventStatement(db, order.id, from, "paid", actor, p.note ?? `${p.provider} ${p.amount}₮${ref ? ` ref ${ref}` : ""}`),
       auditStatement(db, actor, "order.paid", "order", order.order_no, auditData),
+      emitStatement(db, "order.paid", { orderNo: order.order_no, total: order.total, provider: p.provider, amount: p.amount }),
     ];
     result = "paid";
   } else if (row) {

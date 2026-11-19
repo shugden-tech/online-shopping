@@ -9,6 +9,11 @@ export const createSchema = z
   .object({
     orderNo: z.string().trim().toUpperCase().regex(ORDER_NO_RE),
     provider: z.string().regex(PROVIDER_ID_RE).optional(),
+    courier: z.string().trim().max(80).nullable().optional(),
+    fee: z.number().int().min(0).max(10_000_000).nullable().optional(),
+    notes: z.string().trim().max(500).nullable().optional(),
+    trackingNo: z.string().trim().max(64).regex(/^[A-Za-z0-9 ._/-]*$/).nullable().optional(),
+    trackingUrl: z.string().trim().max(500).url().refine((u) => u.startsWith("https://"), "https only").nullable().optional(),
   })
   .strict();
 
@@ -27,6 +32,9 @@ export const patchSchema = z
     trackingNo: trackingNo.optional(),
     trackingUrl: trackingUrl.optional(),
     note: z.string().trim().min(1).max(300).optional(),
+    courier: z.string().trim().max(80).nullable().optional(),
+    fee: z.number().int().min(0).max(10_000_000).nullable().optional(),
+    notes: z.string().trim().max(500).nullable().optional(),
   })
   .strict()
   .refine((v) => Object.keys(v).length > 0, { message: "empty" });

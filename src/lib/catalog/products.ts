@@ -9,9 +9,28 @@ export interface ProductQuery {
   q?: string;
   status?: ProductStatus;
   brand?: string;
+  /** 0004 admin filters */
+  gender?: string;
+  family?: string;
+  hasPrice?: boolean;
+  hasPhoto?: boolean;
+  lowStock?: boolean;
+  sort?: ProductSort;
   page: number;
   limit: number;
 }
+
+export const PRODUCT_SORTS = ["default", "name", "brand", "updated", "created"] as const;
+export type ProductSort = (typeof PRODUCT_SORTS)[number];
+const SORT_SQL: Record<ProductSort, string> = {
+  default: "sort, brand COLLATE NOCASE, name COLLATE NOCASE, id",
+  name: "name COLLATE NOCASE, brand COLLATE NOCASE, id",
+  brand: "brand COLLATE NOCASE, name COLLATE NOCASE, id",
+  updated: "updated_at DESC, id",
+  created: "created_at DESC, id",
+};
+/** Low stock = a tracked SKU with this many or fewer units available. */
+export const LOW_STOCK = 3;
 
 /** Parses ?q=&status=&brand=&page=&limit= . Returns field errors for bad values. */
 export function parseProductQuery(sp: URLSearchParams): ProductQuery | { errors: Record<string, string> } {
@@ -24,8 +43,22 @@ export function parseProductQuery(sp: URLSearchParams): ProductQuery | { errors:
   const limit = sp.has("limit") ? Number(sp.get("limit")) : 50;
   if (!Number.isInteger(page) || page < 1 || page > 10_000) errors.page = "invalid";
   if (!Number.isInteger(limit) || limit < 1 || limit > 100) errors.limit = "invalid";
+  const gender = sp.get("gender") || undefined;
+  if (gender && !["women", "men", "unisex", "none"].includes(gender)) errors.gender = "invalid";
+  const family = (sp.get("family") ?? "").trim().slice(0, 40) || undefined;
+  const flag = (k: string) => {
+    const v = sp.get(k);
+    if (v === null || v === "") return undefined;
+    if (v !== "1" && v !== "0") errors[k] = "invalid";
+    return v === "1";
+  };
+  const hasPrice = flag("hasPrice");
+  const hasPhoto = flag("hasPhoto");
+  const lowStock = flag("lowStock");
+  const sort = (sp.get("sort") || "default") as ProductSort;
+  if (!(PRODUCT_SORTS as readonly string[]).includes(sort)) errors.sort = "invalid";
   if (Object.keys(errors).length) return { errors };
-  return { q: q || undefined, status: status as ProductStatus | undefined, brand: brand || undefined, page, limit };
+  return { q: q || undefined, status: status as ProductStatus | undefined, brand: brand || undefined, gender, family, hasPrice, hasPhoto, lowStock, sort, page, limit };
 }
 
 const likeEscape = (s: string) => s.replace(/[\\%_]/g, (c) => "\\" + c);
@@ -43,6 +76,14 @@ export async function listProducts(db: D1, query: ProductQuery): Promise<Page<Ad
   }
   if (query.status) where.push(`status = ${arg(query.status)}`);
   if (query.brand) where.push(`brand = ${arg(query.brand)} COLLATE NOCASE`);
+  if (query.gender === "none") where.push("gender IS NULL");
+  else if (query.gender) where.push(`gender = ${arg(query.gender)}`);
+  if (query.family === "none") where.push("family IS NULL");
+  else if (query.family) where.push(`family = ${arg(query.family)}`);
+  const priced = "EXISTS (SELECT 1 FROM skus k WHERE k.product_id = products.id AND k.price IS NOT NULL)";
+  if (query.hasPrice !== undefined) where.push(query.hasPrice ? priced : `NOT ${priced}`);
+  if (query.hasPhoto !== undefined) where.push(query.hasPhoto ? "COALESCE(image_front, '') <> ''" : "COALESCE(image_front, '') = ''");
+  if (query.lowStock) where.push(`EXISTS (SELECT 1 FROM skus k WHERE k.product_id = products.id AND k.stock IS NOT NULL AND k.stock - k.reserved <= ${LOW_STOCK})`);
   const w = where.length ? `WHERE ${where.join(" AND ")}` : "";
   const offset = (query.page - 1) * query.limit;
   const [count, rows] = await db.batch([
@@ -50,7 +91,7 @@ export async function listProducts(db: D1, query: ProductQuery): Promise<Page<Ad
     db
       .prepare(
         `SELECT ${PRODUCT_COLS} FROM products ${w}
-         ORDER BY sort, brand COLLATE NOCASE, name COLLATE NOCASE, id LIMIT ${arg(query.limit)} OFFSET ${arg(offset)}`,
+         ORDER BY ${SORT_SQL[query.sort ?? "default"]} LIMIT ${arg(query.limit)} OFFSET ${arg(offset)}`,
       )
       .bind(...args),
   ]);

@@ -33,6 +33,8 @@ interface Env {
   DELIVERY_BASE_URL?: string;
   DELIVERY_API_KEY?: string;
   DELIVERY_WEBHOOK_SECRET?: string;
+  /** DEV/TEST ONLY: "1" lets outbound webhook endpoints be http://127.0.0.1:port (never set in production). */
+  WEBHOOK_ALLOW_LOCAL?: string;
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;

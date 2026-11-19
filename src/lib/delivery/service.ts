@@ -13,6 +13,7 @@
 import type { D1PreparedStatement } from "@cloudflare/workers-types";
 import { auditStatement } from "../audit";
 import { canShipmentTransition, type Actor, type ShipmentStatus } from "../contracts";
+import { emitStatement } from "../webhooks";
 import { getAdapter } from "./registry";
 import { DeliveryError, type DeliveryAdapter, type DeliveryOrder } from "./types";
 
@@ -39,12 +40,15 @@ export interface ShipmentRow {
   next_retry_at: string | null;
   created_at: string;
   updated_at: string;
+  courier?: string | null;
+  fee?: number | null;
+  note?: string | null;
   order_no: string;
   order_status: string;
 }
 
 const SELECT_SHIPMENT = `SELECT s.id, s.order_id, s.provider, s.provider_ref, s.tracking_no, s.tracking_url, s.status, s.attempts,
-  s.last_error, s.next_retry_at, s.created_at, s.updated_at, o.order_no, o.status AS order_status
+  s.last_error, s.next_retry_at, s.created_at, s.updated_at, s.courier, s.fee, s.note, o.order_no, o.status AS order_status
   FROM shipments s JOIN orders o ON o.id = s.order_id`;
 
 export function shipmentView(r: ShipmentRow) {
@@ -62,6 +66,9 @@ export function shipmentView(r: ShipmentRow) {
     nextRetryAt: r.next_retry_at,
     createdAt: r.created_at,
     updatedAt: r.updated_at,
+    courier: r.courier ?? null,
+    fee: r.fee ?? null,
+    notes: r.note ?? null,
   };
 }
 export type ShipmentView = ReturnType<typeof shipmentView>;
@@ -167,6 +174,7 @@ export async function transition(db: D1, ship: Pick<ShipmentRow, "id" | "status"
       .bind(ship.id, from, t.to, t.source, t.externalEventId ?? null, t.note ?? null),
     ...orderSideEffects(db, ship.order_id, ship.id, t.to, t.actor),
     auditStatement(db, t.actor, "shipment.status", "shipment", ship.id, { from, to: t.to, source: t.source, ...t.auditData }),
+    emitStatement(db, "shipment.updated", { shipmentId: ship.id, from, status: t.to, source: t.source, trackingNo: set.trackingNo ?? null }, ship.order_id),
   ];
   try {
     await db.batch(stmts);
@@ -369,6 +377,21 @@ export interface PatchInput {
   trackingNo?: string | null;
   trackingUrl?: string | null;
   note?: string;
+  /** Manual delivery details (0004): stored on the shipment, not an event. */
+  courier?: string | null;
+  fee?: number | null;
+  notes?: string | null;
+}
+
+/** UPDATE for the courier / fee / notes columns (null when none are given). */
+export function detailsStatement(db: D1, id: number, p: Pick<PatchInput, "courier" | "fee" | "notes">) {
+  const sets: string[] = [];
+  const args: (string | number | null)[] = [];
+  if (p.courier !== undefined) { sets.push("courier = ?"); args.push(p.courier); }
+  if (p.fee !== undefined) { sets.push("fee = ?"); args.push(p.fee); }
+  if (p.notes !== undefined) { sets.push("note = ?"); args.push(p.notes); }
+  if (!sets.length) return null;
+  return db.prepare(`UPDATE shipments SET ${sets.join(", ")}, updated_at = datetime('now') WHERE id = ?`).bind(...args, id);
 }
 
 /**
@@ -381,6 +404,18 @@ export async function patchShipment(env: Env, id: number, p: PatchInput, actor: 
   const s = await loadShipment(db, id);
   if (!s) return { ok: false, status: 404, errors: { form: "notFound" } };
   const adapter = getAdapter(s.provider);
+  const details = detailsStatement(db, id, p);
+  if (details) {
+    await db.batch([
+      details,
+      auditStatement(db, actor, "shipment.details", "shipment", s.id, {
+        ...(p.courier !== undefined ? { courier: p.courier } : {}),
+        ...(p.fee !== undefined ? { fee: p.fee } : {}),
+        ...(p.notes !== undefined ? { notes: true } : {}),
+      }),
+    ]);
+    if (p.status === undefined && p.trackingNo === undefined && p.trackingUrl === undefined && p.note === undefined) return { ok: true };
+  }
   const set: TransitionInput["set"] = {};
   if (p.trackingNo !== undefined) set.trackingNo = p.trackingNo;
   if (p.trackingUrl !== undefined) set.trackingUrl = p.trackingUrl;

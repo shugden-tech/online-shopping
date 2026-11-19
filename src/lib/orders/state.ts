@@ -6,6 +6,7 @@
 // write nothing at all, so stock is committed / released / restored exactly once.
 import { auditStatement } from "../audit";
 import { canOrderTransition, type Actor, type OrderStatus } from "../contracts";
+import { emitStatement } from "../webhooks";
 import type { D1, OrderRow, Stmt } from "./types";
 
 /**
@@ -145,6 +146,7 @@ export async function transitionOrder(
     eventStatement(db, order.id, from, to, actor, note),
     auditStatement(db, actor, "order.status", "order", order.order_no, { from, to, ...(extra[0] ? { reason: extra[0] } : {}) }),
   );
+  if (to === "cancelled") stmts.push(emitStatement(db, "order.cancelled", { orderNo: order.order_no, from, reason: extra[0] ?? null, total: order.total }));
   try {
     await db.batch(stmts);
     return { ok: true, from, to };

@@ -15,6 +15,12 @@ export interface InventoryItem extends AdminSku {
 
 export interface InventoryQuery {
   low?: number;
+  /** 0004: brand / name / SKU id contains */
+  q?: string;
+  /** 0004: only SKUs whose stock is tracked */
+  tracked?: boolean;
+  /** 0004: only SKUs of active products */
+  active?: boolean;
   cursor?: string;
   limit: number;
 }
@@ -28,8 +34,11 @@ export function parseInventoryQuery(sp: URLSearchParams): InventoryQuery | { err
   if (cursor && cursor.length > 140) errors.cursor = "invalid";
   const limit = sp.has("limit") ? Number(sp.get("limit")) : 100;
   if (!Number.isInteger(limit) || limit < 1 || limit > 200) errors.limit = "invalid";
+  const q = (sp.get("q") ?? "").trim().slice(0, 80) || undefined;
+  const tracked = sp.get("tracked") === "1" || undefined;
+  const active = sp.get("active") === "1" || undefined;
   if (Object.keys(errors).length) return { errors };
-  return { low, cursor, limit };
+  return { low, q, tracked, active, cursor, limit };
 }
 
 /** Keyset list ordered by SKU id. `low` = tracked SKUs whose available (stock - reserved) is <= low. */
@@ -41,6 +50,12 @@ export async function listInventory(db: D1, q: InventoryQuery): Promise<{ items:
     return `?${args.length}`;
   };
   if (q.low !== undefined) where.push(`s.stock IS NOT NULL AND s.stock - s.reserved <= ${arg(q.low)}`);
+  if (q.q) {
+    const p = arg(`%${q.q.replace(/[\\%_]/g, (c) => "\\" + c)}%`);
+    where.push(`(p.brand LIKE ${p} ESCAPE '\\' OR p.name LIKE ${p} ESCAPE '\\' OR s.id LIKE ${p} ESCAPE '\\')`);
+  }
+  if (q.tracked) where.push("s.stock IS NOT NULL");
+  if (q.active) where.push("p.status = 'active'");
   if (q.cursor) where.push(`s.id > ${arg(q.cursor)}`);
   const sql = `SELECT ${SKU_COLS.split(", ").map((c) => "s." + c).join(", ")}, p.brand, p.name, p.status AS product_status
     FROM skus s JOIN products p ON p.id = s.product_id ${where.length ? "WHERE " + where.join(" AND ") : ""}

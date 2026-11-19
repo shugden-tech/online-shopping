@@ -2,6 +2,7 @@
 //   orders insert -> skus.reserved += qty (tracked lines; the skus CHECK reserved <= stock aborts the batch on
 //   oversell) -> reservations (held) -> order_events (created) -> audit_log.
 import { auditStatement } from "../audit";
+import { emitStatement } from "../webhooks";
 import type { PaymentProvider, Settings } from "../contracts";
 import { orderNumber } from "./number";
 import { firstShortLine } from "./pricing";
@@ -76,6 +77,10 @@ export async function placeOrder(
       auditStatement(db, "customer", "order.create", "order", orderNo, {
         payment: o.payment,
         total: priced.total,
+        items: priced.lines.map((l) => ({ sku: l.sku, qty: l.qty, price: l.price })),
+      }),
+      emitStatement(db, "order.created", {
+        orderNo, payment: o.payment, subtotal: priced.subtotal, delivery: priced.delivery, total: priced.total,
         items: priced.lines.map((l) => ({ sku: l.sku, qty: l.qty, price: l.price })),
       }),
     ];

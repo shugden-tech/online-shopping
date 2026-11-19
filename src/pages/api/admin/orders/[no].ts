@@ -23,15 +23,16 @@ export const GET: APIRoute = async ({ request, locals, clientAddress, params }) 
     if (!ORDER_NO_RE.test(no)) return fail(404, { form: "notFound" });
     const order = await loadOrder(env.DB, no);
     if (!order) return fail(404, { form: "notFound" });
-    const [events, reservations, payments, shipments] = await env.DB.batch([
+    const [events, reservations, payments, shipments, notes] = await env.DB.batch([
       env.DB.prepare("SELECT at, from_status AS fromStatus, to_status AS toStatus, actor, note FROM order_events WHERE order_id = ?1 ORDER BY id").bind(order.id),
       env.DB.prepare("SELECT sku_id AS skuId, qty, tracked, status, created_at AS createdAt, updated_at AS updatedAt FROM reservations WHERE order_id = ?1 ORDER BY id").bind(order.id),
       env.DB.prepare(
         "SELECT id, order_id, provider, provider_ref, amount, status, paid_amount, provider_payment_id, created_at, updated_at, paid_at FROM payments WHERE order_id = ?1 ORDER BY id",
       ).bind(order.id),
       env.DB.prepare(
-        "SELECT id, provider, tracking_no AS trackingNo, tracking_url AS trackingUrl, status, created_at AS createdAt, updated_at AS updatedAt FROM shipments WHERE order_id = ?1 ORDER BY id",
+        "SELECT id, provider, tracking_no AS trackingNo, tracking_url AS trackingUrl, status, courier, fee, note AS notes, created_at AS createdAt, updated_at AS updatedAt FROM shipments WHERE order_id = ?1 ORDER BY id",
       ).bind(order.id),
+      env.DB.prepare("SELECT id, at, actor, note FROM order_notes WHERE order_id = ?1 ORDER BY id").bind(order.id),
     ]);
     return json(200, {
       ok: true,
@@ -41,6 +42,7 @@ export const GET: APIRoute = async ({ request, locals, clientAddress, params }) 
         payments: ((payments!.results ?? []) as PaymentRow[]).map(adminPaymentView),
         reservations: ((reservations!.results ?? []) as { tracked: number }[]).map((r) => ({ ...r, tracked: r.tracked === 1 })),
         shipments: shipments!.results ?? [],
+        notes: notes!.results ?? [],
       },
     });
   } catch (err) {
