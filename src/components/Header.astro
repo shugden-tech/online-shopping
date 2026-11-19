@@ -4,6 +4,7 @@ import mark from "../assets/brand/logo-mark.png";
 import wordmark from "../assets/brand/wordmark.png";
 import Icon from "./Icon.astro";
 import LangToggle from "./LangToggle.astro";
+import ThemeSwitch from "./ThemeSwitch.astro";
 import settings from "../data/settings.json";
 import { getDict, route, fill, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
@@ -199,6 +200,7 @@ const liveText = {
           </div>
         );
       })}
+      <div class="hdr__theme"><ThemeSwitch locale={locale} /></div>
     </div>
   </nav>
 </header>
@@ -215,6 +217,7 @@ const liveText = {
     ))}
   </nav>
   <div class="mmenu__foot" style={`--i:${links.length}`}>
+    <ThemeSwitch locale={locale} />
     <LangToggle locale={locale} alternates={alternates} />
   </div>
 </div>
@@ -270,6 +273,7 @@ const liveText = {
 
   .hdr__nav { position: relative; background: var(--black); }
   .hdr__nav-in { display: flex; align-items: center; gap: 4px; height: 44px; }
+  .hdr__theme { margin-left: auto; padding-left: 12px; color: #fff; flex: none; }
   .hdr__item { display: flex; align-items: center; height: 100%; }
   .hdr__item--drop { position: relative; }
   .hdr__caret { opacity: .7; margin-left: 2px; transition: transform .2s; }
@@ -345,7 +349,7 @@ const liveText = {
   }
   .mmenu__nav a :global(svg) { color: var(--text-dim); }
   .mmenu__nav a[aria-current] { color: var(--gold); }
-  .mmenu__foot { margin-top: auto; padding-top: 24px; }
+  .mmenu__foot { margin-top: auto; padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 
   @media (max-width: 900px) {
     .hdr__top { flex-wrap: wrap; height: auto; gap: 4px 8px; padding-block: 8px 10px; }

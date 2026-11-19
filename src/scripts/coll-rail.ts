@@ -16,7 +16,7 @@ function initRail(rail: HTMLElement) {
   if (half < 2 || !Number.isInteger(half)) return;
 
   rail.dataset.marquee = "1";
-  const loop = items[half]!.offsetLeft - items[0]!.offsetLeft; // width of one copy incl. gaps
+  let loop = items[half]!.offsetLeft - items[0]!.offsetLeft; // width of one copy incl. gaps
 
   let paused = false;
   let resumeTimer = 0;
@@ -45,6 +45,13 @@ function initRail(rail: HTMLElement) {
   const frame = (now: number) => {
     // Stop quietly once this page has been replaced (the rail left the document).
     if (!rail.isConnected) return;
+    if (!rail.getClientRects().length) {
+      last = now;
+      requestAnimationFrame(frame);
+      return;
+    }
+    // A desktop rail can first become visible after rotating or resizing a phone.
+    if (!loop) loop = items[half]!.offsetLeft - items[0]!.offsetLeft;
     const dt = Math.min(now - last, 100) / 1000; // clamp: a background tab must not jump ahead
     last = now;
 

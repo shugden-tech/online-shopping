@@ -47,6 +47,8 @@
 @keyframes hb-caption-in { to { opacity: 1; transform: translateY(0); } }
 
 .hb__dots { padding-inline: 20px; flex-wrap: wrap; row-gap: 14px; }
+.hb--desk .hb__arrow { opacity: 0; pointer-events: none; transition: opacity .2s, background-color .2s; }
+.hb--desk:hover .hb__arrow, .hb--desk:focus-within .hb__arrow { opacity: 1; pointer-events: auto; }
 .hb__rotation {
   position: absolute; right: 20px; bottom: 40px; color: #fff;
   width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgb(255 255 255 / .5);
@@ -65,8 +67,9 @@
   .hb__caption-description { margin-bottom: 12px; }
 }
 @media (max-width: 760px) {
+  .hb--desk .hb__arrow { opacity: 0; pointer-events: none; }
   .hb--mob .hb__track--img {
-    aspect-ratio: auto !important; height: clamp(600px, calc(100svh - var(--header-h, 116px)), 720px);
+    aspect-ratio: auto !important; height: var(--mobile-banner-height);
   }
   /* Crop only through CSS: keep the right-hand bottle in the upper image area. */
   .hb__slide--perfume { background: #130b08; }

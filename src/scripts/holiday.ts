@@ -2,10 +2,6 @@
 // The stored theme is applied before first paint by the inline script in Base.astro, so no flash.
 const KEY = "gz-theme";
 const THEME = "christmas";
-const LABELS: Record<string, [string, string]> = {
-  mn: ["Баярын горим: асаах", "Баярын горим: унтраах"],
-  en: ["Holiday mode: on", "Holiday mode: off"],
-};
 const FLAKES = 26;
 const FLAKE_IMG = `${import.meta.env.BASE_URL}holiday/snowflake.png`;
 
@@ -33,29 +29,26 @@ function snowLayer(): HTMLElement {
   return layer;
 }
 
-function render(on: boolean, btn: HTMLButtonElement) {
+function render(on: boolean) {
   const root = document.documentElement;
   if (on) root.dataset.theme = THEME; else delete root.dataset.theme;
-  const labels = LABELS[root.lang] ?? LABELS.mn!;
-  btn.textContent = on ? labels[1] : labels[0];
-  btn.setAttribute("aria-pressed", String(on));
+  document.querySelectorAll<HTMLButtonElement>("[data-theme-switch]").forEach((button) => {
+    button.setAttribute("aria-checked", String(on));
+  });
   document.querySelector(".holiday-snow")?.remove();
   if (on) document.body.appendChild(snowLayer());
 }
 
 function init() {
-  if (document.querySelector(".holiday-toggle")) return;
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "holiday-toggle";
-  document.body.appendChild(btn);
-
-  let on = read();
-  render(on, btn);
-  btn.addEventListener("click", () => {
-    on = !on;
-    write(on);
-    render(on, btn);
+  render(read());
+  document.querySelectorAll<HTMLButtonElement>("[data-theme-switch]").forEach((button) => {
+    if (button.dataset.themeBound) return;
+    button.dataset.themeBound = "true";
+    button.addEventListener("click", () => {
+      const on = document.documentElement.dataset.theme !== THEME;
+      write(on);
+      render(on);
+    });
   });
 }
 

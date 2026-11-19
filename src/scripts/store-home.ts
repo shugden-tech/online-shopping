@@ -32,7 +32,7 @@ function initSlider(root: HTMLElement) {
     window.clearInterval(timer);
     // Each responsive carousel keeps only its existing timer; the hidden set stays paused.
     if (!motion.matches && !document.hidden && !hovered && !focused && !userPaused && root.getClientRects().length) {
-      timer = window.setInterval(() => go(cur + 1), 6500);
+      timer = window.setInterval(() => go(cur + 1), 5000);
     }
   };
 

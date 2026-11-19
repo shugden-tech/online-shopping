@@ -1,0 +1,10 @@
+---
+import type { Locale } from "../i18n";
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const label = locale === "mn" ? "Баярын загвар" : "Holiday theme";
+---
+<button class="theme-switch" type="button" role="switch" aria-checked="false" data-theme-switch>
+  <span>{label}</span>
+  <span class="theme-switch__track" aria-hidden="true"><span class="theme-switch__thumb">✦</span></span>
+</button>
