@@ -365,24 +365,26 @@ try {
   /* ---------- customer lookup ---------- */
   {
     const lip = freshIp("lookup");
-    const G = (no, phone) => call("GET", `/api/orders/lookup?no=${encodeURIComponent(no)}&phone=${encodeURIComponent(phone)}`, { ip: lip });
+    const G = (no, phone, ip = lip) => call("POST", "/api/orders/lookup", { body: { orderNo: no, phone }, ip });
     const full = await G(no1, PHONE);
-    ok("lookup GET: 200 with status, paymentStatus, holdExpiresAt, shipment", full.status === 200 && full.data?.status === "new" && full.data?.paymentStatus === "unpaid" && full.data?.holdExpiresAt === first.data.holdExpiresAt && full.data?.shipment === null, full.data);
+    ok("lookup POST: 200 with status, paymentStatus, holdExpiresAt, shipment", full.status === 200 && full.data?.status === "new" && full.data?.paymentStatus === "unpaid" && full.data?.holdExpiresAt === first.data.holdExpiresAt && full.data?.shipment === null, full.data);
     ok("lookup: unpaid bank order shows bank instructions", full.data?.payment?.method === "bank" && full.data.payment.reference === no1, full.data?.payment);
     ok("lookup: returns no name / address / phone", full.data && !("name" in full.data) && !("address" in full.data) && !("phone" in full.data));
+    const last6 = await G(no1, PHONE.slice(-6));
+    ok("lookup: last 6 digits are enough", last6.status === 200, last6.status);
     const last4 = await G(no1, PHONE.slice(-4));
-    ok("lookup: last 4 digits are enough", last4.status === 200, last4.status);
+    ok("lookup: only 4 digits is refused (422)", last4.status === 422, last4.status);
+    const viaGet = await call("GET", `/api/orders/lookup?no=${no1}&phone=${PHONE}`, { ip: freshIp("lookup") });
+    ok("lookup: GET (phone in the URL) is refused (405)", viaGet.status === 405, viaGet.status);
     const wrong = await G(no1, "88887777");
     ok("lookup: wrong phone -> 404", wrong.status === 404, wrong.status);
-    const post = await call("POST", "/api/orders/lookup", { body: { orderNo: no1, phone: PHONE }, ip: freshIp("lookup") });
-    ok("lookup POST (legacy) still works", post.status === 200 && post.data?.orderNo === no1, post.status);
     const missing = await call("POST", "/api/orders/lookup", { body: { orderNo: no1 } });
     ok("lookup: missing phone -> 422", missing.status === 422, missing.status);
-    const ghost = await call("GET", `/api/orders/lookup?no=GZ-000101-AAAA&phone=${PHONE}`);
+    const ghost = await G("GZ-000101-AAAA", PHONE, freshIp("lookup"));
     ok("lookup: unknown order -> 404 (same as wrong phone)", ghost.status === 404, ghost.status);
     const rip = freshIp("lookup-rl");
     const codes = [];
-    for (let i = 0; i < 11; i++) codes.push((await call("GET", `/api/orders/lookup?no=${no1}&phone=00000000`, { ip: rip })).status);
+    for (let i = 0; i < 11; i++) codes.push((await G(no1, "00000000", rip)).status);
     ok("lookup: 11th lookup in 10 min -> 429", codes.slice(0, 10).every((c) => c === 404) && codes[10] === 429, codes);
   }
 

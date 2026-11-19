@@ -377,21 +377,23 @@ const lookupBody = (extra = {}) => ({
 
 /* ================= 6. tracking lookup (anyone, number + phone) ================= */
 {
-  let lookupUrl = "";
+  let lookupUrl = "", lookupMethod = "", sentBody = null;
   const { page, ctx } = await open({
     lookup: (r) => {
       lookupUrl = r.request().url();
+      lookupMethod = r.request().method();
+      try { sentBody = JSON.parse(r.request().postData() ?? "null"); } catch { sentBody = null; }
       return r.fulfill(json(200, lookupBody({ status: "shipped", paymentStatus: "paid", holdExpiresAt: null, shipment: { status: "in_transit", trackingNo: "TRK123456", trackingUrl: "https://track.example.mn/TRK123456" } })));
     },
   });
   await page.goto(`${BASE}/zahialga/amjilttai/`, { waitUntil: "domcontentloaded" });
   await page.fill("#ok-track-no", ORDER_NO);
-  await page.fill("#ok-track-phone", "2233");
+  await page.fill("#ok-track-phone", "112233");
   await page.locator(".ok__track button[type=submit]").click();
   await page.waitForSelector("[data-tracking-no]", { timeout: 10000 }).catch(() => {});
   const out = (await page.locator("[data-track-out]").textContent()) ?? "";
   const u = new URL(lookupUrl || "http://x/");
-  ok("tracking: GET lookup with no + phone", u.pathname === "/api/orders/lookup" && u.searchParams.get("no") === ORDER_NO && u.searchParams.get("phone") === "2233", lookupUrl);
+  ok("tracking: POST lookup, phone in the body and never in the URL", u.pathname === "/api/orders/lookup" && u.search === "" && lookupMethod === "POST" && sentBody?.orderNo === ORDER_NO && sentBody?.phone === "112233", `${lookupMethod} ${lookupUrl} ${JSON.stringify(sentBody)}`);
   ok("tracking: status, payment, shipment, tracking no + link", ["Хүргэлтэнд гарсан", "Төлөгдсөн", "Замд яваа", "TRK123456"].every((x) => out.includes(x)) && (await page.locator("a[data-tracking-url]").getAttribute("href")) === "https://track.example.mn/TRK123456", out);
   await shot(page, "track-desktop");
   await ctx.close();

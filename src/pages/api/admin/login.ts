@@ -3,7 +3,7 @@
 // optional secrets. A correct pair returns the matching bearer token, which the UI then uses as before.
 // Disabled (503) until a password of >= 12 characters is configured. Failed attempts: 20 / 10 min / IP.
 import type { APIRoute } from "astro";
-import { safeEqual } from "../../../lib/auth";
+import { safeEqual, usesDevSecrets } from "../../../lib/auth";
 import { clientIp, fail, hitRateLimit, json, readJson } from "../../../lib/server";
 
 export const prerender = false;
@@ -13,6 +13,7 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
   try {
     const env = locals.runtime?.env;
     if (!env?.DB) throw new Error("D1 binding DB is missing");
+    if (usesDevSecrets(request, env)) return fail(503, { form: "insecure-secret" });
     const accounts = [
       { role: "owner", user: env.ADMIN_USERNAME, pass: env.ADMIN_PASSWORD, token: env.ADMIN_TOKEN },
       { role: "staff", user: env.STAFF_USERNAME, pass: env.STAFF_PASSWORD, token: env.STAFF_TOKEN },

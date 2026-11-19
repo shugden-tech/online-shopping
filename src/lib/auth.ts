@@ -26,6 +26,16 @@ export async function safeEqual(a: string, b: string): Promise<boolean> {
   return diff === 0;
 }
 
+/** Secrets copied from .dev.vars.example (they are public in the repo): never accepted outside localhost. */
+const DEV_SECRET_RE = /^(dev-only|demo-)|not-for-production|-demo-/i;
+export const isDevSecret = (v: string | undefined) => !!v && DEV_SECRET_RE.test(v);
+export const isLocalRequest = (request: Request) => /^(localhost|127\.0\.0\.1|\[::1\])$/.test(new URL(request.url).hostname);
+/** true when any configured admin secret is a public dev value AND the request is not from localhost. */
+export function usesDevSecrets(request: Request, env: Env): boolean {
+  if (isLocalRequest(request)) return false;
+  return [env.ADMIN_TOKEN, env.STAFF_TOKEN, env.ADMIN_PASSWORD, env.STAFF_PASSWORD].some(isDevSecret);
+}
+
 export interface AdminSession {
   role: Role;
   actor: Actor;
@@ -47,6 +57,10 @@ export async function authorize(request: Request, env: Env, ip: string, permissi
   if (owner.length < ADMIN_MIN_TOKEN) {
     console.error(`[admin] ADMIN_TOKEN is not set or shorter than ${ADMIN_MIN_TOKEN} characters`);
     return fail(503, { form: "admin-disabled" });
+  }
+  if (usesDevSecrets(request, env)) {
+    console.error("[admin] a public dev secret (from .dev.vars.example) is configured on a non-local host: admin disabled");
+    return fail(503, { form: "insecure-secret" });
   }
   const m = /^Bearer\s+(\S+)\s*$/i.exec(request.headers.get("Authorization") ?? "");
   let role: Role | null = null;

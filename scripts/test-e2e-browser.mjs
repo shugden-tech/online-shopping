@@ -32,8 +32,10 @@ const ml = [...prod.sizes].sort((a, b) => a.ml - b.ml)[0].ml;
 const sku = `${id}:${ml}`;
 const PRICE = 12300;
 await api("PUT", "/api/admin/settings", { "checkout.open": true, "payments.bank.enabled": true });
+// the product may not be in D1 yet (fresh database without the catalog import): create it, ignore "exists"
+await api("POST", "/api/admin/products", { id, brand: prod.brand, name: prod.name, status: "active" });
 await api("PATCH", `/api/admin/products/${id}`, { status: "active", saleLocked: false });
-let r = await api("PUT", `/api/admin/products/${id}/skus/${ml}`, { price: PRICE, active: true });
+let r = await api("PUT", `/api/admin/products/${id}/skus/${ml}`, { kind: "decant", price: PRICE, active: true });
 ok(`admin prices ${sku} at ${PRICE}`, r.data?.ok === true, JSON.stringify(r.data));
 const held = (await api("GET", "/api/admin/inventory?low=100000")).data?.items?.find((i) => i.id === sku)?.reserved ?? 0;
 r = await api("POST", "/api/admin/inventory/adjust", { sku, set: held + 2, reason: "restock" });

@@ -432,3 +432,10 @@ edited the Mongolian admin copy (strings only). **Haiku** ran the existing test 
   form reports "fix the red fields"); it passes on a re-run and is unrelated to the admin. JS budget: finder / checkout are
   0.1–0.3 KB over 25 KB, the same on 9fef058 before this work.
 - Screenshots: `docs/screens/admin-*-{1440,360}.png` (14 views at each width).
+
+## Security hardening, step 2 (Sonnet session)
+- `public/_headers`: CSP (self + Turnstile; inline scripts/styles allowed because Astro emits them), X-Frame-Options DENY, HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP; `/admin/*` no-store + noindex + stricter CSP.
+- `src/lib/auth.ts`: admin routes and `/api/admin/login` refuse public dev secrets (`dev-only…`, `demo-…`) on any non-localhost host (503 `insecure-secret`).
+- Order lookup: POST only, phone ≥ 6 digits (was GET with 4 digits: phone in URLs/logs, 10,000 guesses). Client, texts and tests updated.
+- Verified: headers served by wrangler; 24 page loads (12 page types x desktop/phone) with 0 CSP violations; api 85, payments 45, delivery 85, storefront 57, admin-ui 96, e2e commerce 43, e2e browser 17 all pass; dev-secret guard 200 on localhost, 503 elsewhere. Catalog suite cannot run until the owner pushes `src/lib/catalog/master.mjs` + `src/data/backend.json`.
+- Not done (needs the owner's Cloudflare): Cloudflare Access on /admin, real secrets, WAF/bot rules.

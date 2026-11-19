@@ -398,7 +398,7 @@
     "missing": "No order number found. If you placed an order, we will contact you by phone.",
     "trackTitle": "Check your order status",
     "trackNo": "Order number",
-    "trackPhone": "Phone number (the last 4 digits are enough)",
+    "trackPhone": "Phone number (the last 6 digits are enough)",
     "trackSubmit": "Check",
     "trackLoading": "Checking…",
     "trackNotFound": "No order found with this number and phone.",

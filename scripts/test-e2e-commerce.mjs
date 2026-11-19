@@ -142,9 +142,9 @@ const hook = await fetch(`${BASE}/api/delivery/webhook/mock`, {
 ok("delivery webhook 200", hook.status === 200, hook.status);
 od = (await admin("GET", `/api/admin/orders/${orderNo}`)).data?.order;
 ok("order -> done", od?.status === "done", od?.status);
-const look = await call("GET", `/api/orders/lookup?no=${orderNo}&phone=${PHONE}`);
+const look = await call("POST", "/api/orders/lookup", { body: { orderNo, phone: PHONE } });
 ok("customer lookup: done, paid, tracking", look.data?.status === "done" && look.data?.paymentStatus === "paid" && !!look.data?.shipment?.trackingNo, look.data);
-ok("lookup with wrong phone refused", (await call("GET", `/api/orders/lookup?no=${orderNo}&phone=88000000`)).data?.ok !== true);
+ok("lookup with wrong phone refused", (await call("POST", "/api/orders/lookup", { body: { orderNo, phone: "88000000" } })).data?.ok !== true);
 
 /* 8. unpaid bank order expires through jobs/run and gives its stock back */
 r = await placeOrder([{ sku: SKU, qty: 1 }], "bank");

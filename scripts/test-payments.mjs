@@ -195,7 +195,7 @@ try {
   const replays = await Promise.all([1, 2, 3].map(() => qpayCallback(paid.callback_url)));
   const postJson = await qpayCallback(paid.callback_url, { method: "POST", body: { payment_id: "forged", amount: 1 } });
   ok("callback: replays (3 concurrent + POST JSON) -> SUCCESS, nothing changes", replays.every((r) => r.data === "SUCCESS") && postJson.data === "SUCCESS" && sku("q").stock === 4 && one(`SELECT COUNT(*) AS n FROM stock_movements WHERE order_id = ${orderRow(noA).id}`).n === 1, [replays.map((r) => r.status), postJson]);
-  const look = await call("GET", `/api/orders/lookup?no=${noA}&phone=${PHONE.slice(-4)}`);
+  const look = await call("POST", "/api/orders/lookup", { body: { orderNo: noA, phone: PHONE.slice(-6) } });
   ok("lookup: paymentStatus paid, no payment instructions", look.data?.paymentStatus === "paid" && look.data?.status === "paid" && look.data?.payment === null, look.data);
 
   /* ---------- partial payment ---------- */

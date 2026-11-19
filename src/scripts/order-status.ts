@@ -1,5 +1,5 @@
 // Success / order-tracking page (loaded lazily by SuccessView): payment instructions from POST /api/orders
-// (QPay QR + links, or bank details), order lookup (GET /api/orders/lookup?no=&phone=), the hold-expiry
+// (QPay QR + links, or bank details), order lookup (POST /api/orders/lookup), the hold-expiry
 // countdown for unpaid orders, shipment tracking, and QPay payment polling (POST /api/orders/{no}/payment-check).
 import { clearCart } from "../lib/cart";
 import { formatPrice } from "../lib/price";
@@ -82,8 +82,10 @@ export function qrSrc(img: string | null): string | null {
 
 async function lookup(no: string, phone: string): Promise<Lookup | number> {
   try {
-    const res = await fetch(`/api/orders/lookup?no=${encodeURIComponent(no)}&phone=${encodeURIComponent(phone)}`, {
-      headers: { Accept: "application/json" },
+    const res = await fetch("/api/orders/lookup", {
+      method: "POST",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ orderNo: no, phone }),
       cache: "no-store",
     });
     if (!res.ok) return res.status;
@@ -194,7 +196,7 @@ export function init(root: HTMLElement): void {
     e.preventDefault();
     const n = noInput.value.trim().toUpperCase();
     const ph = phoneInput.value.replace(/\D/g, "");
-    if (!NO_RE.test(n) || ph.length < 4) return message(422);
+    if (!NO_RE.test(n) || ph.length < 6) return message(422);
     out.textContent = t.trackLoading;
     const r = await lookup(n, ph);
     if (typeof r === "number") message(r);

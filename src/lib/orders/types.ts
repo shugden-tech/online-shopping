@@ -91,7 +91,7 @@ export async function loadOrder(db: D1, orderNo: string): Promise<OrderRow | nul
 /** Same rule as the customer lookup: the last 4–8 digits of the phone on the order. */
 export function phoneMatches(order: Pick<OrderRow, "phone">, input: unknown): boolean {
   const digits = typeof input === "string" ? input.replace(/\D/g, "") : "";
-  return digits.length >= 4 && digits.length <= 8 && order.phone.endsWith(digits);
+  return digits.length >= 6 && digits.length <= 8 && order.phone.endsWith(digits);
 }
 
 export const normOrderNo = (v: unknown) => (typeof v === "string" ? v.trim().toUpperCase() : "");
