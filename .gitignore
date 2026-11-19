@@ -11,6 +11,7 @@ decantx/catalog-backup-*/
 decantx/demo-inventory-backup-*/
 decantx/notes-source-cache/
 output/
+workers/image-importer/manifest.json
 **/__pycache__/
 
 # Over GitHub 100 MB limit; kept on the original computer only

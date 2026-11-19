@@ -2,6 +2,9 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { getImage } from "astro:assets";
 import notesJson from "../data/notes.json";
+import backend from "../data/backend.json";
+import masterSnapshot from "../../data/catalog/catalog.json";
+import { catalogPhotos, validateMasterCatalog } from "./catalog/master.mjs";
 import type { Locale } from "../i18n";
 
 export type Product = CollectionEntry<"products">["data"];
@@ -18,6 +21,7 @@ export const NOTE_GROUPS = [
 export type NoteGroup = (typeof NOTE_GROUPS)[number];
 
 let cache: Product[] | null = null;
+const masterById = new Map(validateMasterCatalog(masterSnapshot, backend.mediaBase).map((p) => [p.id, p]));
 
 export async function getProducts(): Promise<Product[]> {
   if (cache && !import.meta.env.DEV) return cache;
@@ -27,7 +31,7 @@ export async function getProducts(): Promise<Product[]> {
       throw new Error(`Product file "${e.id}.json" has slug "${e.data.slug}". The slug must equal the file name.`);
     }
   }
-  cache = entries.map((e) => e.data).sort((a, b) => a.brand.localeCompare(b.brand) || a.name.localeCompare(b.name));
+  cache = entries.map((e) => catalogPhotos(e.data, masterById) as Product).sort((a, b) => a.brand.localeCompare(b.brand) || a.name.localeCompare(b.name));
   return cache;
 }
 
