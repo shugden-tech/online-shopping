@@ -369,3 +369,12 @@ a.a-btn { text-decoration: none; }
 .a-card--warn .a-card__l .a-ico { color: var(--bad); }
 .a-msg { display: flex; align-items: flex-start; gap: 8px; }
 .a-msg .a-ico { margin-top: .12em; }
+
+/* the owner's GENZST wordmark replaces the typed name */
+.a-wordmark { display: block; height: 17px; width: auto; }
+.a-wordmark--lg { height: 30px; margin: 0 auto; }
+.a-logo__name { display: block; line-height: 1; }
+.a-login__h { margin: 4px 0 6px; line-height: 1; }
+.a-logo .a-wordmark { width: auto; height: 19px; object-fit: contain; }
+.a-logo > img:first-child { width: 34px; height: 34px; }
+.a-logo .a-logo__t { gap: 6px; }

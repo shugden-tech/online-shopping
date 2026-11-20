@@ -87,7 +87,7 @@ function loginError(status: number, code: string | undefined, mode: "password" |
   return `Нэвтэрч чадсангүй (${status}).`;
 }
 
-function Login({ onIn, message, logo }: { onIn: (s: Session) => void; message: string; logo: string }) {
+function Login({ onIn, message, logo, wordmark }: { onIn: (s: Session) => void; message: string; logo: string; wordmark: string }) {
   const [mode, setMode] = useState<"password" | "token">("password");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(message);
@@ -121,7 +121,7 @@ function Login({ onIn, message, logo }: { onIn: (s: Session) => void; message: s
     <main class="a-login">
       <div class="a-login__card">
         <img class="a-login__logo" src={logo} alt="" width={84} height={84} />
-        <h1 class="a-login__h">genzst</h1>
+        <h1 class="a-login__h">{wordmark ? <img class="a-wordmark a-wordmark--lg" src={wordmark} alt="genzst" width={196} height={34} /> : "genzst"}</h1>
         <p class="a-login__sub">Удирдлагын хэсэг</p>
         <form onSubmit={submit} class="a-login__form" data-testid="login" noValidate>
           <div class="a-tabs" role="group" aria-label="Нэвтрэх арга">
@@ -206,7 +206,7 @@ function usePoll(enabled: boolean, runJobs: boolean) {
   return count;
 }
 
-export default function App({ logo = "/favicon.png" }: { logo?: string }) {
+export default function App({ logo = "/favicon.png", wordmark = "" }: { logo?: string; wordmark?: string }) {
   const [session, setSession] = useState<Session | null>(null);
   const [booting, setBooting] = useState(() => Boolean(getToken()));
   const [loginMsg, setLoginMsg] = useState("");
@@ -235,7 +235,7 @@ export default function App({ logo = "/favicon.png" }: { logo?: string }) {
   useEffect(() => { if (session) { main.current?.focus({ preventScroll: true }); scrollTo(0, 0); } }, [hash]);
 
   if (booting && !session) return <main class="a-login"><Loading on /></main>;
-  if (!session || !ctx) return <Login logo={logo} onIn={(s) => { setLoginMsg(""); setSession(s); }} message={loginMsg} />;
+  if (!session || !ctx) return <Login logo={logo} wordmark={wordmark} onIn={(s) => { setLoginMsg(""); setSession(s); }} message={loginMsg} />;
 
   const allowed = ctx.can(route.perm);
   const items = NAV.filter((n) => ctx.can(n.perm));
@@ -252,7 +252,7 @@ export default function App({ logo = "/favicon.png" }: { logo?: string }) {
       <aside class="a-side">
         <a class="a-logo" href="#/" aria-label="genzst админ, хянах самбар">
           <img src={logo} alt="" width={38} height={38} />
-          <span class="a-logo__t"><span class="a-logo__name">genzst</span><span class="a-logo__sub">админ</span></span>
+          <span class="a-logo__t"><span class="a-logo__name">{wordmark ? <img class="a-wordmark" src={wordmark} alt="genzst" width={98} height={17} /> : "genzst"}</span><span class="a-logo__sub">админ</span></span>
         </a>
         <nav class="a-nav" aria-label="Админ цэс">{items.map(link)}</nav>
         <div class="a-side__foot">

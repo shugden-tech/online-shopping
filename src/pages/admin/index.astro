@@ -7,9 +7,11 @@ import { getImage } from "astro:assets";
 import "../../styles/fonts.css";
 import "../../styles/admin.css";
 import logoSrc from "../../assets/brand/logo-s.png";
+import wordmarkSrc from "../../assets/brand/wordmark-genzst.png";
 import App from "../../admin-ui/App";
 
 const logo = await getImage({ src: logoSrc, width: 192, format: "webp" });
+const wordmark = await getImage({ src: wordmarkSrc, width: 392, format: "webp" });
 ---
 <!doctype html>
 <html lang="mn">
@@ -25,7 +27,7 @@ const logo = await getImage({ src: logoSrc, width: 192, format: "webp" });
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body class="a-body">
-    <App client:only="preact" logo={logo.src} />
+    <App client:only="preact" logo={logo.src} wordmark={wordmark.src} />
     <noscript><p class="a-msg a-msg--err">Админ хэсэг JavaScript шаарддаг.</p></noscript>
   </body>
 </html>

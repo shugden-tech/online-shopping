@@ -470,3 +470,6 @@ Mongolian string (most suggestions applied; site-wide terms such as "үнэрт�
 - All admin icons are now Google Material Symbols (outlined, 400, Apache-2.0) inlined as SVG paths by `scripts/build-admin-icons.mjs` into `src/admin-ui/icons.tsx` (48 icons; no icon font, no request to fonts.google.com — the CSP allows only our own origin). Used for the 9 nav items, dashboard cards, action buttons (search/save/add/refresh/send/…), arrows (back/forward/external), message status (ok/error/info) and logout; the old text glyphs (‹ ↗ → × ↑ ↓ +) are gone.
 - Admin initial JS 18.1 → 24.2 KB gzip; its budget in `scripts/js-budget.mjs` raised from 20 to 26 KB (back-office page, loaded once per session).
 - Verified: astro check 0 errors, admin-ui tests 96/96, real browser 1440 + 390 px, 0 overflow, 0 page errors. Still failing in `npm run budget`: finder 25.2 and checkout 25.4 KB (limit 25) from earlier storefront commits.
+
+## Admin wordmark (Sonnet session)
+- The owner's GENZST wordmark (`src/assets/brand/wordmark-genzst.png`, transparent) replaces the typed "genzst" text in the admin login card and sidebar (typed text remains as fallback). Verified in a real browser, 0 overflow, 0 page errors, admin-ui tests 96/96.
