@@ -15,7 +15,7 @@ const BASE = (process.env.BASE ?? "http://localhost:8788").replace(/\/$/, "");
 const QPAY = (process.env.MOCK_QPAY ?? "http://127.0.0.1:8892").replace(/\/$/, "");
 const PERSIST = process.env.PERSIST ?? ".wrangler/state-lead";
 const vars = Object.fromEntries(
-  readFileSync(".dev.vars", "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1)]),
+  readFileSync(process.env.DEV_VARS ?? ".dev.vars", "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1)]),
 );
 const ADMIN = vars.ADMIN_TOKEN, STAFF = vars.STAFF_TOKEN;
 const settingsFile = JSON.parse(readFileSync("src/data/settings.json", "utf8"));
@@ -157,6 +157,23 @@ ok("jobs/run expires it", r.data?.ok === true && r.data?.expired >= 1, r);
 od = (await admin("GET", `/api/admin/orders/${bankNo}`)).data?.order;
 ok("expired order cancelled, reservation released", od?.status === "cancelled" && od?.cancelReason === "expired" && od?.reservations?.[0]?.status === "released", od);
 ok("unit is for sale again", (await skuState())?.available === 1);
+
+/* 8b. bundle (0005): one cart line, QPay-paid, commits the part's stock; cancel after paid restores it */
+const BUNDLE = `${PID}-bundle`;
+r = await admin("POST", "/api/admin/bundles", { id: BUNDLE, nameMn: "E2E багц", price: 15000, status: "active", items: [{ sku: SKU, qty: 1 }] });
+ok("admin creates a bundle of the e2e SKU", r.status === 201 && r.data?.bundle?.sellable === true && r.data.bundle.available === 1, r);
+const bundleState = async () => (await call("GET", `/api/store/bundles?ids=${BUNDLE}`, { headers: { "Cache-Control": "no-cache" } })).data?.bundles?.[0];
+r = await placeOrder([{ bundle: BUNDLE, qty: 1 }], "qpay");
+const bNo = r.data?.orderNo;
+ok("bundle order 201 at the bundle price, QPay invoice", r.status === 201 && r.data?.subtotal === 15000 && !!r.data?.payment?.invoiceId, r);
+ok("part reserved -> bundle sold out", (await skuState())?.available === 0 && (await bundleState())?.block === "out");
+await fetch(QPAY + "/_control/pay", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ invoice_id: r.data?.payment?.invoiceId }) });
+await fetch(`${BASE}/api/payments/qpay/callback?order=${bNo}&sig=${createHmac("sha256", vars.QPAY_CALLBACK_SECRET).update(bNo).digest("hex")}`);
+od = (await admin("GET", `/api/admin/orders/${bNo}`)).data?.order;
+ok("bundle order paid, part reservation committed", od?.status === "paid" && od?.reservations?.[0]?.status === "committed" && od?.items?.[0]?.bundle?.id === BUNDLE, od);
+r = await admin("PATCH", `/api/admin/orders/${bNo}`, { status: "cancelled" });
+ok("cancel after paid restores the part -> bundle for sale again", r.status === 200 && (await skuState())?.available === 1 && (await bundleState())?.sellable === true, r);
+await admin("DELETE", `/api/admin/bundles/${BUNDLE}`);
 
 /* 9. audit trail */
 const audit = (await admin("GET", `/api/admin/audit?limit=200`)).data?.items ?? [];

@@ -254,6 +254,23 @@ try {
   r = await call("POST", `/api/admin/payments/${qpayRow?.id ?? 1}/check`, { auth: STAFF });
   ok("QPay check: staff -> 403", r.status === 403);
 
+  /* ---------- bundles (0005): admin CRUD, permissions, audit ---------- */
+  {
+    const BID = `${P}-bundle`;
+    r = await call("POST", "/api/admin/bundles", { body: { id: BID, nameMn: `Багц ${RUN}`, price: 20000, status: "draft", items: [{ sku: `${P}-a:5`, qty: 2 }] } });
+    ok("bundle: create (draft) -> 201", r.status === 201 && r.data.bundle?.block === "hidden" && r.data.bundle.parts[0]?.qty === 2, r.data);
+    r = await call("PATCH", `/api/admin/bundles/${BID}`, { body: { status: "active", nameEn: `Bundle ${RUN}` } });
+    ok("bundle: edit -> active", r.status === 200 && r.data.bundle.status === "active" && r.data.bundle.nameEn === `Bundle ${RUN}`, r.data);
+    r = await call("GET", "/api/admin/bundles", { auth: STAFF });
+    ok("bundle: staff can list", r.status === 200 && r.data.items.some((b) => b.id === BID));
+    r = await call("PATCH", `/api/admin/bundles/${BID}`, { body: { price: 1 }, auth: STAFF });
+    ok("bundle: staff cannot edit -> 403", r.status === 403);
+    r = await call("GET", `/api/store/bundles?ids=${BID}`, { auth: null });
+    ok("bundle: public state", r.status === 200 && r.data.bundles[0]?.id === BID, r.data);
+    r = await call("DELETE", `/api/admin/bundles/${BID}`);
+    ok("bundle: delete -> 200, audited", r.status === 200 && sql(`SELECT action FROM audit_log WHERE entity = 'bundle' AND entity_id = '${BID}'`)[0].length === 3);
+  }
+
   /* ---------- inventory search ---------- */
   r = await call("GET", `/api/admin/inventory?q=${P}&limit=10`);
   ok("inventory search", r.status === 200 && r.data.items.length >= 1 && r.data.items.every((s) => s.id.startsWith(P)), r.data);

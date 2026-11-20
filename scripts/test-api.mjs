@@ -388,6 +388,27 @@ try {
     ok("lookup: 11th lookup in 10 min -> 429", codes.slice(0, 10).every((c) => c === 404) && codes[10] === 429, codes);
   }
 
+  /* ---------- bundles (0005): server price, reservation of every part, sold out, release on cancel ---------- */
+  {
+    const BID = `ta-${RUN}-bundle`;
+    sql(`INSERT INTO products (id, brand, name, status) VALUES (${q(P("bx"))}, 'TestBrand', 'Test bx', 'active'), (${q(P("by"))}, 'TestBrand', 'Test by', 'active');
+         INSERT INTO skus (id, product_id, ml, kind, price, stock, active) VALUES (${q(S("bx", 10))}, ${q(P("bx"))}, 10, 'decant', 40000, 3, 1), (${q(S("by", 10))}, ${q(P("by"))}, 10, 'decant', 35000, NULL, 1);
+         INSERT INTO bundles (id, name_mn, price, status) VALUES (${q(BID)}, 'Тест багц', 60000, 'active');
+         INSERT INTO bundle_items (bundle_id, sku, qty, sort) VALUES (${q(BID)}, ${q(S("bx", 10))}, 1, 1), (${q(BID)}, ${q(S("by", 10))}, 1, 2);`);
+    const bo = await order([{ bundle: BID, qty: 2, price: 1 }]);
+    ok("bundle order: 201, priced from D1 (2 × 60,000)", bo.status === 201 && bo.data?.subtotal === 120000 && bo.data.total === 120000 + deliveryFor(120000), [bo.status, bo.data]);
+    ok("bundle order: tracked part reserved 2, untracked part untouched", skuRow(S("bx", 10)).reserved === 2 && skuRow(S("by", 10)).reserved === 0);
+    const rows = sql(`SELECT sku_id, qty, tracked FROM reservations WHERE order_id = (SELECT id FROM orders WHERE order_no = ${q(bo.data?.orderNo)}) ORDER BY sku_id`)[0];
+    ok("bundle order: one reservation per part", rows.length === 2 && rows.every((x) => x.qty === 2), rows);
+    const short = await order([{ bundle: BID, qty: 2 }]);
+    ok("bundle order: not enough of a part -> 409 stock on bundle:<id>", short.status === 409 && short.data?.errors?.form === "stock" && short.data.errors.sku === `bundle:${BID}`, short.data);
+    const c = await admin("PATCH", `/api/admin/orders/${bo.data?.orderNo}`, { status: "cancelled" });
+    ok("bundle order: cancel releases the parts", c.status === 200 && skuRow(S("bx", 10)).reserved === 0, [c.status, skuRow(S("bx", 10))]);
+    const mixed = await order([{ bundle: BID, qty: 1 }, { sku: S("bx", 10), qty: 1 }]);
+    ok("bundle + SKU line in one order -> 201, subtotal 60,000 + 40,000", mixed.status === 201 && mixed.data?.subtotal === 100000, mixed.data);
+    await admin("PATCH", `/api/admin/orders/${mixed.data?.orderNo}`, { status: "cancelled" });
+  }
+
   /* ---------- order rate limit (atomic, 5 per IP per 10 min) ---------- */
   {
     const rip = freshIp("rate");
