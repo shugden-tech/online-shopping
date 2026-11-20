@@ -480,3 +480,9 @@ Mongolian string (most suggestions applied; site-wide terms such as "үнэрт�
 - Slide change: picture cross-fades; the copy fades in with a soft blur and a small rise, line after line (260–700 ms delays), outgoing copy fades out; reduced-motion shows it statically.
 - Verified in a real browser (mn + en, 1440 and 390 px, mid-transition frame): 0 overflow, 0 page errors; storefront suite 57/57; astro check 0 errors.
 - Follow-up (owner): hero heading is now italic (Instrument Serif Italic, Latin + Latin-ext self-hosted; Mongolian letters use Times New Roman Italic) and the button ("Үнэртэй танилцах" / "Сонголтуудыг үзэх" / "Цуглуулгыг үзэх") is removed from every slide — markup, `cta` data and CSS; the whole slide stays one link. Verified mn + en, 1440 / 390 px, 0 page errors, storefront suite 57/57.
+
+## 2026-11-20 — full-bottle sizes (research)
+- 15 Sonnet sub-agents researched bottle sizes for 222 perfumes (207 site + 15 new store items): `data/catalog/full-bottles.json`.
+- The shared WebSearch budget ran out mid-way: 58 high, 61 medium, 103 low (memory estimates / empty). Only high/medium were applied
+  (115 content files got a `full:true` size, price 0 = "Үнэ удахгүй"). The 103 low ones still need a rerun; no size was invented.
+- PDP now defaults to the full bottle (Opus-free change by Sonnet). Prices from genzst.com + production D1 writes: not yet applied.

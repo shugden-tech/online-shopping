@@ -41,6 +41,12 @@
       "price": 52000,
       "inStock": true,
       "stock": 1
+    },
+    {
+      "ml": 105,
+      "price": 0,
+      "inStock": false,
+      "full": true
     }
   ],
   "bottleShape": "classic",
