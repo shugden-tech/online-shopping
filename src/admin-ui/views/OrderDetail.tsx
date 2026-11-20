@@ -117,8 +117,16 @@ export default function OrderDetail({ no }: { no: string }) {
         <h2 id="items-h" class="a-h2">Бараа</h2>
         <Table label="Захиалгын бараа" head={["Бараа", "мл", "Тоо", "Нэгж үнэ", "Дүн"]}>
           {o.items.map((i) => (
-            <tr>
-              <td>{[i.brand, i.name].filter(Boolean).join(" — ") || i.sku || i.slug}<div class="a-mono a-small a-dim">{i.sku ?? i.slug}</div></td>
+            <tr data-line={i.sku}>
+              <td>
+                {i.bundle ? <><span class="a-badge" data-s="active">Багц</span> <b>{i.bundle.nameMn}</b></> : [i.brand, i.name].filter(Boolean).join(" — ") || i.sku || i.slug}
+                <div class="a-mono a-small a-dim">{i.sku ?? i.slug}</div>
+                {i.bundle && (
+                  <ul class="a-small" style="margin:4px 0 0;padding-left:18px" data-testid="bundle-parts">
+                    {i.bundle.parts.map((p) => <li>{p.brand} — {p.name} · {p.ml} мл × {p.qty * i.qty} <span class="a-mono a-dim">{p.sku}</span></li>)}
+                  </ul>
+                )}
+              </td>
               <td class="a-mono">{i.ml ?? "—"}</td>
               <td class="a-mono">{i.qty}</td>
               <td class="a-mono">{money(i.price)}</td>
@@ -222,7 +230,12 @@ function Slip({ o }: { o: OrderView }) {
       <table>
         <thead><tr><th>✓</th><th>Бараа</th><th>Хэмжээ</th><th>Тоо</th></tr></thead>
         <tbody>
-          {o.items.map((i) => <tr><td>☐</td><td>{[i.brand, i.name].filter(Boolean).join(" — ") || i.sku || i.slug}</td><td>{i.ml ? `${i.ml} мл` : "—"}</td><td>{i.qty}</td></tr>)}
+          {o.items.flatMap((i) => i.bundle
+            ? [
+                <tr><td></td><td colSpan={3}><b>Багц: {i.bundle.nameMn}</b> × {i.qty}</td></tr>,
+                ...i.bundle.parts.map((p) => <tr><td>☐</td><td>{p.brand} — {p.name}</td><td>{p.ml} мл</td><td>{p.qty * i.qty}</td></tr>),
+              ]
+            : [<tr><td>☐</td><td>{[i.brand, i.name].filter(Boolean).join(" — ") || i.sku || i.slug}</td><td>{i.ml ? `${i.ml} мл` : "—"}</td><td>{i.qty}</td></tr>])}
         </tbody>
       </table>
       {o.note && <p>Хэрэглэгчийн тэмдэглэл: “{o.note}”</p>}

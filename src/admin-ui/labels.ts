@@ -52,7 +52,7 @@ export const STOCK_REASON: Record<string, string> = {
   import: "Импортлосон",
 };
 export const ENTITY: Record<string, string> = {
-  product: "Бараа", sku: "Хэмжээ (SKU)", order: "Захиалга", payment: "Төлбөр", shipment: "Хүргэлт", settings: "Тохиргоо", media: "Зураг", webhook: "Webhook",
+  product: "Бараа", sku: "Хэмжээ (SKU)", order: "Захиалга", payment: "Төлбөр", shipment: "Хүргэлт", settings: "Тохиргоо", media: "Зураг", webhook: "Webhook", bundle: "Багц",
 };
 export const ACTOR: Record<string, string> = { "admin:owner": "Эзэмшигч", "admin:staff": "Ажилтан", system: "Систем", customer: "Хэрэглэгч" };
 /** Readable names for audit actions. Unknown ones are shown as-is. */
@@ -63,6 +63,7 @@ export const ACTION: Record<string, string> = {
   "payment.late": "Хоцорсон төлбөр", "payment.extra": "Илүү төлбөр", "shipment.create": "Хүргэлт үүсгэсэн", "shipment.status": "Хүргэлтийн төлөв",
   "shipment.update": "Хяналтын дугаар зассан", "shipment.details": "Хүргэлтийн мэдээлэл", "settings.update": "Тохиргоо өөрчилсөн", "jobs.run": "Автомат ажил",
   "webhook.create": "Webhook нэмсэн", "webhook.update": "Webhook зассан", "webhook.delete": "Webhook устгасан", "webhook.test": "Туршилтын webhook",
+  "bundle.create": "Багц үүсгэсэн", "bundle.update": "Багц зассан", "bundle.delete": "Багц устгасан",
   "webhook.redeliver": "Webhook дахин илгээсэн", "webhook.replay": "Webhook дахин боловсруулсан",
 };
 export const ROLE: Record<string, string> = { owner: "Эзэмшигч", staff: "Ажилтан" };

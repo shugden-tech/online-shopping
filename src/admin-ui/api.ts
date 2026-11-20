@@ -70,7 +70,11 @@ export const pick = (o: any, ...keys: string[]): any => {
   return undefined;
 };
 
-export interface OrderLine { sku?: string; slug?: string; brand?: string; name?: string; ml?: number; qty: number; price?: number }
+export interface OrderLine {
+  sku?: string; slug?: string; brand?: string; name?: string; ml?: number; qty: number; price?: number;
+  /** Bundle line (0005): parts are per ONE bundle. */
+  bundle?: { id: string; nameMn: string; nameEn: string | null; parts: { sku: string; brand: string; name: string; ml: number; qty: number }[] };
+}
 export interface OrderView {
   id: number | null; no: string; createdAt: string; status: string; paymentStatus: string; holdExpiresAt: string | null;
   name: string; phone: string; phone2: string; city: string; district: string; khoroo: string; address: string; note: string;

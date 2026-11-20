@@ -303,7 +303,7 @@ async function uploadImage(productId: string, side: "front" | "back", blob: Blob
 }
 
 /** File -> resized blob, or a readable error. */
-async function prepare(file: File): Promise<Blob | string> {
+export async function prepare(file: File): Promise<Blob | string> {
   if (!IMAGE_TYPES.includes(file.type)) return "Зөвхөн JPEG, PNG, WebP зураг оруулна уу.";
   if (file.size > 25 * 1024 * 1024) return "Зураг хэт том байна (25 MB хүртэл).";
   let blob: Blob;
@@ -313,7 +313,7 @@ async function prepare(file: File): Promise<Blob | string> {
 }
 
 /** Drop zone + file picker with a preview. `onFiles` gets the first accepted file. */
-function DropZone({ label, src, disabled, onFile, testid }: { label: string; src: string | null; disabled?: boolean; onFile: (f: File) => void; testid: string }) {
+export function DropZone({ label, src, disabled, onFile, testid }: { label: string; src: string | null; disabled?: boolean; onFile: (f: File) => void; testid: string }) {
   const [over, setOver] = useState(false);
   return (
     <label

@@ -17,6 +17,8 @@ const R = {
   order: { key: "orders", perm: "orders.read", title: "Захиалга", load: () => import("./views/OrderDetail") },
   products: { key: "products", perm: "catalog.read", title: "Бараа", load: () => import("./views/Products") },
   product: { key: "products", perm: "catalog.read", title: "Бараа", load: () => import("./views/ProductEdit") },
+  bundles: { key: "bundles", perm: "catalog.read", title: "Багц", load: () => import("./views/Bundles") },
+  bundle: { key: "bundles", perm: "catalog.read", title: "Багц", load: () => import("./views/BundleEdit") },
   inventory: { key: "inventory", perm: "catalog.read", title: "Үлдэгдэл", load: () => import("./views/Inventory") },
   payments: { key: "payments", perm: "payments.read", title: "Төлбөр", load: () => import("./views/Payments") },
   shipments: { key: "shipments", perm: "delivery.read", title: "Хүргэлт", load: () => import("./views/Shipments") },
@@ -30,6 +32,7 @@ const NAV: { key: string; href: string; label: string; perm: Permission; icon: I
   { key: "dashboard", href: "#/", label: "Хянах самбар", perm: "orders.read", icon: "chart" },
   { key: "orders", href: "#/orders", label: "Захиалга", perm: "orders.read", icon: "bag" },
   { key: "products", href: "#/products", label: "Бараа", perm: "catalog.read", icon: "bottle" },
+  { key: "bundles", href: "#/bundles", label: "Багц", perm: "catalog.read", icon: "gift" },
   { key: "inventory", href: "#/inventory", label: "Үлдэгдэл", perm: "catalog.read", icon: "box" },
   { key: "payments", href: "#/payments", label: "Төлбөр", perm: "payments.read", icon: "card" },
   { key: "shipments", href: "#/shipments", label: "Хүргэлт", perm: "delivery.read", icon: "truck" },
@@ -43,6 +46,7 @@ function parseHash(h: string): { route: Route; props: Record<string, string> } {
   const q = Object.fromEntries(new URLSearchParams(query));
   const [a, b] = parts;
   if (a === "products" && b) return { route: R.product, props: { id: b === "new" ? "" : b } };
+  if (a === "bundles" && b) return { route: R.bundle, props: { id: b === "new" ? "" : b } };
   if (a === "orders" && b) return { route: R.order, props: { no: b } };
   if (a === "shipments" && b) return { route: R.shipment, props: { id: b } };
   const r = (R as Record<string, Route>)[a ?? ""] ?? R.dashboard;
