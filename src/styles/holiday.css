@@ -44,18 +44,11 @@
 }
 
 /* ---- Holiday theme details (only when data-theme="christmas") ---- */
-/* Page: warm snow-white paper with a faint snowflake dot pattern. */
+/* Page: warm snow-white paper. */
 :root[data-theme="christmas"] html {
   background-color: var(--ink);
-  background-image:
-    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, .9) 0 1.5px, transparent 2px),
-    radial-gradient(circle at 78% 42%, rgba(255, 255, 255, .9) 0 1.5px, transparent 2px),
-    radial-gradient(circle at 42% 74%, rgba(255, 255, 255, .9) 0 1.5px, transparent 2px),
-    radial-gradient(circle at 92% 88%, rgba(255, 255, 255, .9) 0 1.5px, transparent 2px),
-    linear-gradient(180deg, #fbf4e6 0%, #fffdf8 40%);
-  background-size: 260px 260px, 300px 300px, 340px 340px, 280px 280px, 100% 100%;
+  background-image: linear-gradient(180deg, #fbf4e6 0%, #fffdf8 40%);
 }
-/* The body is see-through so the background pattern behind it shows in the open gaps. */
 :root[data-theme="christmas"] body { background: transparent; }
 
 /* Header: snow-white bar with a candy-cane ribbon along its bottom edge. */
@@ -85,13 +78,13 @@
 :root[data-theme="christmas"] .bundles__item:hover { outline-color: #b3202a; }
 :root[data-theme="christmas"] .bundles__cta { color: #1d5a34; }
 
-/* ---- Holiday logo: the seasonal GenZST artwork replaces the mark and wordmark ---- */
+/* ---- Holiday logo: the full seasonal GenZST artwork (mark + script name) replaces the default mark and wordmark ---- */
 .hdr__xmas-logo { display: none; }
 :root[data-theme="christmas"] .hdr__logo,
 :root[data-theme="christmas"] .hdr__word { display: none; }
-:root[data-theme="christmas"] .hdr__xmas-logo { display: block; height: 62px; width: auto; }
+:root[data-theme="christmas"] .hdr__xmas-logo { display: block; height: 72px; width: auto; }
 @media (max-width: 720px) {
-  :root[data-theme="christmas"] .hdr__xmas-logo { height: 50px; }
+  :root[data-theme="christmas"] .hdr__xmas-logo { height: 56px; }
 }
 
 /* ---- Account icon becomes the Grinch in holiday mode (the hat is hidden too) ---- */
@@ -107,13 +100,6 @@
 :root[data-theme="christmas"] .xmas-heart, :root[data-theme="christmas"] .xmas-sack { display: block; }
 :root[data-theme="christmas"] .hdr__badge { background: #b3202a; color: #fffdf8; }
 
-
-/* ---- Background pattern: a faint tile behind the whole page (holiday only) ---- */
-.holiday-pattern { display: none; }
-:root[data-theme="christmas"] .holiday-pattern {
-  display: block; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background-size: cover; background-position: center; background-repeat: no-repeat; opacity: .14;
-}
 
 /* Open gaps show the pattern: the featured-collections band is see-through in holiday mode. */
 :root[data-theme="christmas"] .coll { background: transparent; }
@@ -138,3 +124,15 @@
 :root[data-theme="christmas"] .shop__head,
 :root[data-theme="christmas"] .shop__layout > div:first-child,
 :root[data-theme="christmas"] .shop__filters { background: var(--ink); }
+
+/* New Year mood: the "view all" button and the brands strip. */
+:root[data-theme="christmas"] .tabs__more .btn {
+  background: #b3202a; border-color: #b3202a; color: #fffdf8;
+  box-shadow: 0 0 0 3px #fffdf8, 0 0 0 5px #1d5a34;
+}
+:root[data-theme="christmas"] .tabs__more .btn:hover { background: #8f1820; border-color: #8f1820; color: #fffdf8; }
+:root[data-theme="christmas"] .brands {
+  background: linear-gradient(180deg, #fff4f1 0%, #fffdf8 50%, #f0f7f1 100%);
+  border-block: 4px solid transparent;
+  border-image: repeating-linear-gradient(-45deg, #b3202a 0 10px, #fffdf8 10px 20px) 4;
+}
