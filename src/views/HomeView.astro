@@ -255,7 +255,7 @@ const bundleImages = Array.from({ length: 8 }, (_, i) => `${import.meta.env.BASE
             <li><ProductCard product={p} locale={locale} level={3} eager={i === 0 && j < 4} /></li>
           ))}
         </ul>
-        <div class="tabs__more"><a class="btn" href={t.href}>{t.id === "best" ? s.seeAll : `${s.seeAll} · ${t.label}`}</a></div>
+        <div class="tabs__more"><a class="btn" href={t.href}>{s.seeAll}</a></div>
       </div>
     ))}
   </section>
