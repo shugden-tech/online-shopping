@@ -7,7 +7,14 @@ type D1 = import("@cloudflare/workers-types").D1Database;
 
 export async function getSettings(db: D1): Promise<Settings> {
   const out = { ...SETTINGS } as Settings;
-  const res = await db.prepare("SELECT key, value_json FROM store_settings").all<{ key: string; value_json: string }>();
+  let res: { results?: { key: string; value_json: string }[] };
+  try {
+    res = await db.prepare("SELECT key, value_json FROM store_settings").all<{ key: string; value_json: string }>();
+  } catch (e) {
+    // Never fail a page over settings: fall back to the defaults and log the problem.
+    console.error("getSettings: using defaults", e);
+    return out;
+  }
   for (const r of res.results ?? []) {
     if (!(r.key in SETTINGS)) continue;
     try {
@@ -20,7 +27,13 @@ export async function getSettings(db: D1): Promise<Settings> {
 }
 
 export async function getSetting<K extends SettingKey>(db: D1, key: K): Promise<Settings[K]> {
-  const r = await db.prepare("SELECT value_json FROM store_settings WHERE key = ?1").bind(key).first<{ value_json: string }>();
+  let r: { value_json: string } | null;
+  try {
+    r = await db.prepare("SELECT value_json FROM store_settings WHERE key = ?1").bind(key).first<{ value_json: string }>();
+  } catch (e) {
+    console.error("getSetting: using default", key, e);
+    return SETTINGS[key] as Settings[K];
+  }
   if (!r) return SETTINGS[key] as Settings[K];
   try {
     return JSON.parse(r.value_json) as Settings[K];

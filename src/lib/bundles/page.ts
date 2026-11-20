@@ -47,10 +47,15 @@ export const bundleDescription = (b: Pick<BundleView, "descriptionMn" | "descrip
 export async function loadBundleList(Astro: AstroGlobal): Promise<BundleView[] | Response> {
   const env = Astro.locals.runtime?.env;
   if (!env?.DB) return new Response(null, { status: 503 });
-  const settings = await getSettings(env.DB);
-  const list = await listBundles(env.DB, { status: "active", checkoutOpen: settings["checkout.open"] === true });
   pageHeaders(Astro);
-  return list;
+  try {
+    const settings = await getSettings(env.DB);
+    return await listBundles(env.DB, { status: "active", checkoutOpen: settings["checkout.open"] === true });
+  } catch (e) {
+    // A database problem shows an empty list (the site header and footer still render) instead of an error page.
+    console.error("loadBundleList failed", e);
+    return [];
+  }
 }
 
 export async function loadBundlePage(Astro: AstroGlobal): Promise<BundleView | Response> {
@@ -58,8 +63,14 @@ export async function loadBundlePage(Astro: AstroGlobal): Promise<BundleView | R
   if (!BUNDLE_ID_RE.test(id)) return notFound(Astro);
   const env = Astro.locals.runtime?.env;
   if (!env?.DB) return new Response(null, { status: 503 });
-  const settings = await getSettings(env.DB);
-  const bundle = await getBundle(env.DB, id, settings["checkout.open"] === true);
+  let bundle: BundleView | null;
+  try {
+    const settings = await getSettings(env.DB);
+    bundle = await getBundle(env.DB, id, settings["checkout.open"] === true);
+  } catch (e) {
+    console.error("loadBundlePage failed", id, e);
+    return notFound(Astro);
+  }
   if (!bundle || bundle.status !== "active") return notFound(Astro);
   pageHeaders(Astro);
   return bundle;

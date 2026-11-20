@@ -86,7 +86,7 @@
   "genders": {
     "women": "Women",
     "men": "Men",
-    "unisex": "Gender-neutral"
+    "unisex": "Unisex"
   },
   "seasons": {
     "spring": "Spring",
@@ -548,7 +548,7 @@
       "new": "New",
       "women": "Women",
       "men": "Men",
-      "unisex": "Gender-neutral"
+      "unisex": "Unisex"
     },
     "seeAll": "See all",
     "aboutTitle": "About Gen'Z Street",

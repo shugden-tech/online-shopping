@@ -3,7 +3,7 @@ import { addItem } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import type { SkuView } from "../lib/store-state";
 import {
-  EMPTY_ANSWERS, MAX_NOTES, MOODS, RESULT_STEP, STEPS, WHEN, WHO, answered, parseHash, recommend, toHash,
+  EMPTY_ANSWERS, MOODS, RESULT_STEP, STEPS, WHEN, WHO, parseHash, recommend, toHash,
   type Answers, type Match, type Mood, type QuizProduct,
 } from "../lib/quiz";
 import { fill, type Dict } from "../i18n/lite";
@@ -87,9 +87,6 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
     set(patch);
     go(step + 1);
   };
-  const canNext = step >= 1 && step <= STEPS ? answered(step, a) : true;
-  const toggleNote = (id: string) =>
-    set({ notes: a.notes.includes(id) ? a.notes.filter((n) => n !== id) : a.notes.length < MAX_NOTES ? [...a.notes, id] : a.notes });
 
   const results: Match[] = step === RESULT_STEP ? recommend(products, a) : [];
   const noteLabel = (id: string) => notes.find((n) => n.id === id)?.label ?? id;
@@ -180,7 +177,6 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
             <p class="t-body t-dim">{tr.introText}</p>
             <button type="button" class="btn btn--gold" onClick={() => go(1)}>
               {tr.start}
-              <Arrow />
             </button>
           </section>
         )}
@@ -191,14 +187,11 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
             <div class="sf__menu" role="radiogroup" aria-label={tr.q1}>
               {WHO.map((id, i) => {
                 const label = id === "women" ? tr.q1Women : id === "men" ? tr.q1Men : tr.q1Any;
-                const hint = id === "women" ? tr.q1WomenHint : id === "men" ? tr.q1MenHint : tr.q1AnyHint;
                 return (
                   <label class="sf__opt sf__opt--row">
                     <input type="radio" name="who" checked={a.who === id} onChange={() => choose({ who: id })} />
                     <span class="sf__opt-box">
-                      <span class="sf__opt-n" aria-hidden="true">0{i + 1}</span>
                       <span class="sf__opt-label">{label}</span>
-                      <span class="sf__opt-hint">{hint}</span>
                     </span>
                   </label>
                 );
@@ -260,12 +253,12 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
             <p class="sf__count t-title" aria-live="polite">
               {fill(tr.q4Count, { n: a.notes.length })}
             </p>
-            <div class="sf__notes" role="group" aria-label={tr.q4}>
+                        <div class="sf__notes" role="group" aria-label={tr.q4}>
               {notes.map((n) => {
                 const on = a.notes.includes(n.id);
                 return (
                   <label class="sf__opt sf__opt--note">
-                    <input type="checkbox" checked={on} disabled={!on && a.notes.length >= MAX_NOTES} onChange={() => toggleNote(n.id)} />
+                    <input type="checkbox" checked={on} onChange={() => choose({ notes: [n.id] })} />
                     <span class="sf__opt-box">
                       <img src={n.img} alt="" width="240" height="300" loading="lazy" decoding="async" />
                       <span class="sf__opt-label">{n.label}</span>
@@ -377,16 +370,11 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
       {step >= 1 && step <= STEPS && (
         <nav class="sf__nav" aria-label={tr.progress}>
           <button type="button" class="sf__navbtn" onClick={() => go(step - 1)}>
-            <Arrow back />
             <span class="sf__navlabel">{tr.back}</span>
           </button>
           <p class="sf__step" aria-hidden="true">
             {fill(tr.step, { n: `0${step}`, total: `0${STEPS}` })}
           </p>
-          <button type="button" class="sf__navbtn sf__navbtn--next" onClick={() => go(step + 1)} disabled={!canNext}>
-            {step === STEPS ? tr.finish : tr.next}
-            <Arrow />
-          </button>
         </nav>
       )}
     </div>

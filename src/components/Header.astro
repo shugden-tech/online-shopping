@@ -348,7 +348,7 @@ const liveText = {
     border-bottom: 1px solid var(--line-soft); font-size: 15px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
   }
   .mmenu__nav a :global(svg) { color: var(--text-dim); }
-  .mmenu__nav a[aria-current] { color: var(--gold); }
+  .mmenu__nav a[aria-current] { color: inherit; }
   .mmenu__foot { margin-top: auto; padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 
   @media (max-width: 900px) {
@@ -362,6 +362,6 @@ const liveText = {
     .hdr__cart { padding: 0 10px; }
     .hdr__badge { position: absolute; top: 2px; right: 0; }
     .hdr__nav { display: none; }
-    .mmenu { display: flex; }
+    .mmenu { display: flex; padding-top: 28px; }
   }
 </style>

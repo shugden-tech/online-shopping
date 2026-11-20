@@ -172,3 +172,67 @@
 @media (prefers-reduced-motion: reduce) {
   .sf__bg b { animation: none; }
 }
+
+/* Back and next buttons look like the gold-style button on the intro screen (dark fill, white text). */
+.sf__navbtn {
+  background: var(--black); border: 1px solid var(--black); border-radius: var(--radius);
+  color: #fff; padding: 12px 22px; min-height: 48px; justify-content: center;
+}
+.sf__navbtn--next { color: #fff; }
+.sf__navbtn:hover:not(:disabled) { background: #3a3a3a; border-color: #3a3a3a; color: #fff; }
+
+/* Phones: the back / step / next bar sits right under the answer options, centred, instead of stuck to the bottom. */
+@media (max-width: 640px) {
+  .sf__nav { position: static; margin-inline: 0; margin-top: 28px; padding: 0; border-top: 0; background: none; backdrop-filter: none; }
+}
+
+/* Phones: the question area stops stretching to the bottom of the screen, so the nav follows the options directly. */
+@media (max-width: 640px) {
+  .sf__nav { margin-top: 20px; justify-content: center; }
+}
+
+/* Options: no step numbers, so the row grid has two columns instead of three. */
+.sf__opt--row .sf__opt-box { grid-template-columns: 1fr auto; }
+@media (max-width: 640px) {
+  .sf__opt--row .sf__opt-box { grid-template-columns: 1fr; }
+  .sf__opt--row .sf__opt-hint { grid-column: 1; }
+}
+
+/* Step 2 options stacked one under another, styled like the step 1 rows. */
+.sf__tiles { grid-template-columns: minmax(0, 1fr); gap: 0; max-width: 720px; margin-inline: auto; width: 100%; }
+.sf__opt--tile .sf__opt-box { flex-direction: row; justify-content: flex-start; align-items: center; min-height: 0; gap: 16px; padding: clamp(16px, 2.6vh, 26px) 20px; text-align: left; border-width: 0 0 1px; border-color: var(--line); background: transparent; }
+.sf__opt--tile:first-child .sf__opt-box { border-top-width: 1px; }
+.sf__opt--tile input:checked + .sf__opt-box { border-color: var(--gold); box-shadow: inset 2px 0 0 var(--gold); }
+.sf__opt--tile svg { width: 26px; height: 26px; flex: none; }
+
+
+
+/* The four stacked options: icon and label centred in each row. */
+.sf__opt--tile .sf__opt-box { justify-content: center; text-align: center; }
+
+/* Options read clearly: bolder, full-strength text, and unselected options dimmed less. */
+.sf__opt-label { font-weight: 600; color: var(--text); }
+.sf__opt-hint { color: var(--text); opacity: .75; }
+:is(.sf__menu, .sf__tiles, .sf__bands):has(input:checked) input:not(:checked) + .sf__opt-box { opacity: .85; }
+
+
+/* Mood options (buttons): gold hairline frame that draws in on hover and selection, with a soft shimmer. */
+.sf__bands .sf__opt-box { position: relative; isolation: isolate; }
+.sf__bands .sf__opt-box::before, .sf__bands .sf__opt-box::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, #d4af62, transparent);
+  transform: scaleX(0); transform-origin: 50% 50%; transition: transform .7s var(--ease-out);
+}
+.sf__bands .sf__opt-box::before { top: 0; }
+.sf__bands .sf__opt-box::after { bottom: 0; }
+.sf__bands .sf__opt:hover .sf__opt-box::before, .sf__bands .sf__opt:hover .sf__opt-box::after,
+.sf__bands .sf__opt input:checked + .sf__opt-box::before, .sf__bands .sf__opt input:checked + .sf__opt-box::after { transform: scaleX(1); }
+.sf__bands .sf__opt input:checked + .sf__opt-box { animation: sf-gold-shine 2.8s var(--ease-sine) infinite; }
+@keyframes sf-gold-shine { 0%, 100% { box-shadow: inset 0 0 0 transparent; } 50% { box-shadow: inset 0 0 22px rgba(212, 175, 98, .18); } }
+@media (prefers-reduced-motion: reduce) { .sf__bands .sf__opt-box::before, .sf__bands .sf__opt-box::after, .sf__bands .sf__opt input:checked + .sf__opt-box { transition: none; animation: none; } }
+
+/* Mood step: no coloured background wash, only the plain page background. */
+.sf[data-step="3"] .sf__bg { display: none; }
+
+/* The three-option question (who): keep its column inside the screen so the title and rows are not cut off. */
+.sf__stage > section:has(> .sf__menu) { min-width: 0; width: 100%; }
