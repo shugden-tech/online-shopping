@@ -78,7 +78,8 @@ const legacyBanner = (b: (typeof bannerImages)[number]) => ({
 // One entry per source asset in each responsive set; retain all existing images and shop links.
 const bannerSets = [
   { key: "desk", items: [...perfumeBanners, ...(deskBanners.length ? deskBanners : mobBanners).map(legacyBanner)], only: "hb--desk" },
-  { key: "mob", items: [...perfumeBannersMob, ...(mobBanners.length ? mobBanners : deskBanners).map(legacyBanner)], only: "hb--mob" },
+  // Phone set: never borrow the wide desktop pictures while the perfume phone pictures exist (they would be cropped).
+  { key: "mob", items: [...perfumeBannersMob, ...(mobBanners.length ? mobBanners : perfumeBannersMob.length ? [] : deskBanners).map(legacyBanner)], only: "hb--mob" },
 ].filter((set) => set.items.length > 0);
 const ratio = (b: (typeof bannerImages)[number]) => `${b.image.width} / ${b.image.height}`;
 
