@@ -54,7 +54,14 @@ export function telegramText(no: string, o: NotifyOrder, lines: OrderLine[], sub
     `${o.address}`,
     ...(o.note ? [`Тэмдэглэл: ${o.note}`] : []),
     "",
-    ...lines.map((l) => `- ${l.brand} ${l.name} ${l.ml} мл × ${l.qty} = ${money(l.price * l.qty)}`),
+    ...lines.flatMap((l) =>
+      l.bundle
+        ? [
+            `- Багц «${l.bundle.nameMn}» × ${l.qty} = ${money(l.price * l.qty)}`,
+            ...l.bundle.parts.map((p) => `    · ${p.brand} ${p.name} ${p.ml} мл × ${p.qty * l.qty}`),
+          ]
+        : [`- ${l.brand} ${l.name} ${l.ml} мл × ${l.qty} = ${money(l.price * l.qty)}`],
+    ),
     "",
     `Барааны дүн: ${money(subtotal)}`,
     `Хүргэлт: ${delivery ? money(delivery) : "Үнэгүй"}`,

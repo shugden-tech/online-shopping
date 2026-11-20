@@ -4,7 +4,7 @@ import type { Actor } from "./contracts";
 
 type D1 = import("@cloudflare/workers-types").D1Database;
 
-export type AuditEntity = "product" | "sku" | "order" | "payment" | "shipment" | "settings" | "media" | "webhook";
+export type AuditEntity = "product" | "sku" | "order" | "payment" | "shipment" | "settings" | "media" | "webhook" | "bundle";
 
 /** A prepared INSERT for the caller's batch. `data` must not contain secrets or full customer PII. */
 export function auditStatement(db: D1, actor: Actor, action: string, entity: AuditEntity, entityId: string | number | null, data?: unknown) {

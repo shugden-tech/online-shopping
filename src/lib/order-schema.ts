@@ -3,21 +3,30 @@
 // Do not import this file from an island: it would bundle zod into the browser.
 import { z } from "astro/zod";
 import { parseSkuId, PRODUCT_ID_RE, skuId } from "./contracts";
+import { BUNDLE_ID_RE } from "./bundles/types";
 import { CITIES, DISTRICT_IDS, LIMITS, PAYMENTS, PHONE_RE } from "./order-validate";
 
 const req = { required_error: "required", invalid_type_error: "required" };
 const optionalText = (max: number) => z.string(req).trim().max(max, "tooLong").optional().default("");
 
-// An item is `{ sku, qty }` (sku = "<productId>:<ml>") or the legacy `{ slug, ml, qty }`; both resolve to a SKU id.
-// Anything else the client sends (price, name, ...) is stripped and ignored.
+// An item is `{ sku, qty }` (sku = "<productId>:<ml>"), the legacy `{ slug, ml, qty }` (both resolve to a SKU id),
+// or a bundle `{ bundle, qty }` (0005). Anything else the client sends (price, name, ...) is stripped and ignored.
 const item = z
   .object({
     sku: z.string().trim().min(3).max(130).optional(),
+    bundle: z.string().trim().min(1).max(80).optional(),
     slug: z.string().trim().min(1).max(120).optional(),
     ml: z.number().int().positive().max(1000).optional(),
     qty: z.number(req).int().min(LIMITS.qty[0]).max(LIMITS.qty[1]),
   })
-  .transform((v, ctx) => {
+  .transform((v, ctx): { sku: string; qty: number } | { bundle: string; qty: number } => {
+    if (v.bundle !== undefined) {
+      if (v.sku !== undefined || v.slug !== undefined || !BUNDLE_ID_RE.test(v.bundle)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: "items" });
+        return z.NEVER;
+      }
+      return { bundle: v.bundle, qty: v.qty };
+    }
     const sku = v.sku ?? (v.slug !== undefined && v.ml !== undefined ? skuId(v.slug, v.ml) : "");
     const parsed = parseSkuId(sku);
     if (!parsed || !PRODUCT_ID_RE.test(parsed.productId) || parsed.ml > 1000) {

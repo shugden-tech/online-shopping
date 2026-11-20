@@ -17,6 +17,16 @@ export interface OrderLine {
   price: number;
   /** skus.stock was tracked when the order was priced (reservations.tracked is the source of truth). */
   tracked: boolean;
+  /** Bundle line (0005): sku = "bundle:<id>", price = the bundle's price; the parts' stock is reserved. */
+  bundle?: OrderBundle;
+}
+
+export interface OrderBundle {
+  id: string;
+  nameMn: string;
+  nameEn: string | null;
+  /** Per ONE bundle; reserved qty = part.qty × line.qty. */
+  parts: { sku: string; slug: string; brand: string; name: string; ml: number; qty: number }[];
 }
 
 /** orders row (0001 + 0002 + 0003 columns). */
@@ -77,6 +87,7 @@ export function parseLines(json: string): OrderLine[] {
           qty: Number(l.qty) || 0,
           price: Number(l.price) || 0,
           tracked: l.tracked === true,
+          ...(l.bundle && typeof l.bundle === "object" && Array.isArray(l.bundle.parts) ? { bundle: l.bundle } : {}),
         }))
       : [];
   } catch {

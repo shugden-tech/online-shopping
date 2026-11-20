@@ -77,7 +77,7 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
     const methodOn = o.payment === "qpay" ? qpayEnabled(env, settings) : settings["payments.bank.enabled"] === true;
     if (!methodOn) return fail(422, { payment: "disabled" });
 
-    const priced = await priceCart(db, o.items, settings, o.city);
+    const priced = await priceCart(db, o.items, settings, o.city, o.locale);
     if (!priced.ok) return json(priced.status, { ok: false, errors: priced.errors, ...("unavailable" in priced ? { unavailable: priced.unavailable } : {}) });
 
     const placed = await placeOrder(db, o, priced, settings, ip, idemKey);

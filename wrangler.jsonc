@@ -3,7 +3,9 @@
   "name": "genzst",
   "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2026-01-15",
-  "compatibility_flags": ["nodejs_compat"],
+  // assets_navigation_has_no_effect: a browser navigation to a path with no static file reaches the Worker
+  // (on-demand pages /bundles/…, /delguur/p/…) instead of getting the 404 page straight from the asset layer.
+  "compatibility_flags": ["nodejs_compat", "assets_navigation_has_no_effect"],
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist",

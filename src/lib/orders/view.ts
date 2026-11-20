@@ -37,7 +37,10 @@ export async function lookupView(env: Env, order: OrderRow) {
     paymentMethod: order.payment,
     holdExpiresAt: order.hold_expires_at,
     createdAt: order.created_at,
-    items: parseLines(order.items_json).map(({ sku, slug, brand, name, ml, qty, price }) => ({ sku, slug, brand, name, ml, qty, price })),
+    items: parseLines(order.items_json).map(({ sku, slug, brand, name, ml, qty, price, bundle }) => ({
+      sku, slug, brand, name, ml, qty, price,
+      ...(bundle ? { bundle: { id: bundle.id, parts: bundle.parts.map((p) => ({ brand: p.brand, name: p.name, ml: p.ml, qty: p.qty })) } } : {}),
+    })),
     subtotal: order.subtotal,
     delivery: order.delivery,
     total: order.total,
