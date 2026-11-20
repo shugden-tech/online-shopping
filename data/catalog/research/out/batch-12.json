@@ -1,0 +1,17 @@
+[
+{"id":"acqua-di-parma-ambra-edp","sizesMl":[100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com","note":"Brand site and Selfridges list 100 and 180"},
+{"id":"acqua-di-parma-colonia-futura-cologne","sizesMl":[50,100,180],"flagshipMl":100,"confidence":"high","source":"selfridges.com / acquadiparma.com","note":"One retailer also lists 20 ml (excluded)"},
+{"id":"acqua-di-parma-mirto-di-panarea-la-riserva-edp","sizesMl":[100],"flagshipMl":100,"confidence":"medium","source":"acquadiparma.com","note":"Only 100 ml found; 2025 release"},
+{"id":"affinessence-collection-notes-de-fond-vanille-benjoin-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted before lookup; unknown"},
+{"id":"afnan-souvenir-desert-rose-edp","sizesMl":[100],"flagshipMl":100,"confidence":"medium","source":"superdrug.com / lyko.com","note":"Only 100 ml listed across retailers"},
+{"id":"ajmal-amber-musc-edp","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"medium","source":"riah.ae / ajmal.com","note":"30/50/100 from one UAE retailer; 100 ml widely listed"},
+{"id":"al-haramain-amber-oud-rouge-edition-edp","sizesMl":[60,120],"flagshipMl":60,"confidence":"medium","source":"luxplus.co.uk / anabis.com","note":"60 ml widely listed, 120 ml on Anabis; no Rouge 100 ml found"},
+{"id":"chanel-bleu-de-chanel-parfum","sizesMl":[50,100,150],"flagshipMl":100,"confidence":"high","source":"chanel.com / sephora.co.uk","note":"Chanel says 3 sizes; retailers confirm 50/100/150"},
+{"id":"emporio-armani-stronger-with-you-intensely-edp","sizesMl":[50,100],"flagshipMl":100,"confidence":"low","source":"","note":"Not web-verified (search budget exhausted); from memory, may also have 30 ml"},
+{"id":"lancome-idole-edp","sizesMl":[25,50,75,100],"flagshipMl":50,"confidence":"low","source":"","note":"Not web-verified (search budget exhausted); from memory"},
+{"id":"maison-margiela-by-the-fireplace-edt","sizesMl":[30,100],"flagshipMl":100,"confidence":"low","source":"","note":"Not web-verified (search budget exhausted); from memory"},
+{"id":"rabanne-1-million-edt","sizesMl":[50,100,200],"flagshipMl":100,"confidence":"low","source":"","note":"Not web-verified (search budget exhausted); from memory"},
+{"id":"versace-dylan-blue-edt","sizesMl":[30,50,100,200],"flagshipMl":100,"confidence":"low","source":"","note":"Not web-verified (search budget exhausted); from memory"},
+{"id":"yves-saint-laurent-y-edp","sizesMl":[40,60,100,150],"flagshipMl":100,"confidence":"low","source":"","note":"Not web-verified (search budget exhausted); from memory"},
+{"id":"moncler-pour-homme-edp","sizesMl":[60,100,150],"flagshipMl":100,"confidence":"low","source":"","note":"Not web-verified (search budget exhausted); from memory, uncertain"}
+]

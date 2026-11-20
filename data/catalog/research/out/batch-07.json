@@ -1,0 +1,17 @@
+[
+{"id":"abercrombie-and-fitch-first-instinct-blue-edt","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"medium","source":"ecosmetics.com, lookfantastic.com","note":"30/50/100 per aggregators; 50 not seen in a retailer listing"},
+{"id":"acqua-di-parma-colonia-ambra-cologne","sizesMl":[100,180],"flagshipMl":100,"confidence":"medium","source":"fragrancex.com, davidjones.com","note":"5ml pocket spray also exists; full official list not confirmed"},
+{"id":"acqua-di-parma-gelsomino-nobile-edp","sizesMl":[50],"flagshipMl":50,"confidence":"low","source":"johnlewis.com","note":"Discontinued 50ml EDP; no current official listing"},
+{"id":"acqua-di-parma-vaniglia-edp","sizesMl":[20,100,180],"flagshipMl":100,"confidence":"medium","source":"selfridges.com, superdrug.com, harveynichols.com","note":"5ml refillable sample also listed; 20ml no longer sold at Superdrug"},
+{"id":"afnan-highness-x-brown-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"afnan-supremacy-silver-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched (unverified recollection: 100ml)"},
+{"id":"al-haramain-amber-oud-exclusif-classic-extrait","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"carolina-herrera-good-girl-blush-edp","sizesMl":[30,50,80],"flagshipMl":80,"confidence":"high","source":"sephora.com, parfumdo.com, makeup.ie","note":"80ml is the Sephora US size"},
+{"id":"dior-sauvage-elixir-parfum","sizesMl":[60,100,150],"flagshipMl":100,"confidence":"medium","source":"sephora.co.uk, dior.com","note":"60ml is Dior's signature size; 100 chosen as flagship"},
+{"id":"jean-paul-gaultier-le-male-le-parfum-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"louis-vuitton-imagination-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"prada-lhomme-edt","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"valentino-donna-born-in-roma-intense-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"yves-saint-laurent-black-opium-le-parfum-parfum","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"maison-margiela-jazz-club-edt","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"}
+]

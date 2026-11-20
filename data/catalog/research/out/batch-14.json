@@ -1,0 +1,16 @@
+[
+{"id":"acqua-di-parma-blu-mediterraneo-bergamotto-di-calabria-edt","sizesMl":[30,100,180],"flagshipMl":100,"confidence":"medium","source":"acquadiparma.com; harrods.com; lyko.com","note":"Official 30/100/180; some retailers list 75 and 150 (unconfirmed, excluded)"},
+{"id":"acqua-di-parma-colonia-intensa-cologne","sizesMl":[50,100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com","note":"Official site lists 50/100/180"},
+{"id":"acqua-di-parma-note-di-colonia-iii-cologne","sizesMl":[150],"flagshipMl":150,"confidence":"high","source":"acquadiparma.com","note":"Only 150 ml full bottle found"},
+{"id":"afnan-9-pm-edp","sizesMl":[100],"flagshipMl":100,"confidence":"low","source":"none (search failed); memory","note":"Search budget exhausted; 100 ml is the commonly sold size, unverified"},
+{"id":"afnan-supremacy-gold-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"superdrug.com; walmart.com; carrefouruae.com","note":"Only 100 ml found across many retailers"},
+{"id":"akro-ink-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"none","note":"Search failed (budget exhausted); unknown"},
+{"id":"azzaro-the-most-wanted-intense-edp","sizesMl":[50,100],"flagshipMl":100,"confidence":"low","source":"none (search failed); memory","note":"Search budget exhausted; 50/100 (maybe 150) unverified"},
+{"id":"chanel-coco-mademoiselle-edp","sizesMl":[35,50,100],"flagshipMl":100,"confidence":"medium","source":"chanel.com; sephora.co.uk","note":"35/50/100 confirmed; Sephora UK also shows 200 ml, 150 ml not confirmed"},
+{"id":"givenchy-gentleman-reserve-privee-edp","sizesMl":[60,100],"flagshipMl":100,"confidence":"medium","source":"sephora.co.uk; fragrancex.com","note":"60 and 100 ml retail sizes"},
+{"id":"lattafa-asad-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"ramfabeauty.com; emiratesoud.co.uk","note":"Only 100 ml single bottle; 4x25 ml set separate"},
+{"id":"montblanc-explorer-edp","sizesMl":[30,60,100,200],"flagshipMl":100,"confidence":"high","source":"sephora.co.uk; montblanc.com","note":"30/60/100/200 listed"},
+{"id":"rabanne-invictus-victory-elixir-parfum","sizesMl":[50,100,200],"flagshipMl":100,"confidence":"medium","source":"sephora.co.uk; sephora.com; harrods.com","note":"200 ml seen on Sephora UK; US/other show 50 and 100"},
+{"id":"versace-eros-flame-edp","sizesMl":[50,100,200],"flagshipMl":100,"confidence":"high","source":"sephora.co.uk; lookfantastic.com","note":"50/100/200 listed"},
+{"id":"mancera-intense-cedrat-boise-edp","sizesMl":[60,120],"flagshipMl":120,"confidence":"medium","source":"harrods.com; adorebeauty.com.au","note":"120 ml standard; 60 ml seen in Australia; some retailers label it extrait"}
+]
