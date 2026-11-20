@@ -49,7 +49,9 @@ export default function AddToCart({ locale, pid, base, sizes, labels }: Props) {
   const views: SkuView[] = sizes.map((s) => (store ? store.skuView(pid, s.ml) : { sku: `${pid}:${s.ml}`, status: "loading", price: null, compareAt: null, available: null }));
   const status = views[0]?.status ?? "loading";
   const product = store?.productState(pid);
-  const firstOk = sizes.findIndex((_, k) => views[k]!.status === "ok");
+  // The full bottle is the default; decant chips are bought only when the customer picks one.
+  const fullIdx = sizes.findIndex((s, i) => s.full && views[i]!.status === "ok");
+  const firstOk = fullIdx >= 0 ? fullIdx : sizes.findIndex((_, k) => views[k]!.status === "ok");
   const k = picked !== null && views[picked]?.status === "ok" ? picked : firstOk;
   const current = k >= 0 ? views[k]! : null;
   const limit = current ? Math.min(MAX_QTY, current.available ?? MAX_QTY) : 0;
