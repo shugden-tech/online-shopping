@@ -23,7 +23,7 @@ const stateText = (b: BundleView) =>
   b.sellable ? null : b.block === "soon" ? t.soon : b.block === "closed" ? t.closed : t.soldOut;
 ---
 
-<Base locale={locale} title={`${t.title} · ${tr.site.name}`} description={t.metaDesc} current="bundles">
+<Base locale={locale} title={t.title} description={t.metaDesc} current="bundles">
   <section class="wrap bl">
     <header class="bl__head">
       <h1 class="h-sec">{t.title}</h1>
