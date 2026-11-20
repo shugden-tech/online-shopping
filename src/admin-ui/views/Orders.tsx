@@ -5,6 +5,7 @@ import { ORDER_STATUSES, PAYMENT_STATUSES_ORDER } from "../../lib/contracts";
 import { api, enc, orderView, qs, rows, type OrderView } from "../api";
 import { ORDER_PAY_STATUS, ORDER_STATUS, PROVIDER, money, when } from "../labels";
 import { Badge, Empty, Field, Loading, Msg, Table, go } from "../ui";
+import { Icon } from "../icons";
 
 interface F { status: string; paymentStatus: string; q: string; from: string; to: string }
 
@@ -62,8 +63,8 @@ export default function Orders(props: Partial<F>) {
         </Field>
         <Field label="Эхлэх огноо"><input class="a-input" type="date" name="from" value={f.from} max={f.to || undefined} onChange={set("from")} /></Field>
         <Field label="Дуусах огноо"><input class="a-input" type="date" name="to" value={f.to} min={f.from || undefined} onChange={set("to")} /></Field>
-        <button class="a-btn a-btn--primary" type="submit">Хайх</button>
-        {filtered && <button class="a-btn a-btn--ghost" type="button" onClick={() => { setDraft(""); setF({ status: "", paymentStatus: "", q: "", from: "", to: "" }); }}>Цэвэрлэх</button>}
+        <button class="a-btn a-btn--primary" type="submit"><Icon name="search" />Хайх</button>
+        {filtered && <button class="a-btn a-btn--ghost" type="button" onClick={() => { setDraft(""); setF({ status: "", paymentStatus: "", q: "", from: "", to: "" }); }}><Icon name="filterOff" />Цэвэрлэх</button>}
       </form>
       <Msg kind="err" text={error} />
       <p class="a-dim a-small" role="status">{loading ? "Ачаалж байна…" : `${items.length}${cursor !== null ? "+" : ""} захиалга`}</p>
@@ -85,7 +86,7 @@ export default function Orders(props: Partial<F>) {
       </Table>
       <Loading on={loading && !items.length} />
       <Empty show={!loading && !error && !items.length} text={filtered ? "Шүүлтүүрт тохирох захиалга олдсонгүй." : "Одоогоор захиалга алга. Шинэ захиалга орж ирэхэд энд харагдана."} />
-      {cursor !== null && <p><button type="button" class="a-btn" disabled={loading} onClick={() => load(false)}>Цааш ачаалах</button></p>}
+      {cursor !== null && <p><button type="button" class="a-btn" disabled={loading} onClick={() => load(false)}><Icon name="more" />Цааш ачаалах</button></p>}
     </section>
   );
 }

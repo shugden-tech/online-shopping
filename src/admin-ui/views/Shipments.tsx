@@ -4,15 +4,16 @@ import { SHIPMENT_STATUSES } from "../../lib/contracts";
 import { enc, qs, shipmentView } from "../api";
 import { PROVIDER, SHIPMENT_STATUS, money, when } from "../labels";
 import { Badge, Empty, Field, Loading, Msg, Table, go, useKeyset, useSession } from "../ui";
+import { Icon } from "../icons";
 
 /** Tabs shared by the delivery section (shipments, inbound webhook log, outbound webhooks). */
 export function DeliveryTabs({ current }: { current: "list" | "in" | "out" }) {
   const { can } = useSession();
   return (
     <nav class="a-segs" aria-label="Хүргэлтийн хэсэг" style="margin-bottom:14px">
-      <a href="#/shipments" aria-current={current === "list" ? "page" : undefined}>Хүргэлтүүд</a>
-      <a href="#/webhooks?tab=in" aria-current={current === "in" ? "page" : undefined}>Ирсэн webhook</a>
-      {can("settings.read") && <a href="#/webhooks?tab=out" aria-current={current === "out" ? "page" : undefined}>Илгээх webhook</a>}
+      <a href="#/shipments" aria-current={current === "list" ? "page" : undefined}><Icon name="shipments" />Хүргэлтүүд</a>
+      <a href="#/webhooks?tab=in" aria-current={current === "in" ? "page" : undefined}><Icon name="webhook" />Ирсэн webhook</a>
+      {can("settings.read") && <a href="#/webhooks?tab=out" aria-current={current === "out" ? "page" : undefined}><Icon name="webhook" />Илгээх webhook</a>}
     </nav>
   );
 }
@@ -31,7 +32,7 @@ export default function Shipments(props: { status?: string }) {
             {SHIPMENT_STATUSES.map((s) => <option value={s}>{SHIPMENT_STATUS[s]}</option>)}
           </select>
         </Field>
-        <button type="button" class="a-btn a-btn--ghost" onClick={list.reload}>Шинэчлэх</button>
+        <button type="button" class="a-btn a-btn--ghost" onClick={list.reload}><Icon name="refresh" />Шинэчлэх</button>
       </div>
       <p class="a-dim a-small">Хүргэлтийг захиалгын хуудаснаас үүсгэнэ (төлөгдсөн захиалга → “Хүргэлт үүсгэх”).</p>
       <Msg kind="err" text={list.error} />
@@ -50,7 +51,7 @@ export default function Shipments(props: { status?: string }) {
       </Table>
       <Loading on={list.loading} />
       <Empty show={!list.loading && !list.error && !list.items.length} text={status ? "Энэ төлөвтэй хүргэлт алга." : "Одоогоор хүргэлт алга."} />
-      {list.cursor !== null && <p><button type="button" class="a-btn" disabled={list.loading} onClick={list.more}>Цааш ачаалах</button></p>}
+      {list.cursor !== null && <p><button type="button" class="a-btn" disabled={list.loading} onClick={list.more}><Icon name="more" />Цааш ачаалах</button></p>}
     </section>
   );
 }

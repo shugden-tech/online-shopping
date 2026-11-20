@@ -7,6 +7,7 @@ import { api, qs } from "../api";
 import { when } from "../labels";
 import { Badge, ConfirmButton, Empty, Field, Loading, Msg, Table, useKeyset, useMsg, useSession } from "../ui";
 import { DeliveryTabs } from "./Shipments";
+import { Icon } from "../icons";
 
 const EVENT_LABEL: Record<string, string> = {
   "order.created": "Шинэ захиалга",
@@ -68,7 +69,7 @@ function Inbound() {
               <td class="a-mono a-small a-break">{r.eventIds || "—"}{r.replayCount ? <div class="a-dim">дахин: {r.replayCount}</div> : null}</td>
               <td>
                 <div class="a-row a-row--tight">
-                  <button type="button" class="a-btn a-btn--sm" aria-expanded={open === r.id} onClick={() => setOpen(open === r.id ? null : r.id)}>Дэлгэрэнгүй</button>
+                  <button type="button" class="a-btn a-btn--sm" aria-expanded={open === r.id} onClick={() => setOpen(open === r.id ? null : r.id)}><Icon name="view" />Дэлгэрэнгүй</button>
                   {can("delivery.write") && r.signatureOk && <button type="button" class="a-btn a-btn--sm" data-testid="replay" onClick={() => replay(r.id)}>Дахин боловсруулах</button>}
                 </div>
               </td>
@@ -86,7 +87,7 @@ function Inbound() {
       </Table>
       <Loading on={list.loading} />
       <Empty show={!list.loading && !list.error && !list.items.length} text="Одоогоор ирсэн webhook алга." />
-      {list.cursor !== null && <p><button type="button" class="a-btn" onClick={list.more}>Цааш ачаалах</button></p>}
+      {list.cursor !== null && <p><button type="button" class="a-btn" onClick={list.more}><Icon name="more" />Цааш ачаалах</button></p>}
     </>
   );
 }
@@ -157,8 +158,8 @@ function Outbound() {
         <div class="a-msg a-msg--info" role="alert" data-testid="secret-once">
           <b>Нууц түлхүүр (зөвхөн одоо харагдана):</b> <code class="a-mono a-break" style="user-select:all">{secret.secret}</code>
           <div class="a-row" style="margin-top:8px">
-            <button type="button" class="a-btn a-btn--sm" onClick={() => navigator.clipboard?.writeText(secret.secret).then(() => msg.ok("Хууллаа."), () => {})}>Хуулах</button>
-            <button type="button" class="a-btn a-btn--sm a-btn--ghost" onClick={() => setSecret(null)}>Хадгалсан, хаах</button>
+            <button type="button" class="a-btn a-btn--sm" onClick={() => navigator.clipboard?.writeText(secret.secret).then(() => msg.ok("Хууллаа."), () => {})}><Icon name="copy" />Хуулах</button>
+            <button type="button" class="a-btn a-btn--sm a-btn--ghost" onClick={() => setSecret(null)}><Icon name="doneAll" />Хадгалсан, хаах</button>
           </div>
         </div>
       )}
@@ -179,8 +180,8 @@ function Outbound() {
               <td class="a-mono a-small">{when(ep.lastDeliveredAt)}</td>
               <td>
                 <div class="a-row a-row--tight" style="flex-wrap:wrap">
-                  {canWrite && <button type="button" class="a-btn a-btn--sm" data-testid="hook-test" onClick={() => test(ep.id)}>Туршилт илгээх</button>}
-                  <button type="button" class="a-btn a-btn--sm" aria-expanded={logFor === ep.id} onClick={() => setLogFor(logFor === ep.id ? 0 : ep.id)}>Лог</button>
+                  {canWrite && <button type="button" class="a-btn a-btn--sm" data-testid="hook-test" onClick={() => test(ep.id)}><Icon name="send" />Туршилт илгээх</button>}
+                  <button type="button" class="a-btn a-btn--sm" aria-expanded={logFor === ep.id} onClick={() => setLogFor(logFor === ep.id ? 0 : ep.id)}><Icon name="list" />Лог</button>
                   {canWrite && <button type="button" class="a-btn a-btn--sm" onClick={() => patch(ep.id, { active: !ep.active })}>{ep.active ? "Унтраах" : "Асаах"}</button>}
                   {canWrite && <ConfirmButton label="Устгах" danger question="Энэ хаяг болон түүний логийг устгах уу?" confirmLabel="Тийм, устгах" onConfirm={() => del(ep.id)} />}
                 </div>
@@ -207,7 +208,7 @@ function Outbound() {
               </div>
             </div>
           </div>
-          <button class="a-btn a-btn--primary" type="submit" disabled={busy}>Нэмэх</button>
+          <button class="a-btn a-btn--primary" type="submit" disabled={busy}><Icon name="add" />Нэмэх</button>
         </form>
       )}
     </>
@@ -242,7 +243,7 @@ function Deliveries({ endpoint, canWrite }: { endpoint: number; canWrite: boolea
               <td class="a-mono a-small">{d.lastStatus ?? "—"}{d.lastError ? ` · ${d.lastError}` : ""}</td>
               <td><div class="a-row a-row--tight">
                 <button type="button" class="a-btn a-btn--sm" aria-expanded={open === d.id} onClick={() => setOpen(open === d.id ? null : d.id)}>Өгөгдөл</button>
-                {canWrite && d.status !== "delivered" && <button type="button" class="a-btn a-btn--sm" onClick={() => again(d.id)}>Дахин илгээх</button>}
+                {canWrite && d.status !== "delivered" && <button type="button" class="a-btn a-btn--sm" onClick={() => again(d.id)}><Icon name="send" />Дахин илгээх</button>}
               </div></td>
             </tr>
             {open === d.id && <tr><td colSpan={7}><code class="a-code">{pretty(d.payload)}</code></td></tr>}
@@ -251,7 +252,7 @@ function Deliveries({ endpoint, canWrite }: { endpoint: number; canWrite: boolea
       </Table>
       <Loading on={list.loading} />
       <Empty show={!list.loading && !list.error && !list.items.length} text="Илгээлт алга." />
-      {list.cursor !== null && <p><button type="button" class="a-btn" onClick={list.more}>Цааш ачаалах</button></p>}
+      {list.cursor !== null && <p><button type="button" class="a-btn" onClick={list.more}><Icon name="more" />Цааш ачаалах</button></p>}
     </section>
   );
 }

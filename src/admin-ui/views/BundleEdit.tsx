@@ -8,6 +8,7 @@ import { PRODUCT_STATUS, money } from "../labels";
 import { ConfirmButton, Field, Loading, Msg, go, intOrNull, useMsg, useSession } from "../ui";
 import { DropZone, prepare, slugify } from "./ProductEdit";
 import { BLOCK, partTitle } from "./Bundles";
+import { Icon } from "../icons";
 
 interface Part { sku: string; qty: number; label: string | null; title: string }
 interface Form {
@@ -144,20 +145,20 @@ export default function BundleEdit({ id }: { id: string }) {
   };
 
   if (loading) return <Loading on />;
-  if (loadErr) return <><p><a href="#/bundles">‹ Багц</a></p><Msg kind="err" text={loadErr} /></>;
+  if (loadErr) return <><p><a href="#/bundles"><Icon name="back" />Багц</a></p><Msg kind="err" text={loadErr} /></>;
 
   const info = new Map((bundle?.parts ?? []).map((p) => [p.sku, p]));
   const imgSrc = preview ?? (form.image || null);
 
   return (
     <section aria-labelledby="be-h" class="a-stack">
-      <p><a href="#/bundles">‹ Багц</a></p>
+      <p><a href="#/bundles"><Icon name="back" />Багц</a></p>
       <div class="a-row a-row--between">
         <h1 id="be-h" class="a-title">{isNew ? "Шинэ багц" : bundle!.nameMn}</h1>
         {!isNew && (
           <div class="a-row">
-            {bundle!.status === "active" && <a class="a-btn a-btn--sm" href={`/bundles/${enc(id)}/`} target="_blank" rel="noopener" data-testid="view-bundle">Дэлгүүрт харах ↗</a>}
-            {can("audit.read") && <a class="a-btn a-btn--sm a-btn--ghost" href={`#/audit?entity=bundle&entityId=${enc(id)}`}>Түүх</a>}
+            {bundle!.status === "active" && <a class="a-btn a-btn--sm" href={`/bundles/${enc(id)}/`} target="_blank" rel="noopener" data-testid="view-bundle">Дэлгүүрт харах<Icon name="external" /></a>}
+            {can("audit.read") && <a class="a-btn a-btn--sm a-btn--ghost" href={`#/audit?entity=bundle&entityId=${enc(id)}`}><Icon name="audit" />Түүх</a>}
           </div>
         )}
       </div>
@@ -211,9 +212,9 @@ export default function BundleEdit({ id }: { id: string }) {
                       <span class="a-grow"><b>{p.title}</b> <span class="a-dim a-mono a-small">{p.sku}</span></span>
                       <label class="a-small">Тоо <input class="a-input a-input--sm" style="width:60px" inputMode="numeric" value={p.qty} aria-label={`${p.title} тоо`}
                         onInput={(e) => { const n = Math.max(1, Math.min(10, Number(e.currentTarget.value) || 1)); setForm({ ...form, parts: form.parts.map((x, k) => (k === i ? { ...x, qty: n } : x)) }); }} /></label>
-                      <button type="button" class="a-btn a-btn--sm a-btn--ghost" aria-label="Дээш" disabled={i === 0} onClick={() => movePart(i, -1)}>↑</button>
-                      <button type="button" class="a-btn a-btn--sm a-btn--ghost" aria-label="Доош" disabled={i === form.parts.length - 1} onClick={() => movePart(i, 1)}>↓</button>
-                      <button type="button" class="a-btn a-btn--sm" onClick={() => setForm({ ...form, parts: form.parts.filter((_, k) => k !== i) })}>Хасах</button>
+                      <button type="button" class="a-btn a-btn--sm a-btn--ghost" aria-label="Дээш" disabled={i === 0} onClick={() => movePart(i, -1)}><Icon name="up" /></button>
+                      <button type="button" class="a-btn a-btn--sm a-btn--ghost" aria-label="Доош" disabled={i === form.parts.length - 1} onClick={() => movePart(i, 1)}><Icon name="down" /></button>
+                      <button type="button" class="a-btn a-btn--sm" onClick={() => setForm({ ...form, parts: form.parts.filter((_, k) => k !== i) })}><Icon name="remove" />Хасах</button>
                     </div>
                     {s && (
                       <div class="a-small a-dim">
@@ -234,7 +235,7 @@ export default function BundleEdit({ id }: { id: string }) {
             {canUpload ? <DropZone label="Багцын зураг" src={imgSrc} disabled={busy} testid="bundle" onFile={uploadNow} /> : (
               <div class="a-preview">{imgSrc ? <img src={imgSrc} alt="Багцын зураг" /> : <span class="a-dim">Зураг алга</span>}</div>
             )}
-            {isNew && pending && <p class="a-small a-dim">{Math.round(pending.size / 1024)} KB · багц үүсэхэд оруулагдана. <button type="button" class="a-btn a-btn--sm a-btn--ghost" onClick={() => setPending(null)}>Болих</button></p>}
+            {isNew && pending && <p class="a-small a-dim">{Math.round(pending.size / 1024)} KB · багц үүсэхэд оруулагдана. <button type="button" class="a-btn a-btn--sm a-btn--ghost" onClick={() => setPending(null)}><Icon name="close" />Болих</button></p>}
             {canEdit && <Field label="Эсвэл зургийн хаяг" hint="https://… эсвэл /bundles/1.webp"><input class="a-input" name="image" value={form.image} onInput={set("image")} data-testid="bundle-image-url" /></Field>}
           </div>
         </fieldset>
@@ -268,7 +269,7 @@ function PartSearch({ onPick }: { onPick: (p: Part) => void }) {
       <div class="a-row">
         <input class="a-input a-grow" type="search" aria-label="Бараа хайх (нэр, брэнд, ID)" placeholder="Жишээ: Versace Eros" value={q} onInput={(e) => setQ(e.currentTarget.value)}
           onKeyDown={(e) => { if (e.key === "Enter") search(e); }} />
-        <button type="button" class="a-btn" onClick={search}>Хайх</button>
+        <button type="button" class="a-btn" onClick={search}><Icon name="search" />Хайх</button>
       </div>
       <Msg kind="err" text={err} />
       {items && (items.length === 0 ? <p class="a-dim a-small">Олдсонгүй.</p> : (

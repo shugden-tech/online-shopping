@@ -29,15 +29,15 @@ const R = {
 } satisfies Record<string, Route>;
 
 const NAV: { key: string; href: string; label: string; perm: Permission; icon: IconName }[] = [
-  { key: "dashboard", href: "#/", label: "Хянах самбар", perm: "orders.read", icon: "chart" },
-  { key: "orders", href: "#/orders", label: "Захиалга", perm: "orders.read", icon: "bag" },
-  { key: "products", href: "#/products", label: "Бараа", perm: "catalog.read", icon: "bottle" },
-  { key: "bundles", href: "#/bundles", label: "Багц", perm: "catalog.read", icon: "gift" },
-  { key: "inventory", href: "#/inventory", label: "Үлдэгдэл", perm: "catalog.read", icon: "box" },
-  { key: "payments", href: "#/payments", label: "Төлбөр", perm: "payments.read", icon: "card" },
-  { key: "shipments", href: "#/shipments", label: "Хүргэлт", perm: "delivery.read", icon: "truck" },
-  { key: "settings", href: "#/settings", label: "Тохиргоо", perm: "settings.read", icon: "gear" },
-  { key: "audit", href: "#/audit", label: "Түүх", perm: "audit.read", icon: "clock" },
+  { key: "dashboard", href: "#/", label: "Хянах самбар", perm: "orders.read", icon: "dashboard" },
+  { key: "orders", href: "#/orders", label: "Захиалга", perm: "orders.read", icon: "orders" },
+  { key: "products", href: "#/products", label: "Бараа", perm: "catalog.read", icon: "products" },
+  { key: "bundles", href: "#/bundles", label: "Багц", perm: "catalog.read", icon: "bundles" },
+  { key: "inventory", href: "#/inventory", label: "Үлдэгдэл", perm: "catalog.read", icon: "inventory" },
+  { key: "payments", href: "#/payments", label: "Төлбөр", perm: "payments.read", icon: "payments" },
+  { key: "shipments", href: "#/shipments", label: "Хүргэлт", perm: "delivery.read", icon: "shipments" },
+  { key: "settings", href: "#/settings", label: "Тохиргоо", perm: "settings.read", icon: "settings" },
+  { key: "audit", href: "#/audit", label: "Түүх", perm: "audit.read", icon: "audit" },
 ];
 
 function parseHash(h: string): { route: Route; props: Record<string, string> } {
@@ -125,8 +125,8 @@ function Login({ onIn, message, logo }: { onIn: (s: Session) => void; message: s
         <p class="a-login__sub">Удирдлагын хэсэг</p>
         <form onSubmit={submit} class="a-login__form" data-testid="login" noValidate>
           <div class="a-tabs" role="group" aria-label="Нэвтрэх арга">
-            <button type="button" aria-pressed={mode === "password"} onClick={() => { setMode("password"); setErr(""); }}>Нэр, нууц үг</button>
-            <button type="button" aria-pressed={mode === "token"} data-testid="mode-token" onClick={() => { setMode("token"); setErr(""); }}>Токен</button>
+            <button type="button" aria-pressed={mode === "password"} onClick={() => { setMode("password"); setErr(""); }}><Icon name="person" />Нэр, нууц үг</button>
+            <button type="button" aria-pressed={mode === "token"} data-testid="mode-token" onClick={() => { setMode("token"); setErr(""); }}><Icon name="key" />Токен</button>
           </div>
           {mode === "password" && (
             <label class="a-field">
@@ -256,7 +256,7 @@ export default function App({ logo = "/favicon.png" }: { logo?: string }) {
         </a>
         <nav class="a-nav" aria-label="Админ цэс">{items.map(link)}</nav>
         <div class="a-side__foot">
-          <a href="/" target="_blank" rel="noopener">Дэлгүүр үзэх ↗</a>
+          <a href="/" target="_blank" rel="noopener">Дэлгүүр үзэх<Icon name="external" /></a>
           <span>Нэвтэрсэн: {ROLE[session.role] ?? session.role}</span>
         </div>
       </aside>
@@ -265,8 +265,8 @@ export default function App({ logo = "/favicon.png" }: { logo?: string }) {
           <img class="a-top__logo" src={logo} alt="" width={30} height={30} />
           <span class="a-top__title">{route.title}</span>
           <span class="a-role" data-testid="role">{ROLE[session.role] ?? session.role}</span>
-          <a class="a-btn a-btn--ghost a-btn--sm a-hide-sm" href="/" target="_blank" rel="noopener">Дэлгүүр ↗</a>
-          <button type="button" class="a-btn a-btn--sm" data-testid="logout" onClick={() => logout("Та системээс гарлаа.")}>Гарах</button>
+          <a class="a-btn a-btn--ghost a-btn--sm a-hide-sm" href="/" target="_blank" rel="noopener">Дэлгүүр<Icon name="external" /></a>
+          <button type="button" class="a-btn a-btn--sm" data-testid="logout" onClick={() => logout("Та системээс гарлаа.")}><Icon name="logout" />Гарах</button>
         </header>
         <main id="a-main" class="a-main" ref={main} tabIndex={-1}>
           {allowed ? <Lazy key={hash} load={route.load} props={props} /> : <Msg kind="err" text="Танд энэ хэсгийг үзэх эрх байхгүй байна." />}

@@ -4,6 +4,7 @@ import { useState } from "preact/hooks";
 import { api, enc, qs } from "../api";
 import { PRODUCT_STATUS, STOCK_REASON, num, when, ACTOR } from "../labels";
 import { Badge, Empty, Field, Loading, Msg, Table, intOrNull, useKeyset, useMsg, useSession } from "../ui";
+import { Icon } from "../icons";
 
 const LOW = 3;
 
@@ -27,7 +28,7 @@ export default function Inventory(props: { low?: string; q?: string }) {
         <label class="a-check"><input type="checkbox" checked={f.low} onChange={(e) => setF({ ...f, low: e.currentTarget.checked })} data-testid="low-only" /> Зөвхөн цөөхөн (≤ {LOW})</label>
         <label class="a-check"><input type="checkbox" checked={f.tracked} onChange={(e) => setF({ ...f, tracked: e.currentTarget.checked })} /> Зөвхөн тоолдог</label>
         <label class="a-check"><input type="checkbox" checked={f.active} onChange={(e) => setF({ ...f, active: e.currentTarget.checked })} /> Зөвхөн идэвхтэй бараа</label>
-        <button class="a-btn a-btn--primary" type="submit">Хайх</button>
+        <button class="a-btn a-btn--primary" type="submit"><Icon name="search" />Хайх</button>
       </form>
       <p class="a-dim a-small">“Тоолдоггүй” хэмжээ хязгааргүй зарагдана. Тоог нэг удаа оруулбал түүнээс хойш тоолж эхэлнэ.</p>
       {msg.node}
@@ -42,7 +43,7 @@ export default function Inventory(props: { low?: string; q?: string }) {
               <td class="a-mono">{num(s.reserved)}</td>
               <td class="a-mono">{s.available === null ? "∞" : <b class={s.available <= 0 ? "a-warn" : undefined} style={s.available > 0 && s.available <= LOW ? "color:var(--warn)" : undefined}>{num(s.available)}</b>}</td>
               <td>{canAdjust && <Adjust sku={s} onDone={(t) => { msg.ok(t); list.reload(); }} onErr={msg.err} />}</td>
-              <td><button type="button" class="a-btn a-btn--sm" aria-expanded={open === s.id} onClick={() => setOpen(open === s.id ? null : s.id)}>Түүх</button></td>
+              <td><button type="button" class="a-btn a-btn--sm" aria-expanded={open === s.id} onClick={() => setOpen(open === s.id ? null : s.id)}><Icon name="audit" />Түүх</button></td>
             </tr>
             {open === s.id && <tr><td colSpan={7}><Movements sku={s.id} /></td></tr>}
           </>
@@ -50,7 +51,7 @@ export default function Inventory(props: { low?: string; q?: string }) {
       </Table>
       <Loading on={list.loading} />
       <Empty show={!list.loading && !list.error && !list.items.length} text={f.low ? "Цөөхөн үлдсэн хэмжээ алга." : "Илэрц олдсонгүй."} />
-      {list.cursor !== null && <p><button type="button" class="a-btn" disabled={list.loading} onClick={list.more}>Цааш ачаалах</button></p>}
+      {list.cursor !== null && <p><button type="button" class="a-btn" disabled={list.loading} onClick={list.more}><Icon name="more" />Цааш ачаалах</button></p>}
     </section>
   );
 }

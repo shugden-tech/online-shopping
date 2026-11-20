@@ -5,6 +5,7 @@ import { GENDERS, PRODUCT_STATUSES, type AdminProduct } from "../../lib/contract
 import { api, enc, qs } from "../api";
 import { GENDER, PRODUCT_STATUS, money } from "../labels";
 import { Badge, ConfirmButton, Empty, Field, Msg, Table, go, intOrNull, useLoad, useMsg, useSession } from "../ui";
+import { Icon } from "../icons";
 
 const LIMIT = 50;
 const SORTS: Record<string, string> = { default: "Үндсэн дараалал", brand: "Брэнд", name: "Нэр", updated: "Сүүлд зассан", created: "Сүүлд нэмсэн" };
@@ -54,7 +55,7 @@ export default function Products(props: Partial<Record<keyof F, string>>) {
     <section aria-labelledby="prod-h">
       <div class="a-row a-row--between">
         <h1 id="prod-h" class="a-title">Бараа</h1>
-        {canEdit && <a class="a-btn a-btn--primary" href="#/products/new" data-testid="new-product">+ Шинэ бараа</a>}
+        {canEdit && <a class="a-btn a-btn--primary" href="#/products/new" data-testid="new-product"><Icon name="add" />Шинэ бараа</a>}
       </div>
       {facets && (
         <div class="a-segs" role="group" aria-label="Төлөвөөр" style="margin-bottom:12px;flex-wrap:wrap">
@@ -102,8 +103,8 @@ export default function Products(props: Partial<Record<keyof F, string>>) {
           </select>
         </Field>
         <label class="a-check"><input type="checkbox" checked={f.lowStock === "1"} onChange={(e) => setF({ ...f, lowStock: e.currentTarget.checked ? "1" : "", page: 1 })} /> Цөөхөн үлдсэн</label>
-        <button class="a-btn a-btn--primary" type="submit">Хайх</button>
-        {filtered && <button class="a-btn a-btn--ghost" type="button" onClick={() => { setDraft(""); setF({ q: "", status: "", brand: "", gender: "", family: "", hasPrice: "", hasPhoto: "", lowStock: "", sort: f.sort, page: 1 }); }}>Цэвэрлэх</button>}
+        <button class="a-btn a-btn--primary" type="submit"><Icon name="search" />Хайх</button>
+        {filtered && <button class="a-btn a-btn--ghost" type="button" onClick={() => { setDraft(""); setF({ q: "", status: "", brand: "", gender: "", family: "", hasPrice: "", hasPhoto: "", lowStock: "", sort: f.sort, page: 1 }); }}><Icon name="filterOff" />Цэвэрлэх</button>}
       </form>
       <Msg kind="err" text={list.error} />
       {msg.node}
@@ -144,9 +145,9 @@ export default function Products(props: Partial<Record<keyof F, string>>) {
       <Empty show={!!list.data && !items.length} text={filtered ? "Шүүлтүүрт тохирох бараа олдсонгүй." : "Бараа алга. “+ Шинэ бараа”-аар нэмнэ үү."} />
       {pages > 1 && (
         <nav class="a-pager" aria-label="Хуудаслалт">
-          <button type="button" class="a-btn" disabled={f.page <= 1} onClick={() => setF({ ...f, page: f.page - 1 })}>‹ Өмнөх</button>
+          <button type="button" class="a-btn" disabled={f.page <= 1} onClick={() => setF({ ...f, page: f.page - 1 })}><Icon name="prev" />Өмнөх</button>
           <span class="a-dim">{f.page} / {pages}</span>
-          <button type="button" class="a-btn" disabled={f.page >= pages} onClick={() => setF({ ...f, page: f.page + 1 })}>Дараах ›</button>
+          <button type="button" class="a-btn" disabled={f.page >= pages} onClick={() => setF({ ...f, page: f.page + 1 })}>Дараах<Icon name="next" /></button>
         </nav>
       )}
     </section>
@@ -173,13 +174,13 @@ function Bulk({ ids, onDone, onErr }: { ids: string[]; onDone: (t: string) => vo
   return (
     <form class="a-bulk" onSubmit={setPriceAll} data-testid="bulk">
       <b style="align-self:center">{ids.length} сонгосон</b>
-      <button type="button" class="a-btn a-btn--sm" disabled={busy} onClick={() => run({ action: "activate" }, (n) => `${n} бараа идэвхжлээ.`)}>Идэвхжүүлэх</button>
-      <button type="button" class="a-btn a-btn--sm" disabled={busy} onClick={() => run({ action: "draft" }, (n) => `${n} бараа ноорог боллоо.`)}>Ноорог болгох</button>
+      <button type="button" class="a-btn a-btn--sm" disabled={busy} onClick={() => run({ action: "activate" }, (n) => `${n} бараа идэвхжлээ.`)}><Icon name="enable" />Идэвхжүүлэх</button>
+      <button type="button" class="a-btn a-btn--sm" disabled={busy} onClick={() => run({ action: "draft" }, (n) => `${n} бараа ноорог боллоо.`)}><Icon name="draft" />Ноорог болгох</button>
       <ConfirmButton label="Нуух" question={`${ids.length} барааг дэлгүүрээс нуух уу?`} confirmLabel="Тийм, нуух" onConfirm={() => run({ action: "hide" }, (n) => `${n} бараа нуугдлаа.`)} disabled={busy} />
       <span style="flex-basis:12px" />
       <Field label="Хэмжээ (мл)"><input class="a-input a-input--sm" style="width:80px" inputMode="numeric" value={ml} onInput={(e) => setMl(e.currentTarget.value)} /></Field>
       <Field label="Үнэ ₮"><input class="a-input a-input--sm" inputMode="numeric" value={price} onInput={(e) => setPrice(e.currentTarget.value)} /></Field>
-      <button class="a-btn a-btn--sm a-btn--primary" type="submit" disabled={busy}>Үнэ тавих</button>
+      <button class="a-btn a-btn--sm a-btn--primary" type="submit" disabled={busy}><Icon name="price" />Үнэ тавих</button>
     </form>
   );
 }

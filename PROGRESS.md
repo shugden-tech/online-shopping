@@ -465,3 +465,8 @@ Mongolian string (most suggestions applied; site-wide terms such as "үнэрт�
 ## Admin restyle (Sonnet session)
 - Owner's red S logo (`src/assets/brand/logo-s.png`, white keyed to transparent) replaces the old mark; the admin now uses the storefront's light tokens (#fff / #f5f4f2 / plum #6b5f70, red #e00000 only for the mark and the active-nav indicator) and the storefront fonts (Unbounded MN, Montserrat fallback). Status colours re-derived for a light background; chart colours use CSS variables; phone bottom bar is light.
 - Verified in a real browser against the real Worker: login, dashboard, orders, products, inventory, settings at 1440 and 390 px, 0 overflow, 0 page errors; admin-ui tests 96/96.
+
+## Admin icons (Sonnet session)
+- All admin icons are now Google Material Symbols (outlined, 400, Apache-2.0) inlined as SVG paths by `scripts/build-admin-icons.mjs` into `src/admin-ui/icons.tsx` (48 icons; no icon font, no request to fonts.google.com — the CSP allows only our own origin). Used for the 9 nav items, dashboard cards, action buttons (search/save/add/refresh/send/…), arrows (back/forward/external), message status (ok/error/info) and logout; the old text glyphs (‹ ↗ → × ↑ ↓ +) are gone.
+- Admin initial JS 18.1 → 24.2 KB gzip; its budget in `scripts/js-budget.mjs` raised from 20 to 26 KB (back-office page, loaded once per session).
+- Verified: astro check 0 errors, admin-ui tests 96/96, real browser 1440 + 390 px, 0 overflow, 0 page errors. Still failing in `npm run budget`: finder 25.2 and checkout 25.4 KB (limit 25) from earlier storefront commits.

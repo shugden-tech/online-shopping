@@ -7,6 +7,7 @@ import {
 import { api, enc, rows, pick } from "../api";
 import { GENDER, PRODUCT_STATUS, SKU_KIND, STOCK_REASON, money, num, when } from "../labels";
 import { ConfirmButton, Field, Loading, Msg, Table, go, intOrNull, useMsg, useSession } from "../ui";
+import { Icon } from "../icons";
 
 const MAX_IMAGE = 5 * 1024 * 1024;
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -56,7 +57,7 @@ function Chips({ label, value, onChange, disabled, hint }: { label: string; valu
       <span class="a-field__label">{label}</span>
       <div class="a-chips" onClick={(e) => (e.currentTarget.querySelector("input") as HTMLInputElement | null)?.focus()}>
         {value.map((v) => (
-          <span class="a-chip">{v}{!disabled && <button type="button" aria-label={`${v} хасах`} onClick={() => onChange(value.filter((x) => x !== v))}>×</button>}</span>
+          <span class="a-chip">{v}{!disabled && <button type="button" aria-label={`${v} хасах`} onClick={() => onChange(value.filter((x) => x !== v))}><Icon name="close" /></button>}</span>
         ))}
         {!disabled && (
           <input
@@ -170,17 +171,17 @@ export default function ProductEdit({ id }: { id: string }) {
   };
 
   if (loading) return <Loading on />;
-  if (loadErr) return <><p><a href="#/products">‹ Бараа</a></p><Msg kind="err" text={loadErr} /></>;
+  if (loadErr) return <><p><a href="#/products"><Icon name="back" />Бараа</a></p><Msg kind="err" text={loadErr} /></>;
 
   return (
     <section aria-labelledby="pe-h" class="a-stack">
-      <p><a href="#/products">‹ Бараа</a></p>
+      <p><a href="#/products"><Icon name="back" />Бараа</a></p>
       <div class="a-row a-row--between">
         <h1 id="pe-h" class="a-title">{isNew ? "Шинэ бараа" : `${product!.brand} — ${product!.name}`}</h1>
         {!isNew && (
           <div class="a-row">
-            {product!.status === "active" && <a class="a-btn a-btn--sm" href={`/delguur/p/${enc(id)}`} target="_blank" rel="noopener" data-testid="view-store">Дэлгүүрт харах ↗</a>}
-            {can("audit.read") && <a class="a-btn a-btn--sm a-btn--ghost" href={`#/audit?entity=product&entityId=${enc(id)}`}>Түүх</a>}
+            {product!.status === "active" && <a class="a-btn a-btn--sm" href={`/delguur/p/${enc(id)}`} target="_blank" rel="noopener" data-testid="view-store">Дэлгүүрт харах<Icon name="external" /></a>}
+            {can("audit.read") && <a class="a-btn a-btn--sm a-btn--ghost" href={`#/audit?entity=product&entityId=${enc(id)}`}><Icon name="audit" />Түүх</a>}
           </div>
         )}
       </div>
@@ -344,7 +345,7 @@ function PhotoPick({ side, label, file, onFile, onError }: { side: "front" | "ba
     <div class="a-imgside" data-side={side}>
       <h3 class="a-h3">{label}</h3>
       <DropZone label={label} src={url} testid={side} onFile={async (f) => { const b = await prepare(f); if (typeof b === "string") onError(b); else onFile(b); }} />
-      {file && <p class="a-small a-dim">{Math.round(file.size / 1024)} KB · бараа үүсэхэд оруулагдана. <button type="button" class="a-btn a-btn--sm a-btn--ghost" onClick={() => onFile(undefined)}>Болих</button></p>}
+      {file && <p class="a-small a-dim">{Math.round(file.size / 1024)} KB · бараа үүсэхэд оруулагдана. <button type="button" class="a-btn a-btn--sm a-btn--ghost" onClick={() => onFile(undefined)}><Icon name="close" />Болих</button></p>}
     </div>
   );
 }
@@ -413,7 +414,7 @@ function ImageSide({ product, side, label, onProduct }: { product: AdminProduct;
               <span class="a-field__label">Эсвэл зургийн хаяг</span>
               <input class="a-input" type="url" inputMode="url" placeholder="https://…" value={url} onInput={(e) => setUrl(e.currentTarget.value)} disabled={busy} data-testid={`url-${side}`} />
             </label>
-            <button class="a-btn" type="submit" disabled={busy || !url.trim()}>Хэрэглэх</button>
+            <button class="a-btn" type="submit" disabled={busy || !url.trim()}><Icon name="check" />Хэрэглэх</button>
           </form>
           {current && <ConfirmButton label="Зургийг хасах" question="Энэ зургийг бараанаас хасах уу?" confirmLabel="Тийм, хасах" onConfirm={() => patch(null)} disabled={busy} danger />}
         </>
@@ -486,7 +487,7 @@ function Skus({ product, reload }: { product: AdminProduct; reload: () => Promis
           <Field label="Үнэ ₮ (хоосон = зарагдахгүй)"><input class="a-input" inputMode="numeric" name="price" value={adding.price} onInput={(e) => setAdding({ ...adding, price: e.currentTarget.value })} /></Field>
           <Field label="Хуучин үнэ ₮"><input class="a-input" inputMode="numeric" value={adding.compareAt} onInput={(e) => setAdding({ ...adding, compareAt: e.currentTarget.value })} /></Field>
           <label class="a-check"><input type="checkbox" checked={adding.active} onChange={(e) => setAdding({ ...adding, active: e.currentTarget.checked })} /> Идэвхтэй</label>
-          <button class="a-btn" type="submit">Нэмэх</button>
+          <button class="a-btn" type="submit"><Icon name="add" />Нэмэх</button>
         </form>
       )}
       {msg.node}
@@ -517,7 +518,7 @@ function SkuRow({ sku, canEdit, onSave, onDelete }: { sku: AdminSku; canEdit: bo
       <td>
         {canEdit && (
           <div class="a-row a-row--tight">
-            <button type="button" class="a-btn a-btn--sm" data-action="save-sku" disabled={busy || !dirty} onClick={async () => { setBusy(true); await onSave(f); setBusy(false); }}>Хадгалах</button>
+            <button type="button" class="a-btn a-btn--sm" data-action="save-sku" disabled={busy || !dirty} onClick={async () => { setBusy(true); await onSave(f); setBusy(false); }}><Icon name="save" />Хадгалах</button>
             <ConfirmButton label="Устгах" question={`${sku.ml} мл устгах уу?`} confirmLabel="Тийм" danger onConfirm={onDelete} disabled={busy} />
           </div>
         )}
@@ -575,7 +576,7 @@ function Inventory({ product, reload }: { product: AdminProduct; reload: () => P
             <td class="a-mono">{s.stock === null ? <span class="a-dim">тоолдоггүй</span> : num(s.stock)}</td>
             <td class="a-mono">{num(s.reserved)}</td>
             <td class="a-mono">{s.available === null ? "∞" : <b class={s.available === 0 ? "a-warn" : ""}>{num(s.available)}</b>}</td>
-            <td><button type="button" class="a-btn a-btn--sm" aria-expanded={hist?.sku === s.id} onClick={() => (hist?.sku === s.id ? setHist(null) : showHistory(s.id))}>Түүх</button></td>
+            <td><button type="button" class="a-btn a-btn--sm" aria-expanded={hist?.sku === s.id} onClick={() => (hist?.sku === s.id ? setHist(null) : showHistory(s.id))}><Icon name="audit" />Түүх</button></td>
           </tr>
         ))}
       </Table>
@@ -630,7 +631,7 @@ function Inventory({ product, reload }: { product: AdminProduct; reload: () => P
             </select>
           </Field>
           <Field label="Тэмдэглэл (заавал биш)"><input class="a-input" name="note" maxLength={300} value={adj.note} onInput={(e) => setAdj({ ...adj, note: e.currentTarget.value })} /></Field>
-          <button class="a-btn a-btn--primary" type="submit" disabled={busy}>Хадгалах</button>
+          <button class="a-btn a-btn--primary" type="submit" disabled={busy}><Icon name="save" />Хадгалах</button>
         </form>
       )}
       {msg.node}

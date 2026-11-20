@@ -4,6 +4,7 @@ import { SHIPMENT_TRANSITIONS, type ShipmentStatus } from "../../lib/contracts";
 import { api, enc, pick, shipmentView } from "../api";
 import { PROVIDER, SHIPMENT_STATUS, money, when } from "../labels";
 import { Badge, ConfirmButton, Field, Loading, Msg, intOrNull, useMsg, useSession } from "../ui";
+import { Icon } from "../icons";
 
 export default function ShipmentDetail({ id }: { id: string }) {
   const { can } = useSession();
@@ -25,7 +26,7 @@ export default function ShipmentDetail({ id }: { id: string }) {
   }
   useEffect(() => { load(); }, [id]);
 
-  if (error && !data) return <><p><a href="#/shipments">‹ Хүргэлт</a></p><Msg kind="err" text={error} /></>;
+  if (error && !data) return <><p><a href="#/shipments"><Icon name="back" />Хүргэлт</a></p><Msg kind="err" text={error} /></>;
   if (!data) return <Loading on />;
   const s = shipmentView(data.shipment ?? data);
   const events: any[] = data.events ?? data.shipment?.events ?? [];
@@ -54,7 +55,7 @@ export default function ShipmentDetail({ id }: { id: string }) {
 
   return (
     <section aria-labelledby="sd-h" class="a-stack">
-      <p><a href="#/shipments">‹ Хүргэлт</a></p>
+      <p><a href="#/shipments"><Icon name="back" />Хүргэлт</a></p>
       <h1 id="sd-h" class="a-title">Хүргэлт #{s.id}</h1>
       <div class="a-row">
         <Badge value={s.status} labels={SHIPMENT_STATUS} />
@@ -78,7 +79,7 @@ export default function ShipmentDetail({ id }: { id: string }) {
             <Field label="Хяналтын дугаар"><input class="a-input" name="trackingNo" maxLength={120} value={track.trackingNo} onInput={(e) => setTrack({ ...track, trackingNo: e.currentTarget.value })} /></Field>
             <Field label="Хяналтын холбоос"><input class="a-input" name="trackingUrl" type="url" value={track.trackingUrl} onInput={(e) => setTrack({ ...track, trackingUrl: e.currentTarget.value })} /></Field>
             <Field label="Тэмдэглэл (заавал биш)"><input class="a-input" name="note" maxLength={300} value={track.note} onInput={(e) => setTrack({ ...track, note: e.currentTarget.value })} /></Field>
-            <button class="a-btn" type="submit" disabled={busy}>Хяналт хадгалах</button>
+            <button class="a-btn" type="submit" disabled={busy}><Icon name="save" />Хяналт хадгалах</button>
           </form>
           <form class="a-addsku" data-testid="shipment-details" onSubmit={(e) => {
             e.preventDefault();
@@ -89,14 +90,14 @@ export default function ShipmentDetail({ id }: { id: string }) {
             <Field label="Хүргэгч / компани"><input class="a-input" name="courier" maxLength={80} value={det.courier} onInput={(e) => setDet({ ...det, courier: e.currentTarget.value })} /></Field>
             <Field label="Зардал ₮"><input class="a-input" name="fee" inputMode="numeric" value={det.fee} onInput={(e) => setDet({ ...det, fee: e.currentTarget.value })} /></Field>
             <Field label="Дотоод тэмдэглэл"><input class="a-input" name="notes" maxLength={500} value={det.notes} onInput={(e) => setDet({ ...det, notes: e.currentTarget.value })} /></Field>
-            <button class="a-btn" type="submit" disabled={busy}>Хадгалах</button>
+            <button class="a-btn" type="submit" disabled={busy}><Icon name="save" />Хадгалах</button>
           </form>
           {next.length ? (
             <div class="a-row">
               <span class="a-small a-dim">Төлөв солих:</span>
               {next.map((to) =>
                 s.status === "failed" && to === "pending" ? (
-                  <button type="button" class="a-btn a-btn--primary" data-testid="retry" disabled={busy} onClick={retry}>Дахин оролдох</button>
+                  <button type="button" class="a-btn a-btn--primary" data-testid="retry" disabled={busy} onClick={retry}><Icon name="retry" />Дахин оролдох</button>
                 ) : to === "cancelled" ? (
                   <ConfirmButton testid="ship-cancel" label={SHIPMENT_STATUS.cancelled!} danger disabled={busy} question="Хүргэлтийг цуцлах уу?" confirmLabel="Тийм, цуцлах" onConfirm={() => patch(withNote({ status: to }), "Цуцлагдлаа.")} />
                 ) : (

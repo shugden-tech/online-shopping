@@ -3,6 +3,7 @@ import { useState } from "preact/hooks";
 import { qs } from "../api";
 import { ACTION, ACTOR, ENTITY, when } from "../labels";
 import { Empty, Field, Loading, Msg, Table, useKeyset } from "../ui";
+import { Icon } from "../icons";
 
 interface Row { id: number; at: string; actor: string; action: string; entity: string; entityId: string | null; data: unknown }
 
@@ -54,7 +55,7 @@ export default function Audit(props: { entity?: string; entityId?: string }) {
         <Field label="ID (заавал биш)">
           <input class="a-input a-mono" name="entityId" value={idDraft} onInput={(e) => setIdDraft(e.currentTarget.value)} />
         </Field>
-        <button class="a-btn" type="submit">Шүүх</button>
+        <button class="a-btn" type="submit"><Icon name="filter" />Шүүх</button>
       </form>
       <Msg kind="err" text={list.error} />
       <Table label="Үйлдлийн түүх" head={["Огноо", "Хэн", "Үйлдэл", "Төрөл", "ID", "Өгөгдөл"]}>
@@ -71,7 +72,7 @@ export default function Audit(props: { entity?: string; entityId?: string }) {
       </Table>
       <Loading on={list.loading} />
       <Empty show={!list.loading && !list.error && !list.items.length} text="Бичлэг алга." />
-      {list.cursor !== null && <button type="button" class="a-btn" disabled={list.loading} onClick={list.more}>Цааш ачаалах</button>}
+      {list.cursor !== null && <button type="button" class="a-btn" disabled={list.loading} onClick={list.more}><Icon name="more" />Цааш ачаалах</button>}
     </section>
   );
 }

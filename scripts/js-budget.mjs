@@ -23,7 +23,7 @@ const pages = [
   ["zahialga/amjilttai/index.html", 20, "initial"],
   ["bidnii-tuhai/index.html", 20, "initial"],
   ["tuslamj/index.html", 20, "initial"],
-  ["admin/index.html", 20, "initial"],
+  ["admin/index.html", 26, "initial"] /* back-office, loaded once per session: 48 inlined Material Symbols icons (~6 KB) */,
   ["en/index.html", 90, "total"], // the English home is a home page too: same total rule
 ];
 

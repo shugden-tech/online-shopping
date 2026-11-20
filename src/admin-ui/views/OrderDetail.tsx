@@ -7,6 +7,7 @@ import {
   ORDER_ACTION, ORDER_PAY_STATUS, ORDER_STATUS, PAYMENT_STATUS, PROVIDER, SHIPMENT_STATUS, money, when,
 } from "../labels";
 import { Badge, ConfirmButton, Field, Loading, Msg, Table, go, intOrNull, useMsg, useSession } from "../ui";
+import { Icon } from "../icons";
 
 const CITY: Record<string, string> = { ub: "Улаанбаатар", countryside: "Орон нутаг" };
 
@@ -27,7 +28,7 @@ export default function OrderDetail({ no }: { no: string }) {
   }
   useEffect(() => { load(); }, [no]);
 
-  if (error && !data) return <><p><a href="#/orders">‹ Захиалга</a></p><Msg kind="err" text={error} /></>;
+  if (error && !data) return <><p><a href="#/orders"><Icon name="back" />Захиалга</a></p><Msg kind="err" text={error} /></>;
   if (!data) return <Loading on />;
 
   const raw = data.order ?? {};
@@ -52,10 +53,10 @@ export default function OrderDetail({ no }: { no: string }) {
 
   return (
     <section aria-labelledby="od-h" class="a-stack">
-      <p><a href="#/orders">‹ Захиалга</a></p>
+      <p><a href="#/orders"><Icon name="back" />Захиалга</a></p>
       <div class="a-row a-row--between">
         <h1 id="od-h" class="a-title a-mono">{o.no}</h1>
-        {can("audit.read") && <a href={`#/audit?entity=order&entityId=${enc(o.no)}`}>Үйлдлийн түүх</a>}
+        {can("audit.read") && <a href={`#/audit?entity=order&entityId=${enc(o.no)}`}><Icon name="audit" />Үйлдлийн түүх</a>}
       </div>
       <div class="a-row">
         <Badge value={o.status} labels={ORDER_STATUS} />
@@ -203,7 +204,7 @@ export default function OrderDetail({ no }: { no: string }) {
           </ol>
         ) : <p class="a-dim">Түүх алга.</p>}
       </section>
-      <p><button type="button" class="a-btn a-btn--ghost" onClick={() => go("#/orders")}>‹ Жагсаалт руу</button></p>
+      <p><button type="button" class="a-btn a-btn--ghost" onClick={() => go("#/orders")}><Icon name="back" />Жагсаалт руу</button></p>
       <Slip o={o} />
     </section>
   );
@@ -271,7 +272,7 @@ function Notes({ no, initial, canWrite }: { no: string; initial: any[]; canWrite
       {canWrite && (
         <form class="a-addsku" onSubmit={add}>
           <Field label="Шинэ тэмдэглэл" wide><textarea class="a-input" name="note" rows={2} maxLength={1000} value={text} onInput={(e) => setText(e.currentTarget.value)} /></Field>
-          <button class="a-btn" type="submit" disabled={busy}>Нэмэх</button>
+          <button class="a-btn" type="submit" disabled={busy}><Icon name="add" />Нэмэх</button>
         </form>
       )}
       {msg.node}
@@ -310,7 +311,7 @@ function NewShipment({ no, onDone }: { no: string; onDone: (msg: string) => Prom
       <Field label="Хяналтын дугаар"><input class="a-input" name="trackingNo" maxLength={64} value={f.trackingNo} onInput={set("trackingNo")} /></Field>
       <Field label="Хүргэлтийн зардал ₮"><input class="a-input" name="fee" inputMode="numeric" value={f.fee} onInput={set("fee")} /></Field>
       <Field label="Тэмдэглэл"><input class="a-input" name="notes" maxLength={500} value={f.notes} onInput={set("notes")} /></Field>
-      <button class="a-btn a-btn--primary" type="submit" data-testid="create-shipment" disabled={busy}>Хүргэлт үүсгэх</button>
+      <button class="a-btn a-btn--primary" type="submit" data-testid="create-shipment" disabled={busy}><Icon name="shipments" />Хүргэлт үүсгэх</button>
       {msg.node}
     </form>
   );
@@ -336,7 +337,7 @@ function MarkPaid({ no, total, onDone }: { no: string; total: number; onDone: (m
       <h3 class="a-h3">Банкны шилжүүлгээр төлөгдсөн гэж тэмдэглэх</h3>
       <Field label="Дүн ₮"><input class="a-input" name="amount" inputMode="numeric" value={amount} onInput={(e) => setAmount(e.currentTarget.value)} required /></Field>
       <Field label="Гүйлгээний утга / лавлах"><input class="a-input" name="reference" maxLength={120} value={reference} onInput={(e) => setReference(e.currentTarget.value)} required /></Field>
-      <button class="a-btn a-btn--primary" type="submit" disabled={busy}>Төлбөр бүртгэх</button>
+      <button class="a-btn a-btn--primary" type="submit" disabled={busy}><Icon name="paid" />Төлбөр бүртгэх</button>
       {msg.node}
     </form>
   );

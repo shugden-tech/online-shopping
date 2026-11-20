@@ -4,6 +4,7 @@ import { useEffect, useState } from "preact/hooks";
 import { api, enc } from "../api";
 import { ORDER_PAY_STATUS, ORDER_STATUS, PROVIDER, money, num, when } from "../labels";
 import { Badge, Msg, Table, go, useSession } from "../ui";
+import { Icon, type IconName } from "../icons";
 
 interface Stats {
   range: string;
@@ -83,19 +84,19 @@ export default function Dashboard(props: { range?: string }) {
   const n = data?.now ?? {};
   const v = (x: number | undefined, f: (n: number) => string = num) => (loading && !data ? "…" : x === undefined ? "—" : f(x));
   const kpis = [
-    { key: "orders", l: "Захиалга", n: v(k?.orders), sub: k?.cancelled ? `${k.cancelled} цуцлагдсан` : "" },
-    { key: "revenue", l: "Орлого (төлөгдсөн)", n: v(k?.revenue, money), gold: true, sub: k ? `${k.paidOrders} төлөгдсөн захиалга` : "" },
-    { key: "aov", l: "Захиалгын дундаж дүн", n: v(k?.aov, money), sub: "" },
+    { key: "orders", ic: "orders" as IconName, l: "Захиалга", n: v(k?.orders), sub: k?.cancelled ? `${k.cancelled} цуцлагдсан` : "" },
+    { key: "revenue", ic: "paid" as IconName, l: "Орлого (төлөгдсөн)", n: v(k?.revenue, money), gold: true, sub: k ? `${k.paidOrders} төлөгдсөн захиалга` : "" },
+    { key: "aov", ic: "payments" as IconName, l: "Захиалгын дундаж дүн", n: v(k?.aov, money), sub: "" },
   ];
   const now = [
-    { key: "pendingPayments", l: "Төлбөр хүлээгдэж буй", href: "#/orders?status=new", perm: "orders.read" },
-    { key: "toShip", l: "Илгээх захиалга", href: "#/orders?status=paid", perm: "orders.read" },
-    { key: "lowStock", l: `Цөөхөн үлдсэн (≤ ${data?.lowStockThreshold ?? 3})`, href: "#/inventory?low=1", perm: "catalog.read", warn: true },
-    { key: "outOfStock", l: "Дууссан хэмжээ", href: "#/inventory?low=1", perm: "catalog.read", warn: true },
-    { key: "failedShipments", l: "Амжилтгүй хүргэлт", href: "#/shipments?status=failed", perm: "delivery.read", warn: true },
-    { key: "failedWebhooks", l: "Амжилтгүй webhook", href: "#/webhooks?tab=out", perm: "settings.read", warn: true },
-    { key: "unpricedActive", l: "Үнэ тавиагүй идэвхтэй бараа", href: "#/products?status=active&hasPrice=0", perm: "catalog.read", warn: true },
-    { key: "draftProducts", l: "Ноорог бараа", href: "#/products?status=draft", perm: "catalog.read" },
+    { key: "pendingPayments", ic: "wait" as IconName, l: "Төлбөр хүлээгдэж буй", href: "#/orders?status=new", perm: "orders.read" },
+    { key: "toShip", ic: "shipments" as IconName, l: "Илгээх захиалга", href: "#/orders?status=paid", perm: "orders.read" },
+    { key: "lowStock", ic: "low" as IconName, l: `Цөөхөн үлдсэн (≤ ${data?.lowStockThreshold ?? 3})`, href: "#/inventory?low=1", perm: "catalog.read", warn: true },
+    { key: "outOfStock", ic: "block" as IconName, l: "Дууссан хэмжээ", href: "#/inventory?low=1", perm: "catalog.read", warn: true },
+    { key: "failedShipments", ic: "error" as IconName, l: "Амжилтгүй хүргэлт", href: "#/shipments?status=failed", perm: "delivery.read", warn: true },
+    { key: "failedWebhooks", ic: "webhook" as IconName, l: "Амжилтгүй webhook", href: "#/webhooks?tab=out", perm: "settings.read", warn: true },
+    { key: "unpricedActive", ic: "price" as IconName, l: "Үнэ тавиагүй идэвхтэй бараа", href: "#/products?status=active&hasPrice=0", perm: "catalog.read", warn: true },
+    { key: "draftProducts", ic: "draft" as IconName, l: "Ноорог бараа", href: "#/products?status=draft", perm: "catalog.read" },
   ].filter((c) => can(c.perm as any));
 
   return (
@@ -110,7 +111,7 @@ export default function Dashboard(props: { range?: string }) {
       <ul class="a-cards" data-testid="dashboard">
         {kpis.map((c) => (
           <li><div class={`a-card${c.gold ? " a-card--gold" : ""}`} data-card={c.key}>
-            <span class="a-card__l">{c.l}</span>
+            <span class="a-card__l"><Icon name={c.ic} />{c.l}</span>
             <span class="a-card__n" aria-live="polite">{c.n}</span>
             {c.sub && <span class="a-small a-dim">{c.sub}</span>}
           </div></li>
@@ -129,7 +130,7 @@ export default function Dashboard(props: { range?: string }) {
             const val = n[c.key];
             return (
               <li><a class={`a-card${c.warn && val ? " a-card--warn" : ""}`} href={c.href} data-card={c.key}>
-                <span class="a-card__l">{c.l}</span>
+                <span class="a-card__l"><Icon name={c.ic} />{c.l}</span>
                 <span class="a-card__n">{v(val)}</span>
               </a></li>
             );
@@ -140,7 +141,7 @@ export default function Dashboard(props: { range?: string }) {
       <section class="a-panel" aria-labelledby="latest-h">
         <div class="a-row a-row--between">
           <h2 id="latest-h" class="a-h2">Сүүлийн захиалгууд</h2>
-          <a href="#/orders" class="a-small">Бүх захиалга →</a>
+          <a href="#/orders" class="a-small">Бүх захиалга<Icon name="forward" /></a>
         </div>
         {data && !data.latest.length ? <p class="a-dim a-empty">Одоогоор захиалга алга.</p> : (
           <Table label="Сүүлийн захиалгууд" head={["Дугаар", "Огноо", "Хэрэглэгч", "Утас", "Дүн", "Төлбөр", "Төлөв"]}>

@@ -3,6 +3,7 @@ import type { BundleView } from "../../lib/bundles/types";
 import { api, enc } from "../api";
 import { PRODUCT_STATUS, money } from "../labels";
 import { Badge, Empty, Msg, Table, go, useLoad, useSession } from "../ui";
+import { Icon } from "../icons";
 
 export const BLOCK: Record<string, string> = {
   hidden: "Дэлгүүрт харагдахгүй",
@@ -23,7 +24,7 @@ export default function Bundles() {
     <section aria-labelledby="bun-h">
       <div class="a-row a-row--between">
         <h1 id="bun-h" class="a-title">Багц</h1>
-        {can("catalog.write") && <a class="a-btn a-btn--primary" href="#/bundles/new" data-testid="new-bundle">+ Шинэ багц</a>}
+        {can("catalog.write") && <a class="a-btn a-btn--primary" href="#/bundles/new" data-testid="new-bundle"><Icon name="add" />Шинэ багц</a>}
       </div>
       <p class="a-dim a-small">Багц нь хэд хэдэн хэмжээг (SKU) нэг үнээр зарна. Захиалахад бүрэлдэхүүн бүрийн үлдэгдэл нөөцлөгдөнө. Бүрэлдэхүүний аль нэг нь худалдаалагдахгүй эсвэл дууссан бол багц “Түр дууссан” гэж харагдана.</p>
       <Msg kind="err" text={list.error} />

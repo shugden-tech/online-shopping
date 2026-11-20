@@ -63,7 +63,7 @@ html { -webkit-text-size-adjust: 100%; }
   position: relative; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--radius);
   text-decoration: none; color: var(--text-dim) !important; font-weight: 500; font-size: 13px; letter-spacing: .01em;
 }
-.a-nav__link svg { flex: none; width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+.a-nav__link svg { flex: none; width: 20px; height: 20px; }
 .a-nav__link:hover { background: var(--ink-3); color: var(--text) !important; }
 .a-nav__link[aria-current="page"] { background: var(--gold-soft); color: var(--gold-hi) !important; box-shadow: inset 2px 0 0 var(--gold); }
 .a-nav__badge {
@@ -356,3 +356,16 @@ a.a-card:hover { border-color: var(--gold-line); background: var(--ink-3); }
 @media (max-width: 860px) {
   .a-bnav { background: rgba(255, 255, 255, .97); border-top: 1px solid var(--line); box-shadow: 0 -4px 18px rgba(20, 20, 20, .06); }
 }
+
+/* Material Symbols icons (src/admin-ui/icons.tsx): 1.25em square, take the text colour */
+.a-ico { flex: none; width: 1.3em; height: 1.3em; fill: currentColor; stroke: none; vertical-align: -0.28em; }
+.a-btn, .a-link-btn, button.a-chip { display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.a-btn .a-ico { margin: 0; }
+a.a-btn { text-decoration: none; }
+.a-nav__link .a-ico { width: 20px; height: 20px; vertical-align: 0; }
+.a-top__logo { width: 30px; height: 30px; }
+.a-card__l { display: flex; align-items: center; gap: 7px; }
+.a-card__l .a-ico { color: var(--gold); width: 1.5em; height: 1.5em; }
+.a-card--warn .a-card__l .a-ico { color: var(--bad); }
+.a-msg { display: flex; align-items: flex-start; gap: 8px; }
+.a-msg .a-ico { margin-top: .12em; }

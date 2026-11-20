@@ -3,6 +3,7 @@ import type { ComponentChildren } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 import type { Permission, Role } from "../lib/contracts";
 import { api, rows, type Res } from "./api";
+import { Icon } from "./icons";
 
 export interface Ctx { role: Role; can: (p: Permission) => boolean }
 // Module-level session (no Preact context: keeps the shared preact chunk identical to the storefront's).
@@ -31,7 +32,7 @@ export function useLoad<T>(fn: () => Promise<Res<T>>, deps: unknown[]) {
 
 export function Msg({ text, kind = "info" }: { text: string; kind?: "info" | "ok" | "err" }) {
   if (!text) return null;
-  return <p class={`a-msg a-msg--${kind}`} role={kind === "err" ? "alert" : "status"}>{text}</p>;
+  return <p class={`a-msg a-msg--${kind}`} role={kind === "err" ? "alert" : "status"}><Icon name={kind === "err" ? "error" : kind === "ok" ? "ok" : "info"} />{text}</p>;
 }
 
 /** A message slot that also remembers success/failure of the last action. */
@@ -74,7 +75,7 @@ export function ConfirmButton(props: { label: string; question: string; confirmL
     <span class="a-confirm" role="group" aria-label={props.question} onKeyDown={(e) => e.key === "Escape" && setAsking(false)}>
       <span class="a-confirm__q">{props.question}</span>
       <button ref={yes} type="button" class="a-btn a-btn--danger" data-confirm onClick={() => { setAsking(false); props.onConfirm(); }}>{props.confirmLabel}</button>
-      <button type="button" class="a-btn a-btn--ghost" onClick={() => setAsking(false)}>Болих</button>
+      <button type="button" class="a-btn a-btn--ghost" onClick={() => setAsking(false)}><Icon name="close" />Болих</button>
     </span>
   );
 }
