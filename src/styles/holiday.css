@@ -163,3 +163,16 @@
   background-size: 34px 34px, 34px 34px;
   background-position: 0 0, 17px 17px;
 }
+
+/* Phones narrower than 400px: a smaller logo keeps the header tools on the same row as the logo. */
+@media (max-width: 399px) {
+  :root[data-theme="christmas"] .hdr__xmas-logo { height: 44px; }
+}
+
+/* Phones narrower than 400px: smaller logo and icon buttons so the logo and all header tools fit on one row. */
+@media (max-width: 399px) {
+  :root[data-theme="christmas"] .hdr__xmas-logo { height: 36px; }
+  :root[data-theme="christmas"] .hdr__icon { width: 40px; height: 40px; }
+  :root[data-theme="christmas"] .hdr__tools { gap: 4px; }
+  :root[data-theme="christmas"] .hdr__cart { padding: 0 6px; }
+}
