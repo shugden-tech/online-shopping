@@ -1,7 +1,7 @@
 {
   "site": {
-    "name": "genzst",
-    "titleSuffix": "genzst — perfume decants",
+    "name": "Gen'Z Street",
+    "titleSuffix": "Gen'Z Street — perfume decants",
     "description": "Authentic designer and niche perfume decants in 2, 5 and 10 ml, from Ulaanbaatar. Try on your skin before committing to a full bottle.",
     "tagline": "Perfume decants · Ulaanbaatar"
   },
@@ -17,7 +17,7 @@
     "close": "Close",
     "main": "Main menu",
     "skip": "Skip to content",
-    "home": "genzst — home",
+    "home": "Gen'Z Street — home",
     "langSwitch": "Монгол хэл рүү шилжих",
     "langLabel": "Language"
   },
@@ -31,7 +31,7 @@
     "hours": "Hours",
     "phone": "Phone",
     "rights": "All rights reserved.",
-    "disclaimer": "genzst is an independent decant shop and is not affiliated with the brands mentioned. Brand names belong to their respective owners."
+    "disclaimer": "Gen'Z Street is an independent decant shop and is not affiliated with the brands mentioned. Brand names belong to their respective owners."
   },
   "common": {
     "from": "from {price}",
@@ -217,7 +217,7 @@
     "increase": "Increase by one",
     "allSoldOut": "Currently sold out",
     "deliveryHint": "Delivered in Ulaanbaatar within 24–48 hours.",
-    "metaDescription": "{brand} {name} {conc} — 2, 5 and 10 ml decants. {family} family, at genzst."
+    "metaDescription": "{brand} {name} {conc} — 2, 5 and 10 ml decants. {family} family, at Gen'Z Street."
   },
   "cart": {
     "title": "Your cart",
@@ -248,7 +248,7 @@
   },
   "finder": {
     "title": "Scent Finder",
-    "metaDescription": "Answer five questions and get three fragrances that suit you, then try them as 2, 5 or 10 ml decants. The genzst Scent Finder.",
+    "metaDescription": "Answer five questions and get three fragrances that suit you, then try them as 2, 5 or 10 ml decants. The Gen'Z Street Scent Finder.",
     "introEyebrow": "Scent Finder",
     "introTitle": "Five questions.\nThree scents.",
     "introText": "There are no right or wrong answers. Just go with your instinct.",
@@ -448,10 +448,10 @@
   },
   "about": {
     "title": "About",
-    "metaDescription": "genzst is a perfume decant shop in Ulaanbaatar: authentic fragrances in 2, 5 and 10 ml vials. Our story and principles.",
+    "metaDescription": "Gen'Z Street is a perfume decant shop in Ulaanbaatar: authentic fragrances in 2, 5 and 10 ml vials. Our story and principles.",
     "eyebrow": "About us",
     "heading": "Choose a scent by feeling, not by the bottle.",
-    "p1": "[[TODO owner]] genzst is a perfume decant shop born in Ulaanbaatar. We transfer authentic designer and niche fragrances into 2, 5 and 10 ml vials so anyone can wear a scent on their own skin before buying a full bottle.",
+    "p1": "[[TODO owner]] Gen'Z Street is a perfume decant shop born in Ulaanbaatar. We transfer authentic designer and niche fragrances into 2, 5 and 10 ml vials so anyone can wear a scent on their own skin before buying a full bottle.",
     "p2": "[[TODO owner]] Fragrance is personal. Something that smells beautiful on paper can turn into something else entirely on skin. So we work by one rule: try first, decide later.",
     "p3": "[[TODO owner]] Every order is decanted, labelled and packed by hand.",
     "valuesTitle": "What we stand for",
@@ -551,8 +551,8 @@
       "unisex": "Gender-neutral"
     },
     "seeAll": "See all",
-    "aboutTitle": "About genzst",
-    "about1": "Feeling good starts with smelling good. genzst hand-decants authentic designer and niche fragrances for women, men and everyone from the original bottle into 2, 5 and 10 ml vials.",
+    "aboutTitle": "About Gen'Z Street",
+    "about1": "Feeling good starts with smelling good. Gen'Z Street hand-decants authentic designer and niche fragrances for women, men and everyone from the original bottle into 2, 5 and 10 ml vials.",
     "about2": "Try a scent on your skin before you commit to a full bottle. Sample it, don't settle.",
     "info": [
       {
