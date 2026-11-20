@@ -2,75 +2,139 @@
   {
     "file": "br.jpg",
     "mobileFile": "Byredo_Gypsy_Water_mobile.jpg",
-    "eyebrow": "ЭРХ ЧӨЛӨӨНИЙ МЭДРЭМЖ",
-    "title": "Өөрийн замаар.",
     "product": "BYREDO · GYPSY WATER",
-    "text": "Өөрийн өнгө аясыг илэрхийлэх нэгэн сонголт.",
-    "cta": "Үнэртэй танилцах"
+    "heading": {
+      "mn": "ЭРХ ЧӨЛӨӨ",
+      "en": "FREEDOM"
+    },
+    "text": {
+      "mn": "Өөрийн өнгө аясыг илэрхийлэх нэгэн сонголт.",
+      "en": "A choice that expresses your own tone."
+    },
+    "cta": {
+      "mn": "Үнэртэй танилцах",
+      "en": "Discover the fragrance"
+    }
   },
   {
     "file": "creed.jpg",
     "mobileFile": "Creed_Aventus_mobile.jpg",
-    "eyebrow": "ОНЦГОЙ СОНГОЛТ",
-    "title": "Өөрийн мөрийг үлдээ.",
     "product": "CREED · AVENTUS",
-    "text": "Creed-ийн Aventus-тай ойроос танилцаарай.",
-    "cta": "Үнэртэй танилцах",
-    "slug": "creed-aventus-edp"
+    "slug": "creed-aventus-edp",
+    "heading": {
+      "mn": "ОНЦГОЙ СОНГОЛТ",
+      "en": "A RARE CHOICE"
+    },
+    "text": {
+      "mn": "Creed-ийн Aventus-тай ойроос танилцаарай.",
+      "en": "Get to know Creed Aventus up close."
+    },
+    "cta": {
+      "mn": "Үнэртэй танилцах",
+      "en": "Discover the fragrance"
+    }
   },
   {
     "file": "jpg.jpg",
     "mobileFile": "Jean_Paul_Gaultier_Le_Male_mobile.jpg",
-    "eyebrow": "ӨӨРИЙН ХЭВ МАЯГ",
-    "title": "Дүрмээ өөрөө тогтоо.",
     "product": "JEAN PAUL GAULTIER",
-    "text": "Танил силуэт. Өөрийн сонголтоо олоорой.",
-    "cta": "Сонголтуудыг үзэх"
+    "heading": {
+      "mn": "ӨӨРИЙН ХЭВ МАЯГ",
+      "en": "YOUR OWN STYLE"
+    },
+    "text": {
+      "mn": "Танил силуэт. Өөрийн сонголтоо олоорой.",
+      "en": "A familiar silhouette. Find your own choice."
+    },
+    "cta": {
+      "mn": "Сонголтуудыг үзэх",
+      "en": "View the selection"
+    }
   },
   {
     "file": "ns.jpg",
     "mobileFile": "Vanilla_Blooms_mobile.jpg",
-    "eyebrow": "АЛТЛАГ АГШИН",
-    "title": "Агшнаа өөрийн болго.",
     "product": "INSPIRED · VANILLA BLOOMS",
-    "text": "Алтлаг гэрэлд тодрох нэгэн дүр төрх.",
-    "cta": "Цуглуулгыг үзэх"
+    "heading": {
+      "mn": "НАНДИН МӨЧ",
+      "en": "PRECIOUS MOMENTS"
+    },
+    "text": {
+      "mn": "Алтлаг гэрэлд тодрох нэгэн дүр төрх.",
+      "en": "A look that glows in golden light."
+    },
+    "cta": {
+      "mn": "Цуглуулгыг үзэх",
+      "en": "View the collection"
+    }
   },
   {
     "file": "spicebomb.jpg",
     "mobileFile": "Spicebomb_Infrared_mobile.jpg",
-    "eyebrow": "ТОД ДҮР ТӨРХ",
-    "title": "Мэдрэмжээ тод илэрхийл.",
     "product": "VIKTOR & ROLF · SPICEBOMB INFRARED",
-    "text": "Улаан өнгөөр тодотгосон Spicebomb Infrared.",
-    "cta": "Цуглуулгыг үзэх"
+    "heading": {
+      "mn": "ТОД ДҮР ТӨРХ",
+      "en": "BOLD PRESENCE"
+    },
+    "text": {
+      "mn": "Улаан өнгөөр тодотгосон Spicebomb Infrared.",
+      "en": "Spicebomb Infrared, highlighted in red."
+    },
+    "cta": {
+      "mn": "Цуглуулгыг үзэх",
+      "en": "View the collection"
+    }
   },
   {
     "file": "sw u.jpg",
     "mobileFile": "Stronger_With_You_Absolutely_mobile.jpg",
-    "eyebrow": "ДОТНО АГШИН",
-    "title": "Үгээр хэлэхээс илүү.",
     "product": "EMPORIO ARMANI · STRONGER WITH YOU ABSOLUTELY",
-    "text": "Дотнын хүндээ зориулж сонгох нэгэн бэлэг.",
-    "cta": "Үнэртэй танилцах",
-    "slug": "emporio-armani-stronger-with-you-absolutely-parfum"
+    "slug": "emporio-armani-stronger-with-you-absolutely-parfum",
+    "heading": {
+      "mn": "ДОТНО АГШИН",
+      "en": "INTIMATE MOMENTS"
+    },
+    "text": {
+      "mn": "Дотнын хүндээ зориулж сонгох нэгэн бэлэг.",
+      "en": "A gift to choose for someone close."
+    },
+    "cta": {
+      "mn": "Үнэртэй танилцах",
+      "en": "Discover the fragrance"
+    }
   },
   {
     "file": "tom ford.jpg",
     "mobileFile": "Tom_Ford_Black_Orchid_mobile.jpg",
-    "eyebrow": "ҮДШИЙН СОНГОЛТ",
-    "title": "Үдшийг өөрийн болго.",
     "product": "TOM FORD · BLACK ORCHID",
-    "text": "Хар савлагаанд тодрох Black Orchid.",
-    "cta": "Цуглуулгыг үзэх"
+    "heading": {
+      "mn": "ГЭРЭЛ ГЭГЭЭ",
+      "en": "LIGHT & GLOW"
+    },
+    "text": {
+      "mn": "Хар савлагаанд тодрох Black Orchid.",
+      "en": "Black Orchid, standing out in black packaging."
+    },
+    "cta": {
+      "mn": "Цуглуулгыг үзэх",
+      "en": "View the collection"
+    }
   },
   {
     "file": "tt.jpg",
     "mobileFile": "Twaaq_mobile.jpg",
-    "eyebrow": "ГЭРЭЛТ АГШИН",
-    "title": "Энгийнээс онцгойг ол.",
     "product": "TWAAQ",
-    "text": "Гэрэл, сүүдрийн дунд тодрох алтлаг дүр төрх.",
-    "cta": "Цуглуулгыг үзэх"
+    "heading": {
+      "mn": "ГЭРЭЛТ АГШИН",
+      "en": "LUMINOUS MOMENTS"
+    },
+    "text": {
+      "mn": "Гэрэл, сүүдрийн дунд тодрох алтлаг дүр төрх.",
+      "en": "A golden look standing out between light and shadow."
+    },
+    "cta": {
+      "mn": "Цуглуулгыг үзэх",
+      "en": "View the collection"
+    }
   }
 ]

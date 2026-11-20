@@ -54,7 +54,10 @@ const slides = [
 // Files named "mobile …" are the tall phone versions; the rest are the wide desktop ones.
 const deskBanners = bannerImages.filter((b) => !/^mobile/i.test(b.name));
 const mobBanners = bannerImages.filter((b) => /^mobile/i.test(b.name));
-const perfumeBanners = heroCopy.map(({ file, mobileFile, slug, ...copy }) => {
+// hero-banners.json holds {mn, en} pairs for the heading, description and button; pick the page's language here.
+const pick = <T,>(v: T | { mn: T; en: T }): T => (v && typeof v === "object" && "mn" in (v as object) ? (v as { mn: T; en: T })[locale] : (v as T));
+const perfumeBanners = heroCopy.map(({ file, mobileFile, slug, heading, product: heroProduct, text, cta }) => {
+  const copy = { heading: pick(heading), product: heroProduct, text: pick(text), cta: pick(cta) };
   const image = perfumeHeroImages[file];
   if (!image) throw new Error(`Missing perfume hero image: ${file}`);
   const mobileImage = mobileFile ? perfumeHeroMobileImages[mobileFile] : undefined;
@@ -68,11 +71,10 @@ const perfumeBannersMob = perfumeBanners.map((b) => (b.mobileImage ? { ...b, ima
 const legacyBanner = (b: (typeof bannerImages)[number]) => ({
   ...b, href: shop, perfume: false,
   copy: {
-    eyebrow: "GENZST · ҮНЭРИЙН СОНГОЛТ",
-    title: "Өөрийн үнэрийг ол.",
-    product: b.name === "1" || b.name === "2" ? "JEAN PAUL GAULTIER · ЦУГЛУУЛГА" : b.name === "3" ? "ARMAF · ЦУГЛУУЛГА" : "GENZST · ЦУГЛУУЛГА",
-    text: "Өдөр бүрийн хэв маягтаа тохирох сонголт.",
-    cta: "Цуглуулгыг үзэх",
+    heading: locale === "en" ? "FIND YOUR SCENT" : "ӨӨРИЙН ҮНЭРИЙГ ОЛ",
+    product: b.name === "1" || b.name === "2" ? (locale === "en" ? "JEAN PAUL GAULTIER · COLLECTION" : "JEAN PAUL GAULTIER · ЦУГЛУУЛГА") : b.name === "3" ? (locale === "en" ? "ARMAF · COLLECTION" : "ARMAF · ЦУГЛУУЛГА") : (locale === "en" ? "GENZST · COLLECTION" : "GENZST · ЦУГЛУУЛГА"),
+    text: locale === "en" ? "A choice that suits your everyday style." : "Өдөр бүрийн хэв маягтаа тохирох сонголт.",
+    cta: locale === "en" ? "View the collection" : "Цуглуулгыг үзэх",
   },
 });
 // One entry per source asset in each responsive set; retain all existing images and shop links.
@@ -108,9 +110,8 @@ const bundleImages = Array.from({ length: 8 }, (_, i) => `${import.meta.env.BASE
                 sizes="100vw"
                 loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__img"
               />
-              <div class="hb__caption" lang="mn">
-                <p class="hb__caption-eyebrow">{b.copy.eyebrow}</p>
-                <h2 class="hb__caption-title">{b.copy.title}</h2>
+              <div class="hb__caption" lang={locale}>
+                <h2 class="hb__caption-title">{b.copy.heading}</h2>
                 <p class="hb__caption-product">{b.copy.product}</p>
                 <p class="hb__caption-description">{b.copy.text}</p>
                 <span class="hb__caption-cta">{b.copy.cta}<svg class="hb__caption-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>

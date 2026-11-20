@@ -473,3 +473,9 @@ Mongolian string (most suggestions applied; site-wide terms such as "үнэрт�
 
 ## Admin wordmark (Sonnet session)
 - The owner's GENZST wordmark (`src/assets/brand/wordmark-genzst.png`, transparent) replaces the typed "genzst" text in the admin login card and sidebar (typed text remains as fallback). Verified in a real browser, 0 overflow, 0 page errors, admin-ui tests 96/96.
+
+## Hero: one heading, Instrument Serif, fade-in (Sonnet session)
+- Each hero slide now has ONE heading (owner's list: ЭРХ ЧӨЛӨӨ, ОНЦГОЙ СОНГОЛТ, ӨӨРИЙН ХЭВ МАЯГ, НАНДИН МӨЧ, ТОД ДҮР ТӨРХ, ДОТНО АГШИН, ГЭРЭЛ ГЭГЭЭ, and ГЭРЭЛТ АГШИН kept for slide 8) plus the product line, description and button. `src/data/hero-banners.json` now holds {mn, en} pairs (English written by Claude, not copy-reviewed), HomeView picks the page's language and the caption's `lang` follows it.
+- Heading font: "Instrument Serif", "Times New Roman", serif (owner's stack), self-hosted Latin + Latin-ext (OFL). Instrument Serif has NO Cyrillic: Mongolian heading letters come from Times New Roman (Liberation Serif/Noto Serif on systems without it).
+- Slide change: picture cross-fades; the copy fades in with a soft blur and a small rise, line after line (260–700 ms delays), outgoing copy fades out; reduced-motion shows it statically.
+- Verified in a real browser (mn + en, 1440 and 390 px, mid-transition frame): 0 overflow, 0 page errors; storefront suite 57/57; astro check 0 errors.
