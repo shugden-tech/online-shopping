@@ -267,6 +267,11 @@ export default function CheckoutForm(props: CheckoutFormProps) {
                   <div class="co__line-text">
                     <p class="co__brand">{i.brand}</p>
                     <p class="co__name">{i.name}</p>
+                    {i.parts && i.parts.length > 0 && (
+                      <ul class="co__parts">
+                        {i.parts.map((p) => <li>{p}</li>)}
+                      </ul>
+                    )}
                     <p class="co__meta">
                       {i.ml} {ml} × {i.qty}
                     </p>

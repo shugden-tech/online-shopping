@@ -78,7 +78,7 @@ async function place(
       body: JSON.stringify({
         ...v,
         locale: extra.locale,
-        items: lines.map((i) => ({ sku: i.sku, qty: i.qty })),
+        items: lines.map((i) => (i.bundle ? { bundle: i.bundle, qty: i.qty } : { sku: i.sku, qty: i.qty })),
         turnstileToken: extra.turnstileToken,
         website: extra.website,
       }),

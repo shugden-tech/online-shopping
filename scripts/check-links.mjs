@@ -61,8 +61,12 @@ function isIgnored(link) {
   return /^[a-z][a-z0-9+.-]*:/i.test(link);
 }
 
+/** Pages rendered on demand by the Worker (not in dist/): the bundle list and bundle pages (0005). */
+const ON_DEMAND = [/^\/(en\/)?bundles\/([a-z0-9][a-z0-9-]*\/)?$/];
+
 /** Does a site path resolve to a file in dist/? */
 function targetExists(pathname) {
+  if (ON_DEMAND.some((re) => re.test(pathname))) return true;
   let p;
   try {
     p = decodeURI(pathname);

@@ -1,6 +1,6 @@
 import mn from "./mn.json";
 import en from "./en.json";
-import { ROUTES, route, productPath, alternatesFor } from "./routes.mjs";
+import { ROUTES, route, productPath, bundlePath, alternatesFor } from "./routes.mjs";
 
 export type Locale = "mn" | "en";
 export type Dict = typeof mn;
@@ -59,5 +59,5 @@ export function pick<T>(pair: { mn: T; en: T }, locale: Locale): T {
   return pair[locale];
 }
 
-export { ROUTES, route, productPath, alternatesFor };
+export { ROUTES, route, productPath, bundlePath, alternatesFor };
 export type RouteKey = keyof typeof ROUTES;

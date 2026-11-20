@@ -17,6 +17,9 @@ export interface CartItem {
   shape: string;
   /** Optimised photo URL, when the product has a real photo. */
   img?: string;
+  /** Bundle line (0005): sku = "bundle:<id>", slug = the bundle id, `parts` = the names shown under it. */
+  bundle?: string;
+  parts?: string[];
 }
 
 export const MAX_QTY = 10;
@@ -31,11 +34,12 @@ function sanitize(raw: unknown): CartItem[] {
     if (!r || typeof r !== "object") continue;
     const i = r as Record<string, unknown>;
     if (typeof i.slug !== "string" || typeof i.ml !== "number" || typeof i.price !== "number") continue;
+    const bundle = typeof i.bundle === "string" && i.bundle ? i.bundle : undefined;
     const stock = typeof i.stock === "number" && Number.isFinite(i.stock) ? Math.max(0, Math.floor(i.stock)) : undefined;
     if (stock === 0) continue;
     const qty = Math.min(itemLimit({ stock }), Math.max(1, Math.floor(Number(i.qty) || 1)));
     out.push({
-      sku: typeof i.sku === "string" && i.sku ? i.sku : skuId(i.slug, i.ml),
+      sku: bundle ? `bundle:${bundle}` : typeof i.sku === "string" && i.sku ? i.sku : skuId(i.slug, i.ml),
       slug: i.slug,
       ml: i.ml,
       qty,
@@ -45,7 +49,8 @@ function sanitize(raw: unknown): CartItem[] {
       brand: String(i.brand ?? ""),
       family: String(i.family ?? "amber"),
       shape: String(i.shape ?? "classic"),
-      ...(typeof i.img === "string" && i.img.startsWith("/") ? { img: i.img } : {}),
+      ...(typeof i.img === "string" && (i.img.startsWith("/") || (bundle && i.img.startsWith("https://"))) ? { img: i.img } : {}),
+      ...(bundle ? { bundle, parts: Array.isArray(i.parts) ? i.parts.filter((x): x is string => typeof x === "string").slice(0, 10) : [] } : {}),
     });
     if (out.length >= MAX_LINES) break;
   }
@@ -99,7 +104,8 @@ if (typeof window !== "undefined") {
   });
 }
 
-const same = (a: { slug: string; ml: number }, b: { slug: string; ml: number }) => a.slug === b.slug && a.ml === b.ml;
+/** Lines are keyed by sku (`${slug}:${ml}`, or `bundle:<id>` for a bundle). */
+const same = (a: { sku: string }, b: { sku: string }) => a.sku === b.sku;
 
 export function addItem(input: Omit<CartItem, "qty" | "sku"> & { sku?: string }, qty = 1, open = true): void {
   const item = { ...input, sku: input.sku || skuId(input.slug, input.ml) };
@@ -118,16 +124,16 @@ export function addItem(input: Omit<CartItem, "qty" | "sku"> & { sku?: string },
   if (open) cartOpen.value = true;
 }
 
-export function setQty(slug: string, ml: number, qty: number): void {
-  const current = cartItems.value.find((i) => same(i, { slug, ml }));
-  if (qty < 1 || (current && itemLimit(current) < 1)) return removeItem(slug, ml);
+export function setQty(sku: string, qty: number): void {
+  const current = cartItems.value.find((i) => i.sku === sku);
+  if (qty < 1 || (current && itemLimit(current) < 1)) return removeItem(sku);
   cartItems.value = cartItems.value.map((i) =>
-    same(i, { slug, ml }) ? { ...i, qty: Math.min(itemLimit(i), Math.floor(qty)) } : i,
+    i.sku === sku ? { ...i, qty: Math.min(itemLimit(i), Math.floor(qty)) } : i,
   );
 }
 
-export function removeItem(slug: string, ml: number): void {
-  cartItems.value = cartItems.value.filter((i) => !same(i, { slug, ml }));
+export function removeItem(sku: string): void {
+  cartItems.value = cartItems.value.filter((i) => i.sku !== sku);
 }
 
 export function clearCart(): void {

@@ -1,0 +1,10 @@
+---
+// One bundle, rendered on demand from D1 (0005).
+import BundleView from "../../../views/BundleView.astro";
+import { loadBundlePage } from "../../../lib/bundles/page";
+
+export const prerender = false;
+const r = await loadBundlePage(Astro);
+if (r instanceof Response) return r;
+---
+<BundleView locale="en" bundle={r} />

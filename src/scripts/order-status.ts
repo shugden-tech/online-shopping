@@ -20,7 +20,7 @@ interface Lookup {
   paymentStatus?: string;
   holdExpiresAt?: string | null;
   shipment?: { status: string; trackingNo: string | null; trackingUrl: string | null } | null;
-  items: { brand: string; name: string; ml: number; qty: number; price: number }[];
+  items: { brand: string; name: string; ml: number; qty: number; price: number; bundle?: { parts: { brand: string; name: string; ml: number; qty: number }[] } }[];
   total: number;
 }
 interface LastPayment { no: string; total: number | null; holdExpiresAt: string | null; payment: PaymentInstructions | null; paymentError: string | null }
@@ -184,7 +184,10 @@ export function init(root: HTMLElement): void {
       out.append(h);
     }
     const ul = el("ul", "ok__track-items t-small");
-    for (const i of r.items ?? []) ul.append(el("li", undefined, `${i.brand} ${i.name} · ${i.ml} ${t.ml} × ${i.qty} — ${money(i.price * i.qty)}`));
+    for (const i of r.items ?? []) {
+      const parts = i.bundle ? ` (${i.bundle.parts.map((p) => `${p.brand} ${p.name} ${p.ml} ${t.ml}`).join(", ")})` : "";
+      ul.append(el("li", undefined, `${i.brand} ${i.name}${parts} · ${i.ml} ${t.ml} × ${i.qty} — ${money(i.price * i.qty)}`));
+    }
     out.append(ul, el("p", undefined, `${t.amount}: ${money(r.total)}`));
     startHold(unpaid(r) && r.status === "new" ? parseUtc(r.holdExpiresAt) : null);
   }

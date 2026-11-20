@@ -14,10 +14,13 @@ export interface CartDrawerProps {
   shopHref: string;
   checkoutHref: string;
   productBase: string;
+  /** Bundle pages (0005): `${bundleBase}${id}/`. */
+  bundleBase?: string;
   freeThreshold: number;
 }
 
-export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, checkoutHref, productBase, freeThreshold }: CartDrawerProps) {
+export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, checkoutHref, productBase, bundleBase = productBase, freeThreshold }: CartDrawerProps) {
+  const hrefOf = (i: { slug: string; bundle?: string }) => (i.bundle ? `${bundleBase}${i.bundle}/` : `${productBase}${i.slug}/`);
   // Mounted on demand by scripts/cart-mount.tsx (client only). `ready` flips two frames after
   // mount so the very first open still gets its slide-in transition.
   const [ready, setReady] = useState(false);
@@ -145,28 +148,33 @@ export default function CartDrawer({ locale, tr, ml, closeLabel, shopHref, check
             <ul class="cd__list">
               {items.map((i) => (
                 <li class="cd__item" key={i.sku} data-sku={i.sku}>
-                  <a class="cd__thumb" href={`${productBase}${i.slug}/`} tabIndex={-1} aria-hidden="true" onClick={close}>
+                  <a class="cd__thumb" href={hrefOf(i)} tabIndex={-1} aria-hidden="true" onClick={close}>
                     <Bottle shape={i.shape} family={i.family} initial={initialOf(i.brand)} img={i.img} />
                   </a>
                   <div class="cd__info">
                     <p class="cd__brand">{i.brand}</p>
-                    <a class="cd__name" href={`${productBase}${i.slug}/`} onClick={close}>
+                    <a class="cd__name" href={hrefOf(i)} onClick={close}>
                       {i.name}
                     </a>
+                    {i.parts && i.parts.length > 0 && (
+                      <ul class="cd__parts">
+                        {i.parts.map((p) => <li>{p}</li>)}
+                      </ul>
+                    )}
                     <p class="cd__size">
                       {i.ml} {ml} · {money(i.price)}
                     </p>
                     <div class="cd__row">
                       <div class="stepper" role="group" aria-label={fill(tr.qtyOf, { name: i.name })}>
-                        <button type="button" onClick={() => setQty(i.slug, i.ml, i.qty - 1)} aria-label={tr.decrease}>
+                        <button type="button" onClick={() => setQty(i.sku, i.qty - 1)} aria-label={tr.decrease}>
                           <span aria-hidden="true">−</span>
                         </button>
                         <output aria-live="polite">{i.qty}</output>
-                        <button type="button" onClick={() => setQty(i.slug, i.ml, i.qty + 1)} disabled={i.qty >= itemLimit(i)} aria-label={tr.increase}>
+                        <button type="button" onClick={() => setQty(i.sku, i.qty + 1)} disabled={i.qty >= itemLimit(i)} aria-label={tr.increase}>
                           <span aria-hidden="true">+</span>
                         </button>
                       </div>
-                      <button type="button" class="cd__remove" onClick={() => removeItem(i.slug, i.ml)} aria-label={fill(tr.removeItem, { name: i.name, ml: i.ml })}>
+                      <button type="button" class="cd__remove" onClick={() => removeItem(i.sku)} aria-label={fill(tr.removeItem, { name: i.name, ml: i.ml })}>
                         {tr.remove}
                       </button>
                     </div>

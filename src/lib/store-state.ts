@@ -92,6 +92,10 @@ export function load(ids: string[] = [], fresh = false): Promise<boolean> {
 }
 
 export const storeMeta = (): StoreMeta | null => meta;
+/** Store switches learned elsewhere (the bundle state endpoint), used when no product state was loaded. */
+export function setStoreMeta(m: StoreMeta): void {
+  meta = m;
+}
 /** undefined = not loaded (yet), null = unknown to the server. */
 export const productState = (id: string): StoreProductState | null | undefined => known.get(id);
 export const loadFailed = (id: string): boolean => failed.has(id) && !known.has(id);

@@ -1,106 +1,71 @@
 ---
+// Bundle list (0005): rendered on demand from D1 (see src/lib/bundles/page.ts); each card links to its bundle page.
 import Base from "../layouts/Base.astro";
-import { getDict, productPath, type Locale } from "../i18n";
-import { getProducts, thumbOf } from "../lib/products";
+import { bundlePath, getDict, type Locale } from "../i18n";
 import { formatPrice } from "../lib/price";
-import { BUNDLES, BUNDLE_PRODUCT_SLUGS, BUNDLE_PRICE, BUNDLE_ML, BUNDLE_PART_ML } from "../data/bundles";
+import { bundleName, partName } from "../lib/bundles/page";
+import type { BundleView } from "../lib/bundles/types";
+import "../styles/bundles.css";
 
-interface Props { locale: Locale }
-const { locale } = Astro.props;
+interface Props { locale: Locale; bundles: BundleView[] }
+const { locale, bundles } = Astro.props;
 const tr = getDict(locale);
-const s = tr.store;
-const price = formatPrice(BUNDLE_PRICE, locale);
-const unit = locale === "en" ? "ml" : "мл";
-const sizeLine = `${BUNDLE_ML} ${unit} · 3 × ${BUNDLE_PART_ML} ${unit}`;
-const products = await getProducts();
-const bundles = await Promise.all(BUNDLES.map(async (bundle) => ({
-  ...bundle,
-  perfumes: await Promise.all(bundle.parts.map(async (name) => {
-    const product = products.find((p) => p.slug === BUNDLE_PRODUCT_SLUGS[name]);
-    return { name, href: product ? productPath(locale, product.slug) : undefined, image: product ? await thumbOf(product, 240) : undefined };
-  })),
-})));
-const viewLabel = locale === "en" ? "View fragrances" : "Үнэртнүүдийг харах";
-const contentsLabel = locale === "en" ? "Fragrances in this set" : "Багц дахь үнэртнүүд";
+const t = tr.bundle;
+const unit = tr.common.ml;
+const sizeLine = (b: BundleView) => {
+  const ml = b.parts.map((p) => p.ml * p.qty);
+  const same = ml.every((x) => x === ml[0]);
+  return same && ml.length
+    ? t.size.replace("{n}", String(ml.length)).replace("{ml}", String(ml[0])).replace("{total}", String(ml.reduce((a, c) => a + c, 0)))
+    : `${ml.reduce((a, c) => a + c, 0)} ${unit}`;
+};
+const stateText = (b: BundleView) =>
+  b.sellable ? null : b.block === "soon" ? t.soon : b.block === "closed" ? t.closed : t.soldOut;
 ---
 
-<Base locale={locale} title={`${s.bundles} · ${tr.site.name}`}>
-  <section class="wrap bundles-page">
-    <header class="bundles-page__head">
-      <h1 class="h-sec">{s.bundles}</h1>
-      <p class="bundles-page__sub">{s.bundlesSub}</p>
+<Base locale={locale} title={`${t.title} · ${tr.site.name}`} description={t.metaDesc} current="bundles">
+  <section class="wrap bl">
+    <header class="bl__head">
+      <h1 class="h-sec">{t.title}</h1>
+      <p class="bl__sub">{t.sub}</p>
     </header>
-    <ul class="bundles-page__grid">
-      {bundles.map((b) => (
-        <li class="bundles-page__card">
-          <details class="bundles-page__details">
-          <summary class="bundles-page__summary">
-          <img src={b.image} alt="" loading="lazy" decoding="async" />
-          <div class="bundles-page__body">
-            <ul class="bundles-page__parts">
-              {b.parts.map((p) => <li>{p}</li>)}
-            </ul>
-            <div class="bundles-page__meta">
-              <span class="bundles-page__size">{sizeLine}</span>
-              <span class="bundles-page__price">{price}</span>
-            </div>
-            <span class="bundles-page__toggle">{viewLabel}<span aria-hidden="true">＋</span></span>
-          </div>
-          </summary>
-          <div class="bundles-page__contents">
-            <h2>{contentsLabel}</h2>
-            <ul class="bundles-page__perfumes">
-              {b.perfumes.map((p) => (
-                <li>
-                  {p.href ? (
-                    <a class="bundles-page__perfume" href={p.href}>
-                      {p.image ? <img src={p.image} alt="" width="64" height="64" loading="lazy" /> : <span class="bundles-page__placeholder" aria-hidden="true">✦</span>}
-                      <span>{p.name}<small>{BUNDLE_PART_ML} {unit}</small></span>
-                      <span aria-hidden="true">→</span>
-                    </a>
+    {bundles.length === 0 ? (
+      <p class="bl__empty">{t.empty}</p>
+    ) : (
+      <ul class="bl__grid">
+        {bundles.map((b, i) => {
+          const name = bundleName(b, locale);
+          const state = stateText(b);
+          return (
+            <li class="bl__card" data-bundle={b.id} data-state={b.sellable ? "ok" : b.block}>
+              <a class="bl__link" href={bundlePath(locale, b.id)}>
+                <span class="bl__media">
+                  {b.image ? (
+                    <img src={b.image} alt={name} width="800" height="1000" loading={i < 4 ? "eager" : "lazy"} decoding="async" />
                   ) : (
-                    <div class="bundles-page__perfume">
-                      <span class="bundles-page__placeholder" aria-hidden="true">✦</span>
-                      <span>{p.name}<small>{BUNDLE_PART_ML} {unit}</small></span>
-                    </div>
+                    <span class="bl__ph" aria-hidden="true">✦</span>
                   )}
-                </li>
-              ))}
-            </ul>
-          </div>
-          </details>
-        </li>
-      ))}
-    </ul>
+                  {state && <span class="bl__badge">{state}</span>}
+                </span>
+                <span class="bl__body">
+                  <span class="bl__name">{name}</span>
+                  <span class="bl__parts">{b.parts.map((p) => partName(p)).join(" · ")}</span>
+                  <span class="bl__meta">
+                    <span class="bl__size">{sizeLine(b)}</span>
+                    {b.price !== null && (
+                      <span class="bl__price">
+                        {b.compareAt !== null && b.compareAt > b.price && <s>{formatPrice(b.compareAt, locale)}</s>}
+                        {formatPrice(b.price, locale)}
+                      </span>
+                    )}
+                  </span>
+                  <span class="bl__cta">{t.view}<span aria-hidden="true"> →</span></span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    )}
   </section>
 </Base>
-
-<style>
-  .bundles-page { padding-block: clamp(36px, 5vw, 64px); }
-  .bundles-page__head { text-align: center; margin-bottom: clamp(24px, 3vw, 40px); }
-  .bundles-page__sub { margin-top: 6px; font-size: 15px; opacity: .7; }
-  .bundles-page__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; align-items: start; }
-  .bundles-page__summary { display: block; cursor: pointer; list-style: none; }
-  .bundles-page__summary::-webkit-details-marker { display: none; }
-  .bundles-page__summary:focus-visible { outline: 2px solid var(--gold); outline-offset: -3px; }
-  .bundles-page__toggle { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; color: var(--gold); }
-  .bundles-page__toggle > span { transition: transform .2s; }
-  details[open] .bundles-page__toggle > span { transform: rotate(45deg); }
-  .bundles-page__contents { border-top: 1px solid var(--line); padding: 16px; }
-  .bundles-page__contents h2 { font: 600 13px/1.5 var(--font-sans); margin-bottom: 12px; }
-  .bundles-page__perfumes { display: grid; gap: 12px; }
-  .bundles-page__perfume { display: flex; align-items: center; gap: 10px; font-size: 12px; line-height: 1.5; }
-  a.bundles-page__perfume:hover { color: var(--gold); }
-  .bundles-page__perfume > span:nth-child(2) { flex: 1; min-width: 0; overflow-wrap: anywhere; }
-  .bundles-page__perfume small { display: block; margin-top: 4px; color: var(--text-dim); }
-  .bundles-page__card .bundles-page__perfume img, .bundles-page__placeholder { flex: none; width: 64px; height: 64px; border-radius: 6px; background: var(--ink); object-fit: contain; aspect-ratio: 1; }
-  .bundles-page__placeholder { display: grid; place-items: center; color: var(--gold); font-size: 24px; }
-  @media (prefers-reduced-motion: reduce) { .bundles-page__toggle > span { transition: none; } }
-  .bundles-page__card { border-radius: 8px; overflow: hidden; background: var(--soft); }
-  .bundles-page__card img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-  .bundles-page__body { padding: 16px; display: grid; gap: 12px; }
-  .bundles-page__parts { display: grid; gap: 4px; font-size: 14px; list-style: none; padding: 0; margin: 0; }
-  .bundles-page__meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .bundles-page__size { font-size: 13px; opacity: .7; }
-  .bundles-page__price { font-size: 18px; font-weight: 700; }
-</style>

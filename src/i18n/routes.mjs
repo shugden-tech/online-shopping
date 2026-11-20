@@ -30,6 +30,11 @@ export function productPath(locale, slug) {
   return `${BASE}${ROUTES.shop[locale]}${slug}/`;
 }
 
+/** Bundle page (0005), rendered on demand from D1. @param {Locale} locale @param {string} id */
+export function bundlePath(locale, id) {
+  return `${BASE}${ROUTES.bundles[locale]}${id}/`;
+}
+
 /**
  * Both language versions of a pathname, or null when the page has no twin.
  * @param {string} pathname
@@ -40,6 +45,13 @@ export function alternatesFor(pathname) {
   for (const key of /** @type {RouteKey[]} */ (Object.keys(ROUTES))) {
     const r = ROUTES[key];
     if (r.mn === p || r.en === p) return { ...r };
+  }
+  for (const loc of /** @type {Locale[]} */ (["en", "mn"])) {
+    const b = ROUTES.bundles[loc];
+    if (p.startsWith(b) && p.length > b.length) {
+      const id = p.slice(b.length).replace(/\/$/, "");
+      if (!id.includes("/")) return { mn: bundlePath("mn", id), en: bundlePath("en", id) };
+    }
   }
   for (const loc of /** @type {Locale[]} */ (["en", "mn"])) {
     const base = ROUTES.shop[loc];

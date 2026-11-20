@@ -1,0 +1,10 @@
+---
+// Bundle list, rendered on demand from D1 (0005).
+import BundlesView from "../../views/BundlesView.astro";
+import { loadBundleList } from "../../lib/bundles/page";
+
+export const prerender = false;
+const r = await loadBundleList(Astro);
+if (r instanceof Response) return r;
+---
+<BundlesView locale="mn" bundles={r} />
