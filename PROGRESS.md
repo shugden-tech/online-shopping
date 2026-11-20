@@ -439,3 +439,25 @@ edited the Mongolian admin copy (strings only). **Haiku** ran the existing test 
 - Order lookup: POST only, phone ≥ 6 digits (was GET with 4 digits: phone in URLs/logs, 10,000 guesses). Client, texts and tests updated.
 - Verified: headers served by wrangler; 24 page loads (12 page types x desktop/phone) with 0 CSP violations; api 85, payments 45, delivery 85, storefront 57, admin-ui 96, e2e commerce 43, e2e browser 17 all pass; dev-secret guard 200 on localhost, 503 elsewhere. Catalog suite cannot run until the owner pushes `src/lib/catalog/master.mjs` + `src/data/backend.json`.
 - Not done (needs the owner's Cloudflare): Cloudflare Access on /admin, real secrets, WAF/bot rules.
+
+## Bundles — 2026-11-20 (Opus lead + code; Sonnet copy; migration 0005)
+Owner's request: the bundle section could not sell anything. Models: **Opus** planned and wrote all code, tests and docs.
+**Sonnet** wrote the first draft of the 8 bundle names/descriptions (Opus corrected the note vocabulary) and reviewed every new
+Mongolian string (most suggestions applied; site-wide terms such as "үнэртэн" kept). No Haiku sweep was needed.
+- D1 `bundles` + `bundle_items`, seeded with the owner's 8 bundles (3 × 10 ml, 99,000₮, `public/bundles/1..8.webp`);
+  `src/data/bundles.ts` removed. Part SKUs mapped to D1 ids (e.g. `dolce-gabbana-light-blue-pour-homme-edt`, `paco-rabanne-invictus-edt`).
+- Storefront: `/bundles/` grid and `/bundles/{id}/` pages (+ `/en/`), on demand from D1 (60 s cache), big image, parts with photo /
+  notes / link, "3 × 10 мл · нийт 30 мл", price, "тусад нь авбал" + savings, quantity, "Сагсанд нэмэх" and "Шууд захиалах",
+  sold-out state, JSON-LD. Cart / checkout show a bundle as one line with its parts.
+- Orders: `{ bundle, qty }` items, priced from D1, parts reserved per SKU in the same batch (commit / release / restore unchanged),
+  bundle stored on the line; audit, webhook, Telegram, lookup, admin order detail and packing slip show the parts.
+- Admin "Багц": list, create, edit (names, descriptions, price, compare-at, status, sort, parts search, photo upload / URL), delete.
+- Fix: `assets_navigation_has_no_effect` compatibility flag. Browser navigations to on-demand pages (also the existing
+  `/delguur/p/{id}`) were answered with the static 404 page; curl worked, browsers did not.
+- Tests (local D1 `.wrangler/state-bundles`): bundles 68/68, api 91/91, admin-api 71/71, e2e-commerce 48/48, payments 45/45,
+  delivery 85/85, catalog 77/77 (SKIP_IMPORT), storefront 57/57, admin-ui 96/96, e2e-browser 17/17, master-catalog pass,
+  shot-bundles 35/35 (1440 + 360: list, page, cart, buy now → checkout → order, admin list / editor / order). Link check: only the
+  2 old `/admin/` hreflang notes. JS budget: finder 25.2 / checkout 25.4 KB vs 25 (were 25.1 / 25.3 before this work).
+- Live: migration 0005 applied remotely (8 bundles, 24 parts), deployed; `/bundles/`, bundle pages (mn/en) 200, admin bundles API
+  with login 200. Every live bundle shows "Түр дууссан" because no 10 ml SKU has a price/stock yet and several parts are drafts.
+- Screens: `docs/screens/bundles-{list,page,cart,checkout,success,admin-list,admin-edit}-{1440,360}.png`, `bundles-admin-order-1440.png`.

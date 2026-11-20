@@ -214,3 +214,43 @@ the admin calls every few minutes while open). Request: POST JSON `{ id, event, 
 
 Dev only: `WEBHOOK_ALLOW_LOCAL=1` lets an endpoint be `http://127.0.0.1:port` (tests). Never set it in production.
 Tests: `scripts/test-admin-api.mjs` (65 checks), `scripts/test-admin-ui.mjs` (96); screenshots: `scripts/shot-admin.mjs`.
+
+## 9. Bundles (lead, 2026-11-20, migration 0005)
+
+Schema `migrations/0005_bundles.sql` (also seeds the owner's 8 bundles, 99,000₮, `/bundles/1..8.webp`):
+- `bundles` — `id` (URL slug, `BUNDLE_ID_RE`), `name_mn`, `name_en`, `description_mn`, `description_en`, `image` (https on the
+  `PUBLIC_MEDIA_BASE` host or a site path), `price` (NULL = not for sale), `compare_at` (> price), `status` draft | active | hidden,
+  `sort`, timestamps.
+- `bundle_items` — `(bundle_id, sku)` primary key, `qty` 1–10 per bundle, `label` (shown while the product is not in the catalog),
+  `sort`. No foreign key to `skus`: a bundle may name a size that does not exist yet (the bundle is then not sellable).
+
+Types: `src/lib/bundles/types.ts` (`BundleView`, `BundlePart`, `BundleState`, `bundleLineSku`). Server: `src/lib/bundles/store.ts`
+(reads + rule), `admin.ts` (zod + writes), `page.ts` (on-demand page loaders).
+
+**Sellable** (`judge()` in store.ts): checkout open, bundle `active`, `price` set, at least one part, and every part SKU sellable on its
+own by `isSellable` (product active, not sale-locked, SKU exists, active, priced). `available` = min over tracked parts of
+`floor((stock − reserved) / qty)`; untracked parts do not limit it. `block` (why not): `hidden`, `soon` (no price), `off` (a part cannot
+be sold), `out` (a part is short), `closed` (checkout closed).
+
+**Orders:** an item may be `{ bundle: "<id>", qty }` (1–10) next to `{ sku, qty }`. `priceCart` prices it from `bundles.price`
+(never the client), sums the units each SKU needs across all lines (bundle parts × qty + plain lines) and checks stock on that total;
+`placeOrder` reserves one `reservations` row per SKU in the same D1 batch (so commit on paid, release on cancel/expiry and
+restore after paid work unchanged). The stored line (`orders.items_json`) is `{ sku: "bundle:<id>", slug: <id>, brand: "Багц"|"Bundle",
+name, ml: total ml, qty, price, tracked, bundle: { id, nameMn, nameEn, parts: [{ sku, slug, brand, name, ml, qty /* per bundle */ }] } }`.
+Errors on a bundle line use `sku: "bundle:<id>"` (409 `stock` / `unavailable`). Audit `order.create` and the `order.created` webhook
+list `{ sku, qty, price, bundle?, name?, parts?: [{ sku, qty }] }`. The Telegram message lists the bundle and its parts. Customer
+lookup and the admin order detail return `bundle` on the line; the packing slip lists every part.
+
+| Method & path | Permission | Contract |
+|---|---|---|
+| `GET /api/store/bundles?ids=a,b` (public, ≤ 30 ids; no `ids` = every active bundle) | — | `{ ok, checkoutOpen, payments:{qpay,bank}, bundles: BundleState[] }`, `max-age=30`; unknown ids omitted |
+| `GET /api/admin/bundles` | catalog.read | `{ ok, items: BundleView[] }` (all statuses) |
+| `POST /api/admin/bundles` | catalog.write | `{ id, nameMn, nameEn?, descriptionMn?, descriptionEn?, image?, price, compareAt?, status?, sort?, items:[{ sku, qty?, label? }] }` → 201 `{ bundle }`; 409 `{ id:"taken" }`; 400 codes `required`, `invalid`, `host`, `duplicate`, `compare` |
+| `GET / PATCH / DELETE /api/admin/bundles/{id}` | catalog.read / catalog.write | PATCH any create field except `id` (`items` replaces all parts); DELETE removes it (past orders keep their copy). Each write is audit-logged (`bundle.create|update|delete`, entity `bundle`) |
+| `POST /api/admin/media` | media.write | also accepts `bundleId` (instead of `productId`) → key `bundles/{id}/front-{sha256-12}.{ext}` |
+| `GET /bundles/`, `/bundles/{id}/`, `/en/bundles/…` (pages) | — | rendered on demand from D1 (active bundles only, else 404), `Cache-Control: public, max-age=60`, security headers set by the page |
+
+`wrangler.jsonc` adds the compatibility flag `assets_navigation_has_no_effect`: without it a browser navigation
+(`Sec-Fetch-Mode: navigate`) to any on-demand page (`/bundles/…`, and the existing `/delguur/p/{id}`) got the static 404 page.
+Tests: `scripts/test-bundles.mjs` (68), bundle blocks in `test-api`, `test-admin-api`, `test-e2e-commerce`; browser + screenshots:
+`scripts/shot-bundles.mjs` → `docs/screens/bundles-*`.

@@ -2,7 +2,7 @@
 
 This file is for anyone (person or AI agent) picking up the project on another computer or in a new session. It covers what genzst is, what has been done, and how to carry on. The detailed logs are in the files linked below.
 
-_Last updated: 2026-11-19_
+_Last updated: 2026-11-20_
 
 ---
 
@@ -66,6 +66,16 @@ courier / fee / notes / `returned`, inbound webhook log + replay, outbound webho
 create with front + back photos (WebP ≤ 1600 px), a stock page, live bank / contact settings, and on-demand pages `/delguur/p/{id}`
 for D1-only products. Contract: `docs/CONTRACTS.md` §8. Tests: `npm run test:admin-api`, `npm run test:admin-ui`; screenshots:
 `npm run shots:admin` → `docs/screens/admin-*`.
+
+**Bundles (2026-11-20, migration 0005):** `bundles` + `bundle_items` in D1 (the owner's 8 bundles seeded, 99,000₮). Pages
+`/bundles/`, `/bundles/{id}/` (+ `/en/`) render on demand from D1 (60 s cache) with "Сагсанд нэмэх" / "Шууд захиалах"; a bundle is one
+cart line `{ bundle, qty }`, priced by the server and reserving every part SKU in the order batch. Admin "Багц" section (`#/bundles`):
+list, create, edit, parts picker, photo upload, hide, delete. A bundle sells only when every part is active, priced and in stock, so
+live bundles show "Түр дууссан" until the owner prices/stocks the 10 ml sizes. Contract: `docs/CONTRACTS.md` §9. Tests:
+`npm run test:bundles`; screenshots: `npm run shots:bundles` → `docs/screens/bundles-*`. Owner TODO: activate and add a priced 10 ml size
+for the draft parts (montblanc-legend-edt, jean-paul-gaultier-le-male-edt, versace-eros-edp, versace-eros-parfum,
+dolce-gabbana-light-blue-pour-homme-edt, dolce-gabbana-pour-homme-edt, paco-rabanne-invictus-edt); add the two products that are not in
+the catalog at all (Maison Margiela Replica Sailing Day EDT, Moncler Pour Homme EDP) or swap them in the bundle editor.
 
 **Hide / lock controls:** product hidden (status), product sale lock, payment method off (QPay / bank), checkout closed — all in `/admin/`.
 **Catalog data:** `npm run import:catalog -- --apply local|remote` loads the 1000-item R2 catalog + the 207 site products (1123 products, prices and stock empty). `--demo-prices` is local-only.
