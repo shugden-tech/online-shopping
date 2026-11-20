@@ -136,3 +136,30 @@
   border-block: 4px solid transparent;
   border-image: repeating-linear-gradient(-45deg, #b3202a 0 10px, #fffdf8 10px 20px) 4;
 }
+
+/* Christmas mode: the delivery / guarantee / payment info strip is hidden on the home page. */
+:root[data-theme="christmas"] .info { display: none; }
+
+/* Christmas mode: the search bar gets a red frame, a red icon and a green focus ring. */
+:root[data-theme="christmas"] .hdr__search {
+  border: 1.5px solid #b3202a; background: #fffdf8;
+}
+:root[data-theme="christmas"] .hdr__search svg { color: #b3202a; }
+:root[data-theme="christmas"] .hdr__search:focus-within { background: #fff; border-color: #1d5a34; box-shadow: 0 0 0 3px rgba(29, 90, 52, .18); }
+:root[data-theme="christmas"] .hdr__search input::placeholder { color: #1d5a34; opacity: .75; }
+
+/* Christmas details: small ornaments on the search bar, the view-all button and the brands strip. */
+:root[data-theme="christmas"] .hdr__search::after {
+  content: "✦"; flex: none; color: #1d5a34; font-size: 13px; line-height: 1;
+}
+:root[data-theme="christmas"] .tabs__more .btn::before,
+:root[data-theme="christmas"] .tabs__more .btn::after {
+  content: "✦"; display: inline-block; margin-inline: 6px; color: #fffdf8; font-size: 11px;
+}
+:root[data-theme="christmas"] .brands {
+  background-image:
+    radial-gradient(circle, rgba(179, 32, 42, .14) 0 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(29, 90, 52, .12) 0 1.5px, transparent 2px);
+  background-size: 34px 34px, 34px 34px;
+  background-position: 0 0, 17px 17px;
+}
