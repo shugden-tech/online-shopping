@@ -41,20 +41,20 @@ function Chart({ series }: { series: Stats["series"] }) {
       <svg class="a-chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Сүүлийн 30 хоног: ${totalO} захиалга, ${money(totalR)} төлөгдсөн орлого`}>
         {ticks.map((t) => (
           <g>
-            <line x1={L} x2={W - R} y1={T + ih - t * ih} y2={T + ih - t * ih} stroke="#2b2925" stroke-dasharray={t ? "3 4" : undefined} />
+            <line x1={L} x2={W - R} y1={T + ih - t * ih} y2={T + ih - t * ih} stroke="var(--line)" stroke-dasharray={t ? "3 4" : undefined} />
             <text x={L - 6} y={T + ih - t * ih + 3} text-anchor="end">{Math.round(maxO * t)}</text>
             <text x={W - R + 6} y={T + ih - t * ih + 3}>{short(Math.round(maxR * t))}</text>
           </g>
         ))}
         {series.map((d, i) => (
-          <rect x={x(i) - bw * 0.32} width={bw * 0.64} y={yO(d.orders)} height={Math.max(0, T + ih - yO(d.orders))} rx="2" fill="rgba(204,158,72,.55)">
+          <rect x={x(i) - bw * 0.32} width={bw * 0.64} y={yO(d.orders)} height={Math.max(0, T + ih - yO(d.orders))} rx="2" fill="rgba(107,95,112,.55)">
             <title>{`${d.day}: ${d.orders} захиалга, ${money(d.revenue)}`}</title>
           </rect>
         ))}
-        <path d={line} fill="none" stroke="#6fd39a" stroke-width="2" stroke-linejoin="round" />
+        <path d={line} fill="none" stroke="var(--ok)" stroke-width="2" stroke-linejoin="round" />
         {series.map((d, i) => (i % 5 === 4 || i === 0 ? <text x={x(i)} y={H - 8} text-anchor="middle">{d.day.slice(5).replace("-", "/")}</text> : null))}
       </svg>
-      <figcaption class="a-legend"><span><i style="background:rgba(204,158,72,.7)" />Захиалгын тоо (зүүн тэнхлэг)</span><span><i style="background:#6fd39a" />Төлөгдсөн орлого ₮ (баруун тэнхлэг)</span></figcaption>
+      <figcaption class="a-legend"><span><i style="background:rgba(107,95,112,.7)" />Захиалгын тоо (зүүн тэнхлэг)</span><span><i style="background:var(--ok)" />Төлөгдсөн орлого ₮ (баруун тэнхлэг)</span></figcaption>
     </figure>
   );
 }

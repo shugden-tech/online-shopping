@@ -461,3 +461,7 @@ Mongolian string (most suggestions applied; site-wide terms such as "үнэрт�
 - Live: migration 0005 applied remotely (8 bundles, 24 parts), deployed; `/bundles/`, bundle pages (mn/en) 200, admin bundles API
   with login 200. Every live bundle shows "Түр дууссан" because no 10 ml SKU has a price/stock yet and several parts are drafts.
 - Screens: `docs/screens/bundles-{list,page,cart,checkout,success,admin-list,admin-edit}-{1440,360}.png`, `bundles-admin-order-1440.png`.
+
+## Admin restyle (Sonnet session)
+- Owner's red S logo (`src/assets/brand/logo-s.png`, white keyed to transparent) replaces the old mark; the admin now uses the storefront's light tokens (#fff / #f5f4f2 / plum #6b5f70, red #e00000 only for the mark and the active-nav indicator) and the storefront fonts (Unbounded MN, Montserrat fallback). Status colours re-derived for a light background; chart colours use CSS variables; phone bottom bar is light.
+- Verified in a real browser against the real Worker: login, dashboard, orders, products, inventory, settings at 1440 and 390 px, 0 overflow, 0 page errors; admin-ui tests 96/96.
