@@ -4,7 +4,8 @@
 //   node scripts/build-store-import.mjs            # writes data/catalog/store-import.sql + store-import-report.json
 //   node scripts/build-store-import.mjs --content  # ALSO writes/updates src/content/products/<id>.json
 //
-// Rules (docs/CONTRACTS.md §1): prices and stock come only from the store file. Store price 0 = no price
+// Full bottle: price and stock come from data/catalog/owner-full-prices.json (owner's list, 2026-11-21).
+// Rules (docs/CONTRACTS.md §1): other prices and stock come only from the store file. Store price 0 = no price
 // (SKU price NULL, not for sale). Stock: full bottle = store `quantity`; decant = floor(decants.mlStock / ml);
 // a missing or 0 value is stock 0 (sold out). Decant SKUs only when decants.enabled and the size has a price.
 // The SQL is idempotent (upserts keyed by id) and touches only these products and their SKUs.
@@ -20,6 +21,11 @@ const NOTES = read("src/data/notes.json");
 const MASTER = new Map(read("data/catalog/catalog.json").map((c) => [c.id, c]));
 const FULL = new Map(read("data/catalog/full-bottles.json").map((f) => [f.id, f]));
 const WRITE_CONTENT = process.argv.includes("--content");
+// Owner's full-bottle price list (2026-11-21): overrides the store's full-bottle price and sets full-bottle stock.
+const OWNER = read("data/catalog/owner-full-prices.json");
+const OWNER_PRICE = new Map(OWNER.items.map((i) => [i.storeId, i.price]));
+const OWNER_NOTE = "owner-full-prices 2026-11-21";
+if (OWNER_PRICE.size !== STORE.length || STORE.some((s) => !OWNER_PRICE.has(s.d1Id))) throw new Error("owner-full-prices.json must list every store product");
 
 /* ---------- decisions that are not plain copies of the store file ---------- */
 // The store's "Eros" is the Eau de Parfum (its description, notes and photo all say EDP), so it maps to
@@ -29,14 +35,15 @@ const REMAP = { "versace-eros-edt": "versace-eros-edp" };
 // Full-bottle size when the rule (mlHint -> researched flagship high/medium -> 100 ml EDP/EDT men's) does not
 // apply or is wrong for the line. Each one is listed in the report.
 const ML_OVERRIDE = {
-  "jean-paul-gaultier-le-male-elixir-parfum": [125, "line is 75/125 ml (no 100 ml); 125 = researched flagship (low confidence) — owner to confirm"],
-  "jean-paul-gaultier-le-male-edt": [125, "line is 40/75/125/200 ml (no 100 ml); 125 assumed — owner to confirm"],
+  "jean-paul-gaultier-le-male-elixir-parfum": [125, "line is 75/125 ml (no 100 ml); 125 ml matches the 495,000₮ price"],
+  "jean-paul-gaultier-le-male-edt": [125, "line is 40/75/125/200 ml (no 100 ml); 125 ml matches the 490,000₮ price"],
+  "versace-eros-edp": [200, "store photo box reads 200 ml (6.7 oz)"],
   "ralph-lauren-polo-black-edt": [125, "store photo box reads 125 ml"],
   "r-my-latour-cigar-edt": [100, "store photo box reads 100 ml"],
   "lagerfeld-classic-edt": [100, "store photo box reads 100 ml"],
   "moncler-pour-homme-edp": [150, "store description: «Голдуу 150 мл-ийн савлагаатай»"],
-  "yves-saint-laurent-y-le-parfum": [100, "Parfum (store says EDP); 100 ml assumed — owner to confirm"],
-  "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum": [100, "Parfum; 100 ml assumed (line 50/100) — owner to confirm"],
+  "yves-saint-laurent-y-le-parfum": [100, "Parfum (store says EDP); line is 50/100 ml, 100 ml is the large bottle"],
+  "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum": [100, "Parfum; line is 50/100 ml, 100 ml is the large bottle"],
 };
 // Scent family (for the content schema and NULL D1 rows), from the store's own classification / accords.
 const FAMILY = {
@@ -164,8 +171,9 @@ for (const s of STORE) {
   else if (fb?.flagshipMl && ["high", "medium"].includes(fb.confidence)) [ml, mlSrc] = [fb.flagshipMl, `full-bottles.json flagship (${fb.confidence})`];
   else [ml, mlSrc] = [100, `default 100 ml (${concentration} ${gender})${fb?.flagshipMl === 100 ? "; research also 100 (low)" : ""}`];
 
-  const price = Number.isInteger(s.price) && s.price > 0 ? s.price : null;
-  const qty = Number.isInteger(s.quantity) && s.quantity > 0 ? s.quantity : 0;
+  const ownerPrice = OWNER_PRICE.get(s.d1Id);
+  const price = Number.isInteger(ownerPrice) && ownerPrice > 0 ? ownerPrice : null;
+  const qty = OWNER.fullStock;
   const skus = [{ ml, kind: "full", price, stock: price ? qty : 0 }];
   const decOn = s.decants?.enabled === true;
   const mlStock = Number(s.decants?.mlStock) > 0 ? Number(s.decants.mlStock) : 0;
@@ -196,12 +204,19 @@ for (const s of STORE) {
       content || !master ? "content" : "r2-catalog",
     ].map(q).join(", ")}) ON CONFLICT(id) DO UPDATE SET concentration = COALESCE(products.concentration, excluded.concentration), gender = excluded.gender, family = COALESCE(products.family, excluded.family), notes_json = excluded.notes_json, description_mn = excluded.description_mn, description_en = COALESCE(products.description_en, excluded.description_en), image_front = COALESCE(excluded.image_front, products.image_front), status = 'active', sale_locked = 0, updated_at = datetime('now');`,
   );
+  // owner's list changes the full-bottle stock of a SKU that already exists: record the difference once
+  if (price)
+    sql.push(
+      `INSERT INTO stock_movements (sku_id, delta, reason, actor, note) SELECT id, ${qty} - stock, 'correction', 'system', ${q(OWNER_NOTE)} FROM skus WHERE id = ${q(`${id}:${ml}`)} AND stock <> ${qty} AND stock >= 0 AND ${qty} >= reserved AND NOT EXISTS (SELECT 1 FROM stock_movements m WHERE m.sku_id = skus.id AND m.note = ${q(OWNER_NOTE)});`,
+    );
   // one multi-row upsert per product keeps the file small (D1 limits one query to 100 KB)
   sql.push(
     `INSERT INTO skus (id, product_id, ml, kind, price, compare_at, stock, reserved, active) VALUES ${skus
       .map((k) => `(${q(`${id}:${k.ml}`)}, ${q(id)}, ${k.ml}, ${q(k.kind)}, ${q(k.price)}, NULL, ${k.stock}, 0, 1)`)
       .join(", ")} ON CONFLICT(id) DO UPDATE SET kind = excluded.kind, price = excluded.price, stock = CASE WHEN excluded.stock >= skus.reserved THEN excluded.stock ELSE skus.stock END, active = 1, updated_at = datetime('now');`,
   );
+  // a full-bottle size that is no longer the product's full size stops selling
+  sql.push(`UPDATE skus SET active = 0, updated_at = datetime('now') WHERE product_id = ${q(id)} AND kind = 'full' AND ml <> ${ml} AND active = 1;`);
   for (const k of skus) if (k.stock > 0) moves.push(`(${q(`${id}:${k.ml}`)}, ${k.stock})`);
 
   rows.push({
@@ -217,7 +232,7 @@ for (const s of STORE) {
 // opening stock in the movement history, once (re-running adds nothing)
 if (moves.length)
   sql.push(
-    `INSERT INTO stock_movements (sku_id, delta, reason, actor, note) SELECT v.column1, v.column2, 'import', 'system', 'genzst-store.json' FROM (VALUES ${moves.join(", ")}) AS v WHERE NOT EXISTS (SELECT 1 FROM stock_movements m WHERE m.sku_id = v.column1 AND m.reason = 'import' AND m.note = 'genzst-store.json');`,
+    `INSERT INTO stock_movements (sku_id, delta, reason, actor, note) SELECT v.column1, v.column2, 'import', 'system', 'genzst-store.json' FROM (VALUES ${moves.join(", ")}) AS v WHERE NOT EXISTS (SELECT 1 FROM stock_movements m WHERE m.sku_id = v.column1 AND ((m.reason = 'import' AND m.note = 'genzst-store.json') OR m.note = '${OWNER_NOTE}'));`,
   );
 writeFileSync(join(ROOT, "data/catalog/store-import.sql"), sql.join("\n") + "\n");
 writeFileSync(join(ROOT, "data/catalog/store-import-report.json"), JSON.stringify(rows.map(({ descMn, descEn, noteIds, longevity, sillage, ...r }) => r), null, 2) + "\n");
