@@ -3,6 +3,7 @@
 import fileSettings from "../../data/settings.json";
 import { auditStatement } from "../audit";
 import type { Actor, PaymentInstructions, PaymentProvider } from "../contracts";
+import { notifyTelegramStatus } from "../orders/notify";
 import { commitReservations, errText, eventStatement, guard, guardOrderStatus, isGuardError } from "../orders/state";
 import { loadOrder, type D1, type OrderRow, type PaymentRow, type Stmt } from "../orders/types";
 import { checkInvoice, createInvoice, qpayConfigured, type QpayInvoice } from "./qpay";
@@ -434,7 +435,9 @@ export async function markPaid(env: Env, order: OrderRow, p: PaidInput, actor: A
         eventStatement(db, order.id, order.status, order.status, actor, `late ${row.provider} payment ${p.amount}₮ on a ${row.status} invoice: refund or re-open`),
         auditStatement(db, actor, "payment.late", "payment", row.id, { orderNo: order.order_no, amount: p.amount, status: row.status }),
       ]);
-      return (res[0]?.meta?.changes ?? 0) === 1 ? "recorded" : "already";
+      if ((res[0]?.meta?.changes ?? 0) !== 1) return "already";
+      await notifyTelegramStatus(env, order, { kind: "refund", provider: row.provider, amount: p.amount, actor });
+      return "recorded";
     } catch (err) {
       if (isUnique(err)) return "duplicate_ref";
       throw err;
@@ -466,6 +469,7 @@ export async function markPaid(env: Env, order: OrderRow, p: PaidInput, actor: A
       if (isUnique(err)) return "duplicate_ref";
       throw err;
     }
+    await notifyTelegramStatus(env, order, { kind: "partial", provider: p.provider, amount: p.amount, due, actor });
     return "partial";
   }
 
@@ -527,6 +531,11 @@ export async function markPaid(env: Env, order: OrderRow, p: PaidInput, actor: A
 
   try {
     await db.batch(stmts);
+    await notifyTelegramStatus(
+      env,
+      { ...order, payment_status: result === "paid" ? "paid" : order.payment_status },
+      result === "paid" ? { kind: "paid", provider: p.provider, amount: p.amount, actor } : { kind: "refund", provider: p.provider, amount: p.amount, actor },
+    );
     return result;
   } catch (err) {
     if (isGuardError(err) && attempt < 2) {
