@@ -59,6 +59,9 @@ export async function placeOrder(
   /** Signed-in customer (from the session cookie, never the request body); null for a guest order. */
   customerId: number | null = null,
 ): Promise<PlaceResult> {
+  // guest orders do not name the column, so checkout keeps working on a database without migration 0006
+  const linkCol = customerId === null ? "" : ", customer_id";
+  const linkVal = customerId === null ? "" : ", ?19";
   const holdExpiresAt = sqliteTime(Date.now() + holdMinutes(settings, o.payment) * 60_000);
   for (let attempt = 0; ; attempt++) {
     const orderNo = orderNumber();
@@ -67,12 +70,12 @@ export async function placeOrder(
       db
         .prepare(
           `INSERT INTO orders (order_no, name, phone, phone2, city, district, khoroo, address, note, payment,
-             items_json, subtotal, delivery, total, locale, ip, idempotency_key, updated_at, payment_status, hold_expires_at, customer_id)
-           VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, datetime('now'), 'unpaid', ?18, ?19)`,
+             items_json, subtotal, delivery, total, locale, ip, idempotency_key, updated_at, payment_status, hold_expires_at${linkCol})
+           VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, datetime('now'), 'unpaid', ?18${linkVal})`,
         )
         .bind(
           orderNo, o.name, o.phone, o.phone2 || null, o.city, o.district || null, o.khoroo || null, o.address, o.note || null,
-          o.payment, JSON.stringify(priced.lines), priced.subtotal, priced.delivery, priced.total, o.locale, ip, idemKey, holdExpiresAt, customerId,
+          o.payment, JSON.stringify(priced.lines), priced.subtotal, priced.delivery, priced.total, o.locale, ip, idemKey, holdExpiresAt, ...(customerId === null ? [] : [customerId]),
         ),
       // Every SKU reserves (standalone lines and bundle parts, summed per SKU); it is "tracked" when the SKU has a
       // stock figure at batch time. The UPDATE and the INSERT read the same row inside the transaction, so
