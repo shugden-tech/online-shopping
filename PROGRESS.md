@@ -515,8 +515,10 @@ written by Opus too and still need a Sonnet copy review.
 - JS budget fixed: the wishlist drawer moved into the lazy `wish-list` chunk and the Turnstile mount into `turnstile.ts`
   (finder 25.1 → 24.6 KB, checkout 25.4 → 24.9 KB). Account code loads only on /profile or with the hint cookie.
 
-**Gate** — `npm run test:accounts` 111/111 (local wrangler dev + mock Google); api 91/91; see the final report for the other
-suites; `astro check` 0 errors; `npm run budget` PASS; UI checked in headless Chromium (register, avatar crop/upload, address,
+**Gate** (one local D1, wrangler dev, 2026-11-21) — accounts 111/111 (incl. mock Google), api 91/91, payments 45/45,
+delivery 83/83, bundles 68/68 (needs `WEBHOOK_ALLOW_LOCAL=1` in `.dev.vars`), admin-api 71/71, admin-ui 96/96, e2e commerce 48/48,
+e2e browser 17/17, storefront 56/57 — the one failure ("add uses sku + live price") predates this work: commit ded0d2e made the
+product page default to the full bottle while the test still expects the smallest size; master-catalog 3/3; `astro check` 0 errors; `npm run budget` PASS; UI checked in headless Chromium (register, avatar crop/upload, address,
 checkout prefill, logout/login, 375 px without horizontal scroll, English page).
 
 **Owner TODO** — `npx wrangler d1 migrations apply genzst --remote`; for Google: OAuth client + `GOOGLE_CLIENT_ID` var +
