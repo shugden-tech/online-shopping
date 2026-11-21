@@ -88,7 +88,8 @@
   "bestSeller": false,
   "d1Id": "versace-eros-najim-edp",
   "name": "Eros Najim",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/versace-eros-najim-edp.avif"
  },
  {
   "fsId": "1oyd8qMlBnCu2YapEGXf",
@@ -187,7 +188,8 @@
   "imageUrl": "https://genz-street.web.app/img/1oyd8qMlBnCu2YapEGXf-faf929f012.webp",
   "bestSeller": false,
   "d1Id": "versace-eros-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/versace-eros-edt.jpg"
  },
  {
   "fsId": "7pYX4ucvuzL4ycF5sfLY",
@@ -252,7 +254,8 @@
   "imageUrl": "https://genz-street.web.app/img/7pYX4ucvuzL4ycF5sfLY-9d3119751d.webp",
   "bestSeller": true,
   "d1Id": "versace-pour-homme-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/versace-pour-homme-edt.jpg"
  },
  {
   "fsId": "911kx5rykzPPq2ebSgfJ",
@@ -343,7 +346,8 @@
   "imageUrl": "https://genz-street.web.app/img/911kx5rykzPPq2ebSgfJ-845697ecf5.webp",
   "bestSeller": true,
   "d1Id": "armaf-club-de-nuit-intense-man-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/armaf-club-de-nuit-intense-man-edt.jpg"
  },
  {
   "fsId": "FCMw6T3V5Y3FOKnnBf6h",
@@ -433,7 +437,8 @@
   "imageUrl": "https://genz-street.web.app/img/FCMw6T3V5Y3FOKnnBf6h-1bd83f6fb0.webp",
   "bestSeller": true,
   "d1Id": "jean-paul-gaultier-le-male-elixir-parfum",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/jean-paul-gaultier-le-male-elixir-parfum.jpg"
  },
  {
   "fsId": "GxTzPDDZpTHLje6csHnV",
@@ -524,7 +529,8 @@
   "bestSeller": false,
   "d1Id": "mancera-intense-cedrat-boise-edp",
   "name": "Intense Cedrat Boise",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/mancera-intense-cedrat-boise-edp.avif"
  },
  {
   "fsId": "HFyU3U1vhTZNCqrCJ3jV",
@@ -620,7 +626,8 @@
   "imageUrl": "https://genz-street.web.app/img/HFyU3U1vhTZNCqrCJ3jV-1d09fcca73.webp",
   "bestSeller": false,
   "d1Id": "emporio-armani-stronger-with-you-intensely-edp",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/emporio-armani-stronger-with-you-intensely-edp.png"
  },
  {
   "fsId": "IDA26yXGIjK04pmu0UBj",
@@ -716,7 +723,8 @@
   "imageUrl": "https://genz-street.web.app/img/IDA26yXGIjK04pmu0UBj-423db887e0.webp",
   "bestSeller": false,
   "d1Id": "jean-paul-gaultier-le-male-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/jean-paul-gaultier-le-male-edt.jpg"
  },
  {
   "fsId": "In2bdl3wfyjZMyXpSJst",
@@ -792,7 +800,8 @@
   "bestSeller": false,
   "d1Id": "montblanc-legend-red-edp",
   "name": "Legend Red",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/montblanc-legend-red-edp.jpg"
  },
  {
   "fsId": "KOTXwiyRQMN24Lj3ZPsN",
@@ -881,7 +890,8 @@
   "bestSeller": false,
   "d1Id": "lagerfeld-classic-edt",
   "name": "Classic",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/lagerfeld-classic-edt.png"
  },
  {
   "fsId": "NfifKJiMWlWuar2Xtc44",
@@ -971,7 +981,8 @@
   "imageUrl": "https://genz-street.web.app/img/NfifKJiMWlWuar2Xtc44-50f4e27db2.webp",
   "bestSeller": false,
   "d1Id": "valentino-uomo-born-in-roma-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/valentino-uomo-born-in-roma-edt.avif"
  },
  {
   "fsId": "OYYAYFlnGAujRCSjSeZt",
@@ -1052,7 +1063,8 @@
   "bestSeller": false,
   "d1Id": "french-avenue-liquid-brun-edp",
   "name": "Liquid Brun",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/french-avenue-liquid-brun-edp.jpg"
  },
  {
   "fsId": "QkfOb7v3CfSLBFPiKukx",
@@ -1144,7 +1156,8 @@
   "imageUrl": "https://genz-street.web.app/img/QkfOb7v3CfSLBFPiKukx-fd8619fdb1.webp",
   "bestSeller": false,
   "d1Id": "valentino-uomo-born-in-roma-coral-fantasy-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/valentino-uomo-born-in-roma-coral-fantasy-edt.avif"
  },
  {
   "fsId": "RQH8vrgmHKOStAF9xtR2",
@@ -1228,7 +1241,8 @@
   "bestSeller": true,
   "d1Id": "chanel-allure-homme-sport-edt",
   "name": "Allure Homme Sport",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/chanel-allure-homme-sport-edt.avif"
  },
  {
   "fsId": "RRSZw8BJxyUpPR4amnEn",
@@ -1316,7 +1330,8 @@
   "bestSeller": false,
   "d1Id": "maison-margiela-sailing-day-edt",
   "name": "Sailing Day",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/maison-margiela-sailing-day-edt.jpg"
  },
  {
   "fsId": "SCK7Dp5JoND0Ode0apdP",
@@ -1392,7 +1407,8 @@
   "bestSeller": true,
   "d1Id": "dior-sauvage-edt",
   "name": "Sauvage",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/dior-sauvage-edt.jpg"
  },
  {
   "fsId": "VrTw0aKd5r2k7SN5hvtx",
@@ -1482,7 +1498,8 @@
   "bestSeller": false,
   "d1Id": "valentino-uomo-born-in-roma-purple-melancholia-edt",
   "name": "Uomo Born in Roma Purple Melancholia",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/valentino-uomo-born-in-roma-purple-melancholia-edt.avif"
  },
  {
   "fsId": "VwNdC7x8hjkk8VYPY45X",
@@ -1571,7 +1588,8 @@
   "imageUrl": "https://genz-street.web.app/img/VwNdC7x8hjkk8VYPY45X-01d4a42b13.webp",
   "bestSeller": false,
   "d1Id": "versace-eros-flame-edp",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/versace-eros-flame-edp.jpg"
  },
  {
   "fsId": "XXUzUS9ZGiswNEkDuVmk",
@@ -1665,7 +1683,8 @@
   "imageUrl": "https://genz-street.web.app/img/XXUzUS9ZGiswNEkDuVmk-cc9825bc31.webp",
   "bestSeller": false,
   "d1Id": "yves-saint-laurent-y-le-parfum",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/yves-saint-laurent-y-le-parfum.jpg"
  },
  {
   "fsId": "Y3Du1I1A5zQNApPWcp6O",
@@ -1757,7 +1776,8 @@
   "imageUrl": "https://genz-street.web.app/img/Y3Du1I1A5zQNApPWcp6O-4cc0fa9824.webp",
   "bestSeller": true,
   "d1Id": "montblanc-explorer-edp",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/montblanc-explorer-edp.jpg"
  },
  {
   "fsId": "ZtW6KI9Br6hu1eYoQaCe",
@@ -1837,7 +1857,8 @@
   "bestSeller": false,
   "d1Id": "maison-margiela-jazz-club-edt",
   "name": "Jazz Club",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/maison-margiela-jazz-club-edt.jpg"
  },
  {
   "fsId": "bKHkMqGoDartuJLcQM5R",
@@ -1891,7 +1912,8 @@
   "imageUrl": "https://genz-street.web.app/img/bKHkMqGoDartuJLcQM5R-d75da687b3.webp",
   "bestSeller": false,
   "d1Id": "versace-eros-energy-edp",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/versace-eros-energy-edp.jpg"
  },
  {
   "fsId": "cusVkV4WyQnmtvHd2bOo",
@@ -1973,7 +1995,8 @@
   "imageUrl": "https://genz-street.web.app/img/cusVkV4WyQnmtvHd2bOo-4c4a8e30fc.webp",
   "bestSeller": false,
   "d1Id": "giorgio-armani-emporio-armani-stronger-with-you-powerfully",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/giorgio-armani-emporio-armani-stronger-with-you-powerfully.jpg"
  },
  {
   "fsId": "fH712FnJJxKOoW9yPRjj",
@@ -2054,7 +2077,8 @@
   "imageUrl": "https://genz-street.web.app/img/fH712FnJJxKOoW9yPRjj-2f93496b48.webp",
   "bestSeller": false,
   "d1Id": "dior-eau-sauvage-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/dior-eau-sauvage-edt.avif"
  },
  {
   "fsId": "gzBd7CqzC5NU1TyrBjkk",
@@ -2128,7 +2152,8 @@
   "bestSeller": false,
   "d1Id": "valentino-uomo-born-in-roma-extradose-edp",
   "name": "Uomo Born in Roma Extradose",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/valentino-uomo-born-in-roma-extradose-edp.avif"
  },
  {
   "fsId": "hRaQL3Jdjq2yK29AefDV",
@@ -2222,7 +2247,8 @@
   "imageUrl": "https://genz-street.web.app/img/hRaQL3Jdjq2yK29AefDV-bd27e4d254.webp",
   "bestSeller": false,
   "d1Id": "yves-saint-laurent-y-edp",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/yves-saint-laurent-y-edp.avif"
  },
  {
   "fsId": "kYIEpJTCBi5lftTVqb2C",
@@ -2304,7 +2330,8 @@
   "imageUrl": "https://genz-street.web.app/img/kYIEpJTCBi5lftTVqb2C-7bdfdd2c47.webp",
   "bestSeller": false,
   "d1Id": "montblanc-legend-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/montblanc-legend-edt.jpg"
  },
  {
   "fsId": "kc0RdsUkVHG2Zlb2ZASj",
@@ -2374,7 +2401,8 @@
   "imageUrl": "https://genz-street.web.app/img/kc0RdsUkVHG2Zlb2ZASj-bfaccc7477.webp",
   "bestSeller": true,
   "d1Id": "valentino-uomo-born-in-roma-intense-edp",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/valentino-uomo-born-in-roma-intense-edp.avif"
  },
  {
   "fsId": "m7N0Ijq9Q7I1GSoouWGS",
@@ -2466,7 +2494,8 @@
   "bestSeller": true,
   "d1Id": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum",
   "name": "Emporio Armani Stronger With You Parfum",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum.avif"
  },
  {
   "fsId": "s6QY4TK8ama2OIA4OsuS",
@@ -2542,7 +2571,8 @@
   "bestSeller": false,
   "d1Id": "r-my-latour-cigar-edt",
   "name": "Cigar",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/r-my-latour-cigar-edt.jpg"
  },
  {
   "fsId": "v0bc6S0NvAXX7mMAsLur",
@@ -2636,7 +2666,8 @@
   "bestSeller": false,
   "d1Id": "ralph-lauren-polo-black-edt",
   "name": "Polo Black",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/ralph-lauren-polo-black-edt.jpg"
  },
  {
   "fsId": "vGqkWrtPFWaODRXzcMLC",
@@ -2696,7 +2727,8 @@
   "bestSeller": false,
   "d1Id": "moncler-pour-homme-edp",
   "name": "POUR HOMME",
-  "action": "new"
+  "action": "new",
+  "localImage": "data/catalog/genzst-store-images/moncler-pour-homme-edp.webp"
  },
  {
   "fsId": "wztk2ber0LXhSIxYvACV",
@@ -2775,6 +2807,7 @@
   "imageUrl": "https://genz-street.web.app/img/wztk2ber0LXhSIxYvACV-7e82f7e6b4.webp",
   "bestSeller": false,
   "d1Id": "maison-margiela-by-the-fireplace-edt",
-  "action": "existing"
+  "action": "existing",
+  "localImage": "data/catalog/genzst-store-images/maison-margiela-by-the-fireplace-edt.webp"
  }
 ]
