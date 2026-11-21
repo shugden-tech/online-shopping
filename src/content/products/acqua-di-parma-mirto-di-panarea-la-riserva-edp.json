@@ -1,0 +1,59 @@
+{
+  "slug": "acqua-di-parma-mirto-di-panarea-la-riserva-edp",
+  "brand": "Acqua di Parma",
+  "name": "Mirto di Panarea La Riserva",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "citron",
+      "juniper",
+      "sage",
+      "lavender",
+      "myrtle",
+      "myrrh"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Mirto di Panarea La Riserva: Unisex өвслөг үнэр (EDP). Эхний ноот: цитрон, арц, мэргэн өвс, лаванда, мирт, мирра.",
+    "en": "Mirto di Panarea La Riserva by Acqua di Parma is a fresh and citrusy aromatic fragrance suitable for both women and men. This innovative scent was introduced in 2025. The fragrance opens with top notes of Citron, Juniper Berries, and Sage, leading into a heart of Lavender, Myrtle, and Myrrh. The base is enriched with Patchouli, Labdanum, and Mastic (Lentisque)."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/1377265.jpg?v=1782754354",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/files/acqua-di-parma-mirto-di-panarea-la-riserva_2830f5fb-280f-475b-a606-ece965654316_1652x1652.png?v=1768946637"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "slug": "acqua-di-parma-rosa-nobile-edp",
+  "brand": "Acqua di Parma",
+  "name": "Rosa Nobile",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "mandarin",
+      "bergamot",
+      "pepper"
+    ],
+    "heart": [
+      "rose",
+      "peony",
+      "violet",
+      "lily-of-the-valley"
+    ],
+    "base": [
+      "musk",
+      "cedar",
+      "ambergris"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Rosa Nobile: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: мандарин, бергамот, хар чинжүү; зүрхний ноот: сарнай, цээнэ цэцэг, нил цэцэг, хонхон цэцэг; суурь ноот: заар, хуш мод, амбра.",
+    "en": "Rosa Nobile by Acqua di Parma is a Floral Woody Musk fragrance for women. Rosa Nobile was launched in 2014. The nose behind this fragrance is Francois Demachy. Top notes are Mandarin Orange, Bergamot and Pepper; middle notes are Rose, Peony, Violet and Lily-of-the-Valley; base notes are Musk, Cedar and Ambergris."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/a954680f-8ea6-419d-9a39-38931a360f17_baedc14d-0f57-4eb5-aa11-51fb4ef37bba.jpg?v=1683063508",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/acqua-di-parma-rosa-nobile_1024x1024.png?v=1573009508"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "slug": "jean-paul-gaultier-la-belle-edp",
+  "brand": "Jean Paul Gaultier",
+  "name": "La Belle",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pear",
+      "bergamot"
+    ],
+    "heart": [
+      "floral-notes",
+      "leather"
+    ],
+    "base": [
+      "vanilla",
+      "vetiver",
+      "amber",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Jean Paul Gaultier La Belle: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: лийр, бергамот; зүрхний ноот: цэцгийн ноот, арьс; суурь ноот: ваниль, ветивер, хув, заар.",
+    "en": "Jean Paul Gaultier La Belle is a amber fragrance in EDP concentration. Its listed notes include pear, bergamot, floral notes, leather, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-068-front.webp",
+    "back": "/product-photos/curated-068-back.webp"
+  }
+}

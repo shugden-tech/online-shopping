@@ -1,0 +1,1744 @@
+{
+  "targets": 108,
+  "added": 107,
+  "existing_preserved": 100,
+  "existing_targets": 1,
+  "new_total": 207,
+  "pending_note_translations": [],
+  "products": [
+    {
+      "order": 1,
+      "slug": "jean-paul-gaultier-le-male-elixir-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/jean-paul-gaultier-le-male-elixir-parfum-for-men"
+      ],
+      "source_name": "Jean Paul Gaultier Le Male Elixir Parfum for Men",
+      "merged_index": 1981,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-001-front.webp",
+        "back": "/product-photos/curated-001-back.webp"
+      }
+    },
+    {
+      "order": 2,
+      "slug": "jean-paul-gaultier-le-male-le-parfum-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/jean-paul-gaultier-le-male-le-parfum-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/jean-paul-gaultier-le-male-le-parfum-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Jean Paul Gaultier Le Male Le Parfum Eau de Parfum for Men",
+      "merged_index": 1986,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-002-front.webp",
+        "back": "/product-photos/curated-002-back.webp"
+      }
+    },
+    {
+      "order": 3,
+      "slug": "jean-paul-gaultier-ultra-male-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/jean-paul-gaultier-ultra-male-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/jean-paul-gaultier-ultra-male-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Jean Paul Gaultier Ultra Male Eau de Toilette",
+      "merged_index": 2001,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-003-front.webp",
+        "back": "/product-photos/curated-003-back.webp"
+      }
+    },
+    {
+      "order": 4,
+      "slug": "jean-paul-gaultier-le-beau-le-parfum-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/jean-paul-gaultier-le-beau-le-parfum-eau-de-perfume-for-men"
+      ],
+      "source_name": "Jean Paul Gaultier Le Beau Le Parfum Eau de Parfum for Men",
+      "merged_index": 1973,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-004-front.webp",
+        "back": "/product-photos/curated-004-back.webp"
+      }
+    },
+    {
+      "order": 5,
+      "slug": "jean-paul-gaultier-le-beau-paradise-garden-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/jean-paul-gaultier-le-beau-paradise-garden-eau-de-parfum-for-men"
+      ],
+      "source_name": "Jean Paul Gaultier Le Beau Paradise Garden Eau de Parfum for Men",
+      "merged_index": 1976,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-005-front.webp",
+        "back": "/product-photos/curated-005-back.webp"
+      }
+    },
+    {
+      "order": 6,
+      "slug": "dior-sauvage-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/dior-sauvage-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/dior-sauvage-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Dior Sauvage Eau de Parfum for Men",
+      "merged_index": 1151,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-006-front.webp",
+        "back": "/product-photos/curated-006-back.webp"
+      }
+    },
+    {
+      "order": 7,
+      "slug": "dior-sauvage-elixir-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/dior-sauvage-elixir-for-men",
+        "https://www.decantx.com/products/dior-sauvage-elixir-for-men-1"
+      ],
+      "source_name": "Dior Sauvage Elixir for Men",
+      "merged_index": 1153,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-007-front.webp",
+        "back": "/product-photos/curated-007-back.webp"
+      }
+    },
+    {
+      "order": 8,
+      "slug": "dior-homme-intense-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/dior-dior-homme-intense-eau-de-parfum-for-men"
+      ],
+      "source_name": "Dior Homme Intense 2011 Eau de Parfum for Men",
+      "merged_index": 1112,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-008-front.webp",
+        "back": "/product-photos/curated-008-back.webp"
+      }
+    },
+    {
+      "order": 9,
+      "slug": "chanel-bleu-de-chanel-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/chanel/bleu-de-chanel-eau-de-parfum-25967.html"
+      ],
+      "source_name": "Chanel Bleu de Chanel",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-009-front.webp"
+      }
+    },
+    {
+      "order": 10,
+      "slug": "chanel-bleu-de-chanel-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/chanel/bleu-de-chanel-parfum-49912.html"
+      ],
+      "source_name": "Chanel Bleu de Chanel",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-010-front.webp"
+      }
+    },
+    {
+      "order": 11,
+      "slug": "chanel-allure-homme-sport-eau-extreme-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/chanel/allure-homme-sport-eau-extreme-14669.html"
+      ],
+      "source_name": "Chanel Allure Homme Sport Eau Extreme",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-011-front.webp"
+      }
+    },
+    {
+      "order": 12,
+      "slug": "yves-saint-laurent-y-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/yves-saint-laurent-y-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/yves-saint-laurent-y-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Yves Saint Laurent Y Eau de Parfum for Men",
+      "merged_index": 4038,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-012-front.webp",
+        "back": "/product-photos/curated-012-back.webp"
+      }
+    },
+    {
+      "order": 13,
+      "slug": "yves-saint-laurent-myslf-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/yves-saint-laurent-myslf-eau-de-parfum-for-men"
+      ],
+      "source_name": "Yves Saint Laurent Myslf Eau de Parfum for Men",
+      "merged_index": 4018,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-013-front.webp",
+        "back": "/product-photos/curated-013-back.webp"
+      }
+    },
+    {
+      "order": 14,
+      "slug": "yves-saint-laurent-la-nuit-de-lhomme-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/yves-saint-laurent-la-nuit-de-lhomme-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/yves-saint-laurent-la-nuit-de-lhomme-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Yves Saint Laurent La Nuit de L'Homme Eau de Toilette for Men",
+      "merged_index": 3995,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-014-front.webp",
+        "back": "/product-photos/curated-014-back.webp"
+      }
+    },
+    {
+      "order": 15,
+      "slug": "giorgio-armani-acqua-di-gio-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/giorgio-armani-acqua-di-gio-parfum-for-men"
+      ],
+      "source_name": "Giorgio Armani Acqua Di Gio Parfum for Men",
+      "merged_index": 1545,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-015-front.webp",
+        "back": "/product-photos/curated-015-back.webp"
+      }
+    },
+    {
+      "order": 16,
+      "slug": "emporio-armani-stronger-with-you-intensely-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/emporio-armani-stronger-with-you-intensely-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/emporio-armani-stronger-with-you-intensely-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Emporio Armani Stronger With You Intensely Eau de Parfum for Men",
+      "merged_index": 1339,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-016-front.webp",
+        "back": "/product-photos/curated-016-back.webp"
+      }
+    },
+    {
+      "order": 17,
+      "slug": "emporio-armani-stronger-with-you-absolutely-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/emporio-armani-stronger-with-you-absolutely-parfum-for-men",
+        "https://www.decantx.com/products/emporio-armani-stronger-with-you-absolutely-parfum-for-men-box"
+      ],
+      "source_name": "Emporio Armani Stronger with You Absolutely Parfum for Men",
+      "merged_index": 1335,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-017-front.webp",
+        "back": "/product-photos/curated-017-back.webp"
+      }
+    },
+    {
+      "order": 18,
+      "slug": "azzaro-the-most-wanted-intense-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/azzaro-the-most-wanted-eau-de-parfum-intense-for-men",
+        "https://www.decantx.com/products/azzaro-the-most-wanted-eau-de-parfum-intense-for-men-box"
+      ],
+      "source_name": "Azzaro The Most Wanted Eau de Parfum Intense for Men",
+      "merged_index": 324,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-018-front.webp"
+      }
+    },
+    {
+      "order": 19,
+      "slug": "azzaro-the-most-wanted-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/azzaro-the-most-wanted-parfum-for-men",
+        "https://www.decantx.com/products/azzaro-the-most-wanted-parfum-for-men-1"
+      ],
+      "source_name": "Azzaro The Most Wanted Parfum for Men",
+      "merged_index": 326,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-019-front.webp",
+        "back": "/product-photos/curated-019-back.webp"
+      }
+    },
+    {
+      "order": 20,
+      "slug": "azzaro-wanted-by-night-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/azzaro-wanted-by-night-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/azzaro-wanted-by-night-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Azzaro Wanted By Night Eau de Parfum for Men",
+      "merged_index": 327,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-020-front.webp"
+      }
+    },
+    {
+      "order": 21,
+      "slug": "valentino-uomo-born-in-roma-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/valentino-uomo-born-in-roma-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/valentino-uomo-born-in-roma-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Valentino Uomo Born in Roma Eau de Toilette for Men",
+      "merged_index": 3687,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-021-front.webp"
+      }
+    },
+    {
+      "order": 22,
+      "slug": "valentino-uomo-born-in-roma-intense-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/valentino-uomo-born-in-roma-intense-eau-de-parfum-for-men"
+      ],
+      "source_name": "Valentino Uomo Born in Roma Intense Eau de Parfum for Men",
+      "merged_index": 3690,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-022-front.webp",
+        "back": "/product-photos/curated-022-back.webp"
+      }
+    },
+    {
+      "order": 23,
+      "slug": "versace-eros-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/versace-eros-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/versace-eros-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Versace Eros Eau de Toilette for Men",
+      "merged_index": 3743,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-023-front.webp",
+        "back": "/product-photos/curated-023-back.webp"
+      }
+    },
+    {
+      "order": 24,
+      "slug": "versace-eros-flame-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/versace-eros-flame-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/versace-eros-flame-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Versace Eros Flame Eau de Parfum for Men",
+      "merged_index": 3745,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-024-front.webp",
+        "back": "/product-photos/curated-024-back.webp"
+      }
+    },
+    {
+      "order": 25,
+      "slug": "versace-dylan-blue-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/versace-dylan-blue-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/versace-dylan-blue-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Versace Dylan Blue Eau de Toilette for Men",
+      "merged_index": 3740,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-025-front.webp",
+        "back": "/product-photos/curated-025-back.webp"
+      }
+    },
+    {
+      "order": 26,
+      "slug": "versace-pour-homme-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/versace-pour-homme-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/versace-pour-homme-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Versace Pour Homme Eau de Toilette for Men",
+      "merged_index": 3757,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-026-front.webp",
+        "back": "/product-photos/curated-026-back.webp"
+      }
+    },
+    {
+      "order": 27,
+      "slug": "rabanne-1-million-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/paco-rabanne/1-million-3747.html"
+      ],
+      "source_name": "Paco Rabanne 1 Million",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-027-front.webp"
+      }
+    },
+    {
+      "order": 28,
+      "slug": "rabanne-1-million-elixir-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/paco-rabanne-1-million-elixir-eau-de-parfum-intense-for-men",
+        "https://www.decantx.com/products/paco-rabanne-1-million-elixir-eau-de-parfum-intense-for-men-1"
+      ],
+      "source_name": "Paco Rabanne 1 Million Elixir Eau de Parfum Intense for Men",
+      "merged_index": 2912,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-028-front.webp",
+        "back": "/product-photos/curated-028-back.webp"
+      }
+    },
+    {
+      "order": 29,
+      "slug": "rabanne-invictus-victory-elixir-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/paco-rabanne-invictus-victory-elixir-parfum-intense-for-men"
+      ],
+      "source_name": "Paco Rabanne Invictus Victory Elixir Parfum Intense for Men",
+      "merged_index": 2938,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-029-front.webp",
+        "back": "/product-photos/curated-029-back.webp"
+      }
+    },
+    {
+      "order": 30,
+      "slug": "rabanne-phantom-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/paco-rabanne-phantom-parfum-for-men"
+      ],
+      "source_name": "Paco Rabanne Phantom Parfum for Men",
+      "merged_index": 2950,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-030-front.webp",
+        "back": "/product-photos/curated-030-back.webp"
+      }
+    },
+    {
+      "order": 31,
+      "slug": "viktor-and-rolf-spicebomb-extreme-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/viktor-rolf-spicebomb-extreme-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/viktor-rolf-spicebomb-extreme-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Viktor&Rolf Spicebomb Extreme Eau de Parfum for Men",
+      "merged_index": 3796,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-031-front.webp",
+        "back": "/product-photos/curated-031-back.webp"
+      }
+    },
+    {
+      "order": 32,
+      "slug": "prada-luna-rossa-carbon-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/prada-luna-rossa-carbon-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/prada-luna-rossa-carbon-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Prada Luna Rossa Carbon Eau de Toilette for Men",
+      "merged_index": 3081,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-032-front.webp",
+        "back": "/product-photos/curated-032-back.webp"
+      }
+    },
+    {
+      "order": 33,
+      "slug": "prada-luna-rossa-black-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/prada-luna-rossa-black-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/prada-luna-rossa-black-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Prada Luna Rossa Black Eau de Parfum for Men",
+      "merged_index": 3079,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-033-front.webp",
+        "back": "/product-photos/curated-033-back.webp"
+      }
+    },
+    {
+      "order": 34,
+      "slug": "prada-lhomme-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/prada/prada-l-homme-39029.html"
+      ],
+      "source_name": "Prada L'Homme",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-034-front.webp"
+      }
+    },
+    {
+      "order": 35,
+      "slug": "dolce-and-gabbana-the-one-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/dolce-gabbana/the-one-for-men-eau-de-parfum-31909.html"
+      ],
+      "source_name": "Dolce&Gabbana The One",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-035-front.webp"
+      }
+    },
+    {
+      "order": 36,
+      "slug": "dolce-and-gabbana-light-blue-eau-intense-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/dolce-gabbana-light-blue-eau-intense-pour-homme-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/dolce-gabbana-light-blue-eau-intense-pour-homme-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Dolce & Gabbana Light Blue Eau Intense Pour Homme Eau de Parfum for Men",
+      "merged_index": 1216,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-036-front.webp",
+        "back": "/product-photos/curated-036-back.webp"
+      }
+    },
+    {
+      "order": 37,
+      "slug": "givenchy-gentleman-reserve-privee-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/givenchy-gentleman-reserve-privee-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/givenchy-gentleman-reserve-privee-eau-de-parfum-for-men-1"
+      ],
+      "source_name": "Givenchy Gentleman Reserve Privee Eau de Parfum for Men",
+      "merged_index": 1622,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-037-front.webp",
+        "back": "/product-photos/curated-037-back.webp"
+      }
+    },
+    {
+      "order": 38,
+      "slug": "hermes-terre-dhermes-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/hermes-terre-dhermes-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/hermes-terre-dhermes-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Hermes Terre d'Hermes Eau de Toilette for Men",
+      "merged_index": 1859,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-038-front.webp",
+        "back": "/product-photos/curated-038-back.webp"
+      }
+    },
+    {
+      "order": 39,
+      "slug": "montblanc-explorer-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/montblanc-explorer-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/montblanc-explorer-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Montblanc Explorer Eau de Parfum for Men",
+      "merged_index": 2675,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-039-front.webp",
+        "back": "/product-photos/curated-039-back.webp"
+      }
+    },
+    {
+      "order": 40,
+      "slug": "mancera-cedrat-boise-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/mancera-cedrat-boise-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/mancera-cedrat-boise-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Mancera Cedrat Boise Eau de Parfum Unisex",
+      "merged_index": 2395,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-040-front.webp",
+        "back": "/product-photos/curated-040-back.webp"
+      }
+    },
+    {
+      "order": 41,
+      "slug": "valentino-donna-born-in-roma-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/valentino-donna-born-in-roma-eau-de-parfum-for-women"
+      ],
+      "source_name": "Valentino Donna Born In Roma Eau de Parfum for Women",
+      "merged_index": 3673,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-041-front.webp",
+        "back": "/product-photos/curated-041-back.webp"
+      }
+    },
+    {
+      "order": 42,
+      "slug": "valentino-donna-born-in-roma-intense-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/valentino-donna-born-in-roma-intense-eau-de-parfum-for-women"
+      ],
+      "source_name": "Valentino Donna Born In Roma Intense Eau de Parfum for Women",
+      "merged_index": 3675,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-042-front.webp",
+        "back": "/product-photos/curated-042-back.webp"
+      }
+    },
+    {
+      "order": 43,
+      "slug": "yves-saint-laurent-libre-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/yves-saint-laurent-libre-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/yves-saint-laurent-libre-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Yves Saint Laurent Libre Eau de Parfum for Women",
+      "merged_index": 4003,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-043-front.webp",
+        "back": "/product-photos/curated-043-back.webp"
+      }
+    },
+    {
+      "order": 44,
+      "slug": "yves-saint-laurent-libre-intense-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/yves-saint-laurent-libre-eau-de-parfum-intense-for-women",
+        "https://www.decantx.com/products/yves-saint-laurent-libre-eau-de-parfum-intense-for-women-box"
+      ],
+      "source_name": "Yves Saint Laurent Libre Eau de Parfum Intense for Women",
+      "merged_index": 4004,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-044-front.webp",
+        "back": "/product-photos/curated-044-back.webp"
+      }
+    },
+    {
+      "order": 45,
+      "slug": "yves-saint-laurent-black-opium-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/yves-saint-laurent-black-opium-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/yves-saint-laurent-black-opium-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Yves Saint Laurent Black Opium Eau de Parfum for Women",
+      "merged_index": 3959,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-045-front.webp",
+        "back": "/product-photos/curated-045-back.webp"
+      }
+    },
+    {
+      "order": 46,
+      "slug": "yves-saint-laurent-black-opium-le-parfum-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/yves-saint-laurent-black-opium-le-parfum-for-women"
+      ],
+      "source_name": "Yves Saint Laurent Black Opium Le Parfum for Women",
+      "merged_index": 3965,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-046-front.webp"
+      }
+    },
+    {
+      "order": 47,
+      "slug": "carolina-herrera-good-girl-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/carolina-herrera-good-girl-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/carolina-herrera-good-girl-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Carolina Herrera Good Girl Eau de Parfum for Women",
+      "merged_index": 801,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-047-front.webp",
+        "back": "/product-photos/curated-047-back.webp"
+      }
+    },
+    {
+      "order": 48,
+      "slug": "carolina-herrera-good-girl-blush-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/carolina-herrera-good-girl-blush-eau-de-parfum-for-women"
+      ],
+      "source_name": "Carolina Herrera Good Girl Blush Eau de Parfum for Women",
+      "merged_index": 795,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-048-front.webp",
+        "back": "/product-photos/curated-048-back.webp"
+      }
+    },
+    {
+      "order": 49,
+      "slug": "carolina-herrera-very-good-girl-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/carolina-herrera-very-good-girl-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/carolina-herrera-very-good-girl-eau-de-parfum-for-women-1"
+      ],
+      "source_name": "Carolina Herrera Very Good Girl Eau de Parfum For Women",
+      "merged_index": 826,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-049-front.webp",
+        "back": "/product-photos/curated-049-back.webp"
+      }
+    },
+    {
+      "order": 50,
+      "slug": "burberry-goddess-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/burberry-goddess-eau-de-parfum-for-women"
+      ],
+      "source_name": "Burberry Goddess Eau de Parfum for Women",
+      "merged_index": 537,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-050-front.webp"
+      }
+    },
+    {
+      "order": 51,
+      "slug": "burberry-her-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/burberry-her-burberry-eau-de-parfum"
+      ],
+      "source_name": "Burberry Her Burberry Eau de Parfum",
+      "merged_index": 540,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-051-front.webp",
+        "back": "/product-photos/curated-051-back.webp"
+      }
+    },
+    {
+      "order": 52,
+      "slug": "burberry-her-elixir-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/burberry-her-elixir-eau-de-parfum-intense-for-women"
+      ],
+      "source_name": "Burberry Her Elixir Eau de Parfum Intense for Women",
+      "merged_index": 541,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-052-front.webp",
+        "back": "/product-photos/curated-052-back.webp"
+      }
+    },
+    {
+      "order": 53,
+      "slug": "prada-paradoxe-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/prada-paradoxe-eau-de-parfum-for-women"
+      ],
+      "source_name": "Prada Paradoxe Eau de Parfum for Women",
+      "merged_index": 3095,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-053-front.webp",
+        "back": "/product-photos/curated-053-back.webp"
+      }
+    },
+    {
+      "order": 54,
+      "slug": "prada-paradoxe-intense-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/prada-paradoxe-intense-eau-de-parfum-for-women"
+      ],
+      "source_name": "Prada Paradoxe Intense Eau de Parfum for Women",
+      "merged_index": 3096,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-054-front.webp",
+        "back": "/product-photos/curated-054-back.webp"
+      }
+    },
+    {
+      "order": 55,
+      "slug": "chanel-coco-mademoiselle-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/chanel/coco-mademoiselle-611.html"
+      ],
+      "source_name": "Chanel Coco Mademoiselle",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-055-front.webp"
+      }
+    },
+    {
+      "order": 56,
+      "slug": "chanel-chance-eau-tendre-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/chanel/chance-eau-tendre-eau-de-parfum-52359.html"
+      ],
+      "source_name": "Chanel Chance Eau Tendre",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-056-front.webp"
+      }
+    },
+    {
+      "order": 57,
+      "slug": "dior-miss-dior-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/dior-miss-dior-eau-de-parfum-for-women"
+      ],
+      "source_name": "Dior Miss Dior Eau de Parfum for Women",
+      "merged_index": 1138,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-057-front.webp",
+        "back": "/product-photos/curated-057-back.webp"
+      }
+    },
+    {
+      "order": 58,
+      "slug": "dior-jadore-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/dior-jadore-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/dior-jadore-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Dior J'adore Eau de Parfum for Women",
+      "merged_index": 1120,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-058-front.webp",
+        "back": "/product-photos/curated-058-back.webp"
+      }
+    },
+    {
+      "order": 59,
+      "slug": "dior-hypnotic-poison-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/dior-hypnotic-poison-eau-de-toilette-for-women",
+        "https://www.decantx.com/products/dior-hypnotic-poison-eau-de-toilette-for-women-box"
+      ],
+      "source_name": "Dior Hypnotic Poison Eau de Toilette for Women",
+      "merged_index": 1117,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-059-front.webp",
+        "back": "/product-photos/curated-059-back.webp"
+      }
+    },
+    {
+      "order": 60,
+      "slug": "lancome-la-vie-est-belle-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/lancome-la-vie-est-belle-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/lancome-la-vie-est-belle-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Lancôme La Vie Est Belle Eau de Parfum for Women",
+      "merged_index": 2194,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-060-front.webp",
+        "back": "/product-photos/curated-060-back.webp"
+      }
+    },
+    {
+      "order": 61,
+      "slug": "lancome-idole-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lancome/idole-55795.html"
+      ],
+      "source_name": "Lancome Idole",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-061-front.webp"
+      }
+    },
+    {
+      "order": 62,
+      "slug": "viktor-and-rolf-flowerbomb-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/viktor-rolf-flowerbomb-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/viktor-rolf-flowerbomb-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Viktor&Rolf Flowerbomb Eau de Parfum for Women",
+      "merged_index": 3787,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-062-front.webp",
+        "back": "/product-photos/curated-062-back.webp"
+      }
+    },
+    {
+      "order": 63,
+      "slug": "mugler-alien-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/thierry-mugler-alien-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/thierry-mugler-alien-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Mugler Alien Eau de Parfum for Women",
+      "merged_index": 2699,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-063-front.webp"
+      }
+    },
+    {
+      "order": 64,
+      "slug": "mugler-alien-goddess-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/mugler-alien-goddess-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/mugler-alien-goddess-eau-de-parfum-for-women-1"
+      ],
+      "source_name": "Mugler Alien Goddess Eau de Parfum for Women",
+      "merged_index": 2700,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-064-front.webp",
+        "back": "/product-photos/curated-064-back.webp"
+      }
+    },
+    {
+      "order": 65,
+      "slug": "gucci-flora-gorgeous-gardenia-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/gucci-flora-gorgeous-gardenia-eau-de-parfum-for-women"
+      ],
+      "source_name": "Gucci Flora Gorgeous Gardenia Eau de Parfum for Women",
+      "merged_index": 1696,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-065-front.webp",
+        "back": "/product-photos/curated-065-back.webp"
+      }
+    },
+    {
+      "order": 66,
+      "slug": "versace-bright-crystal-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/versace-bright-crystal-eau-de-toilette-for-women",
+        "https://www.decantx.com/products/versace-bright-crystal-eau-de-toilette-for-women-box"
+      ],
+      "source_name": "Versace Bright Crystal Eau de Toilette for Women",
+      "merged_index": 3730,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-066-front.webp",
+        "back": "/product-photos/curated-066-back.webp"
+      }
+    },
+    {
+      "order": 67,
+      "slug": "versace-crystal-noir-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/versace-crystal-noir-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/versace-crystal-noir-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Versace Crystal Noir Eau de Parfum for Women",
+      "merged_index": 3736,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-067-front.webp",
+        "back": "/product-photos/curated-067-back.webp"
+      }
+    },
+    {
+      "order": 68,
+      "slug": "jean-paul-gaultier-la-belle-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/jean-paul-gaultier-la-belle-eau-de-parfum-for-women"
+      ],
+      "source_name": "Jean Paul Gaultier La Belle Eau de Parfum for Women",
+      "merged_index": 1966,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-068-front.webp",
+        "back": "/product-photos/curated-068-back.webp"
+      }
+    },
+    {
+      "order": 69,
+      "slug": "narciso-rodriguez-for-her-musc-noir-rose-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/narciso-rodriguez-musc-noir-rose-eau-de-parfum-for-her"
+      ],
+      "source_name": "Narciso Rodriguez Musc Noir Rose Eau de Parfum For Her",
+      "merged_index": 2728,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-069-front.webp",
+        "back": "/product-photos/curated-069-back.webp"
+      }
+    },
+    {
+      "order": 70,
+      "slug": "kayali-vanilla-28-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/kayali-vanilla-28-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/kayali-vanilla-28-eau-de-parfum-for-women-1"
+      ],
+      "source_name": "Kayali Vanilla 28 Eau de Parfum for Women",
+      "merged_index": 2171,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-070-front.webp",
+        "back": "/product-photos/curated-070-back.webp"
+      }
+    },
+    {
+      "order": 71,
+      "slug": "maison-francis-kurkdjian-baccarat-rouge-540-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/maison-francis-kurkdjian-baccarat-rouge-540-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/maison-francis-kurkdjian-baccarat-rouge-540-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Maison Francis Kurkdjian Baccarat Rouge 540 Eau de Parfum Unisex",
+      "merged_index": 2314,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-071-front.webp",
+        "back": "/product-photos/curated-071-back.webp"
+      }
+    },
+    {
+      "order": 72,
+      "slug": "maison-francis-kurkdjian-baccarat-rouge-540-extrait",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/maison-francis-kurkdjian-baccarat-rouge-540-extrait-de-parfum-unisex"
+      ],
+      "source_name": "Maison Francis Kurkdjian Baccarat Rouge 540 Extrait de Parfum Unisex",
+      "merged_index": 2315,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-072-front.webp",
+        "back": "/product-photos/curated-072-back.webp"
+      }
+    },
+    {
+      "order": 73,
+      "slug": "maison-francis-kurkdjian-grand-soir-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/maison-francis-kurkdjian-grand-soir-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/maison-francis-kurkdjian-grand-soir-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Maison Francis Kurkdjian Grand Soir Eau de Parfum Unisex",
+      "merged_index": 2319,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-073-front.webp",
+        "back": "/product-photos/curated-073-back.webp"
+      }
+    },
+    {
+      "order": 74,
+      "slug": "creed-aventus-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/creed-aventus-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/creed-aventus-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Creed Aventus Eau de Parfum for Men",
+      "merged_index": 979,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-074-front.webp",
+        "back": "/product-photos/curated-074-back.webp"
+      }
+    },
+    {
+      "order": 75,
+      "slug": "parfums-de-marly-layton-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/parfums-de-marly-layton-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/parfums-de-marly-layton-eau-de-parfum-for-men-box"
+      ],
+      "source_name": "Parfums de Marly Layton Eau de Parfum for Men",
+      "merged_index": 2981,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-075-front.webp",
+        "back": "/product-photos/curated-075-back.webp"
+      }
+    },
+    {
+      "order": 76,
+      "slug": "parfums-de-marly-althair-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/parfums-de-marly-althair-eau-de-parfum-for-men"
+      ],
+      "source_name": "Parfums de Marly Althair Eau de Parfum for Men",
+      "merged_index": 2955,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-076-front.webp",
+        "back": "/product-photos/curated-076-back.webp"
+      }
+    },
+    {
+      "order": 77,
+      "slug": "parfums-de-marly-delina-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/parfums-de-marly-delina-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/parfums-de-marly-delina-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Parfums de Marly Delina Eau de Parfum for Women",
+      "merged_index": 2967,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-077-front.webp",
+        "back": "/product-photos/curated-077-back.webp"
+      }
+    },
+    {
+      "order": 78,
+      "slug": "parfums-de-marly-delina-exclusif-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/parfums-de-marly-delina-exclusif-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/parfums-de-marly-delina-exclusif-eau-de-parfum-for-women-box"
+      ],
+      "source_name": "Parfums de Marly Delina Exclusif Eau de Parfum for Women",
+      "merged_index": 2968,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-078-front.webp",
+        "back": "/product-photos/curated-078-back.webp"
+      }
+    },
+    {
+      "order": 79,
+      "slug": "xerjoff-naxos-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/xerjoff-xj-1861-naxos-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/xerjoff-xj-box861-naxos-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Xerjoff XJ 1861 Naxos Eau de Parfum Unisex",
+      "merged_index": 3940,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-079-front.webp",
+        "back": "/product-photos/curated-079-back.webp"
+      }
+    },
+    {
+      "order": 80,
+      "slug": "xerjoff-erba-pura-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/xerjoff-erba-pura-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/xerjoff-erba-pura-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Xerjoff Erba Pura Eau de Parfum Unisex",
+      "merged_index": 3875,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-080-front.webp",
+        "back": "/product-photos/curated-080-back.webp"
+      }
+    },
+    {
+      "order": 81,
+      "slug": "louis-vuitton-imagination-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/louis-vuitton/imagination-67370.html"
+      ],
+      "source_name": "Louis Vuitton Imagination",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-081-front.webp"
+      }
+    },
+    {
+      "order": 82,
+      "slug": "louis-vuitton-afternoon-swim-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/Louis-Vuitton/Afternoon-Swim-53947.html"
+      ],
+      "source_name": "Louis Vuitton Afternoon Swim",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-082-front.webp"
+      }
+    },
+    {
+      "order": 83,
+      "slug": "louis-vuitton-ombre-nomade-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/Louis-Vuitton/Ombre-Nomade-49755.html"
+      ],
+      "source_name": "Louis Vuitton Ombre Nomade",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-083-front.webp"
+      }
+    },
+    {
+      "order": 84,
+      "slug": "tom-ford-tobacco-vanille-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/tom-ford-tobacco-vanille-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/tom-ford-tobacco-vanille-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Tom Ford Tobacco Vanille Eau de Parfum Unisex",
+      "merged_index": 3636,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-084-front.webp",
+        "back": "/product-photos/curated-084-back.webp"
+      }
+    },
+    {
+      "order": 85,
+      "slug": "tom-ford-oud-wood-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/tom-ford-oud-wood-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/tom-ford-oud-wood-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Tom Ford Oud Wood Eau de Parfum Unisex",
+      "merged_index": 3612,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-085-front.webp",
+        "back": "/product-photos/curated-085-back.webp"
+      }
+    },
+    {
+      "order": 86,
+      "slug": "tom-ford-lost-cherry-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/tom-ford-lost-cherry-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/tom-ford-lost-cherry-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Tom Ford Lost Cherry Eau de Parfum Unisex",
+      "merged_index": 3586,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-086-front.webp",
+        "back": "/product-photos/curated-086-back.webp"
+      }
+    },
+    {
+      "order": 87,
+      "slug": "tom-ford-ombre-leather-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/tom-ford-ombre-leather-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/tom-ford-ombre-leather-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Tom Ford Ombre Leather Eau de Parfum Unisex",
+      "merged_index": 3604,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-087-front.webp",
+        "back": "/product-photos/curated-087-back.webp"
+      }
+    },
+    {
+      "order": 88,
+      "slug": "kilian-angels-share-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/by-kilian-angels-share-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/by-kilian-angels-share-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "By Kilian Angels' Share Eau de Parfum Unisex",
+      "merged_index": 596,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-088-front.webp",
+        "back": "/product-photos/curated-088-back.webp"
+      }
+    },
+    {
+      "order": 89,
+      "slug": "maison-margiela-by-the-fireplace-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/maison-margiela-replica-by-the-fireplace-eau-de-toilette-unisex",
+        "https://www.decantx.com/products/maison-margiela-replica-by-the-fireplace-eau-de-toilette-unisex-box"
+      ],
+      "source_name": "Maison Margiela REPLICA By The Fireplace Eau de Toilette Unisex",
+      "merged_index": 2341,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-089-front.webp",
+        "back": "/product-photos/curated-089-back.webp"
+      }
+    },
+    {
+      "order": 90,
+      "slug": "le-labo-santal-33-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/le-labo-santal-33-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/le-labo-santal-33-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Le Labo Santal 33 Eau de Parfum Unisex",
+      "merged_index": 2215,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-090-front.webp",
+        "back": "/product-photos/curated-090-back.webp"
+      }
+    },
+    {
+      "order": 91,
+      "slug": "lattafa-khamrah-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lattafa-perfumes/khamrah-75805.html"
+      ],
+      "source_name": "Lattafa Khamrah",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-091-front.webp"
+      }
+    },
+    {
+      "order": 92,
+      "slug": "lattafa-khamrah-qahwa-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lattafa-perfumes/khamrah-qahwa-88175.html"
+      ],
+      "source_name": "Lattafa Khamrah Qahwa",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-092-front.webp"
+      }
+    },
+    {
+      "order": 93,
+      "slug": "lattafa-asad-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lattafa-perfumes/asad-72821.html"
+      ],
+      "source_name": "Lattafa Asad",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-093-front.webp"
+      }
+    },
+    {
+      "order": 94,
+      "slug": "lattafa-yara-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lattafa-perfumes/yara-76880.html"
+      ],
+      "source_name": "Lattafa Yara",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-094-front.webp"
+      }
+    },
+    {
+      "order": 95,
+      "slug": "lattafa-eclaire-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lattafa-perfumes/eclaire-93628.html"
+      ],
+      "source_name": "Lattafa Eclaire",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-095-front.webp"
+      }
+    },
+    {
+      "order": 96,
+      "slug": "lattafa-badee-al-oud-honor-and-glory-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lattafa-perfumes/bade-e-al-oud-honor-glory-84302.html"
+      ],
+      "source_name": "Lattafa Bade'e Al Oud Honor & Glory",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-096-front.webp"
+      }
+    },
+    {
+      "order": 97,
+      "slug": "afnan-9-pm-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/afnan-9pm-eau-de-parfum-for-men-1"
+      ],
+      "source_name": "Afnan 9pm Eau de Parfum for Men",
+      "merged_index": 68,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-097-front.webp",
+        "back": "/product-photos/curated-097-back.webp"
+      }
+    },
+    {
+      "order": 98,
+      "slug": "afnan-turathi-blue-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/afnan/turathi-blue-70839.html"
+      ],
+      "source_name": "Afnan Turathi Blue",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-098-front.webp"
+      }
+    },
+    {
+      "order": 99,
+      "slug": "armaf-club-de-nuit-intense-man-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/armaf-club-de-nuit-intense-man-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/armaf-club-de-nuit-intense-man-eau-de-toilette-for-men-1",
+        "https://www.decantx.com/products/armaf-club-de-nuit-intense-man-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Armaf Club de Nuit Intense Man Eau de Toilette for Men",
+      "merged_index": 256,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-099-front.webp",
+        "back": "/product-photos/curated-099-back.webp"
+      }
+    },
+    {
+      "order": 100,
+      "slug": "al-haramain-amber-oud-gold-edition-edp",
+      "status": "existing_product_preserved",
+      "source_urls": [
+        "https://www.decantx.com/products/al-haramain-amber-oud-gold-edition-eau-de-parfum-for-women",
+        "https://www.decantx.com/products/al-haramain-amber-oud-eau-de-parfum-for-men",
+        "https://www.decantx.com/products/al-haramain-amber-oud-gold-edition-eau-de-parfum-unisex-1"
+      ]
+    },
+    {
+      "order": 101,
+      "slug": "byredo-bal-dafrique-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/byredo-bal-dafrique-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/byredo-bal-dafrique-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "BYREDO Bal D'Afrique Eau de Parfum Unisex",
+      "merged_index": 663,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-101-front.webp",
+        "back": "/product-photos/curated-101-back.webp"
+      }
+    },
+    {
+      "order": 102,
+      "slug": "bvlgari-man-in-black-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/bvlgari-man-in-black-eau-de-parfum-for-men"
+      ],
+      "source_name": "Bvlgari Man in Black Eau de Parfum for Men",
+      "merged_index": 579,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-102-front.webp",
+        "back": "/product-photos/curated-102-back.webp"
+      }
+    },
+    {
+      "order": 103,
+      "slug": "coach-for-men-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/coach-coach-men-eau-de-toilette-for-men",
+        "https://www.decantx.com/products/coach-coach-men-eau-de-toilette-for-men-box"
+      ],
+      "source_name": "Coach Men Eau de Toilette for Men",
+      "merged_index": 964,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-103-front.webp",
+        "back": "/product-photos/curated-103-back.webp"
+      }
+    },
+    {
+      "order": 104,
+      "slug": "diptyque-orpheon-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/diptyque-orpheon-eau-de-parfum-unisex",
+        "https://www.decantx.com/products/diptyque-orpheon-eau-de-parfum-unisex-box"
+      ],
+      "source_name": "Diptyque Orphéon Eau de Parfum Unisex",
+      "merged_index": 1185,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-104-front.webp",
+        "back": "/product-photos/curated-104-back.webp"
+      }
+    },
+    {
+      "order": 105,
+      "slug": "hugo-boss-bottled-elixir-parfum",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/hugo-boss-bottled-elixir-parfum-intense-for-men"
+      ],
+      "source_name": "Hugo Boss Bottled Elixir Parfum Intense for Men",
+      "merged_index": 1895,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-105-front.webp",
+        "back": "/product-photos/curated-105-back.webp"
+      }
+    },
+    {
+      "order": 106,
+      "slug": "lacoste-l-12-12-blanc-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/lacoste-fragrances/eau-de-lacoste-l-12-12-white-11043.html"
+      ],
+      "source_name": "Lacoste L.12.12 Blanc",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-106-front.webp"
+      }
+    },
+    {
+      "order": 107,
+      "slug": "ralph-lauren-polo-blue-edt",
+      "status": "added",
+      "source_urls": [
+        "https://www.decantx.com/products/ralph-lauren-polo-blue-eau-de-toilette-for-men"
+      ],
+      "source_name": "Ralph Lauren Polo Blue Eau de Toilette for Men",
+      "merged_index": 3105,
+      "pricing": "reference USD prices converted at existing 3500 MNT/USD, not owner confirmed",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-107-front.webp",
+        "back": "/product-photos/curated-107-back.webp"
+      }
+    },
+    {
+      "order": 108,
+      "slug": "victorias-secret-bombshell-edp",
+      "status": "added",
+      "source_urls": [
+        "https://www.fragrantica.com/perfume/victoria-s-secret/bombshell-10190.html"
+      ],
+      "source_name": "Victoria's Secret Bombshell",
+      "pricing": "price not set",
+      "inventory": "unconfirmed, not available for purchase",
+      "photos": {
+        "front": "/product-photos/curated-108-front.webp"
+      }
+    }
+  ],
+  "backup": "decantx\\catalog-backup-2026-11-15T04-22-33-068Z"
+}

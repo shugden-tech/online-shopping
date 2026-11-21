@@ -1,0 +1,59 @@
+{
+  "slug": "jean-paul-gaultier-le-beau-paradise-garden-edp",
+  "brand": "Jean Paul Gaultier",
+  "name": "Le Beau Paradise Garden",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "fresh",
+  "notes": {
+    "top": [
+      "green-notes",
+      "marine",
+      "mint",
+      "ginger"
+    ],
+    "heart": [
+      "coconut",
+      "fig",
+      "sea-salt"
+    ],
+    "base": [
+      "tonka",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Jean Paul Gaultier Le Beau Paradise Garden: Эрэгтэйчүүдэд зориулсан сэрүүн үнэр (EDP). Эхний ноот: ногоон ноот, далайн ноот, гаа, цагаан гаа; зүрхний ноот: кокос, инжир, далайн давс; суурь ноот: тонка шош, зандан мод.",
+    "en": "Jean Paul Gaultier Le Beau Paradise Garden is a fresh fragrance in EDP concentration. Its listed notes include green notes, marine notes, mint, ginger, coconut."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-005-front.webp",
+    "back": "/product-photos/curated-005-back.webp"
+  }
+}

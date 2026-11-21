@@ -1,0 +1,58 @@
+{
+  "slug": "prada-luna-rossa-carbon-edt",
+  "brand": "Prada",
+  "name": "Luna Rossa Carbon",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "bergamot",
+      "pepper"
+    ],
+    "heart": [
+      "lavender",
+      "metallic-notes",
+      "coal",
+      "marine",
+      "soil-tincture"
+    ],
+    "base": [
+      "ambroxan",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Prada Luna Rossa Carbon: Эрэгтэйчүүдэд зориулсан өвслөг үнэр (EDT). Эхний ноот: бергамот, хар чинжүү; зүрхний ноот: лаванда, металллаг ноот, нүүрс, далайн ноот, хөрсний ханд; суурь ноот: амброксан, пачули.",
+    "en": "Prada Luna Rossa Carbon is a aromatic fragrance in EDT concentration. Its listed notes include bergamot, black pepper, lavender, metallic notes, coal."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-032-front.webp",
+    "back": "/product-photos/curated-032-back.webp"
+  }
+}

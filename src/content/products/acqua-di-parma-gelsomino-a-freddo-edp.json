@@ -1,0 +1,54 @@
+{
+  "slug": "acqua-di-parma-gelsomino-a-freddo-edp",
+  "brand": "Acqua di Parma",
+  "name": "Gelsomino A Freddo",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "pink-pepper",
+      "artemisia",
+      "lemon"
+    ],
+    "heart": [],
+    "base": [
+      "patchouli",
+      "guaiac-wood",
+      "nagarmotha"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Gelsomino A Freddo: Unisex модлог үнэр (EDP). Эхний ноот: ягаан чинжүү, шарилж, нимбэг; суурь ноот: пачули, гваяк мод, нагармота.",
+    "en": "Gelsomino A Freddo, crafted by Acqua di Parma, is a unisex fragrance that debuted in 2025. This captivating scent opens with vibrant top notes of Pink Pepper, Artemisia, and Lemon. At the heart, you'll find a delightful blend of Jasmine, Iris, and Black Tea, while the foundation comprises rich base notes of Patchouli, Guaiac Wood, and Nagarmotha."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/1354801.jpg?v=1757958149",
+    "back": "https://hrd-live.cdn.scayle.cloud/images/861a77977e77fe2a486005108e5290c6.jpg?bg=ffffff&brightness=1&height=1230&quality=75&width=922"
+  }
+}

@@ -1,0 +1,2656 @@
+[
+ {
+  "id": "abercrombie-and-fitch-authentic-man-edt",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "superdrug.com / lookfantastic.com",
+  "note": "50 and 100 confirmed; 30 seen on lookfantastic for Authentic for Men line",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-chinotto-di-liguria-edt",
+  "sizesMl": [
+   75,
+   150
+  ],
+  "flagshipMl": 75,
+  "confidence": "high",
+  "source": "selfridges.com / libertylondon.com",
+  "note": "30 ml discontinued per Lyko; minis exist",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-mirra-cologne",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "selfridges.com",
+  "note": "Eau de Cologne Concentree, Selfridges-exclusive style listing; 180 widely listed",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-osmanthus-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search failed (rate limit/budget); not verified",
+  "applied": false
+ },
+ {
+  "id": "afnan-9pm-elixir-intense-parfum",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "maxaroma.com / fragrancenet.com",
+  "note": "Only 100 ml found",
+  "applied": true
+ },
+ {
+  "id": "afnan-supremacy-in-oud-extrait",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Search failed; estimate from Afnan Supremacy line typically 100 ml; not verified",
+  "applied": false
+ },
+ {
+  "id": "akro-night-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search failed; unknown",
+  "applied": false
+ },
+ {
+  "id": "azzaro-wanted-by-night-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Search failed; estimate from general knowledge, not verified",
+  "applied": false
+ },
+ {
+  "id": "creed-aventus-edp",
+  "sizesMl": [
+   50,
+   100,
+   250,
+   500
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "printemps.com / harveynichols.com",
+  "note": "250 and 500 are flacons without spray; 120 ml also exists but not seen in search",
+  "applied": true
+ },
+ {
+  "id": "hermes-terre-dhermes-edt",
+  "sizesMl": [
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "selfridges.com / printemps.com",
+  "note": "Also 12.5 ml travel; 175 not found",
+  "applied": true
+ },
+ {
+  "id": "lattafa-eclaire-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "perfumania.com / notino.co.uk",
+  "note": "12 ml only in gift set",
+  "applied": true
+ },
+ {
+  "id": "mugler-alien-goddess-edp",
+  "sizesMl": [
+   30,
+   60,
+   90
+  ],
+  "flagshipMl": 60,
+  "confidence": "high",
+  "source": "lookfantastic.com",
+  "note": "Refillable 60 ml also common; 90 ml not stocked everywhere",
+  "applied": true
+ },
+ {
+  "id": "ralph-lauren-polo-blue-edt",
+  "sizesMl": [
+   40,
+   75,
+   125,
+   200
+  ],
+  "flagshipMl": 125,
+  "confidence": "medium",
+  "source": "macys.com / bloomingdales.com",
+  "note": "Oz sizes converted (1.4, 2.5, 4.2, 6.7 oz); 125 is most common",
+  "applied": true
+ },
+ {
+  "id": "victorias-secret-bombshell-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; estimate from general knowledge (1.7 / 3.4 oz), not verified",
+  "applied": false
+ },
+ {
+  "id": "lagerfeld-classic-edt",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; unknown",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-authentic-moment-edt",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "matas.dk",
+  "note": "Men's EDT 30/50/100 per Matas, Kaufland, Escentual",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-cipresso-di-toscana-cologne",
+  "sizesMl": [
+   75,
+   150
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "unverified (search rate-limited)",
+  "note": "Memory estimate: Blu Mediterraneo line typically 75/150; not confirmed",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-colonia-oud-cologne",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "selfridges.com / spacenk.com",
+  "note": "100 ml (Space NK) and 180 ml (Selfridges special edition) seen",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-oud-and-spice-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search rate-limited)",
+  "note": "Best estimate 100 ml; could not verify",
+  "applied": false
+ },
+ {
+  "id": "afnan-her-highness-black-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "maxaroma.com / galaxus.ch",
+  "note": "Only 100 ml bottle found",
+  "applied": true
+ },
+ {
+  "id": "afnan-supremacy-incense-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search rate-limited)",
+  "note": "Best estimate 100 ml; not confirmed",
+  "applied": false
+ },
+ {
+  "id": "al-haramain-amber-musk-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "target.com / fragrancenet.com",
+  "note": "Only 3.4 oz found",
+  "applied": true
+ },
+ {
+  "id": "burberry-goddess-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "burberry.com / harrods.com",
+  "note": "30/50/100 listed; 150 ml refill also exists; 50 ml most widely stocked",
+  "applied": true
+ },
+ {
+  "id": "dior-homme-intense-edp",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "dior.com / sephora.com",
+  "note": "50/100/150 listed",
+  "applied": true
+ },
+ {
+  "id": "hugo-boss-bottled-elixir-parfum",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "lookfantastic.com / sephora.co.uk",
+  "note": "Parfum Intense 50/100",
+  "applied": true
+ },
+ {
+  "id": "lattafa-khamrah-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "lattafa.my",
+  "note": "100 ml standard EDP",
+  "applied": true
+ },
+ {
+  "id": "narciso-rodriguez-for-her-musc-noir-rose-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "lookfantastic.com / sephora.co.uk",
+  "note": "30/50/100",
+  "applied": true
+ },
+ {
+  "id": "tom-ford-lost-cherry-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 50,
+  "confidence": "high",
+  "source": "sephora.co.uk / printemps.com",
+  "note": "30/50/100; 50 ml is the common US size, 100 ml also standard",
+  "applied": true
+ },
+ {
+  "id": "viktor-and-rolf-flowerbomb-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "unverified (search rate-limited)",
+  "note": "Memory: 30/50/100 (refills/larger exist); not confirmed",
+  "applied": false
+ },
+ {
+  "id": "french-avenue-liquid-brun-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search rate-limited)",
+  "note": "Best estimate 100 ml (Fragrance World line); not confirmed",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-authentic-night-edp",
+  "sizesMl": [
+   15,
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "lyko.com, lookfantastic.com, pricespy.co.uk",
+  "note": "Women's EDP; 15/30/50/100 listed by retailers; 100 most common",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-fico-di-amalfi-edt",
+  "sizesMl": [
+   30,
+   75,
+   150
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "none (search unavailable; from memory)",
+  "note": "Unverified; search budget exhausted. Typical Blu Mediterraneo sizes 30/75/150",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-colonia-pura-cologne",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Official site and Sephora UK list 50/100/180",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-peonia-nobile-edp",
+  "sizesMl": [
+   20,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "50 and 100 widely sold; 20 ml on some official regional sites",
+  "applied": true
+ },
+ {
+  "id": "afnan-her-highness-red-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "none",
+  "note": "Unknown; search budget exhausted",
+  "applied": false
+ },
+ {
+  "id": "afnan-supremacy-noir-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (from memory)",
+  "note": "Unverified; Afnan Supremacy line usually 100 ml",
+  "applied": false
+ },
+ {
+  "id": "al-haramain-amber-oud-black-edition-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "none",
+  "note": "Unknown; search budget exhausted (sibling Gold Edition is 60/120, unverified for Black)",
+  "applied": false
+ },
+ {
+  "id": "burberry-her-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.co.uk, burberry.com",
+  "note": "30/50/100 confirmed on brand and retailer pages",
+  "applied": true
+ },
+ {
+  "id": "dior-hypnotic-poison-edt",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "dior.com, harrods.com, davidjones.com",
+  "note": "50 and 100 ml EDT confirmed; 150 ml from memory not verified",
+  "applied": true
+ },
+ {
+  "id": "jean-paul-gaultier-la-belle-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "lookfantastic.com, sephora.co.uk",
+  "note": "30/50/100 retail; 15 ml travel also on brand site",
+  "applied": true
+ },
+ {
+  "id": "lattafa-khamrah-qahwa-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "perfumania.com, nahdionline.com",
+  "note": "Only 100 ml full bottle; others are travel/decants",
+  "applied": true
+ },
+ {
+  "id": "parfums-de-marly-althair-edp",
+  "sizesMl": [
+   75,
+   125
+  ],
+  "flagshipMl": 125,
+  "confidence": "high",
+  "source": "us.parfums-de-marly.com, printemps.com",
+  "note": "75 and 125 ml; 125 most widely stocked",
+  "applied": true
+ },
+ {
+  "id": "tom-ford-ombre-leather-edp",
+  "sizesMl": [
+   10,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "myer.com.au, belk.com",
+  "note": "50/100 core; 10 ml at some retailers",
+  "applied": true
+ },
+ {
+  "id": "viktor-and-rolf-spicebomb-extreme-edp",
+  "sizesMl": [
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "high",
+  "source": "viktor-rolf.com, superdrug.com",
+  "note": "50 and 90 ml; 10 ml only in sets",
+  "applied": true
+ },
+ {
+  "id": "chanel-allure-homme-sport-edt",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "chanel.com",
+  "note": "Spray sizes 50/100/150; 3x20 refillable is a separate product",
+  "applied": true
+ },
+ {
+  "id": "abercrombie-and-fitch-authentic-night-edt",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "matas.dk / lookfantastic.com",
+  "note": "Men's EDT 30/50/100 per retailer listings",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-mandorlo-di-sicilia-edt",
+  "sizesMl": [
+   75,
+   150
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified estimate; typically 75 and 150 ml",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-colonia-quercia-cologne",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified estimate",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-rosa-nobile-edp",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified estimate; 50/100 likely",
+  "applied": false
+ },
+ {
+  "id": "afnan-highness-iv-red-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified; Afnan typically 100 ml",
+  "applied": false
+ },
+ {
+  "id": "afnan-supremacy-not-only-intense-extrait",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "elryan.com / maxaroma.com",
+  "note": "Only 100 ml listed by retailers",
+  "applied": true
+ },
+ {
+  "id": "al-haramain-amber-oud-bleu-edition-edp",
+  "sizesMl": [
+   60,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified; 60/100 likely, 200 uncertain",
+  "applied": false
+ },
+ {
+  "id": "burberry-her-elixir-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.co.uk / woolworths.co.za",
+  "note": "30/50/100 confirmed",
+  "applied": true
+ },
+ {
+  "id": "dior-jadore-edp",
+  "sizesMl": [
+   30,
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "sephora.co.uk / makeupstore.com",
+  "note": "30/50/100 standard; 150 appears in some listings",
+  "applied": true
+ },
+ {
+  "id": "jean-paul-gaultier-le-beau-le-parfum-edp",
+  "sizesMl": [
+   40,
+   75,
+   125
+  ],
+  "flagshipMl": 125,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified estimate",
+  "applied": false
+ },
+ {
+  "id": "lattafa-yara-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified; commonly 100 ml",
+  "applied": false
+ },
+ {
+  "id": "parfums-de-marly-delina-edp",
+  "sizesMl": [
+   30,
+   75,
+   125
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified; typically 30/75/125 ml",
+  "applied": false
+ },
+ {
+  "id": "tom-ford-oud-wood-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified; 50/100 typical, 250 also exists in Private Blend",
+  "applied": false
+ },
+ {
+  "id": "xerjoff-erba-pura-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified; 50/100 typical",
+  "applied": false
+ },
+ {
+  "id": "maison-margiela-sailing-day-edt",
+  "sizesMl": [
+   30,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "memory (search unavailable)",
+  "note": "Unverified; Replica typically 30/100",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-away-man-edt",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "perfumedirect.com, lyko.com",
+  "note": "Retailer listings, not brand site",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-mirto-di-panarea-edt",
+  "sizesMl": [
+   30,
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "acquadiparma.com",
+  "note": "Official pages disagree on 30 vs 50; 500 also listed (large format, excluded); 75/150 only at some retailers",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-quercia-concentree-edp",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "selfridges.com, fragrancex.com",
+  "note": "Exact name matches Colonia Quercia Concentree (100/180); separate Signatures Quercia EDP is 20/50/100/180",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-sakura-edp",
+  "sizesMl": [
+   20,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Official size options 20/100/180",
+  "applied": true
+ },
+ {
+  "id": "afnan-highness-ix-maroon-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "superdrug.com, fragrancenet.com",
+  "note": "Only 100 ml seen",
+  "applied": true
+ },
+ {
+  "id": "afnan-supremacy-pink-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "lyko.com, cosmetify.com",
+  "note": "Only 100 ml seen",
+  "applied": true
+ },
+ {
+  "id": "al-haramain-amber-oud-carbon-edition-edp",
+  "sizesMl": [
+   60,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "superdrug.com, anabis.com",
+  "note": "One listing also mentions 200 ml, unconfirmed",
+  "applied": true
+ },
+ {
+  "id": "bvlgari-man-in-black-edp",
+  "sizesMl": [
+   60,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "bulgari.com",
+  "note": "Official: 60/100/150 plus 200 ml refill",
+  "applied": true
+ },
+ {
+  "id": "dior-miss-dior-edp",
+  "sizesMl": [
+   30,
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "selfridges.com, sephora.co.uk",
+  "note": "2024 version",
+  "applied": true
+ },
+ {
+  "id": "jean-paul-gaultier-le-beau-paradise-garden-edp",
+  "sizesMl": [
+   40,
+   75,
+   125
+  ],
+  "flagshipMl": 125,
+  "confidence": "low",
+  "source": "unverified",
+  "note": "Search budget exhausted; estimate from Le Beau line pattern",
+  "applied": false
+ },
+ {
+  "id": "le-labo-santal-33-edp",
+  "sizesMl": [
+   15,
+   50,
+   100
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "unverified",
+  "note": "Search budget exhausted; from memory, 50 ml is the typical flagship",
+  "applied": false
+ },
+ {
+  "id": "parfums-de-marly-delina-exclusif-edp",
+  "sizesMl": [
+   75
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "unverified",
+  "note": "Search budget exhausted; from memory, 75 ml; 125 ml possible",
+  "applied": false
+ },
+ {
+  "id": "tom-ford-tobacco-vanille-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "unverified",
+  "note": "Search budget exhausted; from memory (50/100, 250 also exists)",
+  "applied": false
+ },
+ {
+  "id": "xerjoff-naxos-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified",
+  "note": "Search budget exhausted; from memory",
+  "applied": false
+ },
+ {
+  "id": "dior-sauvage-edt",
+  "sizesMl": [
+   60,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified",
+  "note": "Search budget exhausted; from memory",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-fierce-cologne",
+  "sizesMl": [
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "abercrombie.com; superdrug.com; klinq.com",
+  "note": "A&F site shows 50 and 200; 100 from retailers; 30 ml also seen",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-camelia-edp",
+  "sizesMl": [
+   20,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "harveynichols.com; harveynorman.com.au; 24s.com",
+  "note": "Retailer listings; 24s says 100 ml no longer available",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-gelsomino-a-freddo-edp",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com; sephora.co.uk",
+  "note": "Official site lists 50/100/180",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-sandalo-edp",
+  "sizesMl": [
+   20,
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Official site lists 20/50/100/180",
+  "applied": true
+ },
+ {
+  "id": "afnan-highness-vi-blue-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "superdrug.com; galaxus.ch; lyko.com",
+  "note": "Only 100 ml found",
+  "applied": true
+ },
+ {
+  "id": "afnan-supremacy-purple-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "lyko.com; aio.lv; walmart.com",
+  "note": "Only 100 ml found",
+  "applied": true
+ },
+ {
+  "id": "al-haramain-amber-oud-emerald-edition-edp",
+  "sizesMl": [
+   60
+  ],
+  "flagshipMl": 60,
+  "confidence": "low",
+  "source": "fragrancex.com; desertcart.co.th",
+  "note": "60 ml listed for Amber Oud Exclusif Emerald; naming/concentration unclear; 100 ml unconfirmed",
+  "applied": false
+ },
+ {
+  "id": "byredo-bal-dafrique-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "selfridges.com; kith.com",
+  "note": "50 and 100 ml EDP",
+  "applied": true
+ },
+ {
+  "id": "dior-sauvage-edp",
+  "sizesMl": [
+   60,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "dior.com; sephora.co.uk; selfridges.com",
+  "note": "Dior UK mentions 5 sizes (30 and 500 ml unverified)",
+  "applied": true
+ },
+ {
+  "id": "jean-paul-gaultier-le-male-elixir-parfum",
+  "sizesMl": [
+   40,
+   75,
+   125
+  ],
+  "flagshipMl": 125,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "From memory, not web-verified",
+  "applied": false
+ },
+ {
+  "id": "louis-vuitton-afternoon-swim-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "From memory; LV Cologne line is 100 ml (refills/200 ml possible)",
+  "applied": false
+ },
+ {
+  "id": "parfums-de-marly-layton-edp",
+  "sizesMl": [
+   75,
+   125
+  ],
+  "flagshipMl": 125,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "From memory; PdM standard 75/125, 30 ml travel possible",
+  "applied": false
+ },
+ {
+  "id": "valentino-donna-born-in-roma-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "From memory, not web-verified",
+  "applied": false
+ },
+ {
+  "id": "yves-saint-laurent-black-opium-edp",
+  "sizesMl": [
+   30,
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "From memory; 150 ml may exist",
+  "applied": false
+ },
+ {
+  "id": "valentino-uomo-born-in-roma-purple-melancholia-edt",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "From memory, not web-verified",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-first-instinct-blue-edt",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "ecosmetics.com, lookfantastic.com",
+  "note": "30/50/100 per aggregators; 50 not seen in a retailer listing",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-ambra-cologne",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "fragrancex.com, davidjones.com",
+  "note": "5ml pocket spray also exists; full official list not confirmed",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-gelsomino-nobile-edp",
+  "sizesMl": [
+   50
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "johnlewis.com",
+  "note": "Discontinued 50ml EDP; no current official listing",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-vaniglia-edp",
+  "sizesMl": [
+   20,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "selfridges.com, superdrug.com, harveynichols.com",
+  "note": "5ml refillable sample also listed; 20ml no longer sold at Superdrug",
+  "applied": true
+ },
+ {
+  "id": "afnan-highness-x-brown-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "afnan-supremacy-silver-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched (unverified recollection: 100ml)",
+  "applied": false
+ },
+ {
+  "id": "al-haramain-amber-oud-exclusif-classic-extrait",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "carolina-herrera-good-girl-blush-edp",
+  "sizesMl": [
+   30,
+   50,
+   80
+  ],
+  "flagshipMl": 80,
+  "confidence": "high",
+  "source": "sephora.com, parfumdo.com, makeup.ie",
+  "note": "80ml is the Sephora US size",
+  "applied": true
+ },
+ {
+  "id": "dior-sauvage-elixir-parfum",
+  "sizesMl": [
+   60,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "sephora.co.uk, dior.com",
+  "note": "60ml is Dior's signature size; 100 chosen as flagship",
+  "applied": true
+ },
+ {
+  "id": "jean-paul-gaultier-le-male-le-parfum-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "louis-vuitton-imagination-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "prada-lhomme-edt",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "valentino-donna-born-in-roma-intense-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "yves-saint-laurent-black-opium-le-parfum-parfum",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "maison-margiela-jazz-club-edt",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-first-instinct-edt",
+  "sizesMl": [
+   15,
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "lyko.com, superdrug.com, nstperfume.com",
+  "note": "Retailer listings; 100 most common",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-assoluta-cologne",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "selfridges.com",
+  "note": "Only 100 ml confirmed; 50/180 not verified for Assoluta; product may be discontinued",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-iris-nobile-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "24s.com, spacenk.com",
+  "note": "100 ml listed (discontinued at 24S), 50 ml at Space NK; not on brand site",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-yuzu-edp",
+  "sizesMl": [
+   20,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Brand site lists 20/100/180; a 50 ml page may exist but unconfirmed",
+  "applied": true
+ },
+ {
+  "id": "afnan-his-highness-green-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "afnan-tobacco-rush-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Unverified guess: Afnan EDPs are usually 100 ml; search budget exhausted",
+  "applied": false
+ },
+ {
+  "id": "al-haramain-amber-oud-exclusif-sport-extrait-the-extrait",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "carolina-herrera-good-girl-edp",
+  "sizesMl": [
+   30,
+   50,
+   80,
+   150
+  ],
+  "flagshipMl": 80,
+  "confidence": "low",
+  "source": "model memory (unverified)",
+  "note": "Not confirmed by search; recheck",
+  "applied": false
+ },
+ {
+  "id": "diptyque-orpheon-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "jean-paul-gaultier-ultra-male-edt",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "louis-vuitton-ombre-nomade-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "prada-luna-rossa-black-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "valentino-uomo-born-in-roma-edt",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "yves-saint-laurent-la-nuit-de-lhomme-edt",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "valentino-uomo-born-in-roma-extradose-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted; not researched",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-first-instinct-extreme-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "maxaroma.com / notino.co.uk",
+  "note": "Retailer listings only; no brand page found",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-c-l-u-b-cologne",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.co.uk",
+  "note": "Also 12ml travel spray in sets",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-leather-edp",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "escentual.com / woolworths.co.za",
+  "note": "100 and 180 per retailers; smaller sizes only as samples",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-zafferano-edp",
+  "sizesMl": [
+   20,
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "acquadiparma.com",
+  "note": "Sizes vary by country site: 20/100/180 (BE), 50/100/180 (BG)",
+  "applied": true
+ },
+ {
+  "id": "afnan-his-highness-white-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "Unverified estimate from memory",
+  "applied": false
+ },
+ {
+  "id": "afnan-turathi-blue-edp",
+  "sizesMl": [
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "medium",
+  "source": "superdrug.com / lyko.com",
+  "note": "90ml widely listed; one Perfumania 100ml listing unconfirmed",
+  "applied": true
+ },
+ {
+  "id": "al-haramain-amber-oud-gold-edition-edp",
+  "sizesMl": [
+   60,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "fragrancenet.com / perfumania.com / superdrug.com",
+  "note": "60 most common; 100 and 200 (6.7oz) listed; 75ml also seen in AU",
+  "applied": true
+ },
+ {
+  "id": "carolina-herrera-very-good-girl-edp",
+  "sizesMl": [
+   30,
+   50,
+   80
+  ],
+  "flagshipMl": 80,
+  "confidence": "low",
+  "source": "none (search failed)",
+  "note": "From memory, unverified; larger sizes may exist",
+  "applied": false
+ },
+ {
+  "id": "dolce-and-gabbana-light-blue-eau-intense-edp",
+  "sizesMl": [
+   25,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "From memory, unverified",
+  "applied": false
+ },
+ {
+  "id": "kayali-vanilla-28-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "From memory, unverified",
+  "applied": false
+ },
+ {
+  "id": "maison-francis-kurkdjian-baccarat-rouge-540-edp",
+  "sizesMl": [
+   35,
+   70,
+   200
+  ],
+  "flagshipMl": 70,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "From memory, unverified; 70ml is the standard",
+  "applied": false
+ },
+ {
+  "id": "prada-luna-rossa-carbon-edt",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "From memory, unverified",
+  "applied": false
+ },
+ {
+  "id": "valentino-uomo-born-in-roma-intense-edp",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "From memory, unverified",
+  "applied": false
+ },
+ {
+  "id": "yves-saint-laurent-libre-edp",
+  "sizesMl": [
+   30,
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "From memory, unverified; 90ml is the YSL standard large size",
+  "applied": false
+ },
+ {
+  "id": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search budget exhausted)",
+  "note": "From memory, unverified",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-first-instinct-together-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "maxaroma.com / cosmetify.com",
+  "note": "Retailers show 50 and 100; no official page found",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-ebano-concentree-cologne",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "fragrancex.com / bloomingdales via search",
+  "note": "100 and 180 listed; 2x30 travel refill set also exists",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-lily-of-the-valley-edp",
+  "sizesMl": [
+   20,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Official site lists 20/100/180; 20 may not be in all markets",
+  "applied": true
+ },
+ {
+  "id": "affinessence-collection-notes-de-fond-cedre-iris-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "galaxus.ch / maxaroma.com",
+  "note": "100 confirmed; one aggregator mentioned 50 but unverified",
+  "applied": true
+ },
+ {
+  "id": "afnan-mirsaal-of-trust-edp",
+  "sizesMl": [
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "medium",
+  "source": "notino.co.uk / galaxus.ch / nahdionline.com",
+  "note": "Most listings 90 ml (3 oz); some mislabelled 100",
+  "applied": true
+ },
+ {
+  "id": "agatho-parfum-195-a-c-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "maxaroma.com / scentsangel.com",
+  "note": "100 ml full bottle; 5/10 are decants only",
+  "applied": true
+ },
+ {
+  "id": "al-haramain-amber-oud-gold-edition-extreme-parfum",
+  "sizesMl": [
+   60,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Best estimate from memory; verify",
+  "applied": false
+ },
+ {
+  "id": "chanel-allure-homme-sport-eau-extreme-edp",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Best estimate from memory; verify",
+  "applied": false
+ },
+ {
+  "id": "dolce-and-gabbana-the-one-edp",
+  "sizesMl": [
+   30,
+   50,
+   75
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Women's EDP estimate; men's version has 50/100/150; verify",
+  "applied": false
+ },
+ {
+  "id": "kilian-angels-share-edp",
+  "sizesMl": [
+   50
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Refillable 50 ml; travel sizes may exist; verify",
+  "applied": false
+ },
+ {
+  "id": "maison-francis-kurkdjian-baccarat-rouge-540-extrait",
+  "sizesMl": [
+   35,
+   70
+  ],
+  "flagshipMl": 70,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Best estimate from memory; verify",
+  "applied": false
+ },
+ {
+  "id": "prada-paradoxe-edp",
+  "sizesMl": [
+   30,
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Best estimate from memory; verify",
+  "applied": false
+ },
+ {
+  "id": "versace-bright-crystal-edt",
+  "sizesMl": [
+   30,
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Best estimate from memory; verify",
+  "applied": false
+ },
+ {
+  "id": "yves-saint-laurent-libre-intense-edp",
+  "sizesMl": [
+   30,
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "low",
+  "source": "unverified (search budget exhausted)",
+  "note": "Best estimate from memory; verify",
+  "applied": false
+ },
+ {
+  "id": "r-my-latour-cigar-edt",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "none",
+  "note": "Not researched (search budget exhausted); likely 100 ml, unverified",
+  "applied": false
+ },
+ {
+  "id": "abercrombie-and-fitch-first-instinct-together-edt",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "maxaroma.com, galaxus.ch",
+  "note": "100 ml widely listed; 50 ml on Maxaroma (out of stock); possibly discontinued",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-essenza-cologne",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "bluemercury.com",
+  "note": "Only 100 ml bottle found (12 ml travel spray only in gift sets)",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-magnolia-nobile-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "50 and 100 ml on official site and Harrods",
+  "applied": true
+ },
+ {
+  "id": "affinessence-collection-notes-de-fond-cuir-curcuma-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "galaxus.ch, maxaroma.com",
+  "note": "50 and 100 ml retailer listings",
+  "applied": true
+ },
+ {
+  "id": "afnan-ornament-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "galaxus.ch, fragrancenet.com",
+  "note": "Only 100 ml listings found",
+  "applied": true
+ },
+ {
+  "id": "agatho-parfum-castiamanti-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Not researched; search budget exhausted",
+  "applied": false
+ },
+ {
+  "id": "al-haramain-amber-oud-original-edition-edp",
+  "sizesMl": [
+   60,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "No sourced result; best estimate 60/100 ml",
+  "applied": false
+ },
+ {
+  "id": "chanel-bleu-de-chanel-edp",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "chanel.com, sephora.co.uk",
+  "note": "3 sizes on Chanel and Sephora UK",
+  "applied": true
+ },
+ {
+  "id": "emporio-armani-stronger-with-you-absolutely-parfum",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "Not searched; search budget exhausted",
+  "applied": false
+ },
+ {
+  "id": "lacoste-l-12-12-blanc-edt",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "Not searched; a 175 ml may also exist",
+  "applied": false
+ },
+ {
+  "id": "maison-francis-kurkdjian-grand-soir-edp",
+  "sizesMl": [
+   70,
+   200
+  ],
+  "flagshipMl": 70,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "Not searched; 35 ml may also exist",
+  "applied": false
+ },
+ {
+  "id": "prada-paradoxe-intense-edp",
+  "sizesMl": [
+   30,
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "Not searched; Prada Paradoxe uses 30/50/90",
+  "applied": false
+ },
+ {
+  "id": "versace-crystal-noir-edp",
+  "sizesMl": [
+   30,
+   50,
+   90
+  ],
+  "flagshipMl": 90,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "Not searched",
+  "applied": false
+ },
+ {
+  "id": "yves-saint-laurent-myslf-edp",
+  "sizesMl": [
+   40,
+   60,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "Not searched",
+  "applied": false
+ },
+ {
+  "id": "ralph-lauren-polo-black-edt",
+  "sizesMl": [
+   40,
+   75,
+   125
+  ],
+  "flagshipMl": 125,
+  "confidence": "low",
+  "source": "unverified (memory)",
+  "note": "Not searched; 200 ml may also exist",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-ambra-edp",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Brand site and Selfridges list 100 and 180",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-futura-cologne",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "selfridges.com / acquadiparma.com",
+  "note": "One retailer also lists 20 ml (excluded)",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-mirto-di-panarea-la-riserva-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "acquadiparma.com",
+  "note": "Only 100 ml found; 2025 release",
+  "applied": true
+ },
+ {
+  "id": "affinessence-collection-notes-de-fond-vanille-benjoin-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "",
+  "note": "Search budget exhausted before lookup; unknown",
+  "applied": false
+ },
+ {
+  "id": "afnan-souvenir-desert-rose-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "superdrug.com / lyko.com",
+  "note": "Only 100 ml listed across retailers",
+  "applied": true
+ },
+ {
+  "id": "ajmal-amber-musc-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "riah.ae / ajmal.com",
+  "note": "30/50/100 from one UAE retailer; 100 ml widely listed",
+  "applied": true
+ },
+ {
+  "id": "al-haramain-amber-oud-rouge-edition-edp",
+  "sizesMl": [
+   60,
+   120
+  ],
+  "flagshipMl": 60,
+  "confidence": "medium",
+  "source": "luxplus.co.uk / anabis.com",
+  "note": "60 ml widely listed, 120 ml on Anabis; no Rouge 100 ml found",
+  "applied": true
+ },
+ {
+  "id": "chanel-bleu-de-chanel-parfum",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "chanel.com / sephora.co.uk",
+  "note": "Chanel says 3 sizes; retailers confirm 50/100/150",
+  "applied": true
+ },
+ {
+  "id": "emporio-armani-stronger-with-you-intensely-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Not web-verified (search budget exhausted); from memory, may also have 30 ml",
+  "applied": false
+ },
+ {
+  "id": "lancome-idole-edp",
+  "sizesMl": [
+   25,
+   50,
+   75,
+   100
+  ],
+  "flagshipMl": 50,
+  "confidence": "low",
+  "source": "",
+  "note": "Not web-verified (search budget exhausted); from memory",
+  "applied": false
+ },
+ {
+  "id": "maison-margiela-by-the-fireplace-edt",
+  "sizesMl": [
+   30,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Not web-verified (search budget exhausted); from memory",
+  "applied": false
+ },
+ {
+  "id": "rabanne-1-million-edt",
+  "sizesMl": [
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Not web-verified (search budget exhausted); from memory",
+  "applied": false
+ },
+ {
+  "id": "versace-dylan-blue-edt",
+  "sizesMl": [
+   30,
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Not web-verified (search budget exhausted); from memory",
+  "applied": false
+ },
+ {
+  "id": "yves-saint-laurent-y-edp",
+  "sizesMl": [
+   40,
+   60,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Not web-verified (search budget exhausted); from memory",
+  "applied": false
+ },
+ {
+  "id": "moncler-pour-homme-edp",
+  "sizesMl": [
+   60,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "",
+  "note": "Not web-verified (search budget exhausted); from memory, uncertain",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-arancia-di-capri-edt",
+  "sizesMl": [
+   30,
+   75,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "cultbeauty.co.uk, fragrancenet.com, davidjones.com",
+  "note": "Cult Beauty 75/150; FragranceNet 1oz/5oz; David Jones 100; regional variation",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-il-profumo-edp",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com, harrods.com",
+  "note": "Harrods lists 50-180ml range",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-note-di-colonia-i-cologne",
+  "sizesMl": [
+   150
+  ],
+  "flagshipMl": 150,
+  "confidence": "medium",
+  "source": "acquadiparma.com, selfridges.com",
+  "note": "Only 150ml found; 5ml is atomizer/promo, not counted",
+  "applied": true
+ },
+ {
+  "id": "affinessence-collection-notes-de-tete-combava-cedrat-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "parfumo.com, fragrancenet.com",
+  "note": "Only 100ml found; 5ml atomizer sold separately",
+  "applied": true
+ },
+ {
+  "id": "afnan-souvenir-floral-bouquet-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "notino.co.uk, fragrancenet.com",
+  "note": "Consistently 100ml",
+  "applied": true
+ },
+ {
+  "id": "ajmal-evoke-gold-edp",
+  "sizesMl": [
+   75
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "galaxus.ch, fragrancex.com",
+  "note": "Women's Evoke Gold 75ml (2.5oz); separate men's Gold Edition Him is 90ml, ambiguous which is meant",
+  "applied": false
+ },
+ {
+  "id": "armaf-club-de-nuit-intense-man-edt",
+  "sizesMl": [
+   105
+  ],
+  "flagshipMl": 105,
+  "confidence": "medium",
+  "source": "notino.co.uk, walmart.com",
+  "note": "105ml standard; 10ml travel; 200ml listings are EDP",
+  "applied": true
+ },
+ {
+  "id": "chanel-chance-eau-tendre-edp",
+  "sizesMl": [
+   35,
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "chanel.com, sephora.com, macys.com",
+  "note": "Chanel shows 4 sizes; 35 (Sephora), 50, 100, 150 (5oz); not all regions",
+  "applied": true
+ },
+ {
+  "id": "giorgio-armani-acqua-di-gio-parfum",
+  "sizesMl": [
+   40,
+   75,
+   125
+  ],
+  "flagshipMl": 75,
+  "confidence": "low",
+  "source": "sephora.com, chemistwarehouse.com.au",
+  "note": "Results were for Acqua di Gio EDP (40/75/125); Parfum assumed similar, unverified",
+  "applied": false
+ },
+ {
+  "id": "lancome-la-vie-est-belle-edp",
+  "sizesMl": [
+   30,
+   50,
+   75,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.co.uk, brownthomas.com",
+  "note": "15ml mini also at some retailers",
+  "applied": true
+ },
+ {
+  "id": "mancera-cedrat-boise-edp",
+  "sizesMl": [
+   60,
+   120
+  ],
+  "flagshipMl": 120,
+  "confidence": "high",
+  "source": "parfuma.com, harrods.com",
+  "note": "Most retailers list only 120ml",
+  "applied": true
+ },
+ {
+  "id": "rabanne-1-million-elixir-edp",
+  "sizesMl": [
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "lookfantastic.com, sephora.co.uk",
+  "note": "US Sephora shows 50ml only; 100/200 in UK/EU",
+  "applied": true
+ },
+ {
+  "id": "versace-eros-edt",
+  "sizesMl": [
+   30,
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "versace.com, sephora.co.uk, lyko.com",
+  "note": "US site 50/100/200; 30ml in UK/EU",
+  "applied": true
+ },
+ {
+  "id": "versace-eros-najim-edp",
+  "sizesMl": [
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "adorebeauty.com.au, versace.com, woolworths.co.za",
+  "note": "Mostly marketed as Parfum; 10ml travel also exists",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-bergamotto-di-calabria-edt",
+  "sizesMl": [
+   30,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "acquadiparma.com; harrods.com; lyko.com",
+  "note": "Official 30/100/180; some retailers list 75 and 150 (unconfirmed, excluded)",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-intensa-cologne",
+  "sizesMl": [
+   50,
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Official site lists 50/100/180",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-note-di-colonia-iii-cologne",
+  "sizesMl": [
+   150
+  ],
+  "flagshipMl": 150,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Only 150 ml full bottle found",
+  "applied": true
+ },
+ {
+  "id": "afnan-9-pm-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search failed); memory",
+  "note": "Search budget exhausted; 100 ml is the commonly sold size, unverified",
+  "applied": false
+ },
+ {
+  "id": "afnan-supremacy-gold-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "superdrug.com; walmart.com; carrefouruae.com",
+  "note": "Only 100 ml found across many retailers",
+  "applied": true
+ },
+ {
+  "id": "akro-ink-edp",
+  "sizesMl": [],
+  "flagshipMl": null,
+  "confidence": "low",
+  "source": "none",
+  "note": "Search failed (budget exhausted); unknown",
+  "applied": false
+ },
+ {
+  "id": "azzaro-the-most-wanted-intense-edp",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "none (search failed); memory",
+  "note": "Search budget exhausted; 50/100 (maybe 150) unverified",
+  "applied": false
+ },
+ {
+  "id": "chanel-coco-mademoiselle-edp",
+  "sizesMl": [
+   35,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "chanel.com; sephora.co.uk",
+  "note": "35/50/100 confirmed; Sephora UK also shows 200 ml, 150 ml not confirmed",
+  "applied": true
+ },
+ {
+  "id": "givenchy-gentleman-reserve-privee-edp",
+  "sizesMl": [
+   60,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "sephora.co.uk; fragrancex.com",
+  "note": "60 and 100 ml retail sizes",
+  "applied": true
+ },
+ {
+  "id": "lattafa-asad-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "ramfabeauty.com; emiratesoud.co.uk",
+  "note": "Only 100 ml single bottle; 4x25 ml set separate",
+  "applied": true
+ },
+ {
+  "id": "montblanc-explorer-edp",
+  "sizesMl": [
+   30,
+   60,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.co.uk; montblanc.com",
+  "note": "30/60/100/200 listed",
+  "applied": true
+ },
+ {
+  "id": "rabanne-invictus-victory-elixir-parfum",
+  "sizesMl": [
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "sephora.co.uk; sephora.com; harrods.com",
+  "note": "200 ml seen on Sephora UK; US/other show 50 and 100",
+  "applied": true
+ },
+ {
+  "id": "versace-eros-flame-edp",
+  "sizesMl": [
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.co.uk; lookfantastic.com",
+  "note": "50/100/200 listed",
+  "applied": true
+ },
+ {
+  "id": "mancera-intense-cedrat-boise-edp",
+  "sizesMl": [
+   60,
+   120
+  ],
+  "flagshipMl": 120,
+  "confidence": "medium",
+  "source": "harrods.com; adorebeauty.com.au",
+  "note": "120 ml standard; 60 ml seen in Australia; some retailers label it extrait",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-blu-mediterraneo-cedro-di-taormina-edt",
+  "sizesMl": [
+   75,
+   150
+  ],
+  "flagshipMl": 75,
+  "confidence": "medium",
+  "source": "selfridges.com / parfumo.com",
+  "note": "75 and 150 ml listed; line reportedly discontinued",
+  "applied": true
+ },
+ {
+  "id": "acqua-di-parma-colonia-leather-cologne",
+  "sizesMl": [
+   100,
+   180
+  ],
+  "flagshipMl": 100,
+  "confidence": "low",
+  "source": "airpointsstore.co.nz",
+  "note": "180 ml confirmed; 100 ml (and possibly 20 ml) not verified for EDC",
+  "applied": false
+ },
+ {
+  "id": "acqua-di-parma-note-di-colonia-iv-cologne",
+  "sizesMl": [
+   150
+  ],
+  "flagshipMl": 150,
+  "confidence": "high",
+  "source": "acquadiparma.com",
+  "note": "Official page lists only 150 ml",
+  "applied": true
+ },
+ {
+  "id": "afnan-9-pm-rebel-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "lyko.com / justmylook.com",
+  "note": "Only 100 ml found",
+  "applied": true
+ },
+ {
+  "id": "afnan-supremacy-in-heaven-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "superdrug.com / lyko.com",
+  "note": "Only 100 ml found",
+  "applied": true
+ },
+ {
+  "id": "akro-malt-edp",
+  "sizesMl": [
+   30,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "lookfantastic.com",
+  "note": "30 and 100 ml listed",
+  "applied": true
+ },
+ {
+  "id": "azzaro-the-most-wanted-parfum",
+  "sizesMl": [
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.com / mynavyexchange.com",
+  "note": "50 and 100 ml; FragranceNet also shows a larger ~156 ml, not confirmed",
+  "applied": true
+ },
+ {
+  "id": "coach-for-men-edt",
+  "sizesMl": [
+   40,
+   60,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "coach.com / rustans.com",
+  "note": "40, 60, 100 ml",
+  "applied": true
+ },
+ {
+  "id": "gucci-flora-gorgeous-gardenia-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.co.uk / woolworths.co.za",
+  "note": "One listing showed 90 ml, likely regional variant",
+  "applied": true
+ },
+ {
+  "id": "lattafa-badee-al-oud-honor-and-glory-edp",
+  "sizesMl": [
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "emiratesoud.co.uk / walmart.com",
+  "note": "Only 100 ml found",
+  "applied": true
+ },
+ {
+  "id": "mugler-alien-edp",
+  "sizesMl": [
+   30,
+   60,
+   90
+  ],
+  "flagshipMl": 60,
+  "confidence": "high",
+  "source": "mugler.com / superdrug.com",
+  "note": "Refillable 30/60/90; minis 10/15 ml exist",
+  "applied": true
+ },
+ {
+  "id": "rabanne-phantom-parfum",
+  "sizesMl": [
+   50,
+   100,
+   150
+  ],
+  "flagshipMl": 100,
+  "confidence": "medium",
+  "source": "sephora.co.uk / adorebeauty.com.au",
+  "note": "150 is refillable; 200 ml refill-only exists; 15 ml travel",
+  "applied": true
+ },
+ {
+  "id": "versace-pour-homme-edt",
+  "sizesMl": [
+   30,
+   50,
+   100,
+   200
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "sephora.com / macys.com",
+  "note": "Plus 10 ml travel",
+  "applied": true
+ },
+ {
+  "id": "montblanc-legend-red-edp",
+  "sizesMl": [
+   30,
+   50,
+   100
+  ],
+  "flagshipMl": 100,
+  "confidence": "high",
+  "source": "montblanc.com",
+  "note": "Official regional sites",
+  "applied": true
+ }
+]

@@ -1,0 +1,293 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import BottleArt from "../components/BottleArt.astro";
+import ProductCard from "../components/ProductCard.astro";
+import TopCustomers from "../components/TopCustomers.astro";
+import Reviews from "../components/Reviews.astro";
+import Icon from "../components/Icon.astro";
+import bestsellerSlugs from "../data/bestsellers.json";
+import heroCopy from "../data/hero-banners.json";
+import { getDict, route, productPath, type Locale } from "../i18n";
+import { NOTES, NOTE_GROUPS, getProducts, initialOf, type Product } from "../lib/products";
+import { bannerImages, perfumeHeroImages, perfumeHeroMobileImages, brandLogos, familyStrips, genderImages, noteImages } from "../lib/images";
+import "../styles/home.css";
+import "../styles/hero-banners.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+const s = tr.store;
+const shop = route("shop", locale);
+const bundlesHref = route("bundles", locale);
+const products = await getProducts();
+const bestsellers = bestsellerSlugs.map((slug) => {
+  const product = products.find((p) => p.slug === slug);
+  if (!product) throw new Error(`Unknown bestseller product: ${slug}`);
+  return product;
+});
+
+const byFeatured = [...products].sort(
+  (a, b) => Number(b.featured ?? false) - Number(a.featured ?? false) || Number(b.isNew ?? false) - Number(a.isNew ?? false),
+);
+const fresh = [...products].sort((a, b) => Number(b.isNew ?? false) - Number(a.isNew ?? false));
+const ofGender = (g: Product["gender"]) => byFeatured.filter((p) => p.gender === g);
+
+const tabs = [
+  { id: "best", label: s.tabs.best, items: bestsellers, href: shop },
+  { id: "new", label: s.tabs.new, items: fresh.slice(0, 8), href: `${shop}?sort=newest` },
+  { id: "women", label: s.tabs.women, items: ofGender("women").slice(0, 8), href: `${shop}?gender=women` },
+  { id: "men", label: s.tabs.men, items: ofGender("men").slice(0, 8), href: `${shop}?gender=men` },
+  { id: "unisex", label: s.tabs.unisex, items: ofGender("unisex").slice(0, 8), href: `${shop}?gender=unisex` },
+].filter((t) => t.items.length > 0);
+
+/** Three bottles with different liquid colours for a banner. */
+const trio = (list: Product[]) => list.filter((p, i) => list.findIndex((o) => o.family === p.family) === i).slice(0, 3);
+
+const slides = [
+  { ...s.slides[0]!, href: shop, img: familyStrips.amber!, bg: "#2b211b,#8a5a33", bottles: trio(byFeatured) },
+  { ...s.slides[1]!, href: `${shop}?sort=newest`, img: familyStrips.citrus!, bg: "#1d3433,#5f8f86", bottles: trio(fresh) },
+  { ...s.slides[2]!, href: route("finder", locale), img: familyStrips.woody!, bg: "#2a2233,#6b5f70", bottles: trio([...byFeatured].reverse()) },
+];
+
+// Owner's banner pictures (src/assets/thumbnail/) replace the illustrated slides when present.
+// Files named "mobile …" are the tall phone versions; the rest are the wide desktop ones.
+const deskBanners = bannerImages.filter((b) => !/^mobile/i.test(b.name));
+const mobBanners = bannerImages.filter((b) => /^mobile/i.test(b.name));
+// hero-banners.json holds {mn, en} pairs for the heading, description and button; pick the page's language here.
+const pick = <T,>(v: T | { mn: T; en: T }): T => (v && typeof v === "object" && "mn" in (v as object) ? (v as { mn: T; en: T })[locale] : (v as T));
+const perfumeBanners = heroCopy.map(({ file, mobileFile, slug, heading, product: heroProduct, text }) => {
+  const copy = { heading: pick(heading), product: heroProduct, text: pick(text) };
+  const image = perfumeHeroImages[file];
+  if (!image) throw new Error(`Missing perfume hero image: ${file}`);
+  const mobileImage = mobileFile ? perfumeHeroMobileImages[mobileFile] : undefined;
+  if (mobileFile && !mobileImage) throw new Error(`Missing perfume hero phone image: ${mobileFile}`);
+  const product = slug ? products.find((p) => p.slug === slug) : undefined;
+  if (slug && !product) throw new Error(`Unknown perfume hero product: ${slug}`);
+  return { name: file, image, mobileImage, copy, href: product ? productPath(locale, product.slug) : shop, perfume: true };
+});
+// Phone set: the tall phone picture (pic_chat/mobile/) replaces the cropped desktop one.
+const perfumeBannersMob = perfumeBanners.map((b) => (b.mobileImage ? { ...b, image: b.mobileImage, tall: true } : b));
+const legacyBanner = (b: (typeof bannerImages)[number]) => ({
+  ...b, href: shop, perfume: false,
+  copy: {
+    heading: locale === "en" ? "FIND YOUR SCENT" : "ӨӨРИЙН ҮНЭРИЙГ ОЛ",
+    product: b.name === "1" || b.name === "2" ? (locale === "en" ? "JEAN PAUL GAULTIER · COLLECTION" : "JEAN PAUL GAULTIER · ЦУГЛУУЛГА") : b.name === "3" ? (locale === "en" ? "ARMAF · COLLECTION" : "ARMAF · ЦУГЛУУЛГА") : (locale === "en" ? "GENZST · COLLECTION" : "GENZST · ЦУГЛУУЛГА"),
+    text: locale === "en" ? "A choice that suits your everyday style." : "Өдөр бүрийн хэв маягтаа тохирох сонголт.",
+  },
+});
+// One entry per source asset in each responsive set; retain all existing images and shop links.
+const bannerSets = [
+  { key: "desk", items: [...perfumeBanners, ...(deskBanners.length ? deskBanners : mobBanners).map(legacyBanner)], only: "hb--desk" },
+  // Phone set: never borrow the wide desktop pictures while the perfume phone pictures exist (they would be cropped).
+  { key: "mob", items: [...perfumeBannersMob, ...(mobBanners.length ? mobBanners : perfumeBannersMob.length ? [] : deskBanners).map(legacyBanner)], only: "hb--mob" },
+].filter((set) => set.items.length > 0);
+const ratio = (b: (typeof bannerImages)[number]) => `${b.image.width} / ${b.image.height}`;
+
+/** Gender tiles: owner-approved images, ordered Unisex / Men / Women. */
+const genderTiles = (["unisex", "men", "women"] as const).map((g) => ({
+  g, label: tr.genders[g], href: `${shop}?gender=${g}`,
+  image: genderImages[g]!,
+}));
+
+/** The eight bundle pictures, copied into public/bundles/1..8.webp. */
+const bundleImages = Array.from({ length: 8 }, (_, i) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}/bundles/${i + 1}.webp`);
+
+---
+<Base locale={locale} title={tr.site.name}>
+  <!-- 1 · banner slider: the owner's pictures (desktop + phone sets), else the illustrated slides -->
+  {bannerSets.length > 0 && <h1 class="sr-only">{s.slides[0]!.title}</h1>}
+  {bannerSets.map((set) => (
+    <section class:list={["hb", set.only]} aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
+      <div class="hb__track hb__track--img" style={`aspect-ratio:${set.key === "desk" && perfumeBanners.length ? "20 / 7" : ratio(set.items[0]!)}`}>
+        {set.items.map((b, i) => (
+          <div class:list={["hb__slide hb__slide--img", { "is-on": i === 0, "hb__slide--perfume": b.perfume, "hb__slide--tall": "tall" in b && b.tall }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${set.items.length}`} aria-hidden={i === 0 ? undefined : "true"} inert={i !== 0}>
+            <a class="hb__link" href={b.href} tabindex={i === 0 ? undefined : -1}>
+              <Image
+                src={b.image} alt={b.copy.product}
+                widths={set.key === "mob" ? [480, 760, 1145] : [768, 1280, 1920, 2560]}
+                sizes="100vw"
+                loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__img"
+              />
+              <div class="hb__caption" lang={locale}>
+                <h2 class="hb__caption-title">{b.copy.heading}</h2>
+                <p class="hb__caption-product">{b.copy.product}</p>
+                <p class="hb__caption-description">{b.copy.text}</p>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+      <button class="hb__arrow hb__arrow--prev" type="button" data-prev aria-label={tr.common.prev}><Icon name="chevron" size={22} /></button>
+      <button class="hb__arrow hb__arrow--next" type="button" data-next aria-label={tr.common.next}><Icon name="chevron" size={22} /></button>
+      <div class="hb__dots">
+        {set.items.map((_, i) => (
+          <button type="button" data-dot={i} aria-label={`${i + 1} / ${set.items.length}`} aria-current={i === 0 ? "true" : undefined}></button>
+        ))}
+      </div>
+      <button class="hb__rotation" type="button" data-rotation aria-label={locale === "mn" ? "Автомат слайд солилтыг түр зогсоох" : "Pause automatic slides"} aria-pressed="false">
+        <svg class="hb__rot-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 2v10M10.5 2v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="hb__rot-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.5v9l7-4.5z" fill="currentColor"/></svg>
+      </button>
+    </section>
+  ))}
+
+  {bannerSets.length === 0 && (
+    <section class="hb" aria-roledescription="carousel" aria-label={tr.home.slider.label} data-slider>
+      <div class="hb__track">
+        {slides.map((sl, i) => (
+          <div class:list={["hb__slide", { "is-on": i === 0 }]} data-slide style={`--a:${sl.bg.split(",")[0]};--b:${sl.bg.split(",")[1]}`} aria-roledescription="slide" aria-label={`${i + 1} / ${slides.length}`} aria-hidden={i === 0 ? undefined : "true"}>
+            <Image src={sl.img} alt="" widths={[640, 1280, 1920]} sizes="100vw" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} class="hb__bg" />
+            <div class="hb__text">
+              <p class="hb__eyebrow">{sl.eyebrow}</p>
+              {i === 0 ? <h1 class="hb__title">{sl.title}</h1> : <h2 class="hb__title">{sl.title}</h2>}
+              <p class="hb__sub">{sl.text}</p>
+              <a class="btn btn--light" href={sl.href} tabindex={i === 0 ? undefined : -1}>{sl.cta}</a>
+            </div>
+            <div class="hb__bottles" aria-hidden="true">
+              {sl.bottles.map((p) => (
+                <div class="hb__bottle"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} /></div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <button class="hb__arrow hb__arrow--prev" type="button" data-prev aria-label={tr.common.prev}><Icon name="chevron" size={22} /></button>
+      <button class="hb__arrow hb__arrow--next" type="button" data-next aria-label={tr.common.next}><Icon name="chevron" size={22} /></button>
+      <div class="hb__dots">
+        {slides.map((_, i) => (
+          <button type="button" data-dot={i} aria-label={`${i + 1} / ${slides.length}`} aria-current={i === 0 ? "true" : undefined}></button>
+        ))}
+      </div>
+    </section>
+  )}
+
+
+  <!-- 3 · featured collections (scent notes) -->
+  <section class="coll" aria-labelledby="coll-title">
+    <div class="wrap">
+      <h2 class="h-sec" id="coll-title">{s.collections}</h2>
+    </div>
+    <div class="coll__band">
+      <ul class="coll__rail" tabindex="0" aria-labelledby="coll-title">
+        {[false, true].map((copy) =>
+          NOTE_GROUPS.map((g) => (
+            <li aria-hidden={copy ? "true" : undefined}>
+              <a class="coll__item" href={`${shop}?notes=${g}`} tabindex={copy ? -1 : undefined}>
+                <span class="coll__img">
+                  <Image src={noteImages[g]!} alt="" widths={[200, 400]} sizes="180px" loading="lazy" quality={62} />
+                </span>
+                <span class="coll__name">{NOTES[g]![locale]}</span>
+              </a>
+            </li>
+          )),
+        )}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3b · bundles window -->
+  <section class="wrap bundles" aria-labelledby="bundles-title">
+    <div class="bundles__head">
+      <h2 class="h-sec" id="bundles-title">{s.bundles}</h2>
+      <p class="bundles__sub">{s.bundlesSub}</p>
+    </div>
+    <div class="bundles__band bundles__band--desktop">
+      <ul class="coll__rail bundles__rail" tabindex="0" aria-labelledby="bundles-title">
+        {[false, true].map((copy) =>
+          bundleImages.map((src) => (
+            <li aria-hidden={copy ? "true" : undefined}>
+              <a class="bundles__item" href={bundlesHref} tabindex={copy ? -1 : undefined}>
+                <img src={src} alt="" loading="lazy" decoding="async" />
+              </a>
+            </li>
+          )),
+        )}
+      </ul>
+    </div>
+    <div class="bundles__mobile" data-slider role="region" aria-roledescription="carousel" aria-labelledby="bundles-title">
+      <div class="bundles__track">
+        {bundleImages.map((src, i) => (
+          <div class:list={["bundles__slide", { "is-on": i === 0 }]} data-slide aria-roledescription="slide" aria-label={`${i + 1} / ${bundleImages.length}`} aria-hidden={i === 0 ? undefined : "true"} inert={i !== 0}>
+            <a href={bundlesHref} tabindex={i === 0 ? undefined : -1} aria-label={`${s.bundles} ${i + 1}`}>
+              <img src={src} alt={`${s.bundles} ${i + 1}`} width="800" height="1000" loading="lazy" decoding="async" />
+            </a>
+          </div>
+        ))}
+      </div>
+      <div class="bundles__controls">
+        <button class="bundles__step" type="button" data-prev aria-label={locale === "en" ? "Previous bundle" : "Өмнөх багц"}>←</button>
+        <div class="bundles__dots">
+          {bundleImages.map((_, i) => <button type="button" data-dot={i} aria-label={`${s.bundles} ${i + 1}`} aria-current={i === 0 ? "true" : undefined}></button>)}
+        </div>
+        <button class="bundles__step" type="button" data-next aria-label={locale === "en" ? "Next bundle" : "Дараагийн багц"}>→</button>
+        <button class="bundles__rotation" type="button" data-rotation aria-pressed="false" aria-label={locale === "en" ? "Pause automatic slideshow" : "Автомат слайдыг түр зогсоох"}><span class="bundles__pause" aria-hidden="true">Ⅱ</span><span class="bundles__play" aria-hidden="true">▶</span></button>
+      </div>
+    </div>
+    <div class="bundles__foot">
+      <a class="bundles__cta" href={bundlesHref}>{s.bundlesCta} →</a>
+    </div>
+  </section>
+
+  <!-- 4 · gender tiles -->
+  <section class="wrap gtiles">
+    {genderTiles.map((t) => (
+      <a class={`gtile gtile--${t.g}`} href={t.href}>
+        <Image src={t.image} alt="" widths={[400, 800]} sizes="(min-width: 900px) 33vw, 100vw" loading="lazy" class="gtile__img" />
+        <span class="gtile__label">{t.label}</span>
+      </a>
+    ))}
+  </section>
+
+  <!-- 5 · tabbed product grid -->
+  <section class="wrap tabs-sec" aria-label={tr.nav.shop} data-tabs>
+    <div class="tabs" role="tablist">
+      {tabs.map((t, i) => (
+        <button type="button" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>
+          {t.label}
+        </button>
+      ))}
+    </div>
+    {tabs.map((t, i) => (
+      <div class="tabs__panel" role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} hidden={i !== 0}>
+        <ul class="grid">
+          {t.items.map((p, j) => (
+            <li><ProductCard product={p} locale={locale} level={3} eager={i === 0 && j < 4} /></li>
+          ))}
+        </ul>
+        <div class="tabs__more"><a class="btn" href={t.href}>{s.seeAll}</a></div>
+      </div>
+    ))}
+  </section>
+
+  <!-- 5b · demo community: top customers + reviews -->
+  <TopCustomers locale={locale} />
+  <Reviews locale={locale} />
+
+  <!-- 6 · brands -->
+  <section class="brands" aria-label={tr.nav.shop}>
+    <div class="brands__marquee">
+      <ul class="brands__track">
+        {[...brandLogos, ...brandLogos].map((b, i) => (
+          <li aria-hidden={i >= brandLogos.length ? "true" : undefined}>
+            <a href={`${shop}?q=${encodeURIComponent(b.name)}`} tabindex={i >= brandLogos.length ? -1 : undefined}>
+              <img src={b.src} alt={b.name} width="160" height="64" loading="lazy" decoding="async" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 · about -->
+  <section class="wrap about" aria-labelledby="about-title">
+    <h2 class="h-sec" id="about-title">{s.aboutTitle}</h2>
+    <p>{s.about1}</p>
+    <p>{s.about2}</p>
+  </section>
+
+  <script>
+    import "../scripts/store-home";
+    import "../scripts/coll-rail";
+  </script>
+</Base>

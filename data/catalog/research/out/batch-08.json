@@ -1,0 +1,17 @@
+[
+{"id":"abercrombie-and-fitch-first-instinct-edt","sizesMl":[15,30,50,100],"flagshipMl":100,"confidence":"medium","source":"lyko.com, superdrug.com, nstperfume.com","note":"Retailer listings; 100 most common"},
+{"id":"acqua-di-parma-colonia-assoluta-cologne","sizesMl":[100],"flagshipMl":100,"confidence":"low","source":"selfridges.com","note":"Only 100 ml confirmed; 50/180 not verified for Assoluta; product may be discontinued"},
+{"id":"acqua-di-parma-iris-nobile-edp","sizesMl":[50,100],"flagshipMl":100,"confidence":"medium","source":"24s.com, spacenk.com","note":"100 ml listed (discontinued at 24S), 50 ml at Space NK; not on brand site"},
+{"id":"acqua-di-parma-yuzu-edp","sizesMl":[20,100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com","note":"Brand site lists 20/100/180; a 50 ml page may exist but unconfirmed"},
+{"id":"afnan-his-highness-green-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"afnan-tobacco-rush-edp","sizesMl":[100],"flagshipMl":100,"confidence":"low","source":"","note":"Unverified guess: Afnan EDPs are usually 100 ml; search budget exhausted"},
+{"id":"al-haramain-amber-oud-exclusif-sport-extrait-the-extrait","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"carolina-herrera-good-girl-edp","sizesMl":[30,50,80,150],"flagshipMl":80,"confidence":"low","source":"model memory (unverified)","note":"Not confirmed by search; recheck"},
+{"id":"diptyque-orpheon-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"jean-paul-gaultier-ultra-male-edt","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"louis-vuitton-ombre-nomade-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"prada-luna-rossa-black-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"valentino-uomo-born-in-roma-edt","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"yves-saint-laurent-la-nuit-de-lhomme-edt","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"},
+{"id":"valentino-uomo-born-in-roma-extradose-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; not researched"}
+]

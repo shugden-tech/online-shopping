@@ -1,0 +1,52 @@
+{
+  "slug": "akro-malt-edp",
+  "brand": "Akro",
+  "name": "Malt",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Akro Malt: Unisex модлог үнэр (EDP).",
+    "en": "Malt, a Leather-scented fragrance for both men and women, was released in 2018 by Akro. It was created by renowned perfumer Olivier Cresp."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/ad97f0b7-41e8-401e-b9bf-b3ebaa50b493.jpg?v=1695315737",
+    "back": "https://cs-a.ecimg.tw/items/DDAHMDA900J3TE5/000001_1754468425.jpg"
+  }
+}

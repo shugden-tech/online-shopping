@@ -1,0 +1,60 @@
+{
+  "slug": "yves-saint-laurent-black-opium-edp",
+  "brand": "Yves Saint Laurent",
+  "name": "Black Opium",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pear",
+      "pink-pepper",
+      "orange-blossom"
+    ],
+    "heart": [
+      "coffee",
+      "jasmine",
+      "bitter-almond",
+      "licorice"
+    ],
+    "base": [
+      "vanilla",
+      "patchouli",
+      "cedar",
+      "cashmere-wood"
+    ]
+  },
+  "description": {
+    "mn": "Yves Saint Laurent Black Opium: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: лийр, ягаан чинжүү, жүржийн цэцэг; зүрхний ноот: кофе, жасмин, гашуун бүйлс, чихэр өвс; суурь ноот: ваниль, пачули, хуш мод, кашмир мод.",
+    "en": "Yves Saint Laurent Black Opium is a amber fragrance in EDP concentration. Its listed notes include pear, pink pepper, orange blossom, coffee, jasmine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-045-front.webp",
+    "back": "/product-photos/curated-045-back.webp"
+  }
+}

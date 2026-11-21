@@ -1,0 +1,54 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "genzst",
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2026-01-15",
+  // assets_navigation_has_no_effect: a browser navigation to a path with no static file reaches the Worker
+  // (on-demand pages /bundles/…, /delguur/p/…) instead of getting the 404 page straight from the asset layer.
+  "compatibility_flags": ["nodejs_compat", "assets_navigation_has_no_effect"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true },
+  "vars": {
+    // Public Turnstile site key. This is Cloudflare's official always-pass TEST key.
+    // [[TODO owner]] replace with the real site key before deploying.
+    "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAGLqfDo1_tAN2tnM",
+    // [[TODO owner]] the real site origin (payment callback URLs are built from it).
+    "PUBLIC_SITE_URL": "http://localhost:8788",
+    // QPay merchant API v2 base. Sandbox until the owner has a live merchant account.
+    "QPAY_BASE_URL": "https://merchant-sandbox.qpay.mn",
+    // Wire API base (https://docs.wire.mn). Wire has no sandbox: every call with the live key moves real money.
+    "WIRE_BASE_URL": "https://api.wire.mn",
+    // Public URL of the product photo bucket (the owner's R2 public bucket).
+    "PUBLIC_MEDIA_BASE": "https://pub-83d529150bc84a489ddcb74b42624830.r2.dev",
+    // Optional "Google-ээр нэвтрэх" for customers: the OAuth client id from Google Cloud Console (public).
+    // Empty = Google sign-in off (button hidden, /api/account/google/* answer 404). The secret is GOOGLE_CLIENT_SECRET.
+    "GOOGLE_CLIENT_ID": ""
+  },
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      // Existing image/catalog bucket; keep this aligned with src/data/backend.json.
+      "bucket_name": "genzst-images"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "genzst",
+      "database_id": "d6de523a-9212-4a53-b635-996765ffd48a",
+      "migrations_dir": "migrations"
+    }
+  ]
+  // Secrets (set with `npx wrangler secret put NAME`, never commit them):
+  //   TURNSTILE_SECRET, TELEGRAM_BOT_TOKEN (optional), TELEGRAM_CHAT_ID (optional),
+  //   ADMIN_TOKEN, STAFF_TOKEN (optional),
+  //   QPAY_USERNAME, QPAY_PASSWORD, QPAY_INVOICE_CODE, QPAY_CALLBACK_SECRET,
+  //   DELIVERY_BASE_URL, DELIVERY_API_KEY, DELIVERY_WEBHOOK_SECRET (when a delivery company is chosen),
+  //   GOOGLE_CLIENT_SECRET (only with GOOGLE_CLIENT_ID, for customer Google sign-in)
+  //   WIRE_API_KEY (sk_live_…), WIRE_WEBHOOK_SECRET (whsec_…, shown once by Wire) — Wire is off until both are set
+  //   and the owner switches payments.wire.enabled on in /admin/
+}

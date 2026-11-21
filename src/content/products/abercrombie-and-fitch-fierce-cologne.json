@@ -1,0 +1,70 @@
+{
+  "slug": "abercrombie-and-fitch-fierce-cologne",
+  "brand": "Abercrombie & Fitch",
+  "name": "Fierce",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "petitgrain",
+      "cardamom",
+      "lemon",
+      "orange",
+      "fir",
+      "marine"
+    ],
+    "heart": [
+      "jasmine",
+      "rosemary",
+      "rose",
+      "lily-of-the-valley",
+      "sage"
+    ],
+    "base": [
+      "vetiver",
+      "musk",
+      "oakmoss",
+      "rosewood",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch Fierce: Эрэгтэйчүүдэд зориулсан модлог үнэр (Cologne). Эхний ноот: петигрейн, кардамон, нимбэг, жүрж, жодоо, далайн ноот; зүрхний ноот: жасмин, розмарин, сарнай, хонхон цэцэг, мэргэн өвс; суурь ноот: ветивер, заар, царсны хөвд, сарнай мод, зандан мод.",
+    "en": "Abercrombie & Fitch Fierce is a fresh, woody aromatic that became a modern classic. Bruno Jovanovic and Christophe Laudamiel created it in 2002. Fir, lemon, orange, cardamom, petitgrain and sea notes open fresh, rosemary, jasmine, rose and sage form the heart, and musk, vetiver, oakmoss and sandalwood give it a clean finish. A daytime favorite for spring and summer, the office and weekends. Fierce by Abercrombie & Fitch is a Woody Aromatic fragrance for men. Fierce was created by Christophe Laudamiel and Bruno Jovanovic. Top notes are petitgrain, cardamom, lemon, orange, fir and sea notes; middle notes are jasmine, rosemary, rose, lily-of-the-valley and sage; base notes are vetiver, musk, oakmoss, brazilian rosewood and sandalwood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/7e539ad2-115b-45a0-999d-dcdca8fb9fa0.jpg?v=1683060564",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/a5edb5ed-f69b-4fdf-9539-c23db9c4ec1a_36beddbe-50cb-488c-937c-e573b159bc9e.jpg?v=1683060564"
+  }
+}

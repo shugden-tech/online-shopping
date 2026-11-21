@@ -1,0 +1,110 @@
+/* Local Latin + Cyrillic fonts, scoped to hero copy; the site's other fonts stay intact. */
+@font-face {
+  font-family: "Oswald Hero"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../assets/fonts/oswald-mn-700-normal.ttf") format("truetype");
+}
+/* Instrument Serif (SIL OFL) covers Latin only: Mongolian letters come from the next fonts in the stack. */
+@font-face {
+  font-family: "Instrument Serif"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Instrument Serif"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/instrument-serif-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/instrument-serif-latin-400-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/instrument-serif-latin-ext-400-italic.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Noto Sans Hero"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("../assets/fonts/noto-sans-mn-variable.ttf") format("truetype");
+}
+
+.hb--desk .hb__track--img { min-height: 340px; }
+.hb__slide--img { pointer-events: none; }
+.hb__slide--img.is-on { pointer-events: auto; }
+.hb__link { position: relative; isolation: isolate; color: #fff; }
+.hb__link::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgb(0 0 0 / .68), rgb(0 0 0 / .26) 40%, transparent 63%);
+}
+.hb__caption {
+  position: absolute; z-index: 1; left: clamp(76px, 7vw, 140px); top: 50%;
+  transform: translateY(-50%); width: 38%; max-width: 550px;
+  font-family: "Noto Sans Hero", sans-serif; text-shadow: 0 2px 16px rgb(0 0 0 / .24);
+}
+.hb__caption > * { opacity: 0; transform: translateY(8px); }
+.hb__caption-title {
+  font-family: "Instrument Serif", "Times New Roman", serif; font-style: italic; font-weight: 400; font-size: clamp(46px, 5.4vw, 92px);
+  line-height: 1.02; letter-spacing: .01em; text-transform: uppercase; text-wrap: balance; margin: 0 0 18px;
+}
+.hb__caption-product { font-size: clamp(10px, .9vw, 13px); font-weight: 600; letter-spacing: .07em; line-height: 1.55; margin-bottom: 12px; }
+.hb__caption-description { font-size: clamp(12px, 1.1vw, 16px); line-height: 1.65; max-width: 34ch; margin-bottom: 24px; color: #eee8e1; }
+.hb__link:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+
+/* Slide change: the picture cross-fades (home.css); the copy fades in with a soft blur and a small rise, line
+   after line, and the outgoing copy fades out first. Only .is-on starts the animation. */
+.hb__caption > * { opacity: 0; transform: translateY(14px); filter: blur(6px); transition: opacity .3s ease; }
+.hb__slide.is-on .hb__caption > * { animation: hb-caption-in 900ms var(--ease-out) both; }
+.hb__slide.is-on .hb__caption > :nth-child(1) { animation-delay: 260ms; }
+.hb__slide.is-on .hb__caption > :nth-child(2) { animation-delay: 420ms; }
+.hb__slide.is-on .hb__caption > :nth-child(3) { animation-delay: 560ms; }
+.hb__slide.is-on .hb__caption > :nth-child(4) { animation-delay: 700ms; }
+@keyframes hb-caption-in { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .hb__caption > *, .hb__slide.is-on .hb__caption > * { animation: none; opacity: 1; transform: none; filter: none; transition: none; }
+  .hb__slide:not(.is-on) .hb__caption > * { opacity: 0; }
+}
+
+.hb__dots { padding-inline: 20px; flex-wrap: wrap; row-gap: 14px; }
+.hb--desk .hb__arrow { opacity: 0; pointer-events: none; transition: opacity .2s, background-color .2s; }
+.hb--desk:hover .hb__arrow, .hb--desk:focus-within .hb__arrow { opacity: 1; pointer-events: auto; }
+.hb__rotation {
+  position: absolute; right: 20px; bottom: 40px; color: #fff;
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgb(255 255 255 / .5);
+  background: rgb(0 0 0 / .3); font-family: "Noto Sans Hero", sans-serif; font-size: 12px;
+  display: grid; place-items: center; cursor: pointer;
+}
+.hb__rotation .hb__rot-play { display: none; }
+.hb__rotation[aria-pressed="true"] .hb__rot-pause { display: none; }
+.hb__rotation[aria-pressed="true"] .hb__rot-play { display: block; }
+
+@media (max-width: 1024px) and (min-width: 761px) {
+  .hb__caption { width: 40%; }
+  .hb__caption-title { margin-bottom: 10px; }
+  .hb__caption-product { margin-bottom: 8px; }
+  .hb__caption-description { margin-bottom: 12px; }
+}
+@media (max-width: 760px) {
+  .hb--desk .hb__arrow { opacity: 0; pointer-events: none; }
+  .hb--mob .hb__track--img {
+    aspect-ratio: auto !important; height: var(--mobile-banner-height);
+  }
+  /* Crop only through CSS: keep the right-hand bottle in the upper image area. */
+  .hb__slide--perfume { background: #130b08; }
+  .hb__slide--perfume .hb__img { height: 59%; object-position: 74% center; }
+  /* Phone pictures are already portrait: fill the slide, keep the bottle (upper middle) in view. */
+  .hb__slide--perfume.hb__slide--tall .hb__img { height: 100%; object-position: center 30%; }
+  .hb__link::after { background: linear-gradient(180deg, transparent 27%, rgb(0 0 0 / .16) 40%, rgb(0 0 0 / .86) 66%, #100b09); }
+  .hb__caption { top: auto; bottom: 65px; left: 24px; width: calc(100% - 48px); max-width: 440px; transform: none; }
+  .hb__caption-title { font-size: clamp(40px, 11vw, 58px); line-height: 1.02; margin-bottom: 12px; }
+  .hb__caption-product { font-size: 10px; max-width: 36ch; margin-bottom: 10px; }
+  .hb__caption-description { font-size: 13px; max-width: 34ch; margin-bottom: 13px; }
+  .hb__dots { bottom: 24px; gap: 7px; row-gap: 14px; padding-inline: 24px; }
+  .hb__dots button { width: 7px; height: 7px; }
+  .hb__dots button[aria-current] { width: 22px; }
+  .hb__rotation { right: 16px; bottom: 57px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hb__slide, .hb__dots button { transition: none; }
+  .hb__slide.is-on .hb__caption > * { opacity: 1; transform: none; animation: none; }
+}

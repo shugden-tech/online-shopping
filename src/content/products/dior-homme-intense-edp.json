@@ -1,0 +1,62 @@
+{
+  "slug": "dior-homme-intense-edp",
+  "brand": "Dior",
+  "name": "Homme Intense",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "lavender"
+    ],
+    "heart": [
+      "iris",
+      "ambrette",
+      "pear"
+    ],
+    "base": [
+      "cedar",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Dior Homme Intense: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: лаванда; зүрхний ноот: цахилдаг, амбретт, лийр; суурь ноот: хуш мод, ветивер.",
+    "en": "Dior Homme Intense is a woody fragrance in EDP concentration. Its listed notes include lavender, iris, ambrette, pear, cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-008-front.webp",
+    "back": "/product-photos/curated-008-back.webp"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "acqua-di-parma-blu-mediterraneo-mirto-di-panarea-edt",
+  "brand": "Acqua di Parma",
+  "name": "Blu Mediterraneo Mirto Di Panarea",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Blu Mediterraneo Mirto Di Panarea: Unisex модлог үнэр (EDT).",
+    "en": "Panarea near Sicily is an an island suspended in time. The smallest and oldest of the Eolie islands, its essence is brought to life in this revitalizing fragrance. A scent characterized by the aromatic notes of myrtle and basil, it opens with lemon and bergamot. At the heart, a sea breeze accord melts with jasmine and rose. Its intense base includes lentisc and juniper with cedarwood and amber. Notes: Myrtle, Basil, Lemon, Bergamot, Sea Breeze Accord, Jasmine, Rose, Lentisc, Juniper, Cedarwood, and Amber. Style: Revitalizing. Intense. Aromatic."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/5a977119-beed-43bf-98ac-3bca1547bf4c_3f49a57a-809a-43fe-b204-43c651a76e0b.jpg?v=1683062930",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/000db419-229b-4d41-8e03-fc3352d80b32.jpg?v=1683062930"
+  }
+}

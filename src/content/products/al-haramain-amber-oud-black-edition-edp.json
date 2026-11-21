@@ -1,0 +1,59 @@
+{
+  "slug": "al-haramain-amber-oud-black-edition-edp",
+  "brand": "Al Haramain",
+  "name": "Amber Oud Black Edition",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "rosemary",
+      "bergamot",
+      "cedar",
+      "lemon"
+    ],
+    "heart": [
+      "pepper",
+      "cedar",
+      "guaiac-wood"
+    ],
+    "base": [
+      "resins",
+      "amber",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Al Haramain Amber Oud Black Edition: Unisex хув үнэр (EDP). Эхний ноот: розмарин, бергамот, хуш мод, нимбэг; зүрхний ноот: хар чинжүү, хуш мод, гваяк мод; суурь ноот: давирхай, хув, заар.",
+    "en": "Amber Oud by Al Haramain Perfumes is a Amber Woody fragrance for women and men. Amber Oud was launched in 2018. Top notes are Rosemary, Bergamot, Cedar and Lemon; middle notes are Spices, Cedar and Guaiac Wood; base notes are resins, Amber and Musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 56000,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/9f717eac-8118-4bd0-9735-078dfb506c50_582cd955-90f0-4f4e-bd34-c6e2a483a759.jpg?v=1683067760",
+    "back": "https://pardohogar.vtexassets.com/arquivos/ids/820434/image-05d9eed5b6de4fb58aff4c74ffde0d5c.jpg?v=638997831085270000"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "slug": "carolina-herrera-very-good-girl-edp",
+  "brand": "Carolina Herrera",
+  "name": "Very Good Girl",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "lychee",
+      "red-currant"
+    ],
+    "heart": [
+      "rose"
+    ],
+    "base": [
+      "vanilla",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Carolina Herrera Very Good Girl: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: личи, улаан үхрийн нүд; зүрхний ноот: сарнай; суурь ноот: ваниль, ветивер.",
+    "en": "Carolina Herrera Very Good Girl is a floral fragrance in EDP concentration. Its listed notes include lychee, red currant, rose, vanilla, vetiver."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-049-front.webp",
+    "back": "/product-photos/curated-049-back.webp"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "slug": "versace-bright-crystal-edt",
+  "brand": "Versace",
+  "name": "Bright Crystal",
+  "concentration": "EDT",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "yuzu",
+      "pomegranate",
+      "ice"
+    ],
+    "heart": [
+      "peony",
+      "lotus",
+      "magnolia"
+    ],
+    "base": [
+      "musk",
+      "mahogany",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Versace Bright Crystal: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDT). Эхний ноот: юзу, анар, мөс; зүрхний ноот: цээнэ цэцэг, бадамлянхуа, магнолия; суурь ноот: заар, зандан мод, хув.",
+    "en": "Versace Bright Crystal is a floral fragrance in EDT concentration. Its listed notes include yuzu, pomegranate, ice, peony, lotus."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-066-front.webp",
+    "back": "/product-photos/curated-066-back.webp"
+  }
+}

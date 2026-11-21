@@ -1,0 +1,66 @@
+{
+  "slug": "valentino-uomo-born-in-roma-coral-fantasy-edt",
+  "brand": "Valentino",
+  "name": "Uomo Born In Roma Coral Fantasy",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "apple",
+      "cardamom",
+      "bergamot"
+    ],
+    "heart": [
+      "lavender",
+      "geranium",
+      "clary-sage"
+    ],
+    "base": [
+      "tobacco",
+      "patchouli",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Valentino брэндийн Valentino Uomo Born In Roma Coral Fantasy нь эрэгтэй хүмүүст зориулагдсан Анхилуун Модлог ангилалын сүрчиг юм",
+    "en": "Valentino Uomo Born In Roma Coral Fantasy is an aromatic EDT for men. Notes include apple, cardamom, bergamot, lavender, geranium, clary sage."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/valentino-uomo-born-in-roma-coral-fantasy-edt.webp",
+    "back": "/product-photos/store/valentino-uomo-born-in-roma-coral-fantasy-edt-back.webp"
+  }
+}

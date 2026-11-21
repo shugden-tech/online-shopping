@@ -1,0 +1,178 @@
+/* Holiday mode extras. Colours come from tokens.css; everything here is off unless data-theme="christmas". */
+.theme-switch {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
+  color: inherit; font: 500 11px/1.4 var(--font-sans, sans-serif); white-space: nowrap; cursor: pointer;
+}
+.theme-switch__track {
+  display: inline-flex; align-items: center; width: 38px; height: 22px; padding: 3px;
+  border-radius: 999px; background: #777; transition: background-color .2s;
+}
+.theme-switch__thumb {
+  display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; color: #777; font: 12px/1 sans-serif; transition: transform .2s, color .2s;
+}
+.theme-switch[aria-checked="true"] .theme-switch__track { background: #1d7545; }
+.theme-switch[aria-checked="true"] .theme-switch__thumb { transform: translateX(16px); color: #1d7545; }
+.theme-switch:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .theme-switch__track, .theme-switch__thumb { transition: none; }
+}
+
+/* ---- snowflakes ---- */
+.holiday-snow { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 50; }
+.holiday-snow i {
+  position: absolute; top: -20px; display: block; opacity: .9;
+  animation-name: holiday-fall; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+.holiday-snow i img { display: block; width: 100%; height: auto; }
+@keyframes holiday-fall {
+  from { transform: translate3d(0, -10vh, 0) rotate(0deg); }
+  50% { transform: translate3d(14px, 50vh, 0) rotate(180deg); }
+  to { transform: translate3d(-8px, 110vh, 0) rotate(360deg); }
+}
+
+/* ---- Santa hat on the account icon ---- */
+.xmas-ico { display: inline-flex; position: relative; }
+.xmas-hat { display: none; }
+:root[data-theme="christmas"] .xmas-hat {
+  display: block; position: absolute; width: 16px; height: 14px; left: 50%; top: -8px; transform: translateX(-50%) rotate(-8deg);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holiday-snow { display: none; }
+}
+
+/* ---- Holiday theme details (only when data-theme="christmas") ---- */
+/* Page: warm snow-white paper. */
+:root[data-theme="christmas"] html {
+  background-color: var(--ink);
+  background-image: linear-gradient(180deg, #fbf4e6 0%, #fffdf8 40%);
+}
+:root[data-theme="christmas"] body { background: transparent; }
+
+/* Header: snow-white bar with a candy-cane ribbon along its bottom edge. */
+:root[data-theme="christmas"] .hdr { background: var(--ink-2); }
+:root[data-theme="christmas"] .hdr::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; pointer-events: none;
+  background: repeating-linear-gradient(-45deg, #b3202a 0 10px, #fffdf8 10px 20px);
+}
+
+/* Footer: the same ribbon on top. */
+:root[data-theme="christmas"] .ftr { position: relative; }
+:root[data-theme="christmas"] .ftr::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -4px; height: 4px; pointer-events: none;
+  background: repeating-linear-gradient(-45deg, #1d5a34 0 10px, #fffdf8 10px 20px);
+}
+
+/* Section headings get a small star ornament. */
+:root[data-theme="christmas"] .h-sec::before {
+  content: "✦"; display: block; color: var(--gold); font-size: 14px; letter-spacing: .3em;
+  margin-bottom: 8px; text-align: center;
+}
+
+/* Cards: a thin green or red frame, like a holiday gift tag. */
+:root[data-theme="christmas"] .coll__item { box-shadow: inset 0 0 0 1px #e6dcc6; }
+:root[data-theme="christmas"] .coll__item:hover { box-shadow: inset 0 0 0 2px #1d5a34, 0 16px 34px rgba(0, 0, 0, .12); }
+:root[data-theme="christmas"] .bundles__item { outline: 2px solid #efe7d4; outline-offset: -2px; }
+:root[data-theme="christmas"] .bundles__item:hover { outline-color: #b3202a; }
+:root[data-theme="christmas"] .bundles__cta { color: #1d5a34; }
+
+/* ---- Holiday logo: the full seasonal GenZST artwork (mark + script name) replaces the default mark and wordmark ---- */
+.hdr__xmas-logo { display: none; }
+:root[data-theme="christmas"] .hdr__logo,
+:root[data-theme="christmas"] .hdr__word { display: none; }
+:root[data-theme="christmas"] .hdr__xmas-logo { display: block; height: 72px; width: auto; }
+@media (max-width: 720px) {
+  :root[data-theme="christmas"] .hdr__xmas-logo { height: 56px; }
+}
+
+/* ---- Account icon becomes the Grinch in holiday mode (the hat is hidden too) ---- */
+.xmas-grinch { display: none; }
+:root[data-theme="christmas"] .xmas-ico > svg:not(.xmas-grinch):not(.xmas-hat) { display: none; }
+:root[data-theme="christmas"] .xmas-grinch { display: block; }
+:root[data-theme="christmas"] .xmas-hat { display: none; }
+
+/* ---- Header wishlist and cart: holiday heart and Santa's sack ---- */
+.xmas-heart, .xmas-sack { display: none; }
+:root[data-theme="christmas"] .hdr__wish > svg:not(.xmas-heart) { display: none; }
+:root[data-theme="christmas"] .hdr__cart > svg:not(.xmas-sack) { display: none; }
+:root[data-theme="christmas"] .xmas-heart, :root[data-theme="christmas"] .xmas-sack { display: block; }
+:root[data-theme="christmas"] .hdr__badge { background: #b3202a; color: #fffdf8; }
+
+
+/* Open gaps show the pattern: the featured-collections band is see-through in holiday mode. */
+:root[data-theme="christmas"] .coll { background: transparent; }
+
+/* Text and product areas stay on a solid background; the pattern shows only in the open gaps. */
+:root[data-theme="christmas"] .tabs-sec,
+:root[data-theme="christmas"] .about,
+:root[data-theme="christmas"] .info,
+:root[data-theme="christmas"] .top3,
+:root[data-theme="christmas"] .reviews { background: var(--ink); }
+
+/* Bundles and featured-collections blocks: solid cream, full width, so the pattern is hidden there. */
+:root[data-theme="christmas"] .bundles,
+:root[data-theme="christmas"] .coll {
+  background: var(--soft);
+  box-shadow: 0 0 0 100vmax var(--soft);
+  clip-path: inset(0 -100vmax);
+}
+:root[data-theme="christmas"] .bundles__track { background: var(--soft); }
+
+/* Shop page: the title, search and filter area sits on a solid background (no pattern behind it). */
+:root[data-theme="christmas"] .shop__head,
+:root[data-theme="christmas"] .shop__layout > div:first-child,
+:root[data-theme="christmas"] .shop__filters { background: var(--ink); }
+
+/* New Year mood: the "view all" button and the brands strip. */
+:root[data-theme="christmas"] .tabs__more .btn {
+  background: #b3202a; border-color: #b3202a; color: #fffdf8;
+  box-shadow: 0 0 0 3px #fffdf8, 0 0 0 5px #1d5a34;
+}
+:root[data-theme="christmas"] .tabs__more .btn:hover { background: #8f1820; border-color: #8f1820; color: #fffdf8; }
+:root[data-theme="christmas"] .brands {
+  background: linear-gradient(180deg, #fff4f1 0%, #fffdf8 50%, #f0f7f1 100%);
+  border-block: 4px solid transparent;
+  border-image: repeating-linear-gradient(-45deg, #b3202a 0 10px, #fffdf8 10px 20px) 4;
+}
+
+/* Christmas mode: the delivery / guarantee / payment info strip is hidden on the home page. */
+:root[data-theme="christmas"] .info { display: none; }
+
+/* Christmas mode: the search bar gets a red frame, a red icon and a green focus ring. */
+:root[data-theme="christmas"] .hdr__search {
+  border: 1.5px solid #b3202a; background: #fffdf8;
+}
+:root[data-theme="christmas"] .hdr__search svg { color: #b3202a; }
+:root[data-theme="christmas"] .hdr__search:focus-within { background: #fff; border-color: #1d5a34; box-shadow: 0 0 0 3px rgba(29, 90, 52, .18); }
+:root[data-theme="christmas"] .hdr__search input::placeholder { color: #1d5a34; opacity: .75; }
+
+/* Christmas details: small ornaments on the search bar, the view-all button and the brands strip. */
+:root[data-theme="christmas"] .hdr__search::after {
+  content: "✦"; flex: none; color: #1d5a34; font-size: 13px; line-height: 1;
+}
+:root[data-theme="christmas"] .tabs__more .btn::before,
+:root[data-theme="christmas"] .tabs__more .btn::after {
+  content: "✦"; display: inline-block; margin-inline: 6px; color: #fffdf8; font-size: 11px;
+}
+:root[data-theme="christmas"] .brands {
+  background-image:
+    radial-gradient(circle, rgba(179, 32, 42, .14) 0 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(29, 90, 52, .12) 0 1.5px, transparent 2px);
+  background-size: 34px 34px, 34px 34px;
+  background-position: 0 0, 17px 17px;
+}
+
+/* Phones narrower than 400px: a smaller logo keeps the header tools on the same row as the logo. */
+@media (max-width: 399px) {
+  :root[data-theme="christmas"] .hdr__xmas-logo { height: 44px; }
+}
+
+/* Phones narrower than 400px: smaller logo and icon buttons so the logo and all header tools fit on one row. */
+@media (max-width: 399px) {
+  :root[data-theme="christmas"] .hdr__xmas-logo { height: 36px; }
+  :root[data-theme="christmas"] .hdr__icon { width: 40px; height: 40px; }
+  :root[data-theme="christmas"] .hdr__tools { gap: 4px; }
+  :root[data-theme="christmas"] .hdr__cart { padding: 0 6px; }
+}

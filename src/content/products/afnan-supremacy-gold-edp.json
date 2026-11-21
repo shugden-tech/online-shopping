@@ -1,0 +1,64 @@
+{
+  "slug": "afnan-supremacy-gold-edp",
+  "brand": "Afnan",
+  "name": "Supremacy Gold",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "violet",
+      "nutmeg",
+      "peach-blossom",
+      "cumin"
+    ],
+    "heart": [
+      "patchouli",
+      "iris"
+    ],
+    "base": [
+      "vanilla",
+      "oud",
+      "amber",
+      "benzoin"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy Gold: Unisex хув үнэр (EDP). Эхний ноот: нил цэцэг, задийн самар, тоорын цэцэг, зира; зүрхний ноот: пачули, цахилдаг; суурь ноот: ваниль, агар мод, хув, бензойн.",
+    "en": "Supremacy Gold by Afnan Perfumes is a Oriental fragrance for women and men. Supremacy Gold was launched in 2013. Top notes are Violet, Nutmeg, Peach Blossom and Cumin; middle notes are Patchouli and iris; base notes are Vanilla, Agarwood (Oud), Amber and Benzoin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/ff00f4f4-41e0-438c-a8f6-1f7ed5d31a47_252c36cf-3605-466d-8f21-4af83d9acd86.jpg?v=1683065036",
+    "back": "https://cdn.miswag.me/images/images/a0a46867-fe8e-46fb-8706-fe1df5390586.jpeg"
+  }
+}

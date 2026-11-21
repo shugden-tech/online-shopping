@@ -1,0 +1,62 @@
+{
+  "slug": "abercrombie-and-fitch-first-instinct-edt",
+  "brand": "Abercrombie & Fitch",
+  "name": "First Instinct",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "fresh",
+  "notes": {
+    "top": [
+      "gin",
+      "tonic",
+      "kiwano"
+    ],
+    "heart": [
+      "violet-leaf",
+      "sichuan-pepper"
+    ],
+    "base": [
+      "cashmere-wood",
+      "amber",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch First Instinct: Эрэгтэйчүүдэд зориулсан сэрүүн үнэр (EDT). Эхний ноот: жин, тоник, кивано; зүрхний ноот: нил цэцгийн навч, сычуань чинжүү; суурь ноот: кашмир мод, хув, заар.",
+    "en": "'First Instinct' is the first fragrance to be sold outside of the Abercrombie & Fitch boutiques. This addictive and irresistible fragrance is a fougere aromatic amber. Blended for the man who lives by his first instinct. This modern fragrance opens with electronic gin and Tonic combined with kiwano melon. In the heart, szechuan pepper ignites the spark to attraction while violet leaves bring depth and a citrus twist. The base is made up of suede musk and sleek warm amber, creating the perfect blend of fresh elements of fougere and oriental warmth."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 33000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 49500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/798ce6b3-3b32-423e-b150-744de0588b83.jpg?v=1683060717",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/fe87725d-d986-4a25-90c1-d91ca6187529_00fea57a-bb46-4a8f-b3e2-cc387efd50ec.jpg?v=1683060717"
+  }
+}

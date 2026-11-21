@@ -1,0 +1,52 @@
+{
+  "slug": "acqua-di-parma-ambra-edp",
+  "brand": "Acqua di Parma",
+  "name": "Ambra",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Ambra: Unisex модлог үнэр (EDP).",
+    "en": "The 2019 Ambra Eau de Parfum by Acqua di Parma is a Woody Aromatic fragrance meant to be worn by both men and women. At first, it carries with it a blend of Orange, Calabrian Bergamot and Petitgrain. Followed by a combination of Cedar, Cypriol Oil or Nagarmotha, Rose and Patchouli at the heart of the fragrance. Finally, the scent complements the aroma with Ambergris, Sandalwood, Musk, Vanilla and Labdanum at the base."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 48500,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 69500,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/6c6c85b6-d6b2-4bc3-94a1-b4eb5acb196c.jpg?v=1694453365",
+    "back": "https://www.parfuem365.de/media/image/c3/99/f2/8028713810718_1.jpg"
+  }
+}

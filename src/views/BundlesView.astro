@@ -1,0 +1,71 @@
+---
+// Bundle list (0005): rendered on demand from D1 (see src/lib/bundles/page.ts); each card links to its bundle page.
+import Base from "../layouts/Base.astro";
+import { bundlePath, getDict, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { bundleName, partName } from "../lib/bundles/page";
+import type { BundleView } from "../lib/bundles/types";
+import "../styles/bundles.css";
+
+interface Props { locale: Locale; bundles: BundleView[] }
+const { locale, bundles } = Astro.props;
+const tr = getDict(locale);
+const t = tr.bundle;
+const unit = tr.common.ml;
+const sizeLine = (b: BundleView) => {
+  const ml = b.parts.map((p) => p.ml * p.qty);
+  const same = ml.every((x) => x === ml[0]);
+  return same && ml.length
+    ? t.size.replace("{n}", String(ml.length)).replace("{ml}", String(ml[0])).replace("{total}", String(ml.reduce((a, c) => a + c, 0)))
+    : `${ml.reduce((a, c) => a + c, 0)} ${unit}`;
+};
+const stateText = (b: BundleView) =>
+  b.sellable ? null : b.block === "soon" ? t.soon : b.block === "closed" ? t.closed : t.soldOut;
+---
+
+<Base locale={locale} title={t.title} description={t.metaDesc} current="bundles">
+  <section class="wrap bl">
+    <header class="bl__head">
+      <h1 class="h-sec">{t.title}</h1>
+      <p class="bl__sub">{t.sub}</p>
+    </header>
+    {bundles.length === 0 ? (
+      <p class="bl__empty">{t.empty}</p>
+    ) : (
+      <ul class="bl__grid">
+        {bundles.map((b, i) => {
+          const name = bundleName(b, locale);
+          const state = stateText(b);
+          return (
+            <li class="bl__card" data-bundle={b.id} data-state={b.sellable ? "ok" : b.block}>
+              <a class="bl__link" href={bundlePath(locale, b.id)}>
+                <span class="bl__media">
+                  {b.image ? (
+                    <img src={b.image} alt={name} width="800" height="1000" loading={i < 4 ? "eager" : "lazy"} decoding="async" />
+                  ) : (
+                    <span class="bl__ph" aria-hidden="true">✦</span>
+                  )}
+                  {state && <span class="bl__badge">{state}</span>}
+                </span>
+                <span class="bl__body">
+                  <span class="bl__name">{name}</span>
+                  <span class="bl__parts">{b.parts.map((p) => partName(p)).join(" · ")}</span>
+                  <span class="bl__meta">
+                    <span class="bl__size">{sizeLine(b)}</span>
+                    {b.price !== null && (
+                      <span class="bl__price">
+                        {b.compareAt !== null && b.compareAt > b.price && <s>{formatPrice(b.compareAt, locale)}</s>}
+                        {formatPrice(b.price, locale)}
+                      </span>
+                    )}
+                  </span>
+                  <span class="bl__cta">{t.view}<span aria-hidden="true"> →</span></span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </section>
+</Base>

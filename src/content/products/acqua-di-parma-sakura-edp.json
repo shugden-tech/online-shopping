@@ -1,0 +1,56 @@
+{
+  "slug": "acqua-di-parma-sakura-edp",
+  "brand": "Acqua di Parma",
+  "name": "Sakura",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "bergamot",
+      "mandarin",
+      "pink-pepper"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Sakura: Unisex цитрус үнэр (EDP). Эхний ноот: бергамот, мандарин, ягаан чинжүү.",
+    "en": "Acqua di Parma's Sakura Eau de Parfum is a unisex Citrus scent, unveiled in 2019. Its composition begins with top notes of zesty Calabrian bergamot, vibrant Yellow Mandarin, and a hint of spicy Pink Pepper. The heart of the fragrance blooms with delicate Cherry Blossom and exotic Jasmine Sambac, while a warm base of Musk rounds out the olfactory experience."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/76eec4bd-2706-4ca8-aa5d-e21f4139c116.jpg?v=1705700234",
+    "back": "https://media.sephora.eu/content/dam/gdam/europe/digital/pim/published/A/Acqua_di_Parma/P3910115/49411-media_3.jpg?scaleHeight=750&scaleMode=fit&scaleWidth=750"
+  }
+}

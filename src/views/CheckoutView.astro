@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import CheckoutForm from "../islands/CheckoutForm.tsx";
+import settings from "../data/settings.json";
+import { getDict, route, type Locale } from "../i18n";
+import "../styles/checkout.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+
+---
+<Base locale={locale} title={tr.checkout.title} description={tr.checkout.metaDescription} noindex>
+  <section class="wrap page-top co">
+    <header class="co__head">
+      <p class="t-title t-gold">Gen'Z Street</p>
+      <h1 class="t-head">{tr.checkout.title}</h1>
+      <p class="t-body t-dim">{tr.checkout.sub}</p>
+    </header>
+
+    <CheckoutForm
+      client:load
+      locale={locale}
+      tr={tr.checkout}
+      ml={tr.common.ml}
+      districts={settings.districts.map((d) => ({ id: d.id, label: d[locale] }))}
+      cartTr={{ removed: tr.cart.removed, capped: tr.cart.capped, priceUpdated: tr.cart.priceUpdated, checking: tr.cart.checking }}
+      delivery={{ fee: settings.delivery.fee, freeThreshold: settings.delivery.freeThreshold }}
+      siteKey={settings.turnstile.siteKey}
+      shopHref={route("shop", locale)}
+      successHref={route("success", locale)}
+    />
+  </section>
+</Base>

@@ -1,0 +1,65 @@
+{
+  "slug": "afnan-highness-ix-maroon-edp",
+  "brand": "Afnan",
+  "name": "Highness IX Maroon",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "cypress",
+      "bergamot",
+      "lavender"
+    ],
+    "heart": [
+      "cedar",
+      "galbanum",
+      "pepper",
+      "petitgrain"
+    ],
+    "base": [
+      "oud",
+      "oakmoss",
+      "leather"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Highness IX Maroon: Unisex өвслөг үнэр (EDP). Эхний ноот: кипарис, бергамот, лаванда; зүрхний ноот: хуш мод, гальбанум, хар чинжүү, петигрейн; суурь ноот: агар мод, царсны хөвд, арьс.",
+    "en": "His Highness Green by Afnan is a Aromatic Spicy fragrance for men. This is a new fragrance. His Highness Green was launched in 2020. Top notes are Cypress, Bergamot and Lavender; middle notes are Cedar, Galbanum, Black Pepper and Petitgrain; base notes are Agarwood (Oud), Oakmoss and Leather."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/59c23eaf-6f89-4429-a0a2-851d6abd2414_cfda72b8-ac22-46af-b94d-7a42cdbf3310.jpg?v=1683064037",
+    "back": "https://cdn2.jomashop.com/media/catalog/product/a/f/afnan-unisex-highness-ix-maroon-edp-spray-34-oz-tester-fragrances-0000950039655.jpg"
+  }
+}

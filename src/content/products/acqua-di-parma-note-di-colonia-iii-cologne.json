@@ -1,0 +1,57 @@
+{
+  "slug": "acqua-di-parma-note-di-colonia-iii-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Note di Colonia III",
+  "concentration": "Cologne",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "mandarin",
+      "ginger"
+    ],
+    "heart": [
+      "incense",
+      "vetiver",
+      "jasmine"
+    ],
+    "base": [
+      "myrrh",
+      "labdanum",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Note di Colonia III: Unisex хув үнэр (Cologne). Эхний ноот: мандарин, цагаан гаа; зүрхний ноот: хүж, ветивер, жасмин; суурь ноот: мирра, лабданум, тонка шош.",
+    "en": "Note di Colonia III by Acqua di Parma is a Amber fragrance for women and men. Note di Colonia III was launched in 2016. Top notes are Mandarin Orange and Ginger; middle notes are Olibanum, Vetiver and Jasmine; base notes are Myrhh, Labdanum and Tonka Bean."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 54500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 150,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/8e47ec2a-cdd6-43f9-9e3e-6bad3a211680.jpg?v=1683063048",
+    "back": "https://hrd-live.cdn.scayle.cloud/images/03afd79a11c723fbe5bfa48888ffe8b7.jpg?bg=ffffff&brightness=1&height=1230&quality=75&width=922"
+  }
+}

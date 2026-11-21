@@ -1,0 +1,66 @@
+{
+  "slug": "versace-pour-homme-edt",
+  "brand": "Versace",
+  "name": "Pour Homme",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "lemon",
+      "bergamot",
+      "neroli",
+      "rose"
+    ],
+    "heart": [
+      "hyacinth",
+      "cedar",
+      "clary-sage",
+      "geranium"
+    ],
+    "base": [
+      "tonka",
+      "musk",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Versace Pour Homme: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDT). Эхний ноот: нимбэг, бергамот, нероли, сарнай; зүрхний ноот: гиацинт, хуш мод, мускат хашхираа, герань; суурь ноот: тонка шош, заар, хув.",
+    "en": "Versace Pour Homme is a citrus fragrance in EDT concentration. Its listed notes include lemon, bergamot, neroli, rose, hyacinth."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 200,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/store/versace-pour-homme-edt.webp",
+    "back": "/product-photos/store/versace-pour-homme-edt-back.webp"
+  }
+}

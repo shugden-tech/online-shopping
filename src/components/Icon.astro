@@ -1,0 +1,35 @@
+---
+interface Props {
+  name:
+    | "search" | "bag" | "menu" | "close" | "arrow" | "plus" | "minus" | "check"
+    | "instagram" | "facebook" | "telegram" | "filter" | "chevron"
+    | "sun" | "moon" | "briefcase" | "heart" | "leaf" | "snow" | "flower" | "wave";
+  size?: number;
+  class?: string;
+}
+const { name, size = 20, class: cls } = Astro.props;
+const paths: Record<Props["name"], string> = {
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/>',
+  bag: '<path d="M5 8h14l-1 12.5H6L5 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/>',
+  menu: '<path d="M3 8h18M3 16h18"/>',
+  close: '<path d="M5 5l14 14M19 5L5 19"/>',
+  arrow: '<path d="M2 12h19M15 6l6 6-6 6"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  minus: '<path d="M5 12h14"/>',
+  check: '<path d="M4 12.5l5 5L20 6.5"/>',
+  filter: '<path d="M3 7h18M6.5 12h11M10 17h4"/>',
+  chevron: '<path d="M6 9l6 6 6-6"/>',
+  instagram: '<rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/>',
+  facebook: '<path d="M14 21v-8h3l.5-3.5H14V7.4c0-1 .4-1.9 2-1.9h1.6V2.6c-.6-.1-1.6-.2-2.6-.2-2.7 0-4.5 1.6-4.5 4.6v2.5H7.5V13h3v8"/>',
+  telegram: '<path d="M21 4L3 11.2l5.4 1.9L10.5 20l3.1-4 4.6 3.4L21 4z"/><path d="M8.4 13.1L17 7.5"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+  moon: '<path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/>',
+  briefcase: '<rect x="3" y="7.5" width="18" height="12" rx="1.5"/><path d="M9 7.5V5.5h6v2M3 13h18"/>',
+  heart: '<path d="M12 20s-7.5-4.6-7.5-10A4.2 4.2 0 0112 7.6 4.2 4.2 0 0119.5 10c0 5.4-7.5 10-7.5 10z"/>',
+  leaf: '<path d="M5 19c0-8 5-13 15-14 0 9-5 14-13 14"/><path d="M5 19c2-4 5-7 9-9"/>',
+  snow: '<path d="M12 2.5v19M3.8 7.2l16.4 9.6M20.2 7.2L3.8 16.8"/>',
+  flower: '<circle cx="12" cy="12" r="2.2"/><path d="M12 9.8c-2-5 2-7.300 2-7.300s2.500 3.800 0 7.300M14.200 12c5-2 7.300 2 7.300 2s-3.800 2.500-7.300 0M12 14.200c2 5-2 7.300-2 7.300s-2.500-3.800 0-7.300M9.800 12c-5 2-7.300-2-7.300-2s3.800-2.500 7.300 0"/>',
+  wave: '<path d="M2 9c2.500-2.500 5-2.500 7.500 0s5 2.500 7.500 0 3.500-1.800 5-.5M2 15c2.500-2.500 5-2.500 7.500 0s5 2.500 7.500 0 3.500-1.800 5-.5"/>',
+};
+---
+<svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={paths[name]} />

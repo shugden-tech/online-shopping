@@ -1,0 +1,63 @@
+{
+  "slug": "afnan-supremacy-pink-edp",
+  "brand": "Afnan",
+  "name": "Supremacy Pink",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pink-pepper",
+      "violet"
+    ],
+    "heart": [
+      "rose",
+      "peony",
+      "lily-of-the-valley"
+    ],
+    "base": [
+      "musk",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy Pink: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: ягаан чинжүү, нил цэцэг; зүрхний ноот: сарнай, цээнэ цэцэг, хонхон цэцэг; суурь ноот: заар, хув.",
+    "en": "Floral & Fruity"
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/c5108209-f39a-402c-b839-8f9aa334e079_30dc6ab8-458d-4e49-a26c-f4b90782d874.jpg?v=1683065670",
+    "back": "https://cdn.notinoimg.com/detail_main_hq/afnan/afnspim_aedp10_02/afnan-supremacy-pour-femme-pink-eau-de-parfum-fur-damen___170914.jpg"
+  }
+}

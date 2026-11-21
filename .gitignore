@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.dev.vars
+.env
+
+# Local research downloads, snapshots and browser review artifacts
+decantx/merged.backup-*.json
+decantx/catalog-backup-*/
+decantx/demo-inventory-backup-*/
+decantx/notes-source-cache/
+output/
+workers/image-importer/manifest.json
+**/__pycache__/
+
+# Over GitHub 100 MB limit; kept on the original computer only
+decantx/products_full.json
+
+# Windows junk
+desktop.ini
+
+# Local copies of Worker secrets (never commit)
+.secrets/

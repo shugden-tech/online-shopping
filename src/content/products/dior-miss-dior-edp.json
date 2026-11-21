@@ -1,0 +1,72 @@
+{
+  "slug": "dior-miss-dior-edp",
+  "brand": "Dior",
+  "name": "Miss Dior",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "aldehydes",
+      "galbanum",
+      "clary-sage",
+      "gardenia",
+      "bergamot"
+    ],
+    "heart": [
+      "narcissus",
+      "iris",
+      "carnation",
+      "lily-of-the-valley",
+      "jasmine",
+      "rose",
+      "neroli"
+    ],
+    "base": [
+      "vanilla",
+      "musk",
+      "tonka",
+      "benzoin",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Dior Miss Dior: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: альдегид, гальбанум, мускат хашхираа, гардения, бергамот; зүрхний ноот: нарцисс, цахилдаг, лиш цэцэг, хонхон цэцэг, жасмин, сарнай, нероли; суурь ноот: ваниль, заар, тонка шош, бензойн, зандан мод.",
+    "en": "Dior Miss Dior is a amber fragrance in EDP concentration. Its listed notes include aldehydes, galbanum, clary sage, gardenia, bergamot."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-057-front.webp",
+    "back": "/product-photos/curated-057-back.webp"
+  }
+}

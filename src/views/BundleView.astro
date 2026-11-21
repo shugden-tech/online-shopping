@@ -1,0 +1,129 @@
+---
+// One bundle (0005): rendered on demand from D1, cached 60 s. The buy block (BundleBuy) re-checks the live
+// price and stock on load; the order API prices the bundle from D1 again when the order is placed.
+import Base from "../layouts/Base.astro";
+import BundleBuy from "../islands/BundleBuy.tsx";
+import { bundlePath, getDict, route, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { bundleDescription, bundleName, partHref, partName } from "../lib/bundles/page";
+import { toState } from "../lib/bundles/store";
+import type { BundleView } from "../lib/bundles/types";
+import "../styles/bundles.css";
+
+interface Props { locale: Locale; bundle: BundleView }
+const { locale, bundle: b } = Astro.props;
+const tr = getDict(locale);
+const t = tr.bundle;
+const unit = tr.common.ml;
+const name = bundleName(b, locale);
+const description = bundleDescription(b, locale);
+const totalMl = b.parts.reduce((n, p) => n + p.ml * p.qty, 0);
+const sameMl = b.parts.length > 0 && b.parts.every((p) => p.ml * p.qty === b.parts[0]!.ml * b.parts[0]!.qty);
+const sizeLine = sameMl
+  ? t.size.replace("{n}", String(b.parts.length)).replace("{ml}", String(b.parts[0]!.ml * b.parts[0]!.qty)).replace("{total}", String(totalMl))
+  : `${totalMl} ${unit}`;
+const parts = await Promise.all(b.parts.map(async (p) => ({ ...p, title: partName(p), href: await partHref(locale, p) })));
+const state = toState(b);
+const savings = b.price !== null && b.separateTotal !== null && b.separateTotal > b.price ? b.separateTotal - b.price : 0;
+const site = Astro.site ?? new URL("https://genzst.mn");
+const canonical = new URL(bundlePath(locale, b.id), site).href;
+const ogImage = b.image ?? undefined;
+const metaDesc = (description || `${name}: ${parts.map((p) => p.title).join(", ")}. ${sizeLine}.`).slice(0, 160);
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name,
+  description: metaDesc,
+  ...(b.image ? { image: new URL(b.image, site).href } : {}),
+  brand: { "@type": "Brand", name: tr.site.name },
+  ...(b.price !== null
+    ? {
+        offers: {
+          "@type": "Offer",
+          price: b.price,
+          priceCurrency: "MNT",
+          availability: b.sellable ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+          url: canonical,
+        },
+      }
+    : {}),
+};
+---
+
+<Base locale={locale} title={`${name} · ${t.bundleWord}`} description={metaDesc} current="bundles" ogType="product" ogImage={ogImage}>
+  <article class="bd wrap page-top" data-bundle={b.id}>
+    <div class="bd__media">
+      {b.image ? (
+        <img src={b.image} alt={name} width="800" height="1000" decoding="async" loading="eager" fetchpriority="high" />
+      ) : (
+        <span class="bl__ph" aria-hidden="true">✦</span>
+      )}
+    </div>
+
+    <div class="bd__info">
+      <nav class="bd__crumbs" aria-label="Breadcrumb">
+        <a href={route("bundles", locale)}>← {t.back}</a>
+      </nav>
+      <p class="t-title t-gold bd__kicker">{t.bundleWord}</p>
+      <h1 class="bd__name">{name}</h1>
+      <p class="bd__size">{sizeLine}</p>
+      {description && <p class="t-body bd__desc">{description}</p>}
+
+      <div class="bd__price">
+        {b.price !== null ? (
+          <>
+            <strong>{formatPrice(b.price, locale)}</strong>
+            {b.compareAt !== null && b.compareAt > b.price && <s>{formatPrice(b.compareAt, locale)}</s>}
+          </>
+        ) : (
+          <strong class="bd__soon">{t.soon}</strong>
+        )}
+      </div>
+      {savings > 0 && (
+        <p class="bd__save">
+          <span>{t.separately}: <s>{formatPrice(b.separateTotal!, locale)}</s></span>
+          <span class="bd__save-amt">{t.save.replace("{amount}", formatPrice(savings, locale))}</span>
+        </p>
+      )}
+
+      <BundleBuy
+        client:load
+        locale={locale}
+        id={b.id}
+        initial={state}
+        checkoutHref={route("checkout", locale)}
+        line={{ name, brand: t.bundleWord, ml: totalMl, ...(b.image ? { img: b.image } : {}), parts: parts.map((p) => `${p.title} ${p.ml * p.qty} ${unit}`) }}
+        labels={{
+          add: t.add, buyNow: t.buyNow, soldOut: t.soldOut, soon: t.soon, closed: t.closed, unavailable: t.unavailable,
+          failed: t.failed, qty: t.qty, decrease: t.decrease, increase: t.increase, left: t.left, addedToCart: t.addedToCart,
+        }}
+      />
+      <p class="bd__note t-small t-dim">{tr.product.decantNote} {tr.product.deliveryHint}</p>
+    </div>
+
+    <section class="bd__parts" aria-labelledby="bd-parts">
+      <h2 class="h-sec bd__parts-title" id="bd-parts">{t.contents}</h2>
+      <ul class="bd__list">
+        {parts.map((p) => {
+          const inner = (
+            <>
+              <span class="bd__pimg">
+                {p.image ? <img src={p.image} alt="" width="160" height="160" decoding="async" /> : <span class="bl__ph" aria-hidden="true">✦</span>}
+              </span>
+              <span class="bd__ptext">
+                {p.brand && <span class="bd__pbrand">{p.brand}</span>}
+                <span class="bd__pname">{p.name ?? p.title}</span>
+                <span class="bd__pmeta">{[p.concentration, `${p.ml * p.qty} ${unit}`].filter(Boolean).join(" · ")}</span>
+                {p.notes.length > 0 && <span class="bd__pnotes"><span class="sr-only">{t.notes}: </span>{p.notes.join(", ")}</span>}
+                {!p.href && <span class="bd__psoon">{t.notInShop}</span>}
+              </span>
+              {p.href && <span class="bd__parrow" aria-hidden="true">→</span>}
+            </>
+          );
+          return <li>{p.href ? <a class="bd__part" href={p.href}>{inner}</a> : <div class="bd__part">{inner}</div>}</li>;
+        })}
+      </ul>
+    </section>
+  </article>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+</Base>

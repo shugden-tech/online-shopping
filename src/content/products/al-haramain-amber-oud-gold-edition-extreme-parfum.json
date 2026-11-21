@@ -1,0 +1,60 @@
+{
+  "slug": "al-haramain-amber-oud-gold-edition-extreme-parfum",
+  "brand": "Al Haramain",
+  "name": "Amber Oud Gold Edition Extreme",
+  "concentration": "Parfum",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot",
+      "green-notes"
+    ],
+    "heart": [
+      "melon",
+      "sweet-notes",
+      "cedar",
+      "pineapple",
+      "amber"
+    ],
+    "base": [
+      "myrrh",
+      "woods",
+      "musk",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Al Haramain Amber Oud Gold Edition Extreme: Unisex хув үнэр (Parfum). Эхний ноот: бергамот, ногоон ноот; зүрхний ноот: амтат гуа, чихэрлэг ноот, хуш мод, хан боргоцой, хув; суурь ноот: мирра, модлог ноот, заар, ваниль.",
+    "en": "Amber Oud Gold Edition Extreme Pure Perfume by Al Haramain Perfumes is a Amber Woody fragrance for women and men. This is a new fragrance. Amber Oud Gold Edition Extreme Pure Perfume was launched in 2022. Top notes are Bergamot and Green Notes; middle notes are Melon, Sweet Notes, Cedar, Pineapple and Amber; base notes are Myrrh, Woodsy Notes, Musk and Vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 39500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 59500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/d0afd9d8-d2e0-4721-8e77-40335e5febdf_7a8cdd9c-8b6f-44dc-b738-3923037dd30a.jpg?v=1683068230",
+    "back": "https://cdn.fragrancenet.com/images/photos/1600x1600/454510.jpg"
+  }
+}

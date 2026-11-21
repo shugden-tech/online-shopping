@@ -1,0 +1,53 @@
+{
+  "slug": "valentino-donna-born-in-roma-intense-edp",
+  "brand": "Valentino",
+  "name": "Donna Born in Roma Intense",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "vanilla",
+      "amber"
+    ],
+    "heart": [
+      "jasmine"
+    ],
+    "base": [
+      "benzoin"
+    ]
+  },
+  "description": {
+    "mn": "Valentino Donna Born in Roma Intense: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: ваниль, хув; зүрхний ноот: жасмин; суурь ноот: бензойн.",
+    "en": "Valentino Donna Born in Roma Intense is a amber fragrance in EDP concentration. Its listed notes include vanilla, amber, jasmine, benzoin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-042-front.webp",
+    "back": "/product-photos/curated-042-back.webp"
+  }
+}

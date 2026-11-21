@@ -1,0 +1,58 @@
+{
+  "slug": "acqua-di-parma-iris-nobile-edp",
+  "brand": "Acqua di Parma",
+  "name": "Iris Nobile",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "iris",
+      "star-anise"
+    ],
+    "heart": [
+      "tuberose",
+      "orange"
+    ],
+    "base": [
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Iris Nobile: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: цахилдаг, одон анис; зүрхний ноот: тубероз, жүрж; суурь ноот: ваниль.",
+    "en": "Acqua di Parma Iris Nobile by Acqua di Parma is a Floral Woody Musk fragrance for women. Acqua di Parma Iris Nobile was launched in 2006. Acqua di Parma Iris Nobile was created by Francoise Caron and Francis Kurkdjian. Top notes are iris, Star Anise, Bergamot, Orange and Mandarin Orange; middle notes are Tuberose, Orange Blossom, Mimosa, Ylang-Ylang, Hibiscus and Cedar; base notes are Vanilla and Amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/5016653f-d4b8-4c5c-8206-f1385d5eacea.jpg?v=1683062553",
+    "back": "https://cdn2.jomashop.com/media/catalog/product/i/r/iris-nobile-acqua-di-parma-eau-de-parfum-spray-34-oz-8028713440021.jpg"
+  }
+}

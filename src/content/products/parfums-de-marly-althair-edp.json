@@ -1,0 +1,59 @@
+{
+  "slug": "parfums-de-marly-althair-edp",
+  "brand": "Parfums de Marly",
+  "name": "Althair",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "cinnamon",
+      "cardamom",
+      "orange-blossom",
+      "bergamot"
+    ],
+    "heart": [
+      "vanilla",
+      "elemi"
+    ],
+    "base": [
+      "praline",
+      "musk",
+      "ambroxan",
+      "guaiac-wood"
+    ]
+  },
+  "description": {
+    "mn": "Parfums de Marly Althair: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDP). Эхний ноот: шанцай, кардамон, жүржийн цэцэг, бергамот; зүрхний ноот: ваниль, элеми давирхай; суурь ноот: пралине, заар, амброксан, гваяк мод.",
+    "en": "Parfums de Marly Althair is a citrus fragrance in EDP concentration. Its listed notes include cinnamon, cardamom, orange blossom, bergamot, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 79500,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 125,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-076-front.webp",
+    "back": "/product-photos/curated-076-back.webp"
+  }
+}

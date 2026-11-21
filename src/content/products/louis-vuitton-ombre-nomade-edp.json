@@ -1,0 +1,55 @@
+{
+  "slug": "louis-vuitton-ombre-nomade-edp",
+  "brand": "Louis Vuitton",
+  "name": "Ombre Nomade",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": [],
+    "key": [
+      "oud",
+      "incense",
+      "rose",
+      "raspberry",
+      "saffron",
+      "amberwood",
+      "benzoin",
+      "birch"
+    ]
+  },
+  "description": {
+    "mn": "Louis Vuitton Ombre Nomade: Unisex модлог үнэр (EDP). Үндсэн ноотууд: Агар мод, Хүж, Сарнай, Бөөрөлзгөнө, Гүргэм, Хув мод, Бензойн, Хус мод.",
+    "en": "Louis Vuitton Ombre Nomade is a woody fragrance in EDP concentration. Its listed notes include oud, incense, rose, raspberry, saffron."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-083-front.webp"
+  }
+}

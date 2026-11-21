@@ -1,0 +1,54 @@
+{
+  "slug": "chanel-allure-homme-sport-edt",
+  "brand": "Chanel",
+  "name": "Allure Homme Sport",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "orange",
+      "marine",
+      "aldehydes",
+      "mandarin"
+    ],
+    "heart": [
+      "pepper",
+      "neroli",
+      "cedar"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "musk",
+      "amber",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Chanel брэндийн Allure Homme Sport нь эрэгтэй хүмүүст зориулагдсан Амлагчит Модлог ангилалын сүрчиг юм.",
+    "en": "Chanel Allure Homme Sport is a citrus EDT for men. Notes include orange, marine notes, aldehydes, mandarin, black pepper, neroli."
+  },
+  "sizes": [
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/chanel-allure-homme-sport-edt.webp",
+    "back": "/product-photos/store/chanel-allure-homme-sport-edt-back.webp"
+  }
+}

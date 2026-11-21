@@ -1,0 +1,58 @@
+{
+  "slug": "afnan-his-highness-white-edp",
+  "brand": "Afnan",
+  "name": "His Highness White",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "cardamom",
+      "pink-pepper",
+      "cumin",
+      "nutmeg",
+      "saffron"
+    ],
+    "heart": [
+      "geranium"
+    ],
+    "base": [
+      "patchouli",
+      "incense"
+    ]
+  },
+  "description": {
+    "mn": "Afnan His Highness White: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: кардамон, ягаан чинжүү, зира, задийн самар, гүргэм; зүрхний ноот: герань; суурь ноот: пачули, хүж.",
+    "en": "His Highness White Cologne by Afnan, Exude confidence and masculinity with each and every step by incorporating His Highness White, a smooth, sweet cologne, into your everyday wardrobe. This unique fragrance opens up with top notes of cardamom, pink pepper, cumin, nutmeg, saffron, pink pepper. The middle notes offer a softer experience, with floral touches of geranium and a dash of spicy myrrh. Base notes include touches of patchouli, incense, almond, musk and sandalwood, creating a smoky and spicy finish unlike any other. This well-loved fragrance is ideal for chilly days and upscale occasions of all types."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/52c8ee37-aa51-4d33-8e85-7fb1f87054db_67b68e94-8a57-40af-8da6-ce42af656423.jpg?v=1683064346",
+    "back": "https://fvfperfumes.com/cdn/shop/files/AfnanHisHighnessWhiteEDP2_M.jpg?v=1744089649&width=533"
+  }
+}

@@ -1,0 +1,133 @@
+---
+import { Image } from "astro:assets";
+import mark from "../assets/brand/logo-mark.png";
+import wordmark from "../assets/brand/wordmark.png";
+import Icon from "./Icon.astro";
+import settings from "../data/settings.json";
+import { getDict, route, pick, type Locale } from "../i18n";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+const { contact } = settings;
+const tel = contact.phone.replace(/[^+\d]/g, "");
+const year = new Date().getFullYear();
+const socials = [
+  { name: "instagram", label: "Instagram", href: contact.social.instagram },
+  { name: "facebook", label: "Facebook", href: contact.social.facebook },
+  { name: "telegram", label: "Telegram", href: contact.social.telegram },
+] as const;
+---
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <a href={route("home", locale)} class="ftr__logo" aria-label={tr.nav.home}>
+          <Image src={mark} alt="" height={60} densities={[1, 2]} loading="lazy" class="ftr__mark" />
+          <Image src={wordmark} alt="" height={40} densities={[1, 2]} loading="lazy" class="ftr__word" />
+        </a>
+        <p class="ftr__line">{tr.footer.line}</p>
+      </div>
+
+      <nav class="ftr__col" aria-label={tr.footer.explore}>
+        <h2 class="t-title">{tr.footer.explore}</h2>
+        <ul>
+          <li><a href={route("shop", locale)}>{tr.nav.shop}</a></li>
+          <li><a href={route("finder", locale)}>{tr.nav.finder}</a></li>
+          <li><a href={route("about", locale)}>{tr.nav.about}</a></li>
+        </ul>
+      </nav>
+
+      <nav class="ftr__col" aria-label={tr.footer.support}>
+        <h2 class="t-title">{tr.footer.support}</h2>
+        <ul>
+          <li><a href={route("help", locale)}>{tr.footer.faq}</a></li>
+          <li><a href={`${route("help", locale)}#delivery`}>{tr.footer.delivery}</a></li>
+        </ul>
+      </nav>
+
+      <div class="ftr__col" id="footer-contact">
+        <h2 class="t-title">{tr.footer.contact}</h2>
+        <ul>
+          <li><span class="ftr__k">{tr.footer.phone}</span> <a href={`tel:${tel}`} data-contact="phone">{contact.phone}</a></li>
+          <li><span class="ftr__k">{tr.footer.hours}</span> <span data-contact={`hours_${locale}`}>{pick(contact.hours, locale)}</span></li>
+        </ul>
+        <ul class="ftr__social">
+          {socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} data-contact={s.name}>
+                <Icon name={s.name} size={20} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr__bottom">
+      <p>© {year} Gen'Z Street. {tr.footer.rights}</p>
+      <p class="ftr__disc">{tr.footer.disclaimer}</p>
+      <p class="ftr__credit">{locale === "mn" ? "Вэб хөгжүүлсэн" : "Website by"} <a href="https://shugden.tech" target="_blank" rel="noopener noreferrer">shugden.tech</a></p>
+    </div>
+  </div>
+</footer>
+
+<script is:inline>
+  // Live contact details and store notice from the admin settings (GET /api/store/info). The built values stay
+  // when a setting is empty or the request fails. Inline (plain JS) so it adds nothing to the page bundles.
+  fetch("/api/store/info", { headers: { Accept: "application/json" } })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.ok) return;
+      var lang = document.documentElement.lang === "en" ? "en" : "mn";
+      document.querySelectorAll("[data-contact]").forEach(function (el) {
+        var v = d.contact && d.contact[el.dataset.contact];
+        if (typeof v !== "string" || !v.trim()) return;
+        if (el.dataset.contact === "phone") { el.textContent = v; el.setAttribute("href", "tel:" + v.replace(/[^+\d]/g, "")); }
+        else if (el.tagName === "A") { if (/^https:\/\//.test(v)) el.href = v; }
+        else el.textContent = v;
+      });
+      var notice = d.notice && d.notice[lang];
+      if (typeof notice === "string" && notice.trim() && !document.querySelector(".store-notice")) {
+        var n = document.createElement("p");
+        n.className = "store-notice";
+        n.setAttribute("role", "status");
+        n.textContent = notice;
+        n.style.cssText = "margin:0;padding:8px 16px;text-align:center;font-size:13px;background:var(--black);color:var(--on-accent)";
+        document.body.prepend(n);
+      }
+    })
+    .catch(function () {});
+</script>
+
+<style>
+  .ftr { border-top: 1px solid var(--line); background: var(--ink); padding-top: clamp(48px, 7vw, 88px); margin-top: auto; }
+  .ftr__top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: clamp(28px, 4vw, 64px); }
+  .ftr__logo { display: inline-flex; align-items: center; gap: 12px; }
+  .ftr__mark { width: auto; height: 60px; }
+  .ftr__word { width: auto; height: 40px; }
+  .ftr__line { margin-top: 16px; color: var(--text-dim); max-width: 34ch; font-size: 14px; }
+  .ftr__col h2 { color: var(--gold); margin-bottom: 14px; font-size: 11px; }
+  .ftr__col li { font-size: 14px; color: var(--text-dim); }
+  .ftr__col li a { display: inline-flex; align-items: center; min-height: 40px; color: var(--text); transition: color .3s; }
+  .ftr__col li a:hover { color: var(--gold-soft); }
+  .ftr__k { display: block; font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; }
+  .ftr__social { display: flex; gap: 4px; margin-top: 14px; margin-left: -12px; }
+  .ftr__social a { width: 44px; height: 44px; justify-content: center; color: var(--text-dim); }
+  .ftr__bottom {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px;
+    margin-top: clamp(40px, 6vw, 72px); padding-block: 22px 28px; border-top: 1px solid var(--line-soft);
+    font-size: 12px; color: var(--text-dim);
+  }
+  .ftr__disc { max-width: 70ch; }
+  .ftr__credit a { color: var(--text); text-decoration: none; }
+  .ftr__credit a:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 900px) {
+    .ftr__top { grid-template-columns: 1fr 1fr; }
+    .ftr__brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 420px) {
+    .ftr__top { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+    .ftr__col:last-child { grid-column: 1 / -1; }
+  }
+</style>

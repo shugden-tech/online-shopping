@@ -1,0 +1,10 @@
+---
+// On-demand product page for products created in the admin (not in the built catalog). 0004.
+import LiveProductView from "../../../../views/LiveProductView.astro";
+import { liveProduct } from "../../../../lib/live-product";
+
+export const prerender = false;
+const r = await liveProduct(Astro, "en");
+if (r instanceof Response) return r;
+---
+<LiveProductView locale="en" product={r} />

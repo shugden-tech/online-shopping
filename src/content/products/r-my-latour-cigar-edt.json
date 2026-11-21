@@ -1,0 +1,63 @@
+{
+  "slug": "r-my-latour-cigar-edt",
+  "brand": "Rémy Latour",
+  "name": "Cigar",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "bergamot",
+      "lemon",
+      "pear",
+      "pineapple",
+      "plum"
+    ],
+    "heart": [
+      "african-marigold",
+      "geranium",
+      "jasmine",
+      "laurel",
+      "basil",
+      "nutmeg"
+    ],
+    "base": [
+      "tobacco",
+      "sandalwood",
+      "cedar",
+      "patchouli",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Францын алдартай Rémy Latour брэндийн \"Cigar\" Eau de Toilette (EDT) нь эрчүүдэд зориулсан сонгодог, хүчирхэг, модлог ба тамхины (tobacco) ноот голлосон алдартай сүрчиг юм. 90-ээд оны үеийн казино, дээд зэрэглэлийн клубүүдийн уур амьсгалыг санагдуулам эршүүд төрхийг илэрхийлдэг",
+    "en": "Rémy Latour Cigar is a woody EDT for men. Notes include bergamot, lemon, pear, pineapple, plum, african marigold."
+  },
+  "sizes": [
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/r-my-latour-cigar-edt.webp",
+    "back": "/product-photos/store/r-my-latour-cigar-edt-back.webp"
+  }
+}

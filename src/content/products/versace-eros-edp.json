@@ -1,0 +1,69 @@
+{
+  "slug": "versace-eros-edp",
+  "brand": "Versace",
+  "name": "Eros",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "mint",
+      "apple",
+      "lemon",
+      "mandarin"
+    ],
+    "heart": [
+      "ambroxan",
+      "geranium",
+      "clary-sage"
+    ],
+    "base": [
+      "vanilla",
+      "cedar",
+      "sandalwood",
+      "bitter-orange",
+      "patchouli",
+      "leather"
+    ]
+  },
+  "description": {
+    "mn": "Versace брэндийн Eros Eau de Parfum нь эрэгтэй хүмүүст зориулагдсан Модлог Дорнын ангилалын сүрчиг юм",
+    "en": "Versace Eros is an amber EDP for men. Notes include mint, apple, lemon, mandarin, ambroxan, geranium."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/versace-eros-edp.webp"
+  }
+}

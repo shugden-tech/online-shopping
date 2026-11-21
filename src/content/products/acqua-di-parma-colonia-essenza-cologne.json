@@ -1,0 +1,50 @@
+{
+  "slug": "acqua-di-parma-colonia-essenza-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Essenza",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Essenza: Эрэгтэйчүүдэд зориулсан модлог үнэр (Cologne).",
+    "en": "Acqua di Parma Colonia Essenza is a richer, more refined take on the classic Italian cologne. Launched in 2015, it opens with mandarin, orange, petitgrain, bergamot and grapefruit. Neroli, sage, jasmine, rose and rosemary form an elegant heart, and clove, moss, patchouli, vetiver and amber give it depth. A polished daytime scent for spring and summer and a natural fit for the office. The newest Eau de Cologne from Acqua di Parma is hand crafted in the same tradition as the original and iconic Colonia, representing the essence of Italian luxury and style. Colonia Essenza is a woodsy citrus fragrance, using only the finest and purest essences for the formula. Notes: Bergamot, Lemon, Mandarin, Orange, Grapefruit, Petitgrain, Neroli, Rosemary, Clove, Lilly of the Valley, Rose Accord, Jasmine Accord, Patchouli, Vetiver, White Musk, Amber. Style: Refined. Elegant. Stylish."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/8eb33053-0f56-4a5e-95e0-dc4219c1bdbd_f2ab4f59-d5ce-4a70-ab23-11f0511b857b.jpg?v=1683061802",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/612f0c90-f443-456c-8df4-4750a906d02c.jpg?v=1683061802"
+  }
+}

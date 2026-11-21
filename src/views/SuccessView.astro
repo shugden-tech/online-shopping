@@ -1,0 +1,102 @@
+---
+import Base from "../layouts/Base.astro";
+import settings from "../data/settings.json";
+import { getDict, route, type Locale } from "../i18n";
+import "../styles/checkout.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+const s = tr.success;
+// Strings for src/scripts/order-status.ts (payment instructions, tracking, countdown).
+const text = { ...s, ml: tr.common.ml, bankNote: settings.payment.bankNote[locale] };
+---
+<Base locale={locale} title={s.title} description={s.call} noindex>
+  <script type="application/json" id="ok-i18n" is:inline set:html={JSON.stringify(text).replace(/</g, "\\u003c")}></script>
+  <section class="wrap page-top ok" data-success data-locale={locale} data-copy={s.copy} data-copied={s.copied}>
+    <div class="ok__card" data-ok-found hidden>
+      <p class="t-title t-gold ok__eyebrow">{s.eyebrow}</p>
+      <h1 class="t-h2 ok__heading">{s.heading}</h1>
+
+      <div class="ok__no">
+        <p class="ok__label">{s.orderNo}</p>
+        <p class="t-head ok__no-value" data-order-no></p>
+      </div>
+      <p class="t-body ok__call">{s.call}</p>
+
+      <!-- filled from the order response: QPay QR / links, or the bank details -->
+      <div class="ok__pay" data-pay aria-live="polite" hidden></div>
+      <p class="ok__paystate" data-pay-state role="status" hidden></p>
+    </div>
+
+    <div class="ok__card ok__missing" data-ok-missing hidden>
+      <p class="t-title t-gold ok__eyebrow">{s.eyebrow}</p>
+      <p class="t-h3">{s.missing}</p>
+    </div>
+
+    <form class="ok__card ok__track" data-track-form novalidate>
+      <h2 class="t-title">{s.trackTitle}</h2>
+      <div class="ok__track-row">
+        <div class="field">
+          <label for="ok-track-no">{s.trackNo}</label>
+          <input class="input ok__mono" id="ok-track-no" name="no" autocomplete="off" maxlength="14" placeholder="GZ-000000-XXXX" required />
+        </div>
+        <div class="field">
+          <label for="ok-track-phone">{s.trackPhone}</label>
+          <input class="input" id="ok-track-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" minlength="6" maxlength="8" required />
+        </div>
+      </div>
+      <button type="submit" class="btn btn--gold">{s.trackSubmit}</button>
+      <div class="ok__track-out" data-track-out role="status" aria-live="polite"></div>
+    </form>
+
+    <noscript>
+      <div class="ok__card"><p class="t-h3">{s.call}</p></div>
+    </noscript>
+
+    <nav class="ok__links">
+      <a class="btn btn--gold" href={route("shop", locale)}>{s.shop}</a>
+      <a class="btn" href={route("home", locale)}>{s.home}</a>
+    </nav>
+  </section>
+</Base>
+
+<script>
+  // The page logic (src/scripts/order-status.ts) loads on demand, keeping this page's initial JS small.
+  async function copy(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      ta.remove();
+      return ok;
+    }
+  }
+
+  function init() {
+    const root = document.querySelector<HTMLElement>("[data-success]");
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = "1";
+    void import("../scripts/order-status").then((m) => m.init(root));
+    root.addEventListener("click", async (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-copy-value]");
+      const value = btn?.dataset.copyValue ?? "";
+      if (!btn || !value || !(await copy(value))) return;
+      btn.textContent = root.dataset.copied ?? "";
+      btn.dataset.done = "";
+      window.setTimeout(() => {
+        btn.textContent = root.dataset.copy ?? "";
+        delete btn.dataset.done;
+      }, 1800);
+    });
+  }
+
+  document.addEventListener("astro:page-load", init);
+</script>

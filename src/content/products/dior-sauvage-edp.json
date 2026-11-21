@@ -1,0 +1,63 @@
+{
+  "slug": "dior-sauvage-edp",
+  "brand": "Dior",
+  "name": "Sauvage",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot"
+    ],
+    "heart": [
+      "sichuan-pepper",
+      "lavender",
+      "star-anise",
+      "nutmeg"
+    ],
+    "base": [
+      "ambroxan",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Dior Sauvage: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: бергамот; зүрхний ноот: сычуань чинжүү, лаванда, одон анис, задийн самар; суурь ноот: амброксан, ваниль.",
+    "en": "Dior Sauvage is a amber fragrance in EDP concentration. Its listed notes include bergamot, sichuan pepper, lavender, star anise, nutmeg."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-006-front.webp",
+    "back": "/product-photos/curated-006-back.webp"
+  }
+}

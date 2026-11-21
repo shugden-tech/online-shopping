@@ -1,0 +1,49 @@
+{
+  "slug": "maison-francis-kurkdjian-baccarat-rouge-540-edp",
+  "brand": "Maison Francis Kurkdjian",
+  "name": "Baccarat Rouge 540",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "saffron",
+      "jasmine"
+    ],
+    "heart": [
+      "amberwood"
+    ],
+    "base": [
+      "fir-resin",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Maison Francis Kurkdjian Baccarat Rouge 540: Unisex хув үнэр (EDP). Эхний ноот: гүргэм, жасмин; зүрхний ноот: хув мод; суурь ноот: гацуурын давирхай, хуш мод.",
+    "en": "Maison Francis Kurkdjian Baccarat Rouge 540 is a amber fragrance in EDP concentration. Its listed notes include saffron, jasmine, amberwood, fir resin, cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 112500,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-071-front.webp",
+    "back": "/product-photos/curated-071-back.webp"
+  },
+  "featured": true
+}

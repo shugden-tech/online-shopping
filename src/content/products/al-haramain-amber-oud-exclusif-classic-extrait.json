@@ -1,0 +1,46 @@
+{
+  "slug": "al-haramain-amber-oud-exclusif-classic-extrait",
+  "brand": "Al Haramain",
+  "name": "Amber Oud Exclusif Classic",
+  "concentration": "Extrait",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Al Haramain Amber Oud Exclusif Classic: Unisex хув үнэр (Extrait).",
+    "en": "Al Haramain Amber Oud Exclusif Classic Extrait de Parfum Unisex Notes are Citrus, Floral, Jasmine, Lime, Rose, Sandalwood"
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 5
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 5,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/df109ab3-67d1-4de7-94bb-4876681a1b7b_0780470a-5c19-456e-9231-7c8141df8583.jpg?v=1683067993",
+    "back": "https://media.s-bol.com/xNnVEZowqq7E/WDG2Kx/550x456.jpg"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "slug": "montblanc-legend-red-edp",
+  "brand": "Montblanc",
+  "name": "Legend Red",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "orange",
+      "grapefruit",
+      "cardamom"
+    ],
+    "heart": [
+      "juniper",
+      "clary-sage"
+    ],
+    "base": [
+      "cedar",
+      "mahogany",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Montblanc Legend Red Eau de Parfum (EDP) нь эрч хүчтэй, орчин үеийн эрэгтэй үнэртэн юм. Барилт (Performance): Дунджаар 5-7 цаг орчим арьс болон хувцас дээр тогтдог",
+    "en": "Montblanc Legend Red is a woody EDP for men. Notes include orange, grapefruit, cardamom, juniper, clary sage, cedar."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/montblanc-legend-red-edp.webp",
+    "back": "/product-photos/store/montblanc-legend-red-edp-back.webp"
+  }
+}

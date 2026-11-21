@@ -1,0 +1,63 @@
+{
+  "slug": "rabanne-1-million-elixir-edp",
+  "brand": "Rabanne",
+  "name": "1 Million Elixir",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "apple",
+      "davana"
+    ],
+    "heart": [
+      "osmanthus",
+      "rose",
+      "cedar"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Rabanne 1 Million Elixir: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: алим, давана; зүрхний ноот: османтус, сарнай, хуш мод; суурь ноот: ваниль, тонка шош, пачули.",
+    "en": "Rabanne 1 Million Elixir is a woody fragrance in EDP concentration. Its listed notes include apple, davana, osmanthus, rose, cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-028-front.webp",
+    "back": "/product-photos/curated-028-back.webp"
+  }
+}

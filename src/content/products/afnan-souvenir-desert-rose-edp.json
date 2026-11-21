@@ -1,0 +1,62 @@
+{
+  "slug": "afnan-souvenir-desert-rose-edp",
+  "brand": "Afnan",
+  "name": "Souvenir Desert Rose",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "fruity-notes",
+      "sweet-notes",
+      "musk"
+    ],
+    "heart": [
+      "powdery",
+      "tropical"
+    ],
+    "base": [
+      "sandalwood",
+      "citrus",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Souvenir Desert Rose: Эмэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: жимсний ноот, чихэрлэг ноот, заар; зүрхний ноот: пудрын ноот, халуун орны жимс; суурь ноот: зандан мод, цитрусын ноот, хув.",
+    "en": "Feminine perfume with fruity notes, musk, sandalwood and amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/908924ac-1bd5-48c5-a574-4093a32661e8_93b0a839-b50a-4db6-afb9-c55d71a08952.jpg?v=1683064878",
+    "back": "https://priveperfumes.com/cdn/shop/files/afnan-souvenir-desert-rose-edp-w-1-prive-perfumes.jpg?v=1782206193&width=1024"
+  }
+}

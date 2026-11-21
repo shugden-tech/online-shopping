@@ -1,0 +1,61 @@
+{
+  "slug": "afnan-supremacy-silver-edp",
+  "brand": "Afnan",
+  "name": "Supremacy Silver",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "apple",
+      "bergamot",
+      "blackcurrant",
+      "pineapple"
+    ],
+    "heart": [
+      "rose",
+      "birch",
+      "jasmine",
+      "patchouli"
+    ],
+    "base": [
+      "oakmoss",
+      "musk",
+      "ambergris",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy Silver: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: алим, бергамот, үхрийн нүд, хан боргоцой; зүрхний ноот: сарнай, хус мод, жасмин, пачули; суурь ноот: царсны хөвд, заар, амбра, ваниль.",
+    "en": "Supremacy Silver by Afnan Perfumes is a Woody Floral Musk fragrance for men. Supremacy Silver was launched in 2013. Top notes are apple, bergamot, black currant and pineapple; middle notes are rose, birch, moroccan jasmine and patchouli; base notes are oakmoss, musk, ambergris and vanilla. Supremacy Silver is a woody-floral-musk men’s scent that launched in 2013 from the Afnan Perfumes brand. This refreshing fragrance shows off your sensual, masculine side the moment you enter a room, without overpowering those present. Citrusy top notes include luscious apple, blackcurrant, pineapple and bergamot. Refreshing, oriental, and woody fragrance leaves you feeling cool and confident Ideal for a variety of occasions A fragrance that has been widely accepted It’s light, refreshing and can be applied often. fragrance to make it last longer."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 56000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/b4ec3dbb-3ebc-4689-b3d7-d2e1b617a879.jpg?v=1692046595",
+    "back": "https://media.cdn.kaufland.de/product-images/1024x1024/9b0527efe4154b1816e6de8118e24fa6.jpg"
+  }
+}

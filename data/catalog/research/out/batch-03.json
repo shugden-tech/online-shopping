@@ -1,0 +1,17 @@
+[
+{"id":"abercrombie-and-fitch-authentic-night-edp","sizesMl":[15,30,50,100],"flagshipMl":100,"confidence":"medium","source":"lyko.com, lookfantastic.com, pricespy.co.uk","note":"Women's EDP; 15/30/50/100 listed by retailers; 100 most common"},
+{"id":"acqua-di-parma-blu-mediterraneo-fico-di-amalfi-edt","sizesMl":[30,75,150],"flagshipMl":75,"confidence":"low","source":"none (search unavailable; from memory)","note":"Unverified; search budget exhausted. Typical Blu Mediterraneo sizes 30/75/150"},
+{"id":"acqua-di-parma-colonia-pura-cologne","sizesMl":[50,100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com","note":"Official site and Sephora UK list 50/100/180"},
+{"id":"acqua-di-parma-peonia-nobile-edp","sizesMl":[20,50,100],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com","note":"50 and 100 widely sold; 20 ml on some official regional sites"},
+{"id":"afnan-her-highness-red-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"none","note":"Unknown; search budget exhausted"},
+{"id":"afnan-supremacy-noir-edp","sizesMl":[100],"flagshipMl":100,"confidence":"low","source":"none (from memory)","note":"Unverified; Afnan Supremacy line usually 100 ml"},
+{"id":"al-haramain-amber-oud-black-edition-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"none","note":"Unknown; search budget exhausted (sibling Gold Edition is 60/120, unverified for Black)"},
+{"id":"burberry-her-edp","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"high","source":"sephora.co.uk, burberry.com","note":"30/50/100 confirmed on brand and retailer pages"},
+{"id":"dior-hypnotic-poison-edt","sizesMl":[50,100],"flagshipMl":100,"confidence":"medium","source":"dior.com, harrods.com, davidjones.com","note":"50 and 100 ml EDT confirmed; 150 ml from memory not verified"},
+{"id":"jean-paul-gaultier-la-belle-edp","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"high","source":"lookfantastic.com, sephora.co.uk","note":"30/50/100 retail; 15 ml travel also on brand site"},
+{"id":"lattafa-khamrah-qahwa-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"perfumania.com, nahdionline.com","note":"Only 100 ml full bottle; others are travel/decants"},
+{"id":"parfums-de-marly-althair-edp","sizesMl":[75,125],"flagshipMl":125,"confidence":"high","source":"us.parfums-de-marly.com, printemps.com","note":"75 and 125 ml; 125 most widely stocked"},
+{"id":"tom-ford-ombre-leather-edp","sizesMl":[10,50,100],"flagshipMl":100,"confidence":"high","source":"myer.com.au, belk.com","note":"50/100 core; 10 ml at some retailers"},
+{"id":"viktor-and-rolf-spicebomb-extreme-edp","sizesMl":[50,90],"flagshipMl":90,"confidence":"high","source":"viktor-rolf.com, superdrug.com","note":"50 and 90 ml; 10 ml only in sets"},
+{"id":"chanel-allure-homme-sport-edt","sizesMl":[50,100,150],"flagshipMl":100,"confidence":"high","source":"chanel.com","note":"Spray sizes 50/100/150; 3x20 refillable is a separate product"}
+]

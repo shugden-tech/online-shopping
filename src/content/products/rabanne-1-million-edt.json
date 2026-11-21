@@ -1,0 +1,58 @@
+{
+  "slug": "rabanne-1-million-edt",
+  "brand": "Rabanne",
+  "name": "1 Million",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "mandarin",
+      "grapefruit",
+      "mint"
+    ],
+    "heart": [
+      "cinnamon",
+      "pepper",
+      "rose"
+    ],
+    "base": [
+      "amber",
+      "leather",
+      "woods",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Rabanne 1 Million: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDT). Эхний ноот: мандарин, бэрсүүт жүрж, гаа; зүрхний ноот: шанцай, хар чинжүү, сарнай; суурь ноот: хув, арьс, модлог ноот, пачули.",
+    "en": "Rabanne 1 Million is a citrus fragrance in EDT concentration. Its listed notes include mandarin, grapefruit, mint, cinnamon, black pepper."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-027-front.webp"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "slug": "acqua-di-parma-blu-mediterraneo-chinotto-di-liguria-edt",
+  "brand": "Acqua di Parma",
+  "name": "Blu Mediterraneo Chinotto Di Liguria",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "chypre",
+  "notes": {
+    "top": [
+      "mandarin",
+      "chinotto"
+    ],
+    "heart": [
+      "jasmine",
+      "geranium",
+      "cardamom",
+      "rosemary"
+    ],
+    "base": [
+      "patchouli",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Blu Mediterraneo Chinotto Di Liguria: Unisex шипр үнэр (EDT). Эхний ноот: мандарин, чинотто; зүрхний ноот: жасмин, герань, кардамон, розмарин; суурь ноот: пачули, заар.",
+    "en": "Chinotto di Liguria by Acqua di Parma is a Chypre Floral fragrance for women and men. Chinotto di Liguria was launched in 2018. Top notes are mandarin orange and chinotto; middle notes are jasmine, geranium, cardamom and rosemary; base notes are patchouli and musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 43500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 65500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 75,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/54f42fde-674e-4c71-8797-08245ce7dde0_b2a1f847-e515-41c6-a1f0-3ab8b03ccf8b.jpg?v=1683061254",
+    "back": "https://www.boutiquetozzi.com/cdn/shop/products/ADP57036-150ML.2.H1.jpg?v=1584976889&width=1445"
+  }
+}

@@ -1,0 +1,17 @@
+[
+{"id":"abercrombie-and-fitch-fierce-cologne","sizesMl":[50,100,200],"flagshipMl":100,"confidence":"medium","source":"abercrombie.com; superdrug.com; klinq.com","note":"A&F site shows 50 and 200; 100 from retailers; 30 ml also seen"},
+{"id":"acqua-di-parma-camelia-edp","sizesMl":[20,100,180],"flagshipMl":100,"confidence":"medium","source":"harveynichols.com; harveynorman.com.au; 24s.com","note":"Retailer listings; 24s says 100 ml no longer available"},
+{"id":"acqua-di-parma-gelsomino-a-freddo-edp","sizesMl":[50,100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com; sephora.co.uk","note":"Official site lists 50/100/180"},
+{"id":"acqua-di-parma-sandalo-edp","sizesMl":[20,50,100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com","note":"Official site lists 20/50/100/180"},
+{"id":"afnan-highness-vi-blue-edp","sizesMl":[100],"flagshipMl":100,"confidence":"medium","source":"superdrug.com; galaxus.ch; lyko.com","note":"Only 100 ml found"},
+{"id":"afnan-supremacy-purple-edp","sizesMl":[100],"flagshipMl":100,"confidence":"medium","source":"lyko.com; aio.lv; walmart.com","note":"Only 100 ml found"},
+{"id":"al-haramain-amber-oud-emerald-edition-edp","sizesMl":[60],"flagshipMl":60,"confidence":"low","source":"fragrancex.com; desertcart.co.th","note":"60 ml listed for Amber Oud Exclusif Emerald; naming/concentration unclear; 100 ml unconfirmed"},
+{"id":"byredo-bal-dafrique-edp","sizesMl":[50,100],"flagshipMl":100,"confidence":"high","source":"selfridges.com; kith.com","note":"50 and 100 ml EDP"},
+{"id":"dior-sauvage-edp","sizesMl":[60,100,200],"flagshipMl":100,"confidence":"medium","source":"dior.com; sephora.co.uk; selfridges.com","note":"Dior UK mentions 5 sizes (30 and 500 ml unverified)"},
+{"id":"jean-paul-gaultier-le-male-elixir-parfum","sizesMl":[40,75,125],"flagshipMl":125,"confidence":"low","source":"unverified (search budget exhausted)","note":"From memory, not web-verified"},
+{"id":"louis-vuitton-afternoon-swim-edp","sizesMl":[100],"flagshipMl":100,"confidence":"low","source":"unverified (search budget exhausted)","note":"From memory; LV Cologne line is 100 ml (refills/200 ml possible)"},
+{"id":"parfums-de-marly-layton-edp","sizesMl":[75,125],"flagshipMl":125,"confidence":"low","source":"unverified (search budget exhausted)","note":"From memory; PdM standard 75/125, 30 ml travel possible"},
+{"id":"valentino-donna-born-in-roma-edp","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"low","source":"unverified (search budget exhausted)","note":"From memory, not web-verified"},
+{"id":"yves-saint-laurent-black-opium-edp","sizesMl":[30,50,90],"flagshipMl":90,"confidence":"low","source":"unverified (search budget exhausted)","note":"From memory; 150 ml may exist"},
+{"id":"valentino-uomo-born-in-roma-purple-melancholia-edt","sizesMl":[50,100],"flagshipMl":100,"confidence":"low","source":"unverified (search budget exhausted)","note":"From memory, not web-verified"}
+]

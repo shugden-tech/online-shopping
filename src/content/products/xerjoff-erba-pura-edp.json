@@ -1,0 +1,56 @@
+{
+  "slug": "xerjoff-erba-pura-edp",
+  "brand": "Xerjoff",
+  "name": "Erba Pura",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "orange",
+      "lemon",
+      "bergamot"
+    ],
+    "heart": [
+      "fruity-notes"
+    ],
+    "base": [
+      "musk",
+      "amber",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Xerjoff Erba Pura: Unisex хув үнэр (EDP). Эхний ноот: жүрж, нимбэг, бергамот; зүрхний ноот: жимсний ноот; суурь ноот: заар, хув, ваниль.",
+    "en": "Xerjoff Erba Pura is a amber fragrance in EDP concentration. Its listed notes include orange, lemon, bergamot, fruity notes, musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-080-front.webp",
+    "back": "/product-photos/curated-080-back.webp"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "slug": "parfums-de-marly-delina-edp",
+  "brand": "Parfums de Marly",
+  "name": "Delina",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "lychee",
+      "rhubarb",
+      "bergamot",
+      "nutmeg"
+    ],
+    "heart": [
+      "rose",
+      "peony",
+      "musk",
+      "petalia",
+      "vanilla"
+    ],
+    "base": [
+      "cashmeran",
+      "incense",
+      "cedar",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Parfums de Marly Delina: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: личи, гишүүнэ, бергамот, задийн самар; зүрхний ноот: сарнай, цээнэ цэцэг, заар, петалиа, ваниль; суурь ноот: кашмеран, хүж, хуш мод, ветивер.",
+    "en": "Parfums de Marly Delina is a floral fragrance in EDP concentration. Its listed notes include lychee, rhubarb, bergamot, nutmeg, rose."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 94500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 160500,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-077-front.webp",
+    "back": "/product-photos/curated-077-back.webp"
+  }
+}

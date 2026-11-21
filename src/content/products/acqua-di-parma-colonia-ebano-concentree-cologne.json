@@ -1,0 +1,61 @@
+{
+  "slug": "acqua-di-parma-colonia-ebano-concentree-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Ebano Concentree",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "resins",
+      "red-pepper",
+      "petitgrain"
+    ],
+    "heart": [
+      "ebony",
+      "honey"
+    ],
+    "base": [
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Ebano Concentree: Эрэгтэйчүүдэд зориулсан модлог үнэр (Cologne). Эхний ноот: давирхай, улаан чинжүү, петигрейн; зүрхний ноот: хар мод, зөгийн бал; суурь ноот: ветивер.",
+    "en": "Colonia Ebano by Acqua di Parma is a Woody fragrance for men. Colonia Ebano was launched in 2017. Top notes are resins, Red Pepper, Petitgrain and Bergamot; middle notes are Ebony and Honey; base notes are Vetiver and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/67fcf451-6a90-403f-80fb-07a2e01bdaac.jpg?v=1683061722",
+    "back": "https://cdn.shopify.com/s/files/1/0259/7733/products/acqua-di-parma-colonia-ebano-180ml_grande.png?v=1569964338"
+  }
+}

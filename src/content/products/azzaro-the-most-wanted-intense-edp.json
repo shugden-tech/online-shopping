@@ -1,0 +1,51 @@
+{
+  "slug": "azzaro-the-most-wanted-intense-edp",
+  "brand": "Azzaro",
+  "name": "The Most Wanted Intense",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "cardamom"
+    ],
+    "heart": [
+      "toffee"
+    ],
+    "base": [
+      "amberwood"
+    ]
+  },
+  "description": {
+    "mn": "Azzaro The Most Wanted Intense: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: кардамон; зүрхний ноот: ирис чихэр; суурь ноот: хув мод.",
+    "en": "Azzaro The Most Wanted Intense is a amber fragrance in EDP concentration. Its listed notes include cardamom, toffee, amberwood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-018-front.webp"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "mode": "demo",
+  "products": 207,
+  "available": 190,
+  "soldOut": 17,
+  "sizeQuantities": {
+    "0": 32,
+    "1": 59,
+    "2": 77,
+    "3": 82,
+    "4": 83,
+    "5": 66
+  },
+  "placeholderPricesAdded": 42,
+  "demoPricesMnt": {
+    "2": 20000,
+    "5": 45000,
+    "10": 80000,
+    "30": 200000
+  },
+  "backup": "decantx\\demo-inventory-backup-2026-11-15T04-32-20-970Z",
+  "note": "Stock is a static per-size demo quantity. Orders do not decrement it. Existing positive reference prices are preserved; missing prices are demo placeholders."
+}

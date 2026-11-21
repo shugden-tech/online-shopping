@@ -1,0 +1,89 @@
+---
+// One scent-family band: big family name + a slowly sliding strip of its ingredients.
+// The strip's offset follows scroll progress (--p, set by scripts/home.ts).
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  family: string;
+  name: string;
+  line: string;
+  href: string;
+  cta: string;
+  strip: ImageMetadata;
+  index: number;
+}
+const { family, name, line, href, cta, strip, index } = Astro.props;
+const img = await getImage({ src: strip, format: "avif", quality: 60 });
+const h = 110;
+const w = Math.round((strip.width / strip.height) * h);
+---
+<a class="band" href={href} data-band data-dir={index % 2 ? "-1" : "1"} style={`--tint:var(--fam-${family})`} data-reveal>
+  <span class="band__num" aria-hidden="true">0{index + 1}</span>
+  <span class="band__text">
+    <span class="band__name">{name}</span>
+    <span class="band__line">{line}</span>
+  </span>
+  <span class="band__strip" aria-hidden="true">
+    <span class="band__track">
+      {[0, 1, 2, 3].map(() => (
+        <img src={img.src} alt="" width={w} height={h} loading="lazy" decoding="async" />
+      ))}
+    </span>
+  </span>
+  <span class="band__cta">
+    <span class="sr-only">{cta}</span>
+    <svg viewBox="0 0 22 10" width="30" height="14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M0 5h21M17 1l4 4-4 4" /></svg>
+  </span>
+</a>
+
+<style>
+  .band {
+    position: relative; display: grid; grid-template-columns: 56px minmax(240px, 34%) 1fr 56px; align-items: center; gap: clamp(8px, 2vw, 32px);
+    min-height: clamp(150px, 15vw, 210px); padding: 20px var(--gutter);
+    border-top: 1px solid var(--line); overflow: hidden; isolation: isolate;
+  }
+  .band:last-child { border-bottom: 1px solid var(--line); }
+  .band::before { /* family-coloured wash that warms up on hover */
+    content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0;
+    background: radial-gradient(60% 140% at 70% 50%, color-mix(in srgb, var(--tint) 16%, transparent), transparent 70%);
+    transition: opacity .7s var(--ease-sine);
+  }
+  .band:hover::before, .band:focus-visible::before { opacity: 1; }
+  .band:focus-visible { outline-offset: -4px; }
+
+  .band__num { font-size: 11px; font-weight: 500; letter-spacing: .2em; color: var(--gold); }
+  .band__text { display: grid; gap: 6px; min-width: 0; }
+  .band__name {
+    font-family: var(--font-head); font-weight: 300; font-size: clamp(44px, 6vw, 96px); line-height: 1;
+    transition: color .5s var(--ease-sine), transform .7s var(--ease-out);
+  }
+  .band:hover .band__name { color: var(--gold-soft); transform: translateX(10px); }
+  .band__line { color: var(--text-dim); font-size: 14px; max-width: 36ch; }
+
+  .band__strip {
+    display: block; overflow: hidden; align-self: stretch; margin-block: -20px;
+    mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  }
+  .band__track {
+    display: flex; align-items: center; gap: 28px; height: 100%; width: max-content;
+    /* --x follows scroll progress (set by scripts/home.ts) */
+    transform: translate3d(var(--x, -170px), 0, 0);
+    will-change: transform;
+  }
+  .band__track img { height: clamp(84px, 9vw, 124px); width: auto; flex: none; filter: saturate(.92) brightness(.92); transition: filter .7s var(--ease-sine); }
+  .band:hover .band__track img { filter: none; }
+
+  .band__cta { justify-self: end; color: var(--gold); transition: transform .6s var(--ease-out); }
+  .band:hover .band__cta { transform: translateX(8px); }
+
+  @media (max-width: 760px) {
+    .band { grid-template-columns: 1fr auto; grid-template-areas: "text cta" "strip strip"; gap: 4px 12px; padding-block: 22px 0; min-height: 0; }
+    .band__num { display: none; }
+    .band__text { grid-area: text; }
+    .band__cta { grid-area: cta; }
+    .band__strip { grid-area: strip; margin: 6px calc(var(--gutter) * -1) 0; height: 104px; }
+    .band__track img { height: 80px; }
+    .band__name { font-size: clamp(40px, 12vw, 56px); }
+  }
+</style>

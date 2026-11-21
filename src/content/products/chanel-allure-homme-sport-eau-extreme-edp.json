@@ -1,0 +1,57 @@
+{
+  "slug": "chanel-allure-homme-sport-eau-extreme-edp",
+  "brand": "Chanel",
+  "name": "Allure Homme Sport Eau Extreme",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "mandarin",
+      "mint",
+      "cypress",
+      "sage"
+    ],
+    "heart": [
+      "pepper"
+    ],
+    "base": [
+      "tonka",
+      "musk",
+      "sandalwood",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Chanel Allure Homme Sport Eau Extreme: Эрэгтэйчүүдэд зориулсан өвслөг үнэр (EDP). Эхний ноот: мандарин, гаа, кипарис, мэргэн өвс; зүрхний ноот: хар чинжүү; суурь ноот: тонка шош, заар, зандан мод, хуш мод.",
+    "en": "Chanel Allure Homme Sport Eau Extreme is a aromatic fragrance in EDP concentration. Its listed notes include mandarin, mint, cypress, sage, black pepper."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-011-front.webp"
+  }
+}

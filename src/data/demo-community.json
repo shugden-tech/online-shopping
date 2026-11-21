@@ -1,0 +1,118 @@
+{
+  "_readme": "DEMO data for the home page Top 3 and reviews. Fictional people. Replace with real data from D1 when accounts go live.",
+  "leaderboard": {
+    "p7": [
+      {
+        "name": "Сараа Б.",
+        "total": 186000
+      },
+      {
+        "name": "Тэмүүлэн",
+        "total": 142500
+      },
+      {
+        "name": "Anu G.",
+        "total": 98000
+      },
+      {
+        "name": "Болдбаатар",
+        "total": 76000
+      },
+      {
+        "name": "Оюунаа",
+        "total": 54000
+      }
+    ],
+    "p30": [
+      {
+        "name": "Номин Д.",
+        "total": 412000
+      },
+      {
+        "name": "Сараа Б.",
+        "total": 356500
+      },
+      {
+        "name": "Билгүүн",
+        "total": 287000
+      },
+      {
+        "name": "Саруул",
+        "total": 231000
+      },
+      {
+        "name": "Мөнх-Эрдэнэ",
+        "total": 184500
+      }
+    ],
+    "all": [
+      {
+        "name": "Номин Д.",
+        "total": 1245000
+      },
+      {
+        "name": "Ганбат",
+        "total": 968500
+      },
+      {
+        "name": "Сараа Б.",
+        "total": 874000
+      },
+      {
+        "name": "Энхжин",
+        "total": 742000
+      },
+      {
+        "name": "Бат-Оргил",
+        "total": 615000
+      }
+    ]
+  },
+  "reviews": [
+    {
+      "name": "Номин Д.",
+      "rating": 5,
+      "slug": "chanel-coco-mademoiselle-edp",
+      "text": {
+        "mn": "5 мл-ээр туршаад маш их таалагдсан, одоо бүтэн шилийг нь авна.",
+        "en": "Tried the 5 ml and loved it, getting the full bottle next."
+      }
+    },
+    {
+      "name": "Тэмүүлэн",
+      "rating": 5,
+      "slug": "lattafa-asad-edp",
+      "text": {
+        "mn": "Хүргэлт хурдан, савлагаа цэвэрхэн. Үнэр нь удаан тогтдог.",
+        "en": "Fast delivery, neat packaging. The scent lasts a long time."
+      }
+    },
+    {
+      "name": "Anu G.",
+      "rating": 4,
+      "slug": "afnan-9-pm-edp",
+      "text": {
+        "mn": "Өвлийн оройд яг тохирсон дулаан үнэр. Дахиад авна.",
+        "en": "A warm scent that suits winter evenings. Will buy again."
+      }
+    },
+    {
+      "name": "Билгүүн",
+      "rating": 5,
+      "slug": "rabanne-invictus-victory-elixir-parfum",
+      "text": {
+        "mn": "Олон үнэр туршиж байж сонгох боломжтой нь хамгийн гоё нь.",
+        "en": "Being able to try many scents before choosing is the best part."
+      }
+    },
+    {
+      "name": "Ганбат",
+      "rating": 5,
+      "slug": "acqua-di-parma-colonia-intensa-cologne",
+      "text": {
+        "mn": "Ажилдаа өдөр бүр хэрэглэж байна, сэргэг, хөнгөн.",
+        "en": "I wear it to work every day, fresh and light."
+      }
+    }
+  ]
+}

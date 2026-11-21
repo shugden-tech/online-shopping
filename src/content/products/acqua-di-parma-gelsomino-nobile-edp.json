@@ -1,0 +1,57 @@
+{
+  "slug": "acqua-di-parma-gelsomino-nobile-edp",
+  "brand": "Acqua di Parma",
+  "name": "Gelsomino Nobile",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "mandarin",
+      "pink-pepper",
+      "jasmine",
+      "tuberose",
+      "orange-blossom"
+    ],
+    "heart": [
+      "jasmine",
+      "tuberose",
+      "orange-blossom"
+    ],
+    "base": [
+      "musk",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Gelsomino Nobile: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: мандарин, ягаан чинжүү, жасмин, тубероз, жүржийн цэцэг; зүрхний ноот: жасмин, тубероз, жүржийн цэцэг; суурь ноот: заар, хуш мод.",
+    "en": "Acqua di Parma Gelsomino Nobile is a Floral Woody Musk fragrance designed for women, introduced in 2011. The scent was crafted by renowned perfumers Michel Almairac and Francois Demachy. The fragrance opens with vibrant top notes of Mandarin Orange and Pink Pepper, leading into a heart of exquisite Jasmine, Tuberose, and Orange Blossom. The composition is anchored by a warm base of Musk and Cedar. Acqua di Parma Gelsomino Nobile by Acqua di Parma is a Floral Woody Musk fragrance for women. Acqua di Parma Gelsomino Nobile was launched in 2011. Acqua di Parma Gelsomino Nobile was created by Michel Almairac and Francois Demachy. Top notes are Mandarin Orange and Pink Pepper; middle notes are Jasmine, Tuberose and Orange Blossom; base notes are Musk and Cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/772195.jpg?v=1745437728",
+    "back": "https://i5.walmartimages.com/asr/e3d354ac-b927-4aaf-8317-10eb1a4399e7_1.af78dce31d1fb48faff3da01afc7c37d.jpeg"
+  }
+}

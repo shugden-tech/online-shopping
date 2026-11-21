@@ -1,0 +1,68 @@
+{
+  "slug": "chanel-coco-mademoiselle-edp",
+  "brand": "Chanel",
+  "name": "Coco Mademoiselle",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "orange",
+      "mandarin",
+      "bergamot",
+      "orange-blossom"
+    ],
+    "heart": [
+      "rose",
+      "jasmine",
+      "mimosa",
+      "ylang-ylang"
+    ],
+    "base": [
+      "patchouli",
+      "musk",
+      "vanilla",
+      "vetiver",
+      "tonka",
+      "opoponax"
+    ]
+  },
+  "description": {
+    "mn": "Chanel Coco Mademoiselle: Эмэгтэйчүүдэд зориулсан цитрус үнэр (EDP). Эхний ноот: жүрж, мандарин, бергамот, жүржийн цэцэг; зүрхний ноот: сарнай, жасмин, мимоза, иланг-иланг; суурь ноот: пачули, заар, ваниль, ветивер, тонка шош, опопонакс.",
+    "en": "Chanel Coco Mademoiselle is a citrus fragrance in EDP concentration. Its listed notes include orange, mandarin, bergamot, orange blossom, rose."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-055-front.webp"
+  }
+}
