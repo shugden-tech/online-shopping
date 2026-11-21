@@ -535,3 +535,27 @@ checkout prefill, logout/login, 375 px without horizontal scroll, English page).
 - `scripts/test-storefront.mjs`: the `soon` check now expects «Захиалгаар», enabled, no cart write, popover, Esc, outside click;
   selectors use `button[data-main]` (the photo span can also carry `data-main` when a remote photo fails).
 - Gate: storefront 61/61 on local wrangler dev, `astro check` 0 errors, `npm run budget` PASS (home 33.9 KB total).
+
+## 2026-11-21 — Owner's own-store products made sellable (real prices only) — model: Opus
+- Source: `data/catalog/genzst-store.json` (33 products). Generator `scripts/build-store-import.mjs` writes
+  `data/catalog/store-import.sql` (67 idempotent upserts: 33 products, 33 multi-row SKU upserts, 1 opening-stock movement insert;
+  82 KB, under D1's 100 KB query limit) and `data/catalog/store-import-report.json` (per product: full ml + its source, SKUs, stock,
+  unmapped notes). `--content` also writes the content files.
+- D1: the 33 products `active`, `sale_locked 0`; 92 SKUs (`<id>:<ml>`), 89 priced from the store; store price 0 → price NULL
+  (french-avenue-liquid-brun-edp, valentino-uomo-born-in-roma-extradose-edp, valentino-uomo-born-in-roma-intense-edp). Stock: full =
+  store `quantity`, decant = floor(mlStock / ml), missing/0 → 0. Mongolian notes (mapped to notes.json labels, unknown kept as
+  text) + accords in `notes_json`, store description in `description_mn`, `image_front` = `/product-photos/store/<id>.webp`.
+  Existing rows keep their concentration / family / English description (COALESCE). No other product is touched.
+- The store's "Eros" is the EDP (description, notes and photo say Eau de Parfum) → mapped to `versace-eros-edp` (not `-edt`).
+- Photos: 33 × 1000×1000 WebP on white (Pillow) in `public/product-photos/store/` (25–122 KB). The content schema accepts
+  `/product-photos/store/…`; `catalogPhotos()` (master.mjs) keeps a store photo instead of the R2 catalog photo.
+- Content: 23 files created (the 15 new + 8 existing D1-only ones: versace-eros-edp, jean-paul-gaultier-le-male-edt, valentino coral
+  fantasy, YSL Y Le Parfum, Eros Energy, SWY Powerfully, Eau Sauvage, Legend EDT) and 10 updated (missing 2 ml / full sizes added at
+  price 0, versace-pour-homme full 100 → 200 ml, front photo → store photo). `data/catalog/import.sql` regenerated (still insert-only).
+- Importer: default mode is insert-only (`DO NOTHING`, SKUs price NULL) so a re-import never changes these prices; `--refresh` now
+  skips the 33 store products so it cannot overwrite their notes/description/photo.
+- Tests: fresh local D1 (`migrations apply` → store-import.sql → again → import.sql): 33 products / 92 SKUs / 89 priced / 78
+  movements every time, 0 priced SKUs outside the 33. `wrangler dev` `/api/store/catalog-state` checked for 6 products (prices,
+  availability, sellable, imageFront); PDP checked in headless Chrome. `astro check` 0 errors, `astro build` OK.
+- Owner to confirm full-bottle sizes: Le Male Elixir 125, Le Male EDT 125, Y Le Parfum 100, SWY Parfum 100, Eros EDP 100 (photo
+  box shows 200 ml) — see the report.
