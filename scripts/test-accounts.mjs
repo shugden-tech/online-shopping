@@ -1,4 +1,4 @@
-// Customer account tests (0006): register / login / logout, CSRF origin check, rate limits, session expiry and
+// Customer account tests (0007): register / login / logout, CSRF origin check, rate limits, session expiry and
 // sliding refresh, password change ending other sessions, avatar validation (magic bytes, size) and serving,
 // address CRUD + single default, order linkage (session only) + claiming past orders by phone, wishlist merge /
 // replace, account deletion, admin list + password reset (audit), and Google sign-in against a mock Google

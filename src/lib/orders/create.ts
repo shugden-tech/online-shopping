@@ -59,7 +59,7 @@ export async function placeOrder(
   /** Signed-in customer (from the session cookie, never the request body); null for a guest order. */
   customerId: number | null = null,
 ): Promise<PlaceResult> {
-  // guest orders do not name the column, so checkout keeps working on a database without migration 0006
+  // guest orders do not name the column, so checkout keeps working on a database without migration 0007
   const linkCol = customerId === null ? "" : ", customer_id";
   const linkVal = customerId === null ? "" : ", ?19";
   const holdExpiresAt = sqliteTime(Date.now() + holdMinutes(settings, o.payment) * 60_000);

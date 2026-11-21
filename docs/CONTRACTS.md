@@ -255,14 +255,14 @@ lookup and the admin order detail return `bundle` on the line; the packing slip 
 Tests: `scripts/test-bundles.mjs` (68), bundle blocks in `test-api`, `test-admin-api`, `test-e2e-commerce`; browser + screenshots:
 `scripts/shot-bundles.mjs` → `docs/screens/bundles-*`.
 
-## 10. Customer accounts (lead, 2026-11-21, migration 0006)
+## 10. Customer accounts (lead, 2026-11-21, migration 0007)
 
 Replaces the browser-only demo account (`src/lib/account.ts` and its `gz_account` / `gz_orders` localStorage keys are
 gone; old keys are simply ignored). Server code: `src/lib/customers/` (`crypto.ts`, `session.ts`, `store.ts`, `google.ts`,
 `limits.ts`), routes `src/pages/api/account/**`. Browser: `src/scripts/profile.ts` (the /profile page), `account-api.ts`,
 `account-badge.ts`, `wish-sync.ts`, `account-prefill.ts`. Tests: `scripts/test-accounts.mjs` (`npm run test:accounts`).
 
-Schema `migrations/0006_customers.sql`:
+Schema `migrations/0007_customers.sql`:
 - `customers` — `phone` UNIQUE (8 digits, `[6-9]…`; NULL only for a Google sign-up that has not given one yet, and after
   deletion), `name`, `display_name`, `password_hash` / `password_salt` / `password_iter` (NULL = no password, Google only),
   `must_change_password`, `avatar_key`, `show_on_board`, `google_sub` UNIQUE, `email` (from a verified Google ID token only),

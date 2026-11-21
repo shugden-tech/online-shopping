@@ -218,7 +218,7 @@ export const PERMISSIONS = [
   "delivery.read", "delivery.write",
   "settings.read", "settings.write",
   "audit.read",
-  // customer accounts (0006): owner only (staff has neither)
+  // customer accounts (0007): owner only (staff has neither)
   "customers.read", "customers.write",
 ] as const;
 export type Permission = (typeof PERMISSIONS)[number];

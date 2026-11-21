@@ -1,4 +1,4 @@
--- 0006: real customer accounts (replaces the browser-only demo account).
+-- 0007: real customer accounts (replaces the browser-only demo account).
 -- Login = Mongolian phone (8 digits) + password (PBKDF2-SHA256), or optional Google sign-in.
 -- Sessions: only the SHA-256 of the random cookie token is stored. Contract: docs/CONTRACTS.md §10.
 

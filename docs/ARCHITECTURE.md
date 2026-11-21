@@ -16,7 +16,7 @@ flowchart TB
     direction TB
     ASSETS["Workers static assets<br/>dist/ + _headers (CSP, HSTS…)"]
     W["Worker (Astro SSR endpoints)<br/>src/pages/api/**"]
-    D1[("D1 database<br/>genzst · migrations 0001–0006")]
+    D1[("D1 database<br/>genzst · migrations 0001–0007")]
     R2[("R2 bucket<br/>genzst-images · product photos, customer avatars")]
     TS["Turnstile"]
     ACC["Cloudflare Access<br/>(planned: guards /admin)"]
@@ -56,8 +56,8 @@ flowchart TB
 | API | `src/pages/api/**` | Thin routes: auth → validate (zod) → call a lib module → JSON. |
 | Domain libs | `src/lib/catalog`, `orders`, `payments`, `delivery` | Business rules. Every state change is one D1 batch with a conditional update. |
 | Shared | `src/lib/contracts.ts`, `ids.ts`, `auth.ts`, `settings.ts`, `audit.ts`, `server.ts` | Types, state machines, permissions, store switches, audit rows, rate limiter. |
-| Accounts | `src/lib/customers`, `src/pages/api/account/**`, `src/scripts/profile.ts` | Customer accounts (0006): phone + password (PBKDF2), HttpOnly session cookie, addresses, wishlist sync, my orders, avatar in R2, optional Google sign-in. Contract: CONTRACTS.md §10. |
-| Data | `migrations/0001–0006`, D1 | Orders, products, SKUs, reservations, payments, shipments, settings, audit, rate limits, webhooks, bundles, customers. |
+| Accounts | `src/lib/customers`, `src/pages/api/account/**`, `src/scripts/profile.ts` | Customer accounts (0007): phone + password (PBKDF2), HttpOnly session cookie, addresses, wishlist sync, my orders, avatar in R2, optional Google sign-in. Contract: CONTRACTS.md §10. |
+| Data | `migrations/0001–0007`, D1 | Orders, products, SKUs, reservations, payments, shipments, settings, audit, rate limits, webhooks, bundles, customers. |
 | Infra | `wrangler.jsonc`, `public/_headers`, `.github/workflows/pages.yml` | Bindings DB/MEDIA/ASSETS, security headers, CI to GitHub Pages. |
 
 ### Order flow
@@ -115,8 +115,8 @@ Legend: 🔴 blocks launch · 🟠 should fix before real customers · 🟡 late
 - [ ] 🔴 Make the repo private (or remove `decantx/` scraped data and `pic_chat/`; 30 tracked files).
 - [ ] 🟠 Delivery company: name, API + webhook docs, sandbox. Questions: send the order note to the courier? re-ship after a cancelled shipment?
 - [ ] 🟠 Privacy policy, terms, returns page and a consent line on checkout (none exist).
-- [x] Customer accounts and wishlist sync are real (D1, 0006). Top 3 board and reviews are still demo data.
-- [ ] 🟠 Apply migration 0006 to production; optional Google sign-in needs an OAuth client (CONTRACTS.md §10).
+- [x] Customer accounts and wishlist sync are real (D1, 0007). Top 3 board and reviews are still demo data.
+- [ ] 🟠 Apply migration 0007 to production; optional Google sign-in needs an OAuth client (CONTRACTS.md §10).
 - [ ] 🟡 No SMS: the account phone is not verified (forgot-password = owner reset from `/admin/#/customers`).
 
 ### Cloudflare configuration (only you can do it)

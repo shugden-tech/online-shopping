@@ -489,13 +489,13 @@ Mongolian string (most suggestions applied; site-wide terms such as "үнэрт�
 
 ---
 
-## 2026-11-21 — Real customer accounts (migration 0006) · Opus 5.5
+## 2026-11-21 — Real customer accounts (migration 0007) · Opus 5.5
 
 **Model:** Opus 5.5 (hard coding: auth, sessions, API, Google OAuth, UI, tests). Mongolian/English account strings were
 written by Opus too and still need a Sonnet copy review.
 
 **Done**
-- `migrations/0006_customers.sql`: `customers`, `customer_sessions`, `customer_addresses`, `customer_wishlist`, `orders.customer_id`.
+- `migrations/0007_customers.sql`: `customers`, `customer_sessions`, `customer_addresses`, `customer_wishlist`, `orders.customer_id`.
 - Auth (`src/lib/customers/`): PBKDF2-SHA256 100k (WebCrypto), salted, constant-time; common-password list; `__Host-gz_session`
   HttpOnly/Secure/Lax cookie with only its SHA-256 in D1, 30-day sliding expiry; non-secret `gz_in=1` hint cookie; same-origin
   `Origin` check on every mutating account route; failure-based login limits per IP and per phone; Turnstile + honeypot on sign-up.

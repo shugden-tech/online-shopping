@@ -77,7 +77,7 @@ for the draft parts (montblanc-legend-edt, jean-paul-gaultier-le-male-edt, versa
 dolce-gabbana-light-blue-pour-homme-edt, dolce-gabbana-pour-homme-edt, paco-rabanne-invictus-edt); add the two products that are not in
 the catalog at all (Maison Margiela Replica Sailing Day EDT, Moncler Pour Homme EDP) or swap them in the bundle editor.
 
-**Customer accounts (2026-11-21, migration 0006):** real accounts replace the browser-only demo: phone + password
+**Customer accounts (2026-11-21, migration 0007):** real accounts replace the browser-only demo: phone + password
 (PBKDF2), HttpOnly session cookie, `/profile` with avatar, addresses, live orders, wishlist sync, password, devices, delete;
 optional Google sign-in (off until `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` are set); checkout prefill; owner-only
 `/admin/#/customers` with password reset (no SMS yet). Contract: `docs/CONTRACTS.md` §10. Tests: `npm run test:accounts`.
@@ -177,7 +177,7 @@ More detail, including editing products, secrets and deploying, is in `README.md
 - [ ] Decide on the declined copy suggestions: the formal register, and the "Таван аяс" headline versus 8 families (see `PROGRESS.md`).
 - [ ] Unverified: 60 fps smoothness on real hardware. The test machine's headless browser ran at 30 fps.
 
-**Out of scope for v1:** reviews (customer accounts exist since 0006). A minimal `/admin` exists (orders, status, inventory), see §3a.
+**Out of scope for v1:** reviews (customer accounts exist since 0007). A minimal `/admin` exists (orders, status, inventory), see §3a.
 
 ---
 
