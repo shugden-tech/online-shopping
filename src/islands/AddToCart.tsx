@@ -14,7 +14,7 @@ interface Props {
   labels: {
     chooseSize: string; ml: string; qty: string; add: string; soldOut: string; allSoldOut: string; fullBottle: string;
     decrease: string; increase: string; total: string;
-    loading: string; failed: string; soon: string; soonShort: string; locked: string; off: string; notSold: string; was: string; left: string;
+    order?: string; loading: string; failed: string; soon: string; soonShort: string; locked: string; off: string; notSold: string; was: string; left: string;
   };
 }
 
@@ -71,7 +71,7 @@ export default function AddToCart({ locale, pid, base, sizes, labels }: Props) {
       </>
     )
     : v.status === "out" ? labels.soldOut
-    : v.status === "soon" ? labels.soonShort
+    : v.status === "soon" ? (ordering ? labels.order : labels.soonShort)
     : labels.off;
 
   // why the button cannot add (when it cannot)
@@ -82,6 +82,11 @@ export default function AddToCart({ locale, pid, base, sizes, labels }: Props) {
     : views.every((v) => v.status === "out") ? labels.allSoldOut
     : views.every((v) => v.status === "soon" || v.status === "out") ? labels.soon
     : labels.off;
+
+  // «Захиалгаар»: the product is shown but no size has a price. The button opens the order popover, never the cart.
+  const ordering =
+    !waiting && status !== "error" && !locked && !canBuy && Boolean(product) && Boolean(labels.order) &&
+    views.some((v) => v.status === "soon") && views.every((v) => v.status === "soon" || v.status === "out");
 
   if (hidden) {
     return (
@@ -99,7 +104,7 @@ export default function AddToCart({ locale, pid, base, sizes, labels }: Props) {
       aria-busy={waiting ? "true" : undefined}
       onSubmit={(e) => {
         e.preventDefault();
-        if (!current || current.price === null) return;
+        if (ordering || !current || current.price === null) return;
         const size = sizes[k]!;
         addItem(
           { ...base, ml: size.ml, sku: current.sku, price: current.price, ...(current.available !== null ? { stock: current.available } : {}) },
@@ -141,7 +146,15 @@ export default function AddToCart({ locale, pid, base, sizes, labels }: Props) {
             <span aria-hidden="true">+</span>
           </button>
         </div>
-        <button type="submit" class="btn btn--gold atc__btn" disabled={!canBuy} data-wait={waiting ? "" : undefined}>
+        <button
+          type={ordering ? "button" : "submit"}
+          class="btn btn--gold atc__btn"
+          disabled={!canBuy && !ordering}
+          data-wait={waiting ? "" : undefined}
+          data-order={ordering ? "" : undefined}
+          aria-haspopup={ordering ? "dialog" : undefined}
+          // the click is handled by shell.ts ([data-order] → src/scripts/order-pop.ts)
+        >
           {canBuy && current.price !== null ? (
             <>
               <span>{labels.add}</span>
@@ -149,6 +162,8 @@ export default function AddToCart({ locale, pid, base, sizes, labels }: Props) {
                 {money(current.price * selectedQty)}
               </span>
             </>
+          ) : ordering ? (
+            labels.order
           ) : (
             blocked
           )}

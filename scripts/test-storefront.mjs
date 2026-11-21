@@ -131,11 +131,11 @@ const line = (slug, ml, extra = {}) => {
   const { page, ctx, log } = await open({ delay: 900, state: {} });
   await page.goto(`${BASE}/delguur/`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(cardSel(GOOD));
-  const early = await page.$eval(cardSel(GOOD), (c) => ({ ph: !!c.querySelector("[data-price-v] .live-ph"), text: c.querySelector(".pcard__price")?.textContent ?? "", disabled: c.querySelector("[data-main]").disabled }));
+  const early = await page.$eval(cardSel(GOOD), (c) => ({ ph: !!c.querySelector("[data-price-v] .live-ph"), text: c.querySelector(".pcard__price")?.textContent ?? "", disabled: c.querySelector("button[data-main]").disabled }));
   ok("shop: quiet placeholder while loading (no number, add disabled)", early.ph && !/\d/.test(early.text.replace(/\d+\s*мл/g, "")) && early.disabled, JSON.stringify(early));
   await page.waitForFunction((s) => !document.querySelector(`[data-card][data-pid="${s}"] [data-price-v] .live-ph`), GOOD, { timeout: 10000 });
   await shot(page, "shop-desktop");
-  const goodMain = await page.$eval(cardSel(GOOD), (c) => ({ v: c.querySelector("[data-price-v]").textContent.trim(), ml: Number(c.querySelector("[data-main]").dataset.ml), sku: c.querySelector("[data-main]").dataset.sku, dis: c.querySelector("[data-main]").disabled }));
+  const goodMain = await page.$eval(cardSel(GOOD), (c) => ({ v: c.querySelector("[data-price-v]").textContent.trim(), ml: Number(c.querySelector("button[data-main]").dataset.ml), sku: c.querySelector("button[data-main]").dataset.sku, dis: c.querySelector("button[data-main]").disabled }));
   ok("shop: price comes from the API", goodMain.v === fmt(livePrice(GOOD, goodMain.ml)), JSON.stringify(goodMain));
   ok("shop: add button carries the sku id", goodMain.sku === `${GOOD}:${goodMain.ml}` && !goodMain.dis, JSON.stringify(goodMain));
   const allPrices = await page.$$eval("[data-card] [data-price-v], .pcard__dec-opt [data-opt-v]", (els) => els.map((e) => e.textContent.trim()).filter((t) => /\d/.test(t)));
@@ -144,8 +144,20 @@ const line = (slug, ml, extra = {}) => {
   const allIds = new Set(log.state.flat());
   ok("shop: one request per id per page view", allIds.size === log.state.flat().length, `${allIds.size} vs ${log.state.flat().length}`);
   ok("shop: hidden product card removed", (await page.locator(cardSel(HIDDEN)).count()) === 0);
-  const soon = await page.$eval(cardSel(SOON), (c) => ({ v: c.querySelector("[data-price-v]").textContent.trim(), dis: c.querySelector("[data-main]").disabled }));
-  ok("shop: price null → «Үнэ удахгүй», no add", soon.v === "Үнэ удахгүй" && soon.dis, JSON.stringify(soon));
+  const soon = await page.$eval(cardSel(SOON), (c) => ({ v: c.querySelector("[data-price-v]").textContent.trim(), dis: c.querySelector("button[data-main]").disabled, lbl: c.querySelector("[data-add-label]").textContent.trim(), dec: c.querySelector("[data-decants]")?.hidden ?? true }));
+  ok("shop: price null → «Захиалгаар», enabled button, decant picker hidden", soon.v === "Захиалгаар" && !soon.dis && soon.lbl === "Захиалгаар" && soon.dec, JSON.stringify(soon));
+  const cartBefore = await page.evaluate(() => localStorage.getItem("gz-cart-v1"));
+  await page.locator(`${cardSel(SOON)} button[data-main]`).click();
+  await page.waitForSelector(".opop[role=dialog]");
+  const pop = await page.$eval(".opop", (d) => ({ txt: d.querySelector(".opop__note").textContent, lab: !!document.getElementById(d.getAttribute("aria-labelledby")), acts: d.querySelectorAll("a.opop__a").length, focusIn: d.contains(document.activeElement) }));
+  ok("shop: «Захиалгаар» opens the order popover (text, labelled, focus inside, ≤3 links)", pop.txt.startsWith("Энэ үнэртнийг захиалгаар авна") && pop.lab && pop.acts <= 3 && pop.focusIn, JSON.stringify(pop));
+  ok("shop: «Захиалгаар» never writes the cart", (await page.evaluate(() => localStorage.getItem("gz-cart-v1"))) === cartBefore && (await page.locator(".cd[data-open]").count()) === 0);
+  await page.keyboard.press("Escape");
+  ok("shop: Esc closes the popover and returns focus to the button", (await page.locator(".opop").count()) === 0 && (await page.evaluate((s) => document.activeElement === document.querySelector(`[data-card][data-pid="${s}"] button[data-main]`), SOON)));
+  await page.locator(`${cardSel(SOON)} button[data-main]`).click();
+  await page.waitForSelector(".opop");
+  await page.mouse.click(5, 300);
+  ok("shop: outside click closes the popover", (await page.locator(".opop").count()) === 0);
   const locked = await page.$eval(cardSel(LOCKED), (c) => ({ flag: c.querySelector("[data-flag]").textContent, hidden: c.querySelector("[data-flag]").hidden, btn: c.querySelector("[data-add-label]").textContent, dis: [...c.querySelectorAll("[data-add]")].every((b) => b.disabled) }));
   ok("shop: sale-locked → «Түр хаалттай», buttons disabled", locked.flag === "Түр хаалттай" && !locked.hidden && locked.btn === "Түр хаалттай" && locked.dis, JSON.stringify(locked));
   const out = await page.$eval(cardSel(OUT), (c) => ({ flag: c.querySelector("[data-flag]").textContent, btn: c.querySelector("[data-add-label]").textContent, dis: [...c.querySelectorAll("[data-add]")].every((b) => b.disabled) }));
@@ -155,7 +167,7 @@ const line = (slug, ml, extra = {}) => {
   const count = await page.locator(".flt__count").textContent();
   ok("shop: result count excludes the hidden product", count.includes(String(products.length - 1)), count);
   // quick add → cart line with sku + live price
-  await page.locator(`${cardSel(GOOD)} [data-main]`).click();
+  await page.locator(`${cardSel(GOOD)} button[data-main]`).click();
   await page.waitForSelector(".cd[data-open] .cd__item");
   const cart = await page.evaluate(() => JSON.parse(localStorage.getItem("gz-cart-v1") ?? "[]"));
   ok("cart: line stores sku and live price", cart.length === 1 && cart[0].sku === goodMain.sku && cart[0].price === livePrice(GOOD, goodMain.ml), JSON.stringify(cart));
@@ -171,7 +183,7 @@ const line = (slug, ml, extra = {}) => {
   const { page, ctx } = await open({ stateStatus: 500 });
   await page.goto(`${BASE}/delguur/`, { waitUntil: "domcontentloaded" });
   await page.waitForFunction((s) => document.querySelector(`[data-card][data-pid="${s}"] [data-price-v]`)?.textContent.includes("чадсангүй"), GOOD, { timeout: 10000 }).catch(() => {});
-  const f = await page.$eval(cardSel(GOOD), (c) => ({ v: c.querySelector("[data-price-v]").textContent.trim(), dis: c.querySelector("[data-main]").disabled }));
+  const f = await page.$eval(cardSel(GOOD), (c) => ({ v: c.querySelector("[data-price-v]").textContent.trim(), dis: c.querySelector("button[data-main]").disabled }));
   ok("failure: «Үнэ ачаалж чадсангүй», add disabled, page alive", f.v === "Үнэ ачаалж чадсангүй" && f.dis, JSON.stringify(f));
   await ctx.close();
 }

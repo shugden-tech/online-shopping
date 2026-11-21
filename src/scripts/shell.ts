@@ -158,6 +158,14 @@ doc.addEventListener("click", (e) => {
     return;
   }
 
+  // «Захиалгаар» (unpriced product): never adds; opens the small order popover (lazy chunk)
+  const orderBtn = target.closest<HTMLButtonElement>("[data-order]");
+  if (orderBtn && !orderBtn.disabled) {
+    e.preventDefault();
+    void import("./order-pop").then((m) => m.toggleOrder(orderBtn));
+    return;
+  }
+
   // quick add: <button data-add data-item='{"slug":…}' data-ml="2" data-price="15000">
   const add = target.closest<HTMLElement>("[data-add]");
   if (add && !add.hasAttribute("disabled")) {

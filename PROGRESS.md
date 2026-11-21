@@ -523,3 +523,15 @@ checkout prefill, logout/login, 375 px without horizontal scroll, English page).
 
 **Owner TODO** — `npx wrangler d1 migrations apply genzst --remote`; for Google: OAuth client + `GOOGLE_CLIENT_ID` var +
 `wrangler secret put GOOGLE_CLIENT_SECRET` (CONTRACTS.md §10).
+
+## 2026-11-21 — «Захиалгаар» (by order) for unpriced products — model: Sonnet
+- A visible product whose SKU has no price (state `soon`) no longer shows «Үнэ удахгүй» + a dead button. Card and product
+  page show «Захиалгаар» on the price line and an enabled button that never touches the cart: it opens a small dialog
+  (`src/scripts/order-pop.ts`, lazy chunk; pulse + icon wiggle ≤ 600 ms, skipped for prefers-reduced-motion; Esc / outside
+  click / «Хаах» close, focus moves in and returns to the button). Actions come from `src/data/settings.json`
+  (phone → `tel:`, `social.messenger`, instagram, telegram; empty / `TODO` / bare-domain / all-zero phone are hidden, max 3),
+  built in `Header.astro` into `#live-i18n` (`orderLinks`). The card's 5/10 ml picker is hidden when no decant has a price.
+  Sold out, locked, hidden and priced products are unchanged. Strings: `live.order*` in mn.json / en.json.
+- `scripts/test-storefront.mjs`: the `soon` check now expects «Захиалгаар», enabled, no cart write, popover, Esc, outside click;
+  selectors use `button[data-main]` (the photo span can also carry `data-main` when a remote photo fails).
+- Gate: storefront 61/61 on local wrangler dev, `astro check` 0 errors, `npm run budget` PASS (home 33.9 KB total).

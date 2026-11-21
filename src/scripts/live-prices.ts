@@ -8,7 +8,7 @@ export { load };
 
 interface LiveText {
   loading: string; failed: string; soon: string; soonShort: string; locked: string; off: string; notSold: string;
-  was: string; left: string; add: string; soldOut: string; ml: string; decantsShort: string;
+  was: string; left: string; add: string; soldOut: string; ml: string; decantsShort: string; order: string;
 }
 /** Sent on `document` after each update so the shop filters can follow the live prices. */
 export interface LiveDetail { hidden: string[]; from: Record<string, number | null>; sizes: Record<string, number[]> }
@@ -35,12 +35,12 @@ function el(tag: string, cls: string, txt = ""): HTMLElement {
 }
 
 /** The price line for one size: compare-at (struck) + price, or a short note. */
-export function priceNodes(v: SkuView): (Node | string)[] {
+export function priceNodes(v: SkuView, order = false): (Node | string)[] {
   const tx = text();
   if (v.status === "loading") return [el("i", "live-ph"), el("span", "sr-only", tx.loading)];
   if (v.status === "error") return [el("span", "live-note", tx.failed)];
   if (v.status === "hidden") return [el("span", "live-note", tx.notSold)];
-  if (v.price === null) return [el("span", "live-note", tx.soon)];
+  if (v.price === null) return [el("span", "live-note", order && tx.order ? tx.order : tx.soon)];
   const out: (Node | string)[] = [];
   if (v.compareAt) {
     const s = el("s", "live-was", money(v.compareAt));
@@ -64,10 +64,20 @@ export function stateLabel(v: SkuView, short = false): string {
 }
 
 /** Point an add button at a size: enabled only when it can be bought, with the live price for the cart. */
-function setButton(b: HTMLButtonElement, v: SkuView, ml: number) {
+function setButton(b: HTMLButtonElement, v: SkuView, ml: number, order = false) {
   b.dataset.ml = String(ml);
   b.dataset.sku = v.sku;
-  b.disabled = v.status !== "ok";
+  // «Захиалгаар»: an unpriced size of a visible product. The button stays enabled but never adds (shell.ts opens
+  // the order popover for [data-order]); it carries no data-price, so nothing priceless can reach the cart.
+  b.disabled = v.status !== "ok" && !order;
+  b.toggleAttribute("data-order", order);
+  if (order) {
+    b.setAttribute("aria-haspopup", "dialog");
+    b.setAttribute("aria-expanded", b.getAttribute("aria-expanded") ?? "false");
+  } else {
+    b.removeAttribute("aria-haspopup");
+    b.removeAttribute("aria-expanded");
+  }
   b.removeAttribute("data-wait");
   if (v.status === "ok" && v.price !== null) {
     b.dataset.price = String(v.price);
@@ -78,6 +88,9 @@ function setButton(b: HTMLButtonElement, v: SkuView, ml: number) {
     delete b.dataset.stock;
   }
 }
+
+/** Unpriced size of a product the shop shows (not sold out, locked or hidden): sold by order. */
+const orderable = (id: string, v: SkuView) => v.status === "soon" && Boolean(productState(id)?.visible);
 
 const loaded = (id: string) => productState(id) !== undefined || loadFailed(id);
 
@@ -117,13 +130,18 @@ function updateCard(card: HTMLElement, detail: LiveDetail) {
     const label = card.querySelector("[data-price-k]");
     if (label) label.textContent = `${tx.decantsShort} · ${ml} ${tx.ml}`;
   }
-  card.querySelector("[data-price-v]")?.replaceChildren(...priceNodes(mv));
+  const order = orderable(id, mv);
+  card.querySelector("[data-price-v]")?.replaceChildren(...priceNodes(mv, order));
   if (main) {
-    setButton(main, mv, ml);
+    setButton(main, mv, ml, order);
     if (main.dataset.labelTpl) main.setAttribute("aria-label", main.dataset.labelTpl.replace("{ml}", String(ml)));
+    if (order) main.setAttribute("aria-label", `${card.querySelector(".pcard__name")?.textContent?.trim() ?? ""}: ${tx.order}`);
     const lbl = main.querySelector("[data-add-label]");
-    if (lbl) lbl.textContent = mv.status === "error" || mv.status === "loading" ? tx.add : stateLabel(mv);
+    if (lbl) lbl.textContent = order ? tx.order : mv.status === "error" || mv.status === "loading" ? tx.add : stateLabel(mv);
   }
+  // no decant has a price: the 5/10 ml picker is pointless, hide it (the full bottle is bought by order)
+  const dec = card.querySelector<HTMLElement>("[data-decants]");
+  if (dec) dec.hidden = views.length > 0 && views.every((v) => v.status === "soon");
 
   // card flag: temporarily closed / sold out (instead of "new")
   const all = [mv, ...views];

@@ -86,8 +86,27 @@ const aboutMenu = [
 
 const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThreshold, locale) });
 // Strings for the live price updater (src/scripts/live-prices.ts), on every page.
+// «Захиалгаар» (by order) actions: only the contact channels the owner has really filled in (no empty / TODO / bare ones).
+const real = (v?: string) => Boolean(v) && !/TODO/i.test(v!);
+const realUrl = (v?: string) => {
+  if (!real(v)) return false;
+  try {
+    const u = new URL(v!);
+    return u.protocol === "https:" && u.pathname.replace(/\//g, "") !== "";
+  } catch {
+    return false;
+  }
+};
+const social = settings.contact.social as Record<string, string | undefined>;
+const phoneDigits = (settings.contact.phone ?? "").replace(/\D/g, "");
+const orderLinks = [
+  real(settings.contact.phone) && /[1-9]/.test(phoneDigits.replace(/^976/, "")) ? { k: "call", href: `tel:${settings.contact.phone.trim().startsWith("+") ? "+" : ""}${phoneDigits}` } : null,
+  realUrl(social.messenger) ? { k: "messenger", href: social.messenger } : null,
+  realUrl(social.instagram) ? { k: "instagram", href: social.instagram } : null,
+  realUrl(social.telegram) ? { k: "telegram", href: social.telegram } : null,
+].filter(Boolean).slice(0, 3);
 const liveText = {
-  ...tr.live, add: tr.common.add, soldOut: tr.common.soldOut, ml: tr.common.ml, decantsShort: tr.store.decantsShort,
+  ...tr.live, add: tr.common.add, soldOut: tr.common.soldOut, ml: tr.common.ml, decantsShort: tr.store.decantsShort, orderLinks,
 };
 ---
 <!-- Announcement bar is hidden; remove the `hidden` attribute to re-enable it. -->
