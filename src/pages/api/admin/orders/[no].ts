@@ -5,6 +5,7 @@
 import type { APIRoute } from "astro";
 import { authorize } from "../../../../lib/auth";
 import { ORDER_STATUSES, canOrderTransition, type OrderStatus } from "../../../../lib/contracts";
+import { notifyTelegramStatus } from "../../../../lib/orders/notify";
 import { transitionOrder } from "../../../../lib/orders/state";
 import { ORDER_NO_RE, loadOrder, normOrderNo, type PaymentRow } from "../../../../lib/orders/types";
 import { adminOrderView, adminPaymentView } from "../../../../lib/orders/view";
@@ -81,6 +82,9 @@ export const PATCH: APIRoute = async ({ request, locals, clientAddress, params }
       if (!r.ok) return json(409, { ok: false, errors: { status: r.code }, from, to });
     }
     const updated = await loadOrder(env.DB, no);
+    if (to !== "paid") {
+      await notifyTelegramStatus(env, updated ?? order, { kind: "status", from, to, actor: s.actor, reason: to === "cancelled" ? "admin" : null, note });
+    }
     return json(200, { ok: true, from, to, order: updated ? adminOrderView(updated) : null });
   } catch (err) {
     console.error("[admin/order] unexpected error", err);

@@ -4,6 +4,7 @@
 // instead of expired.
 // Called from POST /api/orders via waitUntil and from the lead's POST /api/admin/jobs/run.
 import { qpayConfigured, refreshQpay, refreshWire, wireConfigured } from "../payments";
+import { notifyTelegramStatus } from "./notify";
 import { transitionOrder } from "./state";
 import { loadOrder, type OrderRow } from "./types";
 
@@ -39,7 +40,10 @@ export async function sweepExpiredHolds(env: Env, limit = 50): Promise<{ expired
         if (!order || order.status !== "new") continue; // it was paid (or changed) meanwhile
       }
       const r = await transitionOrder(db, order, "cancelled", "system", { reason: "expired", note: "hold expired" });
-      if (r.ok) expired++;
+      if (r.ok) {
+        expired++;
+        await notifyTelegramStatus(env, { ...order, payment_status: "unpaid" }, { kind: "status", from: r.from, to: "cancelled", actor: "system", reason: "expired" });
+      }
     } catch (err) {
       console.error(`[holds] expiring ${candidate.order_no} failed`, err);
     }
