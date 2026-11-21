@@ -36,8 +36,8 @@
   },
 
   "turnstile": {
-    "_todo": "[[TODO owner]] replace with the real Turnstile site key. This is Cloudflare's always-pass TEST key.",
-    "siteKey": "1x00000000000000000000AA"
+    "_todo": "Real Turnstile site key (public).",
+    "siteKey": "0x4AAAAAAGLqfDo1_tAN2tnM"
   },
 
   "districts": [
