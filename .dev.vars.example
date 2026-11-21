@@ -19,3 +19,10 @@ ADMIN_USERNAME=admin
 ADMIN_PASSWORD=demo-admin-pass-2026
 STAFF_USERNAME=staff
 STAFF_PASSWORD=demo-staff-pass-2026
+# Customer Google sign-in (optional). Leave GOOGLE_CLIENT_ID empty to turn it off. For scripts/test-accounts.mjs
+# (mock Google on 127.0.0.1:8894) uncomment these; the *_URL overrides only work for requests to localhost.
+# GOOGLE_CLIENT_ID=test-client.apps.googleusercontent.com
+# GOOGLE_CLIENT_SECRET=dev-only-google-client-secret-0123456789
+# GOOGLE_AUTH_URL=http://127.0.0.1:8894/auth
+# GOOGLE_TOKEN_URL=http://127.0.0.1:8894/token
+# GOOGLE_JWKS_URL=http://127.0.0.1:8894/jwks

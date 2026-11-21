@@ -13,6 +13,7 @@ import { issuesToErrors, orderSchema } from "../../lib/order-schema";
 import { ensureQpayInvoice, qpayEnabled } from "../../lib/payments";
 import { clientIp, fail, hitRateLimit, json, pruneRateLimits, readJson } from "../../lib/server";
 import { getSettings } from "../../lib/settings";
+import { getSession } from "../../lib/customers/session";
 import { deliverDue } from "../../lib/webhooks";
 
 export const prerender = false;
@@ -80,7 +81,9 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
     const priced = await priceCart(db, o.items, settings, o.city, o.locale);
     if (!priced.ok) return json(priced.status, { ok: false, errors: priced.errors, ...("unavailable" in priced ? { unavailable: priced.unavailable } : {}) });
 
-    const placed = await placeOrder(db, o, priced, settings, ip, idemKey);
+    // a signed-in customer's order is linked from the session cookie (the body can never name a customer)
+    const customer = await getSession(db, request).catch(() => null);
+    const placed = await placeOrder(db, o, priced, settings, ip, idemKey, customer?.customer.id ?? null);
     if (!placed.ok) {
       if (placed.kind === "replay") {
         // a concurrent request with the same key won the insert

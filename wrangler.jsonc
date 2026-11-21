@@ -21,7 +21,10 @@
     // QPay merchant API v2 base. Sandbox until the owner has a live merchant account.
     "QPAY_BASE_URL": "https://merchant-sandbox.qpay.mn",
     // Public URL of the product photo bucket (the owner's R2 public bucket).
-    "PUBLIC_MEDIA_BASE": "https://pub-83d529150bc84a489ddcb74b42624830.r2.dev"
+    "PUBLIC_MEDIA_BASE": "https://pub-83d529150bc84a489ddcb74b42624830.r2.dev",
+    // Optional "Google-ээр нэвтрэх" for customers: the OAuth client id from Google Cloud Console (public).
+    // Empty = Google sign-in off (button hidden, /api/account/google/* answer 404). The secret is GOOGLE_CLIENT_SECRET.
+    "GOOGLE_CLIENT_ID": ""
   },
   "r2_buckets": [
     {
@@ -42,5 +45,6 @@
   //   TURNSTILE_SECRET, TELEGRAM_BOT_TOKEN (optional), TELEGRAM_CHAT_ID (optional),
   //   ADMIN_TOKEN, STAFF_TOKEN (optional),
   //   QPAY_USERNAME, QPAY_PASSWORD, QPAY_INVOICE_CODE, QPAY_CALLBACK_SECRET,
-  //   DELIVERY_BASE_URL, DELIVERY_API_KEY, DELIVERY_WEBHOOK_SECRET (when a delivery company is chosen)
+  //   DELIVERY_BASE_URL, DELIVERY_API_KEY, DELIVERY_WEBHOOK_SECRET (when a delivery company is chosen),
+  //   GOOGLE_CLIENT_SECRET (only with GOOGLE_CLIENT_ID, for customer Google sign-in)
 }

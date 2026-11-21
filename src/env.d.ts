@@ -35,6 +35,13 @@ interface Env {
   DELIVERY_WEBHOOK_SECRET?: string;
   /** DEV/TEST ONLY: "1" lets outbound webhook endpoints be http://127.0.0.1:port (never set in production). */
   WEBHOOK_ALLOW_LOCAL?: string;
+  /** Optional Google sign-in for customers (0006). Client id is a public var (empty = off); the secret is a Worker secret. */
+  GOOGLE_CLIENT_ID?: string;
+  GOOGLE_CLIENT_SECRET?: string;
+  /** DEV/TEST ONLY: Google endpoint overrides (a local mock); honoured only for requests to localhost. */
+  GOOGLE_AUTH_URL?: string;
+  GOOGLE_TOKEN_URL?: string;
+  GOOGLE_JWKS_URL?: string;
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
