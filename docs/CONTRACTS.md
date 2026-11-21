@@ -254,3 +254,87 @@ lookup and the admin order detail return `bundle` on the line; the packing slip 
 (`Sec-Fetch-Mode: navigate`) to any on-demand page (`/bundles/…`, and the existing `/delguur/p/{id}`) got the static 404 page.
 Tests: `scripts/test-bundles.mjs` (68), bundle blocks in `test-api`, `test-admin-api`, `test-e2e-commerce`; browser + screenshots:
 `scripts/shot-bundles.mjs` → `docs/screens/bundles-*`.
+
+## 10. Customer accounts (lead, 2026-11-21, migration 0006)
+
+Replaces the browser-only demo account (`src/lib/account.ts` and its `gz_account` / `gz_orders` localStorage keys are
+gone; old keys are simply ignored). Server code: `src/lib/customers/` (`crypto.ts`, `session.ts`, `store.ts`, `google.ts`,
+`limits.ts`), routes `src/pages/api/account/**`. Browser: `src/scripts/profile.ts` (the /profile page), `account-api.ts`,
+`account-badge.ts`, `wish-sync.ts`, `account-prefill.ts`. Tests: `scripts/test-accounts.mjs` (`npm run test:accounts`).
+
+Schema `migrations/0006_customers.sql`:
+- `customers` — `phone` UNIQUE (8 digits, `[6-9]…`; NULL only for a Google sign-up that has not given one yet, and after
+  deletion), `name`, `display_name`, `password_hash` / `password_salt` / `password_iter` (NULL = no password, Google only),
+  `must_change_password`, `avatar_key`, `show_on_board`, `google_sub` UNIQUE, `email` (from a verified Google ID token only),
+  `created_at`, `updated_at`, `deleted_at`.
+- `customer_sessions` — `id` = hex SHA-256 of the cookie token, `customer_id`, `created_at`, `expires_at`, `last_seen`,
+  `user_agent` (short "Chrome · Android" label).
+- `customer_addresses` — `label`, `city` ub | countryside, `district` (UB district id or province), `khoroo`, `address`,
+  `is_default` (unique partial index: one default per customer), ≤ 10 per customer.
+- `customer_wishlist` — `(customer_id, product_id)` PK, `item_json` (sanitized display copy of the browser wishlist item).
+- `orders.customer_id` (nullable).
+
+**Security rules**
+- Passwords: PBKDF2-SHA256 via WebCrypto, 100,000 iterations (Workers' maximum), 16-byte random salt, constant-time compare.
+  ≥ 8 and ≤ 200 characters; refused when in the common list (`common-passwords.ts`), containing the phone, one repeated
+  character or a digit run. Never logged, never returned. An unknown phone still costs one PBKDF2 (no timing oracle).
+- Session cookie `__Host-gz_session` = 32 random bytes base64url; `HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=30 days`.
+  D1 keeps only its SHA-256. Expiry slides to now + 30 days (and the cookie is re-sent) at most once an hour while used.
+  Hint cookie `gz_in=1` (not HttpOnly, no secret) only tells the storefront JS to load the account code.
+- CSRF: every POST / PUT / PATCH / DELETE under `/api/account/*` needs `Origin` equal to the request's origin, else
+  403 `{ form: "origin" }` (on top of Astro's `checkOrigin`).
+- Rate limits (`rate_limits` table): login — failed attempts only, 20 / IP / 10 min and 8 / phone / 15 min (checked before the
+  password; 429 `{ form: "rate" }`); register — 5 / IP / hour and 3 / phone / hour; password / phone change / delete —
+  10 / customer / 10 min; Google start + callback — 30 / IP / 10 min.
+- Login answers the same 401 `{ form: "invalid" }` for an unknown phone, a wrong password and a password-less account.
+  Register says 409 `{ phone: "taken" }` (unavoidable; behind Turnstile + limits).
+- Customer PII never goes to `audit_log`; the admin reset row is `{ actor, action: "customer.reset_password", entity: "customer", entity_id }`.
+
+**Orders.** `POST /api/orders` reads the session cookie: when signed in, `orders.customer_id` = that customer (anything in
+the body is ignored); guests unchanged. At sign-up (and when a Google account first sets its phone) past orders with
+`customer_id IS NULL AND phone = <account phone>` (exact) are linked. The phone is **not** SMS-verified, so the account
+order list never returns the name, phone or address stored on an order.
+
+| Method & path | Auth | Contract |
+|---|---|---|
+| `POST /api/account/register` | — | `{ phone, password, name, turnstileToken, website }` → 201 `{ ok, customer, claimed }` + cookies. 422 `{ phone \| name \| password: code, turnstile }` (password codes `short`, `long`, `common`), 409 `{ phone: "taken" }`, 429. |
+| `POST /api/account/login` | — | `{ phone, password }` → `{ ok, customer }` + cookies; 401 `{ form: "invalid" }`; 429. |
+| `POST /api/account/logout` | — | ends this session, clears cookies → `{ ok }` |
+| `POST /api/account/logout-all` | session | ends every session of the customer → `{ ok, ended }` |
+| `GET /api/account/me` | — | `{ ok, customer: Customer \| null, google: boolean }` |
+| `PATCH /api/account/me` | session | `{ name?, displayName? (≤ 40), showOnBoard?, phone?, password? }` → `{ ok, customer, claimed? }`. Setting a phone when there is none needs nothing; changing it needs `password` (422 `{ password: "wrong" }`); 409 `{ phone: "taken" }`. |
+| `POST /api/account/password` | session | `{ current?, next }` (`current` required when a password exists) → `{ ok, ended }`; ends every other session; 422 `{ current: "wrong" }` / `{ next: code }`. |
+| `GET /api/account/sessions` | session | `{ items: [{ current, createdAt, lastSeen, expiresAt, device }] }` (no ids) |
+| `GET /api/account/avatar` | session | own avatar bytes; `Cache-Control: private, max-age=86400`, `nosniff`, `CSP: default-src 'none'; sandbox`, CORP same-origin; 404 none |
+| `POST /api/account/avatar` | session | multipart `file`, jpeg / png / webp by magic bytes, ≤ 2 MB → R2 `MEDIA` `customers/<id>.<ext>` → `{ ok, customer }`; 400 `{ file: "type" }`, 413 `{ file: "too_large" }`. The page crops to a 512 px square (canvas) first. |
+| `DELETE /api/account/avatar` | session | `{ ok, customer }` |
+| `GET / POST /api/account/addresses` | session | list / create `{ label?, city, district, khoroo?, address, isDefault? }` → 201 `{ address, items }`; first is default; 409 `{ form: "limit" }` |
+| `PATCH / DELETE /api/account/addresses/{id}` | session | own rows only (else 404); `isDefault: true` moves the default; deleting the default promotes the oldest |
+| `GET /api/account/wishlist` | session | `{ items }` |
+| `PUT /api/account/wishlist` | session | `{ mode: "merge" \| "replace", items ≤ 200 }` → `{ items }`. Unsafe / malformed items are dropped (site-path `href`, https or site-path `img`). |
+| `GET /api/account/orders` | session | ≤ 100 newest: `{ orderNo, createdAt, status, paymentStatus, payment, subtotal, delivery, total, items[], shipment \| null }` |
+| `POST /api/account/delete` | session | `{ password }` (or `{ confirm: true }` without a password) → `{ ok }` + cookies cleared. Row kept as a tombstone with PII emptied (`deleted_at` set, phone / Google id freed); sessions, addresses, wishlist, avatar deleted; orders kept — `done` / `cancelled` ones lose name, phones, address, note, ip; open orders keep them until delivered. |
+| `GET /api/account/google/start?mode=login\|link&return=` | — / session for link | 302 to Google; 404 when Google is not configured |
+| `GET /api/account/google/callback` | — | 302 to the return path (`/profile/`, `/en/profile/`, checkout pages only) with `?google=ok\|new\|linked\|taken\|cancelled\|error` |
+| `POST /api/account/google/unlink` | session | only with phone + password, else 409 `{ form: "no-password" }` |
+| `GET /api/admin/customers?q=&cursor=&limit=` | customers.read (owner) | keyset `{ items: [{ id, phone, name, displayName, email, google, hasPassword, mustChangePassword, orders, createdAt, lastSeen, deleted }], nextCursor }` |
+| `POST /api/admin/customers/{id}/reset-password` | customers.write (owner) | `{ ok, tempPassword, sessionsEnded }` — shown once; sets `must_change_password`; ends all sessions; audit-logged. 409 `{ form: "no-phone" }` for a phone-less account. Admin UI: `#/customers`. |
+
+`Customer` = `{ id, phone, name, displayName, showOnBoard, avatarUrl, email, google, hasPassword, mustChangePassword, createdAt }`.
+New permissions `customers.read`, `customers.write` (owner only).
+
+**Google sign-in (optional).** On only when `GOOGLE_CLIENT_ID` (var) and `GOOGLE_CLIENT_SECRET` (secret) are set. Authorization
+code flow with PKCE S256, `scope=openid email profile`, `prompt=select_account`. `state`, code verifier, `nonce`, mode, return
+path and expiry live in an HMAC-SHA256-signed (key = client secret), HttpOnly `__Host-gz_goauth` cookie for 10 minutes. The
+ID token from `oauth2.googleapis.com/token` is verified with WebCrypto: RS256 signature with the JWKS key of its `kid`
+(`www.googleapis.com/oauth2/v3/certs`, cached 1 h, refetched once on an unknown kid), `iss` ∈ {`https://accounts.google.com`,
+`accounts.google.com`}, `aud` = client id, `exp`, `iat`, `nonce`. Accounts are found by `sub` only — never merged by e-mail. A
+first Google sign-in creates an account without a phone; the profile asks for the phone (needed for delivery). Linking from
+the profile needs a session; unlinking needs a phone + password. `GOOGLE_AUTH_URL` / `GOOGLE_TOKEN_URL` / `GOOGLE_JWKS_URL`
+override the endpoints for tests and are honoured only for requests to localhost.
+
+**Storefront.** `/profile/` loads `profile.ts` (sign-in / register tabs with Turnstile, Google button, forgot-password help
+"Утсаар холбогдоно уу"; signed in: profile + avatar crop, orders with live status (re-checked every 60 s), wishlist, addresses,
+password, devices / sign out everywhere, Google link, delete). Other pages load account code only when `gz_in=1`: the header
+badge (avatar or initial), wishlist sync (merge once per tab session and on sign-in, then replace after each change) and the
+checkout prefill (name, phone, default address into empty fields).

@@ -1,6 +1,6 @@
 # genzst — system architecture, status and test plan
 
-Updated 2026-11-20 · branch `genzst` · live: Cloudflare Workers (`genzst`, auto-deploy on push) and a static
+Updated 2026-11-21 · branch `genzst` · live: Cloudflare Workers (`genzst`, auto-deploy on push) and a static
 GitHub Pages preview (`/online-shopping`, no backend).
 
 ## 1. Architecture
@@ -16,8 +16,8 @@ flowchart TB
     direction TB
     ASSETS["Workers static assets<br/>dist/ + _headers (CSP, HSTS…)"]
     W["Worker (Astro SSR endpoints)<br/>src/pages/api/**"]
-    D1[("D1 database<br/>genzst · migrations 0001–0004")]
-    R2[("R2 bucket<br/>genzst-images · product photos")]
+    D1[("D1 database<br/>genzst · migrations 0001–0006")]
+    R2[("R2 bucket<br/>genzst-images · product photos, customer avatars")]
     TS["Turnstile"]
     ACC["Cloudflare Access<br/>(planned: guards /admin)"]
   end
@@ -32,6 +32,8 @@ flowchart TB
   SF -->|"GET /api/store/catalog-state (live price, stock)"| W
   SF -->|"POST /api/orders · /orders/lookup · payment-check"| W
   SF -.->|bot check| TS
+  SF -->|"/api/account/* (session cookie)"| W
+  W -.->|"optional: OAuth code + JWKS"| GG["Google sign-in"]
   AD -.->|planned| ACC
   AD -->|"Bearer token · /api/admin/*"| W
   W --> D1
@@ -54,7 +56,8 @@ flowchart TB
 | API | `src/pages/api/**` | Thin routes: auth → validate (zod) → call a lib module → JSON. |
 | Domain libs | `src/lib/catalog`, `orders`, `payments`, `delivery` | Business rules. Every state change is one D1 batch with a conditional update. |
 | Shared | `src/lib/contracts.ts`, `ids.ts`, `auth.ts`, `settings.ts`, `audit.ts`, `server.ts` | Types, state machines, permissions, store switches, audit rows, rate limiter. |
-| Data | `migrations/0001–0004`, D1 | Orders, products, SKUs, reservations, payments, shipments, settings, audit, rate limits, webhooks. |
+| Accounts | `src/lib/customers`, `src/pages/api/account/**`, `src/scripts/profile.ts` | Customer accounts (0006): phone + password (PBKDF2), HttpOnly session cookie, addresses, wishlist sync, my orders, avatar in R2, optional Google sign-in. Contract: CONTRACTS.md §10. |
+| Data | `migrations/0001–0006`, D1 | Orders, products, SKUs, reservations, payments, shipments, settings, audit, rate limits, webhooks, bundles, customers. |
 | Infra | `wrangler.jsonc`, `public/_headers`, `.github/workflows/pages.yml` | Bindings DB/MEDIA/ASSETS, security headers, CI to GitHub Pages. |
 
 ### Order flow
@@ -98,7 +101,8 @@ Last full run on one fresh local D1 (2026-11-19, after the security hardening): 
 admin UI 96, e2e commerce 43, e2e real browser 17 — all pass; 24 page loads with 0 CSP violations; `astro check` 0 errors;
 master-catalog unit test 3/3. Catalog suite (86) needs the now-tracked importer files: re-run it.
 
-**Fails right now:** `npm run budget` → finder 25.1 KB and checkout 25.3 KB (limit 25).
+`npm run budget` passes again (2026-11-21: finder 24.6 KB, checkout 24.9 KB): the wishlist drawer and the Turnstile mount moved
+into lazy chunks. Accounts: `npm run test:accounts` 111 checks (incl. a mock Google).
 
 ## 3. What is missing — checklist
 
@@ -111,7 +115,9 @@ Legend: 🔴 blocks launch · 🟠 should fix before real customers · 🟡 late
 - [ ] 🔴 Make the repo private (or remove `decantx/` scraped data and `pic_chat/`; 30 tracked files).
 - [ ] 🟠 Delivery company: name, API + webhook docs, sandbox. Questions: send the order note to the courier? re-ship after a cancelled shipment?
 - [ ] 🟠 Privacy policy, terms, returns page and a consent line on checkout (none exist).
-- [ ] 🟡 Customer accounts, wishlist sync, Top 3, reviews are demo (localStorage / fake data): make real or hide.
+- [x] Customer accounts and wishlist sync are real (D1, 0006). Top 3 board and reviews are still demo data.
+- [ ] 🟠 Apply migration 0006 to production; optional Google sign-in needs an OAuth client (CONTRACTS.md §10).
+- [ ] 🟡 No SMS: the account phone is not verified (forgot-password = owner reset from `/admin/#/customers`).
 
 ### Cloudflare configuration (only you can do it)
 - [ ] 🔴 Secrets: `ADMIN_TOKEN` (≥ 24 random chars), real Turnstile site key + `TURNSTILE_SECRET`, `QPAY_USERNAME/PASSWORD/INVOICE_CODE/CALLBACK_SECRET`, optional `STAFF_TOKEN`, Telegram.
@@ -122,7 +128,6 @@ Legend: 🔴 blocks launch · 🟠 should fix before real customers · 🟡 late
 - [ ] 🟠 D1 backups (Time Travel), error alerts, uptime check on `/api/health`.
 
 ### Code / quality
-- [ ] 🟠 JS budget: finder and checkout over by 0.1–0.3 KB.
 - [ ] 🟠 npm audit: 10 findings (1 critical in `astro`, 8 high) — upgrade separately, with the full test run.
 - [ ] 🟠 QPay field names are verified only against a local mock: check against the official v2 docs.
 - [ ] 🟠 Hold times: bank 24 h lets anyone block stock; consider 2–4 h and a per-phone cap.
@@ -139,7 +144,7 @@ Legend: 🔴 blocks launch · 🟠 should fix before real customers · 🟡 late
 npm ci
 npx astro check                 # types: expect 0 errors
 npx astro build
-npm run budget                  # expect PASS (currently 2 pages over by ≤ 0.3 KB)
+npm run budget                  # expect PASS
 node --test scripts/test-master-catalog.mjs
 ```
 
@@ -155,10 +160,11 @@ npx wrangler dev --port 8788 --persist-to .wrangler/state-lead
 
 ```bash
 export BASE=http://localhost:8788 PERSIST=.wrangler/state-lead D1_PERSIST=.wrangler/state-lead
-npm run test:catalog test:api test:payments test:delivery test:admin-api test:storefront test:admin-ui test:e2e
+npm run test:catalog test:api test:payments test:delivery test:admin-api test:storefront test:admin-ui test:e2e test:accounts
 ```
 
-Expected (2026-11-19): catalog 86 · api 85 · payments 45 · delivery 85 · storefront 57 · admin-ui 96 · e2e 43 + 17.
+Expected (2026-11-19): catalog 86 · api 85 · payments 45 · delivery 85 · storefront 57 · admin-ui 96 · e2e 43 + 17;
+accounts 111 (2026-11-21; the Google block needs the GOOGLE_* lines from `.dev.vars.example`, else it is skipped).
 
 ### B. Manual checks on the live Cloudflare site
 

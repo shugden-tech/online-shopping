@@ -486,3 +486,38 @@ Mongolian string (most suggestions applied; site-wide terms such as "үнэрт�
 - The shared WebSearch budget ran out mid-way: 58 high, 61 medium, 103 low (memory estimates / empty). Only high/medium were applied
   (115 content files got a `full:true` size, price 0 = "Үнэ удахгүй"). The 103 low ones still need a rerun; no size was invented.
 - PDP now defaults to the full bottle (Opus-free change by Sonnet). Prices from genzst.com + production D1 writes: not yet applied.
+
+---
+
+## 2026-11-21 — Real customer accounts (migration 0006) · Opus 5.5
+
+**Model:** Opus 5.5 (hard coding: auth, sessions, API, Google OAuth, UI, tests). Mongolian/English account strings were
+written by Opus too and still need a Sonnet copy review.
+
+**Done**
+- `migrations/0006_customers.sql`: `customers`, `customer_sessions`, `customer_addresses`, `customer_wishlist`, `orders.customer_id`.
+- Auth (`src/lib/customers/`): PBKDF2-SHA256 100k (WebCrypto), salted, constant-time; common-password list; `__Host-gz_session`
+  HttpOnly/Secure/Lax cookie with only its SHA-256 in D1, 30-day sliding expiry; non-secret `gz_in=1` hint cookie; same-origin
+  `Origin` check on every mutating account route; failure-based login limits per IP and per phone; Turnstile + honeypot on sign-up.
+- API `/api/account/*`: register, login, logout, logout-all, me (GET/PATCH), password (ends other sessions), sessions, avatar
+  (R2 `customers/<id>.<ext>`, magic bytes, ≤ 2 MB, served same-origin with nosniff + sandbox CSP), addresses CRUD (one default),
+  wishlist merge/replace, orders (from D1, no PII), delete (tombstone, PII removed from finished orders).
+- Optional Google sign-in (owner request): code flow + PKCE, signed state cookie, ID token verified against Google's JWKS with
+  WebCrypto (iss/aud/exp/iat/nonce); off unless `GOOGLE_CLIENT_ID` + `GOOGLE_CLIENT_SECRET`; link/unlink in the profile; never
+  merged by e-mail; Google sign-ups are asked for their phone.
+- Orders placed while signed in carry `customer_id` from the session; past guest orders are claimed when the order phone equals
+  the account phone.
+- Admin: owner-only `GET /api/admin/customers`, `POST /api/admin/customers/{id}/reset-password` (temp password shown once,
+  audit-logged), `/admin/#/customers` view; permissions `customers.read/write`.
+- Storefront: new `/profile` (tabs, avatar crop-to-square on canvas, addresses, live order status, wishlist, password, devices,
+  Google, delete); header shows avatar/initial; wishlist syncs when signed in; checkout prefills name/phone/default address.
+  All "demo" wording and `src/lib/account.ts` (+ its localStorage order history) removed.
+- JS budget fixed: the wishlist drawer moved into the lazy `wish-list` chunk and the Turnstile mount into `turnstile.ts`
+  (finder 25.1 → 24.6 KB, checkout 25.4 → 24.9 KB). Account code loads only on /profile or with the hint cookie.
+
+**Gate** — `npm run test:accounts` 111/111 (local wrangler dev + mock Google); api 91/91; see the final report for the other
+suites; `astro check` 0 errors; `npm run budget` PASS; UI checked in headless Chromium (register, avatar crop/upload, address,
+checkout prefill, logout/login, 375 px without horizontal scroll, English page).
+
+**Owner TODO** — `npx wrangler d1 migrations apply genzst --remote`; for Google: OAuth client + `GOOGLE_CLIENT_ID` var +
+`wrangler secret put GOOGLE_CLIENT_SECRET` (CONTRACTS.md §10).

@@ -2,7 +2,7 @@
 
 This file is for anyone (person or AI agent) picking up the project on another computer or in a new session. It covers what genzst is, what has been done, and how to carry on. The detailed logs are in the files linked below.
 
-_Last updated: 2026-11-20_
+_Last updated: 2026-11-21_
 
 ---
 
@@ -76,6 +76,12 @@ live bundles show "Түр дууссан" until the owner prices/stocks the 10 m
 for the draft parts (montblanc-legend-edt, jean-paul-gaultier-le-male-edt, versace-eros-edp, versace-eros-parfum,
 dolce-gabbana-light-blue-pour-homme-edt, dolce-gabbana-pour-homme-edt, paco-rabanne-invictus-edt); add the two products that are not in
 the catalog at all (Maison Margiela Replica Sailing Day EDT, Moncler Pour Homme EDP) or swap them in the bundle editor.
+
+**Customer accounts (2026-11-21, migration 0006):** real accounts replace the browser-only demo: phone + password
+(PBKDF2), HttpOnly session cookie, `/profile` with avatar, addresses, live orders, wishlist sync, password, devices, delete;
+optional Google sign-in (off until `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` are set); checkout prefill; owner-only
+`/admin/#/customers` with password reset (no SMS yet). Contract: `docs/CONTRACTS.md` §10. Tests: `npm run test:accounts`.
+Owner TODO: `npx wrangler d1 migrations apply genzst --remote`.
 
 **Hide / lock controls:** product hidden (status), product sale lock, payment method off (QPay / bank), checkout closed — all in `/admin/`.
 **Catalog data:** `npm run import:catalog -- --apply local|remote` loads the 1000-item R2 catalog + the 207 site products (1123 products, prices and stock empty). `--demo-prices` is local-only.
@@ -171,7 +177,7 @@ More detail, including editing products, secrets and deploying, is in `README.md
 - [ ] Decide on the declined copy suggestions: the formal register, and the "Таван аяс" headline versus 8 families (see `PROGRESS.md`).
 - [ ] Unverified: 60 fps smoothness on real hardware. The test machine's headless browser ran at 30 fps.
 
-**Out of scope for v1:** online payment, user accounts and reviews. A minimal `/admin` exists (orders, status, inventory), see §3a.
+**Out of scope for v1:** reviews (customer accounts exist since 0006). A minimal `/admin` exists (orders, status, inventory), see §3a.
 
 ---
 
