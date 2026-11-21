@@ -6,6 +6,10 @@
 // Wire endpoints (as documented at https://docs.wire.mn/en/docs):
 //   POST /v1/payment_intents            { amount, currency:"MNT", description?, metadata?, expires_at? } -> pi_… requires_payment_method
 //   POST /v1/checkout/sessions          { payment_intent, success_url?, cancel_url? } -> cs_… url https://pay.wire.mn/c/cs_…
+//   POST /v1/payment_intents/{id}/confirm {}  (direct QR mode) -> requires_action + next_action
+//        { type:"qr", qr:{ text:"000201…", deeplinks:[{name, link}] } } by default; /_control/next_action picks another type
+//        (redirect_to_url / poll / loan_app / …). Only a requires_payment_method intent can be confirmed (else 400
+//        payment_intent_unexpected_state), so a second confirm with a NEW key never makes a second QR.
 //   GET  /v1/payment_intents/{id}
 //   GET  /v1/events/{id}
 // Every POST needs Idempotency-Key (400 parameter_missing), JSON body (400 invalid_json). Same key + same body replays
@@ -16,9 +20,12 @@
 //                            event_id?, sign?: false } changes the intent and (with deliver) POSTs the signed event
 //                            -> { intent, event, delivery: { status, body } | null }
 //   POST /_control/sign    { body: string, t? } -> { header }   (WirePayment-Signature for an arbitrary raw body)
-//   POST /_control/fail    { endpoint: "intent"|"session"|"get", count, status?, code? } the next calls answer an error
+//   POST /_control/fail    { endpoint: "intent"|"session"|"get"|"confirm", count, status?, code?, after? } the next calls answer an
+//                          error (`after: true`, confirm only: the confirm happens, then the answer is an error)
+//   POST /_control/next_action { type: "qr"|"redirect_to_url"|"poll"|<any>, count? }  what the next confirm(s) return
+//   POST /_control/set     … also { intent, next_action: {…} } (no status) replaces an intent's next_action (poll -> qr)
 //   GET  /_control/intents?order_id=      -> { items, sessions } (each with `_key` = the Idempotency-Key that created it)
-//   GET  /_control/stats                  -> { intents, sessions, gets, replays, posts, missingKey }
+//   GET  /_control/stats                  -> { intents, sessions, gets, replays, posts, missingKey, confirms, confirmKeys }
 //   POST /_control/reset
 import { createServer } from "node:http";
 import { createHash, createHmac, randomBytes } from "node:crypto";
@@ -28,15 +35,16 @@ const KEY = process.env.MOCK_WIRE_KEY ?? "sk_live_mock_0123456789abcdef";
 const SECRET = process.env.MOCK_WIRE_SECRET ?? "whsec_mock_0123456789abcdef";
 
 const id = (p) => `${p}_${randomBytes(13).toString("hex").slice(0, 26)}`;
-let intents, sessions, events, idem, keys, fail, stats;
+let intents, sessions, events, idem, keys, fail, stats, nextAction;
 function reset() {
   intents = new Map();
   sessions = new Map();
   events = new Map();
   idem = new Map();
   keys = new Map(); // object id -> the Idempotency-Key that created it (for tests)
-  fail = { intent: null, session: null, get: null };
-  stats = { intents: 0, sessions: 0, gets: 0, replays: 0, posts: 0, missingKey: 0 };
+  fail = { intent: null, session: null, get: null, confirm: null };
+  stats = { intents: 0, sessions: 0, gets: 0, replays: 0, posts: 0, missingKey: 0, confirms: 0, confirmKeys: {} };
+  nextAction = [];
 }
 reset();
 
@@ -60,6 +68,22 @@ const takeFail = (k) => {
   f.count--;
   return f;
 };
+
+/** A made-up EMVCo-style payload (not a real merchant): enough for a scannable QR in tests. */
+const mockQr = (pi) => ({
+  text: `00020101021226${String(14 + pi.id.length).padStart(2, "0")}0010mn.wire.mock01${String(pi.id.length).padStart(2, "0")}${pi.id}5204599953034965406${String(pi.amount).padStart(6, "0").slice(-6)}5802MN5906GenZst6011Ulaanbaatar6304ABCD`,
+  deeplinks: [
+    { name: "Khan Bank", link: `khanbank://q?qPay_QRcode=${pi.id}` },
+    { name: "Golomt Bank", link: `socialpay-payment://q?qPay_QRcode=${pi.id}` },
+    { name: "TDB online", link: `tdbbank://q?qPay_QRcode=${pi.id}` },
+    { name: "Bad link", link: `javascript:alert(1)` },
+  ],
+});
+function actionFor(pi, type) {
+  if (type === "qr") return { type, qr: mockQr(pi) };
+  if (type === "redirect_to_url") return { type, redirect_to_url: { url: `https://pay.wire.mn/r/${pi.id}`, return_url: null } };
+  return { type };
+}
 
 function makeEvent(intent, type, eventId) {
   const ev = {
@@ -142,7 +166,8 @@ createServer(async (req, res) => {
       if (f) return err(res, f.status ?? 500, f.code ?? "api_error", "mock failure", null, "api_error");
       const pi = intents.get(body.payment_intent);
       if (!pi) return err(res, 404, "resource_missing", "No such payment_intent", "payment_intent");
-      if (pi.status !== "requires_payment_method") return err(res, 400, "payment_intent_unexpected_state", "Intent is not awaiting payment", "payment_intent");
+      // (requires_action too: our direct mode falls back to a hosted session for next_action types it cannot show)
+      if (pi.status !== "requires_payment_method" && pi.status !== "requires_action") return err(res, 400, "payment_intent_unexpected_state", "Intent is not awaiting payment", "payment_intent");
       for (const k of ["success_url", "cancel_url"]) {
         if (body[k] !== undefined && !/^https?:\/\/[^\s/]+/.test(String(body[k]))) return err(res, 400, "checkout_url_invalid", `${k} must be absolute`, k);
       }
@@ -155,6 +180,25 @@ createServer(async (req, res) => {
       keys.set(cs.id, String(req.headers["idempotency-key"]));
       stats.sessions++;
       return req.remember(200, cs);
+    }
+
+    const mConfirm = /^\/v1\/payment_intents\/([^/]+)\/confirm$/.exec(url.pathname);
+    if (req.method === "POST" && mConfirm) {
+      // `after: true` = Wire confirms, then the answer is lost (our side sees a 5xx): the retry must read it back
+      const f = takeFail("confirm");
+      if (f && !f.after) return err(res, f.status ?? 500, f.code ?? "api_error", "mock failure", null, "api_error");
+      const pi = intents.get(mConfirm[1]);
+      if (!pi) return err(res, 404, "resource_missing", "No such payment_intent");
+      if (pi.status !== "requires_payment_method" && pi.status !== "requires_confirmation") {
+        return err(res, 400, "payment_intent_unexpected_state", `Intent is ${pi.status}`, "payment_intent");
+      }
+      stats.confirms++;
+      (stats.confirmKeys[pi.id] ??= []).push(String(req.headers["idempotency-key"]));
+      const want = nextAction.length ? nextAction.shift() : "qr";
+      pi.status = "requires_action";
+      pi.next_action = actionFor(pi, want);
+      if (f?.after) return err(res, f.status ?? 502, f.code ?? "api_error", "mock failure after confirm", null, "api_error");
+      return req.remember(200, structuredClone(pi));
     }
 
     const mIntent = /^\/v1\/payment_intents\/([^/]+)$/.exec(url.pathname);
@@ -186,9 +230,14 @@ createServer(async (req, res) => {
         ? intents.get(body.intent)
         : [...intents.values()].reverse().find((i) => i.metadata?.order_id === body.order_id);
       if (!pi) return send(res, 404, { error: "INTENT_NOT_FOUND" });
+      if (body.next_action !== undefined && body.status === undefined) {
+        pi.next_action = typeof body.next_action === "string" ? actionFor(pi, body.next_action) : body.next_action;
+        return send(res, 200, { intent: pi, event: null, delivery: null });
+      }
       const status = String(body.status ?? "succeeded");
       // after a failed attempt the hosted page lets the buyer try again: the intent stays payable
       pi.status = status === "payment_failed" ? String(body.intent_status ?? "requires_payment_method") : status;
+      if (pi.status !== "requires_action") pi.next_action = null;
       if (pi.status === "succeeded" && !pi.latest_charge) pi.latest_charge = id("ch");
       const type = body.type ?? (status === "succeeded" ? "payment_intent.succeeded" : status === "payment_failed" ? "payment_intent.payment_failed" : "payment_intent.canceled");
       const ev = makeEvent(pi, type, body.event_id);
@@ -206,7 +255,7 @@ createServer(async (req, res) => {
     }
     if (what === "sign" && req.method === "POST") return send(res, 200, { header: sign(body.t ?? now(), String(body.body ?? "")) });
     if (what === "fail" && req.method === "POST") {
-      fail[body.endpoint] = { count: Number(body.count ?? 1), status: body.status, code: body.code };
+      fail[body.endpoint] = { count: Number(body.count ?? 1), status: body.status, code: body.code, after: body.after === true };
       return send(res, 200, { fail });
     }
     if (what === "intents") {
@@ -217,6 +266,10 @@ createServer(async (req, res) => {
         items: items.map((i) => ({ ...i, _key: keys.get(i.id) })),
         sessions: [...sessions.values()].filter((c) => ids.has(c.payment_intent)).map((c) => ({ ...c, _key: keys.get(c.id) })),
       });
+    }
+    if (what === "next_action" && req.method === "POST") {
+      nextAction = Array.from({ length: Number(body.count ?? 1) }, () => String(body.type ?? "qr"));
+      return send(res, 200, { nextAction });
     }
     if (what === "stats") return send(res, 200, stats);
     if (what === "reset" && req.method === "POST") {

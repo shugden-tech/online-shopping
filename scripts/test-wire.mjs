@@ -1,5 +1,7 @@
 // Wire payment tests (0008, CONTRACTS §11): the client (imported straight from src/lib/payments/wire.ts), the hosted
-// checkout order flow, the signed webhook, read-back, the hold sweep, payment-check and the admin switch.
+// checkout order flow, the signed webhook, read-back, the hold sweep, payment-check and the admin switch; then direct QR
+// mode (confirm + next_action, the QR on our order page in a real browser at 1440 and 390 px, the checkout's Wire option).
+// SHOTS=<dir> saves the order-page screenshots (default docs/screens).
 // Plain node (22.18+, for TypeScript type stripping), no dependencies. Needs:
 //   node scripts/mock-wire.mjs                                           (port 8896)
 //   .dev.vars: WIRE_BASE_URL=http://127.0.0.1:8896 WIRE_API_KEY=sk_live_mock_0123456789abcdef
@@ -9,6 +11,7 @@
 //   BASE=http://localhost:8797 D1_PERSIST=.wrangler/state-wire npm run test:wire
 // The mock key / secret are fakes made for the mock; no real Wire key is ever used or printed.
 import { execFileSync } from "node:child_process";
+import { createRequire } from "node:module";
 import { createHmac } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -32,6 +35,20 @@ const HOOK = `${BASE}/api/payments/wire/webhook`;
 const SITE = (envVar("PUBLIC_SITE_URL") || BASE).replace(/\/$/, "");
 
 const W = await import(pathToFileURL(join(root, "src/lib/payments/wire.ts")).href);
+const SHOT_DIR = resolve(root, process.env.SHOTS ?? "docs/screens");
+let chromium = null;
+try {
+  const req = createRequire(import.meta.url);
+  let pw;
+  try {
+    pw = req("playwright");
+  } catch {
+    pw = req("playwright-core");
+  }
+  chromium = pw.chromium;
+} catch {
+  /* browser checks are skipped */
+}
 
 let pass = 0;
 let failed = 0;
@@ -206,7 +223,7 @@ try {
 
   /* ================= 2. order flow against wrangler dev ================= */
   sql(
-    ["a", "b", "c", "d", "e"]
+    ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"]
       .map(
         (id) =>
           `INSERT INTO products (id, brand, name, status) VALUES (${q(P(id))}, 'WireBrand', ${q(`Wire ${id}`)}, 'active');
@@ -216,8 +233,10 @@ try {
   );
   originalSettings = (await admin("GET", "/api/admin/settings")).data?.settings ?? null;
   ok("settings: payments.wire.enabled defaults to false", originalSettings?.["payments.wire.enabled"] === false && originalSettings?.["holds.wire_minutes"] === 30, originalSettings);
+  ok("settings: payments.wire.mode defaults to qr (direct QR)", originalSettings?.["payments.wire.mode"] === "qr", originalSettings?.["payments.wire.mode"]);
+  // sections 2.x test the hosted checkout path (kept as the fallback); section 3 switches to direct QR mode
   await admin("PUT", "/api/admin/settings", {
-    "checkout.open": true, "payments.bank.enabled": true, "payments.wire.enabled": false, "holds.wire_minutes": 30,
+    "checkout.open": true, "payments.bank.enabled": true, "payments.wire.enabled": false, "holds.wire_minutes": 30, "payments.wire.mode": "hosted",
     "delivery.fee_ub": null, "delivery.fee_countryside": null, "delivery.free_over": null,
   });
   const TOTAL = 20000 + FEE;
@@ -360,6 +379,179 @@ try {
   // the buyer pays the expired intent anyway: recorded once for a refund, the order stays cancelled
   const late = await setIntent({ order_id: X, status: "succeeded", deliver: HOOK });
   ok("late payment on an expired order -> recorded for refund, stock untouched", JSON.parse(late.data.delivery.body).result === "recorded" && orderRow(X).status === "cancelled" && sku("c").stock === 5 && one(`SELECT COUNT(*) AS n FROM audit_log WHERE action = 'payment.late' AND data_json LIKE ${q(`%${X}%`)}`).n === 1, late.data?.delivery);
+
+  /* ================= 3. direct QR mode ("build your own payment screen") ================= */
+  ok("qr: payments.wire.mode accepts only qr | hosted", (await admin("PUT", "/api/admin/settings", { "payments.wire.mode": "redirect" })).status === 400);
+  const qm = await admin("PUT", "/api/admin/settings", { "payments.wire.mode": "qr" });
+  ok("qr: owner switches to direct QR mode", qm.status === 200 && qm.data.settings["payments.wire.mode"] === "qr", qm.status);
+  const stats = async () => (await mock("GET", "/_control/stats")).data;
+  const confirmKeys = async (no) => {
+    const st = await stats();
+    return (await intentsOf(no)).items.flatMap((i) => st.confirmKeys[i.id] ?? []);
+  };
+
+  /* ---------- order -> intent + ONE confirm -> QR stored ---------- */
+  const fKey = crypto.randomUUID();
+  const c0 = (await stats()).confirms;
+  const Fr = await order([{ sku: S("f"), qty: 1 }], { key: fKey });
+  const F = Fr.data?.orderNo;
+  const fp = Fr.data?.payment;
+  const iF = await intentsOf(F);
+  ok("qr: 201, payment mode qr with qr.text + server-drawn SVG image", Fr.status === 201 && fp?.method === "wire" && fp.mode === "qr" && /^000201/.test(fp.qr?.text ?? "") && /^data:image\/svg\+xml;base64,/.test(fp.qr?.image ?? ""), [Fr.status, fp && { ...fp, qr: fp.qr && { ...fp.qr, image: fp.qr.image?.slice(0, 40) } }]);
+  const svg = Buffer.from(String(fp?.qr?.image ?? "").split(",")[1] ?? "", "base64").toString("utf8");
+  ok("qr: image is a plain SVG (one path, no script)", /^<svg [^>]*viewBox="0 0 \d+ \d+"/.test(svg) && svg.includes("<path") && !/script|href/i.test(svg), svg.slice(0, 80));
+  ok("qr: deeplinks kept (name + link), the javascript: one dropped", fp?.qr?.deeplinks?.length === 3 && fp.qr.deeplinks.every((d) => d.name && /^[a-z-]+:\/\//.test(d.link)) && !JSON.stringify(fp.qr.deeplinks).includes("javascript"), fp?.qr?.deeplinks);
+  ok("qr: no hosted session in direct mode, no checkout url", iF.sessions.length === 0 && fp?.checkoutUrl === null && fp?.sessionId === null, [iF.sessions.length, fp?.checkoutUrl]);
+  ok("qr: confirm called exactly once, Idempotency-Key <orderNo>-confirm", (await stats()).confirms === c0 + 1 && JSON.stringify(await confirmKeys(F)) === JSON.stringify([`${F}-confirm`]), await confirmKeys(F));
+  ok("qr: intent at Wire is requires_action / next_action qr", iF.items[0]?.status === "requires_action" && iF.items[0]?.next_action?.type === "qr", iF.items[0]?.status);
+  {
+    const p = payments(F)[0];
+    const d = JSON.parse(p?.data_json ?? "{}");
+    ok("db: data_json = { mode qr, action qr, qr.text, qr.deeplinks, expiresAt } (no image, no secrets)", p?.status === "pending" && d.mode === "qr" && d.action === "qr" && d.qr?.text === iF.items[0]?.next_action?.qr?.text && d.qr.deeplinks.length === 3 && !("image" in d.qr) && !p.data_json.includes(KEY) && !p.data_json.includes(SECRET) && !/sk_live|whsec_/.test(p.data_json), d);
+  }
+  const Frep = await order([{ sku: S("f"), qty: 1 }], { key: fKey });
+  ok("qr: replayed order (same Idempotency-Key) -> 200 same body, no second confirm", Frep.status === 200 && JSON.stringify(Frep.data) === JSON.stringify(Fr.data) && (await stats()).confirms === c0 + 1, Frep.status);
+  const fc1 = await check(F);
+  const fc2 = await check(F);
+  ok("qr: payment-check (polling) returns the same QR, never confirms again", fc1.data?.payment?.qr?.text === fp?.qr?.text && fc2.data?.payment?.mode === "qr" && (await stats()).confirms === c0 + 1 && (await intentsOf(F)).items.length === 1, [fc1.data?.payment?.mode, (await stats()).confirms - c0]);
+  ok("qr: the QR screen never marks paid (intent still requires_action -> order new, stock held)", orderRow(F).status === "new" && orderRow(F).payment_status === "pending" && sku("f").stock === 6 && sku("f").reserved === 1, orderRow(F));
+  const lkF = await call("POST", "/api/orders/lookup", { body: { orderNo: F, phone: PHONE } });
+  ok("lookup: payment mode qr with the stored QR (after a reload)", lkF.data?.payment?.mode === "qr" && lkF.data.payment.qr?.text === fp?.qr?.text, lkF.data?.payment?.mode);
+  const replayConfirm = await fetch(`${MOCK}/v1/payment_intents/${iF.items[0].id}/confirm`, { method: "POST", headers: { Authorization: `Bearer ${KEY}`, "Content-Type": "application/json", "Idempotency-Key": `${F}-confirm` }, body: "{}" });
+  ok("mock: replayed confirm (same key) -> Idempotent-Replayed, no second QR", replayConfirm.status === 200 && replayConfirm.headers.get("idempotent-replayed") === "true" && (await stats()).confirms === c0 + 1);
+  const otherConfirm = await fetch(`${MOCK}/v1/payment_intents/${iF.items[0].id}/confirm`, { method: "POST", headers: { Authorization: `Bearer ${KEY}`, "Content-Type": "application/json", "Idempotency-Key": `${F}-confirm-x` }, body: "{}" });
+  ok("mock: confirm with a new key on a requires_action intent -> 400 unexpected state", otherConfirm.status === 400);
+  let eK = null;
+  try {
+    await W.wireCall(wenv, `/v1/payment_intents/${iF.items[0].id}/confirm`, { method: "POST", body: {} });
+  } catch (e) {
+    eK = e;
+  }
+  ok("client: confirm without Idempotency-Key refused before sending", eK?.code === "idempotency_key_required");
+  ok("client: parseNextAction keeps only safe deeplinks and bounded QR text", W.parseNextAction({ type: "qr", qr: { text: "short" } })?.type === "qr_invalid" && W.parseNextAction({ type: "qr", qr: { text: "000201010212abc", deeplinks: [{ name: "A", link: "data:text/html,x" }, { name: "B", link: "bank://x" }] } })?.deeplinks?.length === 1 && W.parseNextAction(null) === null);
+
+  /* ---------- the order page in a real browser (desktop 1440 and 390 px) ---------- */
+  if (chromium) {
+    const browser = await chromium.launch({ headless: true });
+    const errors = [];
+    const openSuccess = async (no, viewport, withPay) => {
+      const ctx = await browser.newContext({ viewport });
+      const page = await ctx.newPage();
+      page.on("pageerror", (e) => errors.push(String(e)));
+      const lp = withPay ? { no, total: withPay.total, holdExpiresAt: withPay.holdExpiresAt, payment: withPay.payment, paymentError: null } : null;
+      await page.addInitScript(([n, ph, l]) => {
+        sessionStorage.setItem("gz-last-order", JSON.stringify({ no: n, phone: ph }));
+        if (l) sessionStorage.setItem("gz-last-pay", JSON.stringify(l));
+      }, [no, PHONE, lp]);
+      await page.goto(`${BASE}/zahialga/amjilttai/?no=${no}`, { waitUntil: "domcontentloaded" });
+      return { ctx, page };
+    };
+    const G = (await order([{ sku: S("g"), qty: 1 }], { extra: { locale: "mn" } })).data;
+    for (const [w, h] of [[1440, 900], [390, 844]]) {
+      const { ctx, page } = await openSuccess(G.orderNo, { width: w, height: h }, G);
+      await page.waitForSelector("img[data-wire-qr]", { timeout: 10000 }).catch(() => {});
+      const img = await page.$eval("img[data-wire-qr]", (i) => ({ src: i.getAttribute("src"), nw: i.naturalWidth, w: i.getBoundingClientRect().width })).catch(() => null);
+      ok(`page ${w}px: QR image rendered from the SVG (figure.ok__qr)`, img && img.src.startsWith("data:image/svg+xml;base64,") && img.nw > 0 && img.w >= 150 && (await page.locator("figure.ok__qr img[data-wire-qr]").count()) === 1, img && { ...img, src: img.src.slice(0, 30) });
+      const apps = await page.$$eval("a[data-wire-app]", (as) => as.map((a) => [a.textContent, a.getAttribute("href")]));
+      ok(`page ${w}px: 3 bank-app deeplink buttons`, apps.length === 3 && apps.every(([n, l]) => n && /^[a-z-]+:\/\//.test(l)), apps);
+      const txt = (await page.locator("[data-pay]").textContent()) ?? "";
+      ok(`page ${w}px: "Төлсний дараа автоматаар баталгаажна" note, no hosted button`, txt.includes("Төлсний дараа автоматаар баталгаажна") && (await page.locator("a[data-wire-pay]").count()) === 0, txt.slice(0, 160));
+      ok(`page ${w}px: waiting state + hold countdown`, ((await page.locator("[data-pay-state]").textContent()) ?? "").includes("Төлбөр хүлээж байна") && (await page.locator("[data-hold]").count()) >= 1);
+      ok(`page ${w}px: no horizontal scroll`, await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
+      await page.locator("[data-pay]").scrollIntoViewIfNeeded();
+      await page.screenshot({ path: join(SHOT_DIR, `wire-qr-${w}.png`), fullPage: false });
+      await ctx.close();
+    }
+    // a new tab without the checkout response: the QR comes back from the server (lookup)
+    {
+      const { ctx, page } = await openSuccess(G.orderNo, { width: 390, height: 844 }, null);
+      await page.waitForSelector("img[data-wire-qr]", { timeout: 10000 }).catch(() => {});
+      ok("page: after losing the checkout response, the stored QR is shown from lookup", (await page.locator("img[data-wire-qr]").count()) === 1 && (await page.locator("a[data-wire-app]").count()) === 3);
+      // paid at Wire + webhook -> the page flips to paid on its next poll (5 s), it never decides by itself
+      const pg = await setIntent({ order_id: G.orderNo, status: "succeeded", deliver: HOOK });
+      ok("page: paid webhook -> paid", JSON.parse(pg.data?.delivery?.body ?? "{}").result === "paid", pg.data?.delivery);
+      await page.waitForSelector("[data-pay-state][data-paid]", { timeout: 15000 }).catch(() => {});
+      ok("page: polling shows paid and hides the QR", (await page.locator("[data-pay-state][data-paid]").count()) === 1 && (await page.locator("[data-pay]").isHidden()));
+      await ctx.close();
+    }
+    // checkout: the Wire option appears only while the server says payments.wire is on
+    const cartLine = [{ sku: S("h"), slug: P("h"), ml: 5, qty: 1, price: 20000, name: "Wire h", brand: "WireBrand", family: "woody", shape: "classic" }];
+    const payOptions = async () => {
+      const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+      const page = await ctx.newPage();
+      page.on("pageerror", (e) => errors.push(String(e)));
+      await page.route("https://challenges.cloudflare.com/**", (r) => r.fulfill({ contentType: "text/javascript", body: "window.turnstile={render(){return 'w'},reset(){},remove(){}};" }));
+      await page.addInitScript((c) => localStorage.setItem("gz-cart-v1", JSON.stringify(c)), cartLine);
+      await page.goto(`${BASE}/zahialga/`, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(() => document.querySelector("[data-total]") && !document.querySelector("[data-total] .live-ph"), null, { timeout: 10000 }).catch(() => {});
+      const out = await page.$$eval('input[name="payment"]', (xs) => xs.map((x) => [x.value, x.closest("label")?.querySelector(".co__pay-name")?.textContent]));
+      return { ctx, page, out };
+    };
+    {
+      const { ctx, page, out } = await payOptions();
+      ok("checkout (wire on): bank, qpay?, wire offered with the label «Wire (QR, банкны апп)»", out.some(([v, n]) => v === "wire" && n === "Wire (QR, банкны апп)") && out.some(([v]) => v === "bank"), out);
+      await page.locator('input[name="payment"][value="wire"]').check({ force: true }).catch(() => {});
+      ok("checkout (wire on): no horizontal scroll at 390 px", await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
+      await page.locator(".co__pays").scrollIntoViewIfNeeded().catch(() => {});
+      await page.screenshot({ path: join(SHOT_DIR, "wire-checkout-390.png"), fullPage: false });
+      await ctx.close();
+    }
+    await admin("PUT", "/api/admin/settings", { "payments.wire.enabled": false });
+    {
+      const { ctx, out } = await payOptions();
+      ok("checkout (wire off): no Wire option, bank still offered", out.length >= 1 && !out.some(([v]) => v === "wire") && out.some(([v]) => v === "bank"), out);
+      await ctx.close();
+    }
+    await admin("PUT", "/api/admin/settings", { "payments.wire.enabled": true });
+    ok("browser: no page errors", errors.length === 0, errors);
+    await browser.close();
+  } else console.log("SKIP  browser checks (playwright-core / chromium not available)");
+
+  /* ---------- interrupted confirm: the retry reads the intent back instead of confirming again ---------- */
+  await mock("POST", "/_control/fail", { endpoint: "confirm", count: 1, status: 502, after: true });
+  const Hr = await order([{ sku: S("i"), qty: 1 }]);
+  const Hn = Hr.data?.orderNo;
+  ok("lost confirm answer: 201, paymentError wire_unavailable (row failed, transient)", Hr.status === 201 && Hr.data?.payment === null && Hr.data?.paymentError === "wire_unavailable" && JSON.parse(payments(Hn)[0]?.data_json ?? "{}").transient === true, [Hr.status, Hr.data]);
+  const cH = await check(Hn);
+  const iH = await intentsOf(Hn);
+  ok("lost confirm answer: payment-check -> same intent (-pi replay), read back requires_action, QR shown, ONE confirm", cH.data?.payment?.mode === "qr" && iH.items.length === 1 && JSON.stringify(await confirmKeys(Hn)) === JSON.stringify([`${Hn}-confirm`]), [cH.data?.payment?.mode, iH.items.length, await confirmKeys(Hn)]);
+
+  /* ---------- paid webhook -> paid exactly once, stock committed ---------- */
+  const fEvt = `evt_qrpaid${RUN}00`;
+  const fPaid = await setIntent({ order_id: F, status: "succeeded", deliver: HOOK, event_id: fEvt });
+  ok("qr paid webhook -> 200 paid (intent read back)", JSON.parse(fPaid.data?.delivery?.body ?? "{}").result === "paid", fPaid.data?.delivery);
+  ok("qr paid: order paid, stock 6 -> 5, reserved 0, one sale movement", orderRow(F).status === "paid" && sku("f").stock === 5 && sku("f").reserved === 0 && JSON.stringify(movements(F)) === JSON.stringify([{ reason: "sale", delta: -1 }]), [orderRow(F), sku("f"), movements(F)]);
+  const fDup = await deliver(JSON.stringify(fPaid.data.event));
+  const fAgain = await setIntent({ order_id: F, status: "succeeded", deliver: HOOK });
+  ok("qr paid: redelivery duplicate, a second event already -> stock committed exactly once", fDup.data?.duplicate === true && JSON.parse(fAgain.data.delivery.body).result === "already" && sku("f").stock === 5 && movements(F).length === 1 && one(`SELECT COUNT(*) AS n FROM audit_log WHERE action = 'order.paid' AND data_json LIKE ${q(`%${F}%`)}`).n === 1);
+  const fAfter = await check(F);
+  ok("qr paid: payment-check -> paid, no instructions", fAfter.data?.status === "paid" && fAfter.data?.payment === null, fAfter.data);
+
+  /* ---------- next_action types other than qr ---------- */
+  await mock("POST", "/_control/next_action", { type: "redirect_to_url" });
+  const Rr = await order([{ sku: S("j"), qty: 1 }]);
+  ok("redirect_to_url -> mode redirect, Wire's https url (hosted-page button), no QR", Rr.status === 201 && Rr.data?.payment?.mode === "redirect" && /^https:\/\/pay\.wire\.mn\/r\/pi_/.test(Rr.data.payment.checkoutUrl ?? "") && Rr.data.payment.qr === null, Rr.data?.payment);
+  await mock("POST", "/_control/next_action", { type: "loan_app" });
+  const Lr = await order([{ sku: S("j"), qty: 1 }]);
+  const iL = await intentsOf(Lr.data?.orderNo);
+  ok("loan_app (not shown by us) -> hosted checkout fallback pay.wire.mn/c/cs_, key -cs, one confirm", Lr.data?.payment?.mode === "hosted" && /^https:\/\/pay\.wire\.mn\/c\/cs_/.test(Lr.data.payment.checkoutUrl ?? "") && iL.sessions.length === 1 && iL.sessions[0]._key === `${Lr.data.orderNo}-cs` && (await confirmKeys(Lr.data.orderNo)).length === 1, [Lr.data?.payment, iL.sessions.map((c) => c._key)]);
+  await mock("POST", "/_control/next_action", { type: "poll" });
+  const Pr = await order([{ sku: S("k"), qty: 1 }]);
+  const Pn = Pr.data?.orderNo;
+  ok("poll -> mode poll (no QR yet), the page keeps polling", Pr.data?.payment?.mode === "poll" && Pr.data.payment.qr === null, Pr.data?.payment);
+  await setIntent({ order_id: Pn, next_action: "qr" });
+  const cP = await check(Pn);
+  ok("poll -> qr: payment-check reads the intent, stores and returns the QR, no second confirm", cP.data?.payment?.mode === "qr" && /^000201/.test(cP.data.payment.qr?.text ?? "") && JSON.parse(payments(Pn)[0].data_json).mode === "qr" && (await confirmKeys(Pn)).length === 1, [cP.data?.payment?.mode, payments(Pn)[0]?.data_json]);
+
+  /* ---------- a failed QR attempt -> a fresh intent + confirm with -pi-2 / -confirm-2 ---------- */
+  const Kn = (await order([{ sku: S("l"), qty: 1 }])).data?.orderNo;
+  const kText = JSON.parse(payments(Kn)[0].data_json).qr?.text;
+  const kf = await setIntent({ order_id: Kn, status: "payment_failed", deliver: HOOK });
+  ok("qr attempt failed (intent back to requires_payment_method) -> payment row failed, order keeps its hold", JSON.parse(kf.data.delivery.body).result === "failed" && payments(Kn)[0].status === "failed" && orderRow(Kn).status === "new" && sku("l").reserved === 1, [kf.data?.delivery, payments(Kn)]);
+  const cK = await check(Kn);
+  const iK = await intentsOf(Kn);
+  ok("after a failed QR: payment-check opens a new intent (-pi-2) and confirms it once (-confirm-2), new QR", cK.data?.payment?.mode === "qr" && cK.data.payment.qr?.text !== kText && iK.items.length === 2 && iK.items[1]._key === `${Kn}-pi-2` && JSON.stringify(await confirmKeys(Kn)) === JSON.stringify([`${Kn}-confirm`, `${Kn}-confirm-2`]), [cK.data?.payment?.mode, iK.items.map((i) => i._key), await confirmKeys(Kn)]);
+  ok("qr: no key or secret in any payment row", one(`SELECT COUNT(*) AS n FROM payments WHERE data_json LIKE ${q(`%${KEY}%`)} OR data_json LIKE ${q(`%${SECRET}%`)}`).n === 0);
 
   /* ---------- admin ---------- */
   const list = await admin("GET", "/api/admin/payments?provider=wire&limit=100");
