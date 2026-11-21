@@ -34,6 +34,8 @@ const PERM_LABEL: Record<Permission, string> = {
   "settings.read": "Тохиргоо харах",
   "settings.write": "Тохиргоо, webhook өөрчлөх",
   "audit.read": "Үйлдлийн түүх харах",
+  "customers.read": "Хэрэглэгчийн бүртгэл харах",
+  "customers.write": "Хэрэглэгчийн нууц үг сэргээх",
 };
 
 export default function Settings() {

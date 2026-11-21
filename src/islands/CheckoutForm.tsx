@@ -53,7 +53,7 @@ export default function CheckoutForm(props: CheckoutFormProps) {
   const [sending, setSending] = useState(false);
   const [token, setToken] = useState("");
   const tsBox = useRef<HTMLDivElement>(null);
-  const tsId = useRef<string | null>(null);
+  const tsW = useRef<{ reset(): void; remove(): void }>();
   const formRef = useRef<HTMLFormElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
   const live = check.status === "ok";
@@ -69,6 +69,8 @@ export default function CheckoutForm(props: CheckoutFormProps) {
   useEffect(() => {
     setMounted(true);
     void refresh();
+    // signed in: fill empty fields from the profile + default address (lazy, only with the gz_in hint cookie)
+    if (/(^|; )gz_in=1/.test(document.cookie)) import("../scripts/account-prefill").then((m) => m.apply(setValues, setUbDistrict, setProvince), () => {});
   }, []);
 
   const empty = mounted && items.length === 0;
@@ -81,52 +83,27 @@ export default function CheckoutForm(props: CheckoutFormProps) {
     if (pays.length && !pays.includes(values.payment as (typeof PAYS)[number])) setValues((s) => ({ ...s, payment: pays[0]! }));
   }, [meta]);
 
-  /* Turnstile widget: render explicitly, clean up on unmount (view transitions swap the page) */
+  /* Turnstile widget (../scripts/turnstile, lazy): render explicitly, clean up on unmount (view transitions swap the page) */
   useEffect(() => {
     if (!mounted || empty) return;
-    let cancelled = false;
+    let w: { reset(): void; remove(): void } | undefined;
+    let dead = false;
     import("../scripts/turnstile")
-      .then((m) => m.loadTurnstile())
-      .then((ts) => {
-        if (cancelled || !tsBox.current || tsId.current) return;
-        tsId.current = ts.render(tsBox.current, {
-          sitekey: siteKey,
-          theme: "dark",
-          // Turnstile has no Mongolian; "mn" logs a warning and falls back to en-us anyway
-          language: locale === "en" ? "en" : "auto",
-          callback: (t: string) => {
-            setToken(t);
-            setErrors((e) => (e.turnstile ? { ...e, turnstile: undefined } : e));
-          },
-          "expired-callback": () => setToken(""),
-          "error-callback": () => {
-            setToken("");
-          },
-        });
-      })
-      .catch((err) => console.warn(err));
+      .then((m) => m.mount(tsBox.current!, siteKey, locale, "dark", (t) => {
+        setToken(t);
+        if (t) setErrors((e) => (e.turnstile ? { ...e, turnstile: undefined } : e));
+      }))
+      .then((x) => (dead ? x.remove() : (tsW.current = w = x)), (err) => console.warn(err));
     return () => {
-      cancelled = true;
-      if (tsId.current && window.turnstile) {
-        try {
-          window.turnstile.remove(tsId.current);
-        } catch {
-          /* already gone */
-        }
-      }
-      tsId.current = null;
+      dead = true;
+      w?.remove();
+      tsW.current = undefined;
     };
   }, [mounted, empty]);
 
   const resetTurnstile = () => {
     setToken("");
-    if (tsId.current && window.turnstile) {
-      try {
-        window.turnstile.reset(tsId.current);
-      } catch {
-        /* ignore */
-      }
-    }
+    tsW.current?.reset();
   };
 
   const subtotal = items.reduce((n, i) => n + i.price * i.qty, 0);

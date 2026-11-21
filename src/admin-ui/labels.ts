@@ -52,11 +52,12 @@ export const STOCK_REASON: Record<string, string> = {
   import: "Импортлосон",
 };
 export const ENTITY: Record<string, string> = {
-  product: "Бараа", sku: "Хэмжээ (SKU)", order: "Захиалга", payment: "Төлбөр", shipment: "Хүргэлт", settings: "Тохиргоо", media: "Зураг", webhook: "Webhook", bundle: "Багц",
+  product: "Бараа", sku: "Хэмжээ (SKU)", order: "Захиалга", payment: "Төлбөр", shipment: "Хүргэлт", settings: "Тохиргоо", media: "Зураг", webhook: "Webhook", bundle: "Багц", customer: "Хэрэглэгч",
 };
 export const ACTOR: Record<string, string> = { "admin:owner": "Эзэмшигч", "admin:staff": "Ажилтан", system: "Систем", customer: "Хэрэглэгч" };
 /** Readable names for audit actions. Unknown ones are shown as-is. */
 export const ACTION: Record<string, string> = {
+  "customer.reset_password": "Хэрэглэгчийн нууц үг сэргээсэн",
   "product.create": "Бараа үүсгэсэн", "product.update": "Бараа зассан", "sku.create": "Хэмжээ нэмсэн", "sku.update": "Үнэ / хэмжээ зассан",
   "sku.delete": "Хэмжээ устгасан", "inventory.adjust": "Үлдэгдэл тохируулсан", "media.upload": "Зураг оруулсан",
   "order.create": "Захиалга үүссэн", "order.status": "Захиалгын төлөв", "order.paid": "Төлбөр баталгаажсан", "order.note": "Тэмдэглэл нэмсэн",

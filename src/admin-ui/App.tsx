@@ -24,6 +24,7 @@ const R = {
   shipments: { key: "shipments", perm: "delivery.read", title: "Хүргэлт", load: () => import("./views/Shipments") },
   shipment: { key: "shipments", perm: "delivery.read", title: "Хүргэлт", load: () => import("./views/ShipmentDetail") },
   webhooks: { key: "shipments", perm: "delivery.read", title: "Хүргэлт · Webhook", load: () => import("./views/Webhooks") },
+  customers: { key: "customers", perm: "customers.read", title: "Хэрэглэгчид", load: () => import("./views/Customers") },
   settings: { key: "settings", perm: "settings.read", title: "Тохиргоо", load: () => import("./views/Settings") },
   audit: { key: "audit", perm: "audit.read", title: "Түүх", load: () => import("./views/Audit") },
 } satisfies Record<string, Route>;
@@ -36,6 +37,7 @@ const NAV: { key: string; href: string; label: string; perm: Permission; icon: I
   { key: "inventory", href: "#/inventory", label: "Үлдэгдэл", perm: "catalog.read", icon: "inventory" },
   { key: "payments", href: "#/payments", label: "Төлбөр", perm: "payments.read", icon: "payments" },
   { key: "shipments", href: "#/shipments", label: "Хүргэлт", perm: "delivery.read", icon: "shipments" },
+  { key: "customers", href: "#/customers", label: "Хэрэглэгчид", perm: "customers.read", icon: "person" },
   { key: "settings", href: "#/settings", label: "Тохиргоо", perm: "settings.read", icon: "settings" },
   { key: "audit", href: "#/audit", label: "Түүх", perm: "audit.read", icon: "audit" },
 ];

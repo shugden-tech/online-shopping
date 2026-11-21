@@ -108,17 +108,6 @@ async function place(
     } catch {
       /* storage blocked: the success page falls back to the order lookup */
     }
-    try {
-      // demo account history (browser only); must never block the checkout
-      const { recordOrder } = await import("./account");
-      recordOrder({
-        no,
-        total: data.total ?? lines.reduce((n, i) => n + i.price * i.qty, 0),
-        items: lines.map((i) => ({ name: i.name, brand: i.brand, ml: i.ml, qty: i.qty, price: i.price })),
-      });
-    } catch {
-      /* ignore */
-    }
     return { ok: true, orderNo: no };
   }
 

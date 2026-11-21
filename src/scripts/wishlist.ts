@@ -1,5 +1,6 @@
 // Client-side wishlist: heart buttons on product cards, a count badge in the header, and a drawer listing saved items.
-// Items live in localStorage (`gz_wish`), with a memory fallback when storage is blocked.
+// Items live in localStorage (`gz_wish`), with a memory fallback when storage is blocked. When signed in (hint
+// cookie gz_in=1) ./wish-sync is loaded lazily and mirrors the list to the account (merge on sign-in).
 import "../styles/wishlist.css";
 import type { CartItem } from "../lib/cart";
 
@@ -55,6 +56,7 @@ function write() {
   } catch {
     /* storage blocked: keep working in memory */
   }
+  doc.dispatchEvent(new CustomEvent("gz-wish-change", { detail: items }));
 }
 
 const parseItem = (el: HTMLElement): WishItem | null => {
@@ -103,152 +105,39 @@ function toggle(btn: HTMLElement) {
   write();
   sync();
   if (!wasOn) pulseHeaderWish();
-  if (isOpen()) renderList();
 }
 
 function removeItem(slug: string) {
   items = items.filter((i) => i.slug !== slug);
   write();
   sync();
-  renderList();
 }
 
-/* ---------- drawer ---------- */
+/* ---------- drawer: built and driven by ./wish-list, loaded on the first open ---------- */
 const isOpen = () => root.hasAttribute("data-wish-open");
-let lastOpener: HTMLElement | null = null;
+let drawer: Promise<typeof import("./wish-list")> | null = null;
+const api = { items: () => items, remove: removeItem };
 
-function readText(): PanelText {
-  try {
-    const el = doc.getElementById("wish-i18n");
-    return { title: "", empty: "", emptySub: "", add: "", remove: "", close: "", ...JSON.parse(el?.textContent ?? "{}") };
-  } catch {
-    return { title: "", empty: "", emptySub: "", add: "", remove: "", close: "" };
-  }
-}
-
-/** The drawer is replaced on every view-transition swap, so it is rebuilt when missing. */
-function getPanel(): HTMLElement {
-  const existing = doc.getElementById("wish-panel");
-  if (existing) return existing;
-  const t = readText();
-  const panel = doc.createElement("div");
-  panel.id = "wish-panel";
-  panel.className = "wish";
-
-  const scrim = doc.createElement("div");
-  scrim.className = "wish__scrim";
-  scrim.dataset.wishClose = "";
-
-  const dialog = doc.createElement("aside");
-  dialog.className = "wish__panel";
-  dialog.setAttribute("role", "dialog");
-  dialog.setAttribute("aria-modal", "true");
-  dialog.setAttribute("aria-label", t.title);
-  dialog.tabIndex = -1;
-
-  const head = doc.createElement("header");
-  head.className = "wish__head";
-  const title = doc.createElement("h2");
-  title.className = "wish__title";
-  title.textContent = t.title;
-  const closeBtn = doc.createElement("button");
-  closeBtn.type = "button";
-  closeBtn.className = "wish__close";
-  closeBtn.dataset.wishClose = "";
-  closeBtn.setAttribute("aria-label", t.close);
-  closeBtn.innerHTML =
-    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-  head.append(title, closeBtn);
-
-  const list = doc.createElement("div");
-  list.className = "wish__list";
-  list.dataset.wishList = "";
-
-  dialog.append(head, list);
-  panel.append(scrim, dialog);
-  doc.body.append(panel);
-  return panel;
-}
-
-/** The saved rows (with live prices) are drawn by ./wish-list, loaded the first time the drawer opens. */
-let rows: typeof import("./wish-list") | null = null;
-function renderList() {
-  const list = getPanel().querySelector<HTMLElement>("[data-wish-list]");
-  if (!list) return;
-  if (rows) rows.render(list, items, readText(), () => isOpen() && renderList());
-  else void import("./wish-list").then((m) => {
-    rows = m;
-    renderList();
-  });
-}
-
-function openPanel(opener: HTMLElement | null) {
-  const panel = getPanel();
-  lastOpener = opener;
-  renderList();
-  panel.setAttribute("data-open", "");
-  root.setAttribute("data-wish-open", "");
-  panel.querySelector<HTMLElement>(".wish__close")?.focus({ preventScroll: true });
-}
-
-function closePanel(restoreFocus = true) {
-  const panel = doc.getElementById("wish-panel");
-  root.removeAttribute("data-wish-open");
-  panel?.removeAttribute("data-open");
-  if (restoreFocus && lastOpener?.isConnected) lastOpener.focus({ preventScroll: true });
-  lastOpener = null;
-}
-
-/* ---------- events ---------- */
 doc.addEventListener("click", (e) => {
   const target = e.target as HTMLElement | null;
   if (!target?.closest) return;
-
   const wishToggle = target.closest<HTMLElement>("[data-wish-toggle]");
-  if (wishToggle) {
-    toggle(wishToggle);
-    return;
-  }
-
+  if (wishToggle) return toggle(wishToggle);
   const opener = target.closest<HTMLElement>("[data-wish-open]:not(html)");
-  if (opener) {
-    openPanel(opener);
-    return;
-  }
-
-  if (!isOpen()) return;
-
-  if (target.closest("[data-wish-close]")) {
-    closePanel();
-    return;
-  }
-
-  const remove = target.closest<HTMLElement>("[data-wish-remove]");
-  if (remove) {
-    removeItem(remove.dataset.wishRemove ?? "");
-    return;
-  }
-
-  // Adding from the drawer: close it so the cart drawer (opened by shell.ts) is visible.
-  if (target.closest("#wish-panel [data-add]")) closePanel(false);
+  if (opener) void (drawer ??= import("./wish-list")).then((m) => m.open(opener, api));
 });
 
-doc.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && isOpen()) closePanel();
-});
-
-window.addEventListener("storage", (e) => {
-  if (e.key !== null && e.key !== KEY) return;
+const reload = () => {
   items = read();
   sync();
-  if (isOpen()) renderList();
+  if (isOpen()) doc.dispatchEvent(new Event("gz-wish-render"));
+};
+window.addEventListener("storage", (e) => {
+  if (e.key === null || e.key === KEY) reload();
 });
+// ./wish-sync wrote the merged account list
+doc.addEventListener("gz-wish-reload", reload);
+if (/(?:^|;\s*)gz_in=1(?:;|$)/.test(doc.cookie)) void import("./wish-sync");
 
-doc.addEventListener("astro:before-swap", () => closePanel(false));
-doc.addEventListener("astro:page-load", () => {
-  getPanel();
-  sync();
-});
-
-getPanel();
+doc.addEventListener("astro:page-load", sync);
 sync();

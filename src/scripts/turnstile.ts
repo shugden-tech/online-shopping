@@ -26,3 +26,25 @@ export function loadTurnstile(): Promise<TurnstileApi> {
   return tsLoading;
 }
 
+
+/** Renders one widget into `el`; the token (or "" when it expires / fails) goes to `onToken`. */
+export async function mount(el: HTMLElement, sitekey: string, locale: string, theme: "dark" | "light", onToken: (t: string) => void) {
+  const ts = await loadTurnstile();
+  const id = ts.render(el, {
+    sitekey,
+    theme,
+    // Turnstile has no Mongolian; "mn" logs a warning and falls back to en-us anyway
+    language: locale === "en" ? "en" : "auto",
+    callback: onToken,
+    "expired-callback": () => onToken(""),
+    "error-callback": () => onToken(""),
+  });
+  const safe = (fn: () => void) => {
+    try {
+      fn();
+    } catch {
+      /* already gone */
+    }
+  };
+  return { reset: () => safe(() => ts.reset(id)), remove: () => safe(() => ts.remove(id)) };
+}
