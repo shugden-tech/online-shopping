@@ -271,3 +271,11 @@
 @media (prefers-reduced-motion: reduce) {
   .sf__intro .btn.btn--gold, .sf__intro .btn.btn--gold::before, .sf__intro .btn.btn--gold::after { transition: none; }
 }
+
+/* Scent notes step on phones: the title and the notes sit higher, with smaller square tiles. */
+@media (max-width: 640px) {
+  .sf[data-step="4"] .sf__stage { align-content: start; padding-top: 4px; }
+  .sf[data-step="4"] .sf__q { margin-top: 0; }
+  .sf[data-step="4"] .sf__notes { gap: 6px; }
+  .sf[data-step="4"] .sf__opt--note .sf__opt-box { aspect-ratio: 1 / 1; }
+}

@@ -3,7 +3,7 @@ import { addItem } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import type { SkuView } from "../lib/store-state";
 import {
-  EMPTY_ANSWERS, MOODS, RESULT_STEP, STEPS, WHEN, WHO, parseHash, recommend, toHash,
+  EMPTY_ANSWERS, MAX_NOTES, MOODS, RESULT_STEP, STEPS, WHEN, WHO, answered, parseHash, recommend, toHash,
   type Answers, type Match, type Mood, type QuizProduct,
 } from "../lib/quiz";
 import { fill, type Dict } from "../i18n/lite";
@@ -82,6 +82,10 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
     setStep(Math.max(0, Math.min(RESULT_STEP, n)));
   };
   const set = (patch: Partial<Answers>) => setA((prev) => ({ ...prev, ...patch }));
+  const canNext = step >= 1 && step <= STEPS ? answered(step, a) : true;
+  /** Scent notes: pick up to MAX_NOTES, then press next. */
+  const toggleNote = (id: string) =>
+    set({ notes: a.notes.includes(id) ? a.notes.filter((n) => n !== id) : a.notes.length < MAX_NOTES ? [...a.notes, id] : a.notes });
   /** Single-choice answers advance straight to the next question. */
   const choose = (patch: Partial<Answers>) => {
     set(patch);
@@ -258,7 +262,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                 const on = a.notes.includes(n.id);
                 return (
                   <label class="sf__opt sf__opt--note">
-                    <input type="checkbox" checked={on} onChange={() => choose({ notes: [n.id] })} />
+                    <input type="checkbox" checked={on} disabled={!on && a.notes.length >= MAX_NOTES} onChange={() => toggleNote(n.id)} />
                     <span class="sf__opt-box">
                       <img src={n.img} alt="" width="240" height="300" loading="lazy" decoding="async" />
                       <span class="sf__opt-label">{n.label}</span>
@@ -277,7 +281,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
 
         {step === 5 && (
           <section>
-            {title(tr.q5, tr.q5Sub)}
+            {title(tr.q5)}
             <div class="sf__slider">
               <span class={`sf__pole${a.intensity >= 4 ? " on" : ""}`} aria-hidden="true">{tr.strong}</span>
               <div class="sf__range" style={`--v:${(a.intensity - 1) / 4}`}>
@@ -297,11 +301,6 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                   aria-orientation="vertical"
                   onPointerDown={() => { sliderPointer.current = true; }}
                   onInput={(e) => set({ intensity: Number((e.currentTarget as HTMLInputElement).value) })}
-                  onChange={() => {
-                    if (!sliderPointer.current) return;
-                    sliderPointer.current = false;
-                    go(step + 1);
-                  }}
                 />
               </div>
               <span class={`sf__pole${a.intensity <= 2 ? " on" : ""}`} aria-hidden="true">{tr.soft}</span>
@@ -375,6 +374,11 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
           <p class="sf__step" aria-hidden="true">
             {fill(tr.step, { n: `0${step}`, total: `0${STEPS}` })}
           </p>
+          {(step === 4 || step === 5) && (
+            <button type="button" class="sf__navbtn sf__navbtn--next" onClick={() => go(step + 1)} disabled={!canNext}>
+              {step === STEPS ? tr.finish : tr.next}
+            </button>
+          )}
         </nav>
       )}
     </div>
