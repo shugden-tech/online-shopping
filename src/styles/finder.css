@@ -236,3 +236,38 @@
 
 /* The three-option question (who): keep its column inside the screen so the title and rows are not cut off. */
 .sf__stage > section:has(> .sf__menu) { min-width: 0; width: 100%; }
+
+/* Question steps: Back sits in the bottom-left corner, pinned to the screen on every screen size,
+   so it is always reachable without scrolling, however many answers a step has. */
+.sf__nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; width: auto; max-width: none; margin: 0;
+  padding: 12px var(--gutter) calc(16px + env(safe-area-inset-bottom));
+  border-top: 0; backdrop-filter: none;
+  background: linear-gradient(180deg, transparent, var(--ink) 45%);
+}
+.sf__stage:has(~ .sf__nav) { padding-bottom: 104px; }
+/* Always show the "Буцах" text (it used to be hidden on narrow phones, leaving an empty black box). */
+.sf__navlabel { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
+
+/* Intro start button: no box, just widely spaced text between two thin black lines that fade at the ends. */
+.sf__intro .btn.btn--gold {
+  position: relative; min-width: min(340px, 100%); min-height: 0; padding: 22px 36px;
+  background: none; border: 0; border-radius: 0; color: var(--black, #111); --btn-fg: var(--black, #111);
+  font-size: 14px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
+  transition: color .3s, letter-spacing .4s var(--ease-out);
+}
+.sf__intro .btn.btn--gold::before,
+.sf__intro .btn.btn--gold::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--black, #111) 20%, var(--black, #111) 80%, transparent);
+  transition: transform .4s var(--ease-out);
+}
+.sf__intro .btn.btn--gold::before { top: 0; }
+.sf__intro .btn.btn--gold::after { bottom: 0; }
+.sf__intro .btn.btn--gold:hover { background: none; border: 0; color: var(--black, #111); letter-spacing: .38em; }
+.sf__intro .btn.btn--gold:hover::before,
+.sf__intro .btn.btn--gold:hover::after { transform: scaleX(1.08); }
+.sf__intro .btn.btn--gold:focus-visible { outline: 2px solid var(--black, #111); outline-offset: 6px; }
+@media (prefers-reduced-motion: reduce) {
+  .sf__intro .btn.btn--gold, .sf__intro .btn.btn--gold::before, .sf__intro .btn.btn--gold::after { transition: none; }
+}
