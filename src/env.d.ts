@@ -29,6 +29,12 @@ interface Env {
   QPAY_INVOICE_CODE?: string;
   /** HMAC key that signs the callback URL given to QPay (the callback is still verified with payment/check). */
   QPAY_CALLBACK_SECRET?: string;
+  /** Wire (0008): API base (var; default https://api.wire.mn; http only for a localhost mock). */
+  WIRE_BASE_URL?: string;
+  /** Wire secret API key sk_live_… (Worker secret). Never logged. */
+  WIRE_API_KEY?: string;
+  /** Wire webhook signing secret whsec_… (Worker secret, shown once when the endpoint is created). */
+  WIRE_WEBHOOK_SECRET?: string;
   /** Delivery company API (adapter chosen by the `delivery.provider` setting). */
   DELIVERY_BASE_URL?: string;
   DELIVERY_API_KEY?: string;

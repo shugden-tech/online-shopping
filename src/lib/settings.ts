@@ -49,6 +49,8 @@ export function checkSetting(key: string, value: unknown): string | null {
   if (key.startsWith("delivery.fee") || key === "delivery.free_over") {
     return value === null || (Number.isInteger(value) && (value as number) >= 0 && (value as number) <= 10_000_000) ? null : "invalid";
   }
+  // a Wire PaymentIntent expires 5 minutes to 24 hours after creation, and the hold is its expires_at
+  if (key === "holds.wire_minutes") return Number.isInteger(value) && (value as number) >= 5 && (value as number) <= 1440 ? null : "invalid";
   if (key.startsWith("holds.")) return Number.isInteger(value) && (value as number) >= 5 && (value as number) <= 10_080 ? null : "invalid";
   if (key === "delivery.provider") return typeof value === "string" && /^[a-z0-9_-]{2,32}$/.test(value) ? null : "invalid";
   if (typeof def === "string") return typeof value === "string" && value.length <= 300 ? null : "invalid";

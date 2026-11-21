@@ -75,7 +75,7 @@ export interface StoreSkuState {
 }
 export interface StoreState {
   checkoutOpen: boolean;
-  payments: { qpay: boolean; bank: boolean };
+  payments: { qpay: boolean; bank: boolean; wire: boolean };
   products: StoreProductState[];
 }
 
@@ -124,7 +124,7 @@ export const RESERVATION_TRANSITIONS: Record<ReservationStatus, readonly Reserva
 
 /* ---------------- payments ---------------- */
 
-export const PAYMENT_PROVIDERS = ["qpay", "bank"] as const;
+export const PAYMENT_PROVIDERS = ["qpay", "bank", "wire"] as const;
 export type PaymentProvider = (typeof PAYMENT_PROVIDERS)[number];
 export const PAYMENT_STATUSES = ["pending", "paid", "failed", "expired", "cancelled", "refunded"] as const;
 export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
@@ -142,7 +142,9 @@ export const canPaymentTransition = (from: string, to: string) =>
 /** What POST /api/orders returns under `payment`. */
 export type PaymentInstructions =
   | { method: "qpay"; invoiceId: string; qrImage: string | null; qrText: string | null; shortUrl: string | null; urls: { name: string; link: string; logo?: string }[] }
-  | { method: "bank"; bank: string; account: string; holder: string; reference: string };
+  | { method: "bank"; bank: string; account: string; holder: string; reference: string }
+  /** Wire hosted checkout (0008): the buyer is sent to `checkoutUrl` (https://pay.wire.mn/c/…). */
+  | { method: "wire"; intentId: string; sessionId: string; checkoutUrl: string };
 
 /* ---------------- delivery ---------------- */
 
@@ -175,9 +177,13 @@ export const SETTINGS = {
   "checkout.open": true as boolean,
   "payments.qpay.enabled": true as boolean,
   "payments.bank.enabled": true as boolean,
+  /** Wire hosted checkout (0008). Off until the owner has a live Wire project and both WIRE_* secrets. */
+  "payments.wire.enabled": false as boolean,
   /** Minutes a 'new' order keeps its stock before it expires, per payment method. */
   "holds.qpay_minutes": 30 as number,
   "holds.bank_minutes": 1440 as number,
+  /** Wire: also the PaymentIntent's expires_at, so Wire allows 5–1440 only. */
+  "holds.wire_minutes": 30 as number,
   /** Delivery fees in ₮; null = fall back to src/data/settings.json. */
   "delivery.fee_ub": null as number | null,
   "delivery.fee_countryside": null as number | null,
