@@ -83,10 +83,13 @@ optional Google sign-in (off until `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` a
 `/admin/#/customers` with password reset (no SMS yet). Contract: `docs/CONTRACTS.md` §10. Tests: `npm run test:accounts`.
 Owner TODO: `npx wrangler d1 migrations apply genzst --remote`.
 
-**Wire payments (2026-11-21, migration 0008):** optional third method (hosted checkout on pay.wire.mn, signed webhook
-`/api/payments/wire/webhook`, intent read back before `markPaid`). Off by default (`payments.wire.enabled`); needs `WIRE_API_KEY` +
-`WIRE_WEBHOOK_SECRET`. Checkout form does not offer it yet (A5 island + i18n change). Contract: `docs/CONTRACTS.md` §11. Tests:
-`npm run test:wire` (with `node scripts/mock-wire.mjs`). Owner TODO: `npx wrangler d1 migrations apply genzst --remote` (0008).
+**Wire payments (2026-11-21, migration 0008):** optional third method, offered at checkout as «Wire (QR, банкны апп)» once
+switched on. Default **direct QR** mode (`payments.wire.mode = qr`): intent + one `/confirm`, the QR (drawn server-side as SVG)
+and bank-app deeplinks shown on our order page; `hosted` mode = redirect to pay.wire.mn (also the fallback for next_action types
+we cannot show). Signed webhook `/api/payments/wire/webhook`, intent read back before `markPaid`. Off by default
+(`payments.wire.enabled`); needs `WIRE_API_KEY` + `WIRE_WEBHOOK_SECRET`. Contract: `docs/CONTRACTS.md` §11. Tests:
+`npm run test:wire` (with `node scripts/mock-wire.mjs`). Open risk: confirm / next_action fields checked only against the docs and
+the mock until a first small live payment. Owner TODO: `npx wrangler d1 migrations apply genzst --remote` (0008).
 
 **Hide / lock controls:** product hidden (status), product sale lock, payment method off (QPay / bank), checkout closed — all in `/admin/`.
 **Catalog data:** `npm run import:catalog -- --apply local|remote` loads the 1000-item R2 catalog + the 207 site products (1123 products, prices and stock empty). `--demo-prices` is local-only.

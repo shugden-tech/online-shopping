@@ -342,21 +342,32 @@ checkout prefill (name, phone, default address into empty fields).
 
 ## 11. Wire payments (A2, 2026-11-21, migration 0008)
 
-Third payment method next to bank transfer and QPay, using Wire's **hosted checkout** (https://docs.wire.mn/en/docs).
-Code: `src/lib/payments/wire.ts` (client, signature, event parsing), `src/lib/payments/index.ts` (`ensureWireCheckout`,
-`applyWireIntent`, `refreshWire`), `src/pages/api/payments/wire/webhook.ts`. Mock: `scripts/mock-wire.mjs`; tests:
-`npm run test:wire` (81 checks).
+Third payment method next to bank transfer and QPay (https://docs.wire.mn/en/docs). Two flows, chosen by the setting
+`payments.wire.mode`: **direct QR** (`"qr"`, default since 2026-11-21: Wire's "build your own payment screen" — the QR and
+the bank-app deeplinks are shown on our order page, no redirect) and **hosted checkout** (`"hosted"`: the buyer is sent to
+pay.wire.mn; also the automatic fallback for next_action types we cannot show).
+Code: `src/lib/payments/wire.ts` (client, confirm, next_action parsing, signature, event parsing), `src/lib/payments/index.ts`
+(`ensureWireCheckout`, `applyWireIntent`, `refreshWire`), `src/lib/payments/qr-svg.ts` (QR → SVG on the server, `uqr`),
+`src/pages/api/payments/wire/webhook.ts`, `src/scripts/order-status.ts` (order page). Mock: `scripts/mock-wire.mjs`; tests:
+`npm run test:wire`.
 
 **Schema (0008).** `payments` rebuilt (every row copied with its id) so `provider` allows `'wire'`; `provider_ref` = `pi_…`,
-`provider_payment_id` = `ch_…` (or the `pi_…` when Wire gives no charge), `data_json` = `{ sessionId, checkoutUrl, expiresAt }`.
+`provider_payment_id` = `ch_…` (or the `pi_…` when Wire gives no charge), `data_json` =
+`{ mode: "qr"|"poll"|"redirect"|"hosted", action (next_action.type), qr: { text, deeplinks: [{ name, link }] } | null,
+sessionId, checkoutUrl, expiresAt }` — Wire's public payload only (no key, no secret, no image). Rows from before direct
+mode have no `mode` and read as `hosted`.
 New `wire_events(id evt_… PK, type, object_id, result, received_at)` de-duplicates webhook deliveries.
 
 **Config.** `WIRE_BASE_URL` (var, default `https://api.wire.mn`; `http://` only for localhost / 127.0.0.1), secrets
 `WIRE_API_KEY` (`sk_live_…`; Wire refuses `sk_test_` and has no sandbox) and `WIRE_WEBHOOK_SECRET` (`whsec_…`). Settings
 `payments.wire.enabled` (default **false**, owner only via `PUT /api/admin/settings`, audited) and `holds.wire_minutes`
-(default 30, 5–1440). Wire is offered (`StoreState.payments.wire`, `/api/store/bundles`, `POST /api/orders`) only when the
+(default 30, 5–1440), `payments.wire.mode` (`"qr"` default | `"hosted"`, owner only, admin Тохиргоо → «Wire-ийн төлбөрийн
+хэлбэр»). Wire is offered (`StoreState.payments.wire`, `/api/store/bundles`, `POST /api/orders`) only when the
 setting is on **and** both secrets are set. `PAYMENT_PROVIDERS` / `PaymentInstructions` gain `wire`:
-`{ method: "wire", intentId, sessionId, checkoutUrl }`.
+`{ method: "wire", intentId, mode, sessionId | null, checkoutUrl | null, qr: { text, image, deeplinks } | null }` where
+`qr.image` is an SVG `data:image/svg+xml;base64,…` the server draws from `qr.text` on every read (ECC M, 4-module quiet
+zone, one `<path>`, no script). The checkout form (`CheckoutForm.tsx` `PAYS`) offers «Wire (QR, банкны апп)» /
+"Wire (QR, bank app)" only once the live store state says `payments.wire` is true (never before it loads).
 
 **Outbound calls** (`Authorization: Bearer WIRE_API_KEY`, JSON bodies, integer ₮, 10 s timeout; the key is never logged):
 
@@ -364,18 +375,41 @@ setting is on **and** both secrets are set. `PAYMENT_PROVIDERS` / `PaymentInstru
 |---|---|
 | `POST /v1/payment_intents` | `{ amount: order.total, currency: "MNT", description: "GenZst <orderNo>", metadata: { order_id }, expires_at }`. `expires_at` = the order's `hold_expires_at` (clamped to now + 5.5 min … now + 23 h 59 min). `Idempotency-Key: <orderNo>-pi` |
 | `POST /v1/checkout/sessions` | `{ payment_intent, success_url, cancel_url }`, both = the order's success page (`/zahialga/amjilttai/?no=` or `/en/checkout/success/?no=` on `PUBLIC_SITE_URL`). `Idempotency-Key: <orderNo>-cs`. `/confirm` is never called. |
+| `POST /v1/payment_intents/{id}/confirm` | **direct mode only.** Body `{}`, `Idempotency-Key: <orderNo>-confirm` (`-confirm-2`, … on fresh attempts, same suffix as `-pi`). Expected answer: `status: "requires_action"`, `next_action: { type: "qr", qr: { text: "000201…", deeplinks: [{ name, link }] } }`. Other `next_action.type`: `redirect_to_url` (→ `mode: "redirect"`, button to `redirect_to_url.url`, https only), `poll` (→ `mode: "poll"`, the page keeps polling; `refreshWire` stores the QR once the intent has one), anything else (`loan_app`, `loan_credit_decision`, an unreadable QR) → a hosted checkout session (`mode: "hosted"`, key `-cs`). |
 | `GET /v1/payment_intents/{id}` | read-back before anything is applied; only `status: "succeeded"` marks an order paid |
 
 The client refuses a POST without an `Idempotency-Key` before sending anything. Errors keep Wire's `code` and `request_id`;
 network / 408 / 409 `idempotency_in_flight` / 424 / 429 / 5xx count as **transient**. Retry keys: a transient failure retries
 with the same keys (Wire replays); after an attempt that created an intent or failed for good, the next attempt uses
-`<orderNo>-pi-2` / `-cs-2`, then `-3`, …
+`<orderNo>-pi-2` / `-confirm-2` / `-cs-2`, then `-3`, …
+
+**Confirm only once.** One pending `payments` row per order (the claim), so concurrent requests never both confirm; an
+order replay (same order `Idempotency-Key`), payment-check polling and lookups read the stored row and never call
+confirm. If an attempt confirmed but our side failed afterwards (lost answer, write failure), the row is `failed` +
+`transient` with the `intentId`; the retry replays `-pi` (same intent), **reads the intent back** and confirms only if it is
+still `requires_payment_method` — a `requires_action` intent's stored next_action is used as is. Field validation:
+`qr.text` 8–1500 printable chars; deeplinks ≤ 40, `name` ≤ 80, `link` ≤ 1000 with a scheme, never
+`javascript:`/`data:`/`vbscript:`/`file:`/`blob:`.
+
+**Order page (direct mode).** `figure.ok__qr` with the server-drawn QR (`img[data-wire-qr]`, 220 px, `min(220px, 60vw)`), the
+bank-app deeplinks as buttons (`a[data-wire-app]`, a grid of 44 px tiles), «Төлсний дараа автоматаар баталгаажна.», the hold
+countdown and the existing payment-check polling (5 s … 195 s backoff within the 10 / 10 min limit, then a «Төлбөр
+шалгах» button). If the browser lost the checkout response (new tab), the QR comes back from `POST /api/orders/lookup`.
+The page **never** marks anything paid: only the signed webhook or a payment-check / sweep / admin read-back of
+`succeeded` reaches `markPaid`. A failed QR attempt (`payment_failed`, intent back to `requires_payment_method`) closes
+the row `failed`; the next payment-check opens a new intent + confirm (`-pi-2` / `-confirm-2`) and the page shows the new QR.
+
+**Open risk.** The confirm / `next_action` field names (`next_action.type`, `qr.text`, `qr.deeplinks[].name/link`,
+`redirect_to_url.url`) are taken from the Wire docs and checked only against `scripts/mock-wire.mjs` until a first
+small live (`sk_live_`) payment; whether a checkout session may be opened for an already-confirmed intent (the fallback
+for `loan_app` etc.) is not documented — if Wire refuses it, the order shows «Wire төлбөр үүсгэж чадсангүй» + retry.
+Switch `payments.wire.mode` to `hosted` to go back to the redirect flow without a deploy.
 
 **Order flow.** `POST /api/orders` with `payment: "wire"` → same single D1 batch (order + reservations), hold =
 `holds.wire_minutes` → `ensureWireCheckout` (claims one pending `payments` row, creates intent + session, stores them,
 order `payment_status = pending`, audit `payment.invoice`). Response `payment` = the Wire instructions; on failure `payment: null,
 paymentError: "wire_unavailable"` (row `failed`, audit `payment.error`) and `POST /api/orders/{no}/payment-check` creates it later.
-The success page (`src/scripts/order-status.ts`) shows a **Төлөх** button to `checkoutUrl` (only `https://*.wire.mn`), then polls
+In hosted mode the success page (`src/scripts/order-status.ts`) shows a **Төлөх** button to `checkoutUrl` (only `https://*.wire.mn`), then polls
 payment-check, which reads the intent back (`refreshWire`) and, when the order has no open checkout (cancelled / failed),
 opens a fresh one while the hold lasts. The hold sweep reads every expired Wire order's intent first (a paid order with a lost
 webhook is paid, not expired). Admin `POST /api/admin/payments/{id}/check` works for Wire rows.
@@ -391,7 +425,8 @@ webhook is paid, not expired). Admin `POST /api/admin/payments/{id}/check` works
    pending payments cancelled, reservations committed, movement `sale`, order → paid, order event, audit `order.paid`,
    outbound `order.paid`); a payment on an expired / cancelled row is recorded once for a refund (`payment.late`).
    `canceled` → row `cancelled` (audit `payment.cancelled`; the order keeps its hold and the sweep expires it).
-   `payment_failed` while the intent is still payable (`requires_payment_method` / `requires_action` / `processing`: the buyer
+   Direct mode: an intent back at `requires_payment_method` → row `failed` (audit `payment.failed`), see above.
+   Hosted mode: `payment_failed` while the intent is still payable (`requires_payment_method` / `requires_action` / `processing`: the buyer
    can retry on the hosted page) → row stays pending, audit `payment.attempt_failed`; with a final intent status → row `failed`
    (audit `payment.failed`). Unknown intents (another integration on the same Wire project) → 200 `unknown`.
 4. If the read-back fails, the `wire_events` row is deleted and the answer is **503**, so Wire retries. Otherwise **200**
@@ -402,6 +437,5 @@ webhook is paid, not expired). Admin `POST /api/admin/payments/{id}/check` works
 **TODO (not built).** Refunds from the admin (Wire refund endpoint, `POST` with `Idempotency-Key`): today the owner refunds in
 the Wire dashboard and the `charge.refunded` event is only recorded. Cancelling the Wire intent when an order is cancelled
 (today the intent simply expires at the hold time; a payment after that is recorded for a refund). Optional IP allow-list
-(65.109.117.186) belongs in a Cloudflare WAF rule on `/api/payments/wire/webhook`. The checkout form
-(`src/islands/CheckoutForm.tsx`, `PAYS`) and `src/i18n/*.json` (Wire label/hint, success-page strings) still need the A5
-storefront change before customers can pick Wire; the API, success page and admin are ready.
+(65.109.117.186) belongs in a Cloudflare WAF rule on `/api/payments/wire/webhook`. Cancelling a
+spent QR intent at Wire after a failed attempt (it simply expires with the hold).

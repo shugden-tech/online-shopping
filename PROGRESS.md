@@ -579,3 +579,34 @@ checkout prefill, logout/login, 375 px without horizontal scroll, English page).
   api 91/91, storefront 61/61, admin-ui 96/96, admin-api 69/71 (facets + built-product redirect need the imported catalog).
   `astro check` 0 errors, `astro build` OK, `npm run budget` PASS.
 - Not verified live: Wire has no sandbox; the field names follow the docs and are tested only against the mock.
+
+## 2026-11-21 — Wire direct QR on the order page + Wire at checkout — model: Opus
+- Owner's ask: Wire as a checkout option that shows the **QR directly on our order page** (no redirect to pay.wire.mn), per
+  Wire's quickstart "Alternative: build your own payment screen". Contract: `docs/CONTRACTS.md` §11 (direct QR mode, confirm call).
+- `src/lib/payments/wire.ts`: `confirmWireIntent` (`POST /v1/payment_intents/{id}/confirm`, body `{}`, `Idempotency-Key
+  <orderNo>-confirm` / `-confirm-2` …), `parseNextAction` (qr text + deeplinks, redirect_to_url, poll, other types; bounded sizes,
+  unsafe link schemes dropped), `WireIntent.nextAction`.
+- `src/lib/payments/index.ts`: `ensureWireCheckout` now has two flows by the new setting `payments.wire.mode` (`qr` default,
+  `hosted` = the unchanged redirect flow): intent → confirm once → store `{ mode, action, qr: { text, deeplinks } }` in the
+  payment row; `redirect_to_url` → Wire's URL; `poll` → the page polls and `refreshWire` stores the QR when it appears; other
+  types → hosted session fallback. An interrupted attempt reads the intent back instead of confirming again. A spent QR
+  (`requires_payment_method` again) closes the row so payment-check opens `-pi-2` / `-confirm-2`. Webhook / read-back stay the
+  only way to `markPaid`.
+- `src/lib/payments/qr-svg.ts` (new, dependency `uqr@0.1.3`, MIT, no deps): the server draws the QR as a one-path SVG data: URI
+  on each read, so the browser loads **no QR code** (success page initial JS unchanged at 13.7 KB).
+- Order page `src/scripts/order-status.ts`: `figure.ok__qr` with the Wire QR, bank-app deeplink buttons, «Төлсний дараа
+  автоматаар баталгаажна.», the existing polling; QR restored from lookup when the tab lost the checkout response; no redraw
+  when polling returns the same instructions. Wire strings moved into `src/i18n/{mn,en}.json` (`success.wire*`).
+- Checkout `src/islands/CheckoutForm.tsx`: `PAYS` gains `wire` («Wire (QR, банкны апп)» / "Wire (QR, bank app)"), shown only
+  when the live store state says `payments.wire` is on (hidden until it loads). Payment note mentions Wire.
+- Admin Settings: «Wire-ийн төлбөрийн хэлбэр» select (QR / hosted). `checkSetting` accepts only `qr` | `hosted`.
+- Mock `scripts/mock-wire.mjs`: `/confirm` (requires_action + next_action qr with mock EMVCo text + deeplinks), `/_control/next_action`,
+  `set { next_action }`, `fail { endpoint: "confirm", after }` (confirm happens, answer lost), confirm stats per key.
+- Tests: `npm run test:wire` 129/129 on a fresh local D1 (`.wrangler/state-wire`, wrangler dev + mocks) — 81 hosted-flow checks
+  (now run with `payments.wire.mode: hosted`) + 48 new: one confirm with key, QR payload stored (no secrets), replayed order /
+  confirm / polling never confirm again, lost confirm answer read back, paid webhook paid once with stock committed, redirect /
+  loan_app / poll fallbacks, failed QR → `-confirm-2`, Playwright order page 1440 + 390 px (QR image, 3 deeplinks, note, no
+  overflow, paid flip), checkout offers Wire only when enabled. Screens: `docs/screens/wire-qr-1440.png`, `wire-qr-390.png`,
+  `wire-checkout-390.png`.
+- Open risk: Wire's real confirm / `next_action` fields are verified only against the docs and the mock until a first small
+  `sk_live_` payment. `payments.wire.mode = hosted` reverts to the redirect flow without a deploy.
