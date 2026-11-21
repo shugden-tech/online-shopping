@@ -196,7 +196,8 @@ const line = (slug, ml, extra = {}) => {
   await page.locator(".atc__btn").click();
   await page.waitForSelector(".cd[data-open] .cd__item");
   const cart = await page.evaluate(() => JSON.parse(localStorage.getItem("gz-cart-v1") ?? "[]"));
-  ok("product page: add uses sku + live price", cart[0]?.sku === `${GOOD}:${sizes[0].ml}` && cart[0]?.price === livePrice(GOOD, sizes[0].ml), JSON.stringify(cart[0]));
+  const dflt = sizes.find((s) => s.full) ?? sizes[0]; // the full bottle is the default pick
+  ok("product page: add uses sku + live price", cart[0]?.sku === `${GOOD}:${dflt.ml}` && cart[0]?.price === livePrice(GOOD, dflt.ml), JSON.stringify(cart[0]));
   await page.goto(`${BASE}/delguur/${HIDDEN}/`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(".atc--off", { timeout: 10000 }).catch(() => {});
   ok("product page: hidden → «Одоогоор худалдаалагдахгүй»", ((await page.locator(".atc--off").textContent().catch(() => "")) ?? "").includes("Одоогоор худалдаалагдахгүй"));
