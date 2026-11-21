@@ -91,6 +91,7 @@ function loginError(status: number, code: string | undefined, mode: "password" |
 
 function Login({ onIn, message, logo, wordmark }: { onIn: (s: Session) => void; message: string; logo: string; wordmark: string }) {
   const [mode, setMode] = useState<"password" | "token">("password");
+  const [showSecret, setShowSecret] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(message);
   const user = useRef<HTMLInputElement>(null);
@@ -138,7 +139,10 @@ function Login({ onIn, message, logo, wordmark }: { onIn: (s: Session) => void; 
           )}
           <label class="a-field">
             <span class="a-field__label">{mode === "password" ? "Нууц үг" : "Токен"}</span>
-            <input ref={secret} class="a-input" type="password" name="token" autocomplete={mode === "password" ? "current-password" : "off"} />
+            <span class="a-pw">
+              <input ref={secret} class="a-input" type={showSecret ? "text" : "password"} name="token" autocomplete={mode === "password" ? "current-password" : "off"} />
+              <button type="button" class="a-btn a-btn--ghost a-btn--sm a-pw__toggle" aria-pressed={showSecret} aria-label={showSecret ? "Нууц үгийг нуух" : "Нууц үгийг харах"} onClick={() => setShowSecret((v) => !v)}>{showSecret ? "Нуух" : "Харах"}</button>
+            </span>
             {mode === "token" && <span class="a-field__hint">Токен зөвхөн энэ цонхонд хадгалагдаж, цонхоо хаахад устна.</span>}
           </label>
           <button class="a-btn a-btn--primary" type="submit" disabled={busy}>{busy ? "Шалгаж байна…" : "Нэвтрэх"}</button>

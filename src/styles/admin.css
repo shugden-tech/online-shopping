@@ -378,3 +378,8 @@ a.a-btn { text-decoration: none; }
 .a-logo .a-wordmark { width: auto; height: 19px; object-fit: contain; }
 .a-logo > img:first-child { width: 34px; height: 34px; }
 .a-logo .a-logo__t { gap: 6px; }
+
+/* password field with a show/hide toggle (login) */
+.a-pw { position: relative; display: block; }
+.a-pw .a-input { padding-right: 72px; }
+.a-pw__toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
