@@ -1,8 +1,9 @@
 // Success / order-tracking page (loaded lazily by SuccessView): payment instructions from POST /api/orders
 // (QPay QR + links, or bank details), order lookup (POST /api/orders/lookup), the hold-expiry
 // countdown for unpaid orders, shipment tracking, and QPay payment polling (POST /api/orders/{no}/payment-check).
-// Wire (0008): a "Төлөх" button sends the buyer to Wire's hosted checkout (pay.wire.mn); back on this page the
-// order is polled the same way (the server reads the PaymentIntent back from Wire).
+// Wire (0008): direct QR mode shows Wire's QR (an SVG the server drew from next_action.qr.text) and the bank-app
+// deeplinks right here; the hosted fallback is a "Төлөх" button to pay.wire.mn (or Wire's redirect URL). Either way the
+// order is polled the same way (the server reads the PaymentIntent back from Wire; only its webhook / read-back marks paid).
 import { clearCart } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import type { PaymentInstructions } from "../lib/contracts";
@@ -14,11 +15,6 @@ const LAST_PAY_SLOT = "gz-last-pay"; // LastPayment from cart-checkout.ts
 // (frequent first, while the customer is most likely paying) leave one for the manual "check" button.
 // The QPay callback normally marks the order paid long before polling would notice.
 const POLL_DELAYS_S = [5, 10, 15, 30, 45, 60, 90, 150, 195];
-// Wire strings live here until src/i18n gets them (the success page's i18n JSON has no Wire keys yet).
-const WIRE_TEXT = {
-  mn: { title: "Wire-ээр төлөх", pay: "Төлөх", note: "Wire-ийн төлбөрийн хуудас нээгдэнэ: QR уншуулах эсвэл банкны аппаар төлнө. Төлсний дараа энэ хуудас руу буцаж ирнэ.", error: "Wire төлбөрийн хуудсыг нээж чадсангүй." },
-  en: { title: "Pay with Wire", pay: "Pay", note: "Wire's payment page opens: scan the QR code or pay in your bank app. You come back to this page afterwards.", error: "Could not open the Wire payment page." },
-};
 /** Only Wire's own hosted checkout host is followed. */
 const wireUrl = (u: string | null | undefined): string | null => {
   try {
@@ -38,6 +34,8 @@ interface Lookup {
   shipment?: { status: string; trackingNo: string | null; trackingUrl: string | null } | null;
   items: { brand: string; name: string; ml: number; qty: number; price: number; bundle?: { parts: { brand: string; name: string; ml: number; qty: number }[] } }[];
   total: number;
+  /** While unpaid: the instructions stored on the server (e.g. Wire's QR after a reload / in a new tab). */
+  payment?: PaymentInstructions | null;
 }
 interface LastPayment { no: string; total: number | null; holdExpiresAt: string | null; payment: PaymentInstructions | null; paymentError: string | null }
 type S = Record<string, string> & { status: Record<string, string>; payment: Record<string, string>; ship: Record<string, string> };
@@ -332,26 +330,64 @@ export function init(root: HTMLElement): void {
     payBox.replaceChildren(...parts);
   }
   function wire(p: Extract<PaymentInstructions, { method: "wire" }>, total: number | null) {
-    const w = WIRE_TEXT[locale];
     payBox.dataset.method = "wire";
-    const parts: Node[] = [el("h2", "t-title", w.title)];
+    payBox.dataset.wireMode = p.mode ?? "hosted";
+    const parts: Node[] = [el("h2", "t-title", t.wireTitle)];
     const a = amountRow(total);
     if (a) {
       const dl = el("dl", "ok__rows");
       dl.append(a);
       parts.push(dl);
     }
-    const href = wireUrl(p.checkoutUrl);
-    if (href) {
-      const l = el("a", "btn btn--gold ok__qlink", w.pay);
-      l.href = href;
-      l.rel = "noopener noreferrer";
-      l.dataset.wirePay = "";
-      parts.push(l, el("p", "t-small ok__note", w.note));
-    } else parts.push(el("p", "t-small ok__note", w.error));
+    const src = p.mode === "qr" ? qrSrc(p.qr?.image ?? null) : null;
+    if (src) {
+      const fig = el("figure", "ok__qr");
+      const img = el("img");
+      img.src = src;
+      img.alt = t.wireTitle;
+      img.width = 220;
+      img.height = 220;
+      img.dataset.wireQr = "";
+      fig.append(img, el("figcaption", "t-small t-dim", t.wireScan));
+      parts.push(fig);
+      const links = (p.qr?.deeplinks ?? []).map((u) => ({ name: u.name, link: safeLink(u.link) })).filter((u) => u.link);
+      if (links.length) {
+        const box = el("div", "ok__apps ok__apps--open");
+        box.append(el("p", "ok__apps-title", t.wireApps));
+        const ul = el("ul");
+        for (const u of links) {
+          const li = el("li");
+          const l = el("a", "ok__app", u.name);
+          l.href = u.link!;
+          l.rel = "noopener noreferrer";
+          l.dataset.wireApp = "";
+          li.append(l);
+          ul.append(li);
+        }
+        box.append(ul);
+        parts.push(box);
+      }
+      parts.push(el("p", "t-small ok__note", t.wireAuto));
+    } else if (p.mode === "poll" || p.mode === "qr") {
+      parts.push(el("p", "t-small ok__note", t.wirePreparing));
+    } else {
+      const href = p.mode === "redirect" ? safeHttps(p.checkoutUrl) : wireUrl(p.checkoutUrl);
+      if (href) {
+        const l = el("a", "btn btn--gold ok__qlink", t.wirePay);
+        l.href = href;
+        l.rel = "noopener noreferrer";
+        l.dataset.wirePay = "";
+        parts.push(l, el("p", "t-small ok__note", t.wireNote));
+      } else parts.push(el("p", "t-small ok__note", t.wireError));
+    }
     payBox.replaceChildren(...parts);
   }
+  let shown = "";
   function show(p: PaymentInstructions | null, total: number | null) {
+    // polling hands back the same instructions every time: only redraw when they changed (no QR flicker)
+    const key = JSON.stringify([p, total]);
+    if (key === shown && !payBox.hidden) return;
+    shown = key;
     if (p?.method === "bank") bank(p, total);
     else if (p?.method === "qpay") qpay(p, total);
     else if (p?.method === "wire") wire(p, total);
@@ -417,7 +453,7 @@ export function init(root: HTMLElement): void {
         else payState.hidden = true;
       }
     });
-    say(mine.paymentError === "wire_unavailable" ? WIRE_TEXT[locale].error : t.qpayError, retry);
+    say(mine.paymentError === "wire_unavailable" ? t.wireError : t.qpayError, retry);
   } else if (mine?.payment) {
     show(mine.payment, total);
     if (mine.payment.method === "qpay" || mine.payment.method === "wire") poll();
@@ -439,6 +475,11 @@ export function init(root: HTMLElement): void {
     }
     if (r.paymentStatus === "paid" || r.status === "paid" || ["shipped", "done"].includes(r.status)) {
       if (mine?.payment) paid();
+    } else if (!mine?.payment && r.payment?.method === "wire" && unpaid(r)) {
+      // the browser lost the checkout response (new tab, cleared storage): the server still has the QR
+      show(r.payment, total);
+      poll();
+      if (r.status === "new") startHold(parseUtc(r.holdExpiresAt ?? null));
     } else if (unpaid(r) && r.status === "new") startHold(parseUtc(r.holdExpiresAt ?? mine?.holdExpiresAt ?? null));
   });
 }

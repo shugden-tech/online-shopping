@@ -217,6 +217,8 @@
 .ok__app { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; min-width: 0; }
 .ok__app span { min-width: 0; overflow-wrap: anywhere; }
 .ok__app img { width: 28px; height: 28px; border-radius: 6px; flex: none; }
+.ok__apps-title { margin: 8px 0 0; font-size: 13px; font-weight: 600; }
+.ok__apps--open .ok__app { justify-content: center; text-align: center; }
 .ok__paystate { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; font-weight: 500; color: var(--gold-soft); }
 .ok__paystate[data-paid] { color: var(--text); }
 .ok__hold { font-size: 13px; color: var(--text-dim); font-variant-numeric: tabular-nums; }

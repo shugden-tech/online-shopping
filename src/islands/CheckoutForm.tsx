@@ -27,7 +27,7 @@ export interface CheckoutFormProps {
 }
 
 type FormError = keyof Tr["errors"];
-const PAYS = ["bank", "qpay"] as const;
+const PAYS = ["bank", "qpay", "wire"] as const;
 
 /* Submitting (live re-check, Idempotency-Key, POST /api/orders, error mapping) lives in ../lib/cart-checkout,
  * loaded on submit so it stays out of this page's initial JS. Prices come from the live store state. */
@@ -75,7 +75,8 @@ export default function CheckoutForm(props: CheckoutFormProps) {
 
   const empty = mounted && items.length === 0;
   const closed = meta?.checkoutOpen === false;
-  const pays = PAYS.filter((p) => !meta || meta.payments[p]);
+  // Wire is opt-in (off by default): it appears only once the live store state says it is on
+  const pays = PAYS.filter((p) => (meta ? meta.payments[p] : p !== "wire"));
   const noPay = meta !== null && pays.length === 0;
   const blocked = closed || noPay;
   // keep the chosen payment method one that is switched on
@@ -497,7 +498,7 @@ export default function CheckoutForm(props: CheckoutFormProps) {
                 <span class="co__pay-box">
                   <span class="co__pay-dot" aria-hidden="true"></span>
                   <span class="co__pay-name">{tr[p]}</span>
-                  <span class="co__pay-hint">{p === "bank" ? tr.bankHint : tr.qpayHint}</span>
+                  <span class="co__pay-hint">{tr[`${p}Hint` as const]}</span>
                 </span>
               </label>
             ))}
