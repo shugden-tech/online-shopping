@@ -21,6 +21,7 @@
     "deploy": "astro build && wrangler deploy",
     "test:api": "node scripts/test-api.mjs",
     "test:payments": "node scripts/test-payments.mjs",
+    "test:wire": "node scripts/test-wire.mjs",
     "test:catalog": "node scripts/test-catalog.mjs",
     "test:delivery": "node scripts/test-delivery.mjs",
     "test:storefront": "node scripts/test-storefront.mjs",
