@@ -1,11 +1,18 @@
 // A2: response shapes for orders (checkout response, customer lookup, admin).
 import type { PaymentInstructions } from "../contracts";
-import { ensureQpayInvoice, instructionsFor } from "../payments";
+import { ensureQpayInvoice, ensureWireCheckout, instructionsFor } from "../payments";
 import { parseLines, type D1, type OrderRow } from "./types";
 
 /** Body of POST /api/orders (201 the first time, 200 for the same Idempotency-Key). */
 export async function checkoutResponse(env: Env, order: OrderRow, payment?: PaymentInstructions | null) {
-  const pay = payment !== undefined ? payment : order.payment === "qpay" ? await ensureQpayInvoice(env, order) : await instructionsFor(env.DB, order);
+  const pay =
+    payment !== undefined
+      ? payment
+      : order.payment === "qpay"
+        ? await ensureQpayInvoice(env, order)
+        : order.payment === "wire"
+          ? await ensureWireCheckout(env, order)
+          : await instructionsFor(env.DB, order);
   return {
     ok: true as const,
     orderNo: order.order_no,
@@ -15,6 +22,7 @@ export async function checkoutResponse(env: Env, order: OrderRow, payment?: Paym
     holdExpiresAt: order.hold_expires_at,
     payment: pay,
     ...(pay === null && order.payment === "qpay" ? { paymentError: "qpay_unavailable" } : {}),
+    ...(pay === null && order.payment === "wire" ? { paymentError: "wire_unavailable" } : {}),
   };
 }
 

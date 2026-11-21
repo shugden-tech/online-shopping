@@ -1,6 +1,7 @@
 // POST /api/orders — validate, verify Turnstile, replay by idempotency key, rate-limit (atomic), check the store
 // switches, price every line from D1 `skus` (never from the client), reserve stock and store the order in ONE
-// D1 batch (all or nothing), then create the QPay invoice (QPay orders) and notify Telegram (optional).
+// D1 batch (all or nothing), then create the QPay invoice (QPay orders) or the Wire hosted checkout (Wire orders)
+// and notify Telegram (optional).
 // Contract: docs/CONTRACTS.md §4. Also sweeps expired holds in the background (waitUntil).
 import type { APIRoute } from "astro";
 import { placeOrder } from "../../lib/orders/create";
@@ -10,7 +11,7 @@ import { priceCart } from "../../lib/orders/pricing";
 import { loadOrder, type OrderRow } from "../../lib/orders/types";
 import { checkoutResponse } from "../../lib/orders/view";
 import { issuesToErrors, orderSchema } from "../../lib/order-schema";
-import { ensureQpayInvoice, qpayEnabled } from "../../lib/payments";
+import { ensureQpayInvoice, ensureWireCheckout, qpayEnabled, wireEnabled } from "../../lib/payments";
 import { clientIp, fail, hitRateLimit, json, pruneRateLimits, readJson } from "../../lib/server";
 import { getSettings } from "../../lib/settings";
 import { getSession } from "../../lib/customers/session";
@@ -75,7 +76,8 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
 
     const settings = await getSettings(db);
     if (!settings["checkout.open"]) return fail(423, { form: "closed" });
-    const methodOn = o.payment === "qpay" ? qpayEnabled(env, settings) : settings["payments.bank.enabled"] === true;
+    const methodOn =
+      o.payment === "qpay" ? qpayEnabled(env, settings) : o.payment === "wire" ? wireEnabled(env, settings) : settings["payments.bank.enabled"] === true;
     if (!methodOn) return fail(422, { payment: "disabled" });
 
     const priced = await priceCart(db, o.items, settings, o.city, o.locale);
@@ -96,7 +98,7 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
 
     const order = await loadOrder(db, placed.orderNo);
     if (!order) throw new Error("order vanished after insert");
-    const payment = o.payment === "qpay" ? await ensureQpayInvoice(env, order) : undefined;
+    const payment = o.payment === "qpay" ? await ensureQpayInvoice(env, order) : o.payment === "wire" ? await ensureWireCheckout(env, order) : undefined;
     const fresh = (await loadOrder(db, placed.orderNo)) ?? order;
 
     if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {

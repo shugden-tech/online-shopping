@@ -1,8 +1,9 @@
 // A2: hold expiry. `new` orders whose hold_expires_at has passed are cancelled (reason `expired`), their held
 // stock is released and their pending payments are marked `expired`. A QPay order is re-checked with QPay
-// first, so a payment whose callback got lost is applied instead of expired.
+// first (a Wire order: its PaymentIntent is read back), so a payment whose callback / webhook got lost is applied
+// instead of expired.
 // Called from POST /api/orders via waitUntil and from the lead's POST /api/admin/jobs/run.
-import { qpayConfigured, refreshQpay } from "../payments";
+import { qpayConfigured, refreshQpay, refreshWire, wireConfigured } from "../payments";
 import { transitionOrder } from "./state";
 import { loadOrder, type OrderRow } from "./types";
 
@@ -24,11 +25,14 @@ export async function sweepExpiredHolds(env: Env, limit = 50): Promise<{ expired
   for (const candidate of due.results ?? []) {
     try {
       let order: OrderRow | null = candidate;
-      if (order.payment === "qpay" && qpayConfigured(env)) {
+      const qpay = order.payment === "qpay" && qpayConfigured(env);
+      const wire = order.payment === "wire" && wireConfigured(env);
+      if (qpay || wire) {
         try {
-          await refreshQpay(env, order);
+          if (qpay) await refreshQpay(env, order);
+          else await refreshWire(env, order);
         } catch (err) {
-          console.error(`[holds] QPay check for ${order.order_no} failed:`, String(err));
+          console.error(`[holds] ${order.payment} check for ${order.order_no} failed:`, String((err as Error)?.message ?? err));
           if (!candidate.past_grace) continue; // try again on the next sweep
         }
         order = await loadOrder(db, candidate.order_no);

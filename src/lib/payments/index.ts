@@ -1,4 +1,5 @@
-// A2 payments: payment instructions, QPay invoice creation, markPaid (idempotent) and QPay re-checks.
+// A2 payments: payment instructions, QPay invoice creation, Wire hosted checkout (0008), markPaid (idempotent)
+// and the QPay / Wire re-checks.
 import fileSettings from "../../data/settings.json";
 import { auditStatement } from "../audit";
 import type { Actor, PaymentInstructions, PaymentProvider } from "../contracts";
@@ -6,8 +7,10 @@ import { commitReservations, errText, eventStatement, guard, guardOrderStatus, i
 import { loadOrder, type D1, type OrderRow, type PaymentRow, type Stmt } from "../orders/types";
 import { checkInvoice, createInvoice, qpayConfigured, type QpayInvoice } from "./qpay";
 import { emitStatement } from "../webhooks";
+import { createWireCheckout, createWireIntent, fetchWireIntent, WireError, wireConfigured, type WireIntent } from "./wire";
 
 export { qpayConfigured, qpayEnabled } from "./qpay";
+export { wireConfigured, wireEnabled } from "./wire";
 
 /* ---------------- instructions ---------------- */
 
@@ -55,14 +58,28 @@ function qpayInstructions(row: Pick<PaymentRow, "provider_ref" | "data_json">): 
   };
 }
 
+function wireInstructions(row: Pick<PaymentRow, "provider_ref" | "data_json">): PaymentInstructions | null {
+  if (!row.provider_ref) return null;
+  let d: { sessionId?: unknown; checkoutUrl?: unknown } = {};
+  try {
+    d = JSON.parse(row.data_json ?? "{}") as typeof d;
+  } catch {
+    /* empty */
+  }
+  if (typeof d.checkoutUrl !== "string" || typeof d.sessionId !== "string") return null;
+  return { method: "wire", intentId: row.provider_ref, sessionId: d.sessionId, checkoutUrl: d.checkoutUrl };
+}
+
 /** The instructions a customer needs to pay this order now (null when nothing is payable / no invoice yet). */
 export async function instructionsFor(db: D1, order: OrderRow): Promise<PaymentInstructions | null> {
   if (order.payment === "bank") return bankInstructions(order.order_no, order.locale, await liveBank(db));
+  const provider = order.payment === "wire" ? "wire" : "qpay";
   const row = await db
-    .prepare("SELECT provider_ref, data_json FROM payments WHERE order_id = ?1 AND provider = 'qpay' AND status = 'pending' AND provider_ref IS NOT NULL ORDER BY id DESC LIMIT 1")
-    .bind(order.id)
+    .prepare("SELECT provider_ref, data_json FROM payments WHERE order_id = ?1 AND provider = ?2 AND status = 'pending' AND provider_ref IS NOT NULL ORDER BY id DESC LIMIT 1")
+    .bind(order.id, provider)
     .first<Pick<PaymentRow, "provider_ref" | "data_json">>();
-  return row ? qpayInstructions(row) : null;
+  if (!row) return null;
+  return provider === "wire" ? wireInstructions(row) : qpayInstructions(row);
 }
 
 /* ---------------- QPay invoice ---------------- */
@@ -116,6 +133,155 @@ export async function ensureQpayInvoice(env: Env, order: OrderRow): Promise<Paym
   }
 }
 
+/* ---------------- Wire hosted checkout (CONTRACTS §11) ---------------- */
+
+const utcMs = (s: string | null) => (s ? Date.parse(`${s.replace(" ", "T")}Z`) : NaN);
+
+/** Where Wire sends the buyer back (paid or not): the order's success page, which re-checks the payment itself. */
+export function wireReturnUrl(env: Env, order: Pick<OrderRow, "order_no" | "locale">): string {
+  const site = (env.PUBLIC_SITE_URL ?? "").replace(/\/+$/, "");
+  // = ROUTES.success in src/i18n/routes.mjs (not imported: it reads process.env at load time)
+  const path = order.locale === "en" ? "/en/checkout/success/" : "/zahialga/amjilttai/";
+  return `${site}${path}?no=${encodeURIComponent(order.order_no)}`;
+}
+
+/**
+ * Makes sure a payable Wire order has one pending PaymentIntent + checkout session and returns the hosted URL.
+ * Idempotency keys: `<orderNo>-pi` / `<orderNo>-cs` for the first attempt, `-pi-2` / `-cs-2`, … only after an attempt
+ * that created an intent or failed for good (a transient failure retries with the same keys, so Wire replays).
+ * The intent expires with the order's stock hold. Returns null when Wire failed (the order stays; payment-check retries).
+ */
+export async function ensureWireCheckout(env: Env, order: OrderRow): Promise<PaymentInstructions | null> {
+  const db = env.DB;
+  const existing = await instructionsFor(db, order);
+  if (existing) return existing;
+  if (!wireConfigured(env) || !["new", "confirmed"].includes(order.status) || order.payment_status === "paid") return null;
+  await db
+    .prepare(
+      `UPDATE payments SET status = 'failed', data_json = '{"error":"stale_claim","transient":true}', updated_at = datetime('now')
+        WHERE order_id = ?1 AND provider = 'wire' AND status = 'pending' AND provider_ref IS NULL AND created_at < datetime('now', '-2 minutes')`,
+    )
+    .bind(order.id)
+    .run();
+  const claim = await db
+    .prepare(
+      `INSERT INTO payments (order_id, provider, amount, status)
+       SELECT ?1, 'wire', ?2, 'pending'
+        WHERE EXISTS (SELECT 1 FROM orders WHERE id = ?1 AND status IN ('new','confirmed') AND payment_status IN ('unpaid','pending'))
+          AND NOT EXISTS (SELECT 1 FROM payments WHERE order_id = ?1 AND provider = 'wire' AND status = 'pending')`,
+    )
+    .bind(order.id, order.total)
+    .run();
+  if ((claim.meta?.changes ?? 0) !== 1) return instructionsFor(db, order);
+  const paymentId = Number(claim.meta.last_row_id);
+  const prior = await db
+    .prepare(
+      `SELECT COUNT(*) AS n FROM payments WHERE order_id = ?1 AND provider = 'wire' AND id < ?2
+          AND (provider_ref IS NOT NULL OR data_json IS NULL OR IFNULL(json_extract(data_json, '$.transient'), 0) = 0)`,
+    )
+    .bind(order.id, paymentId)
+    .first<{ n: number }>();
+  const suffix = (prior?.n ?? 0) > 0 ? `-${(prior?.n ?? 0) + 1}` : "";
+  const hold = utcMs(order.hold_expires_at);
+  const expiresAt = Math.floor((Number.isFinite(hold) ? hold : Date.now() + 60 * 60_000) / 1000);
+  let intent: WireIntent | null = null;
+  try {
+    intent = await createWireIntent(env, { amount: order.total, orderNo: order.order_no, expiresAt, idempotencyKey: `${order.order_no}-pi${suffix}` });
+    const back = wireReturnUrl(env, order);
+    const cs = await createWireCheckout(env, { intentId: intent.id, successUrl: back, cancelUrl: back, idempotencyKey: `${order.order_no}-cs${suffix}` });
+    const data = { sessionId: cs.id, checkoutUrl: cs.url, expiresAt: intent.expiresAt };
+    await db.batch([
+      db
+        .prepare("UPDATE payments SET provider_ref = ?2, data_json = ?3, updated_at = datetime('now') WHERE id = ?1")
+        .bind(paymentId, intent.id, JSON.stringify(data)),
+      db.prepare("UPDATE orders SET payment_status = 'pending', updated_at = datetime('now') WHERE id = ?1 AND payment_status = 'unpaid'").bind(order.id),
+      auditStatement(db, "system", "payment.invoice", "payment", paymentId, { orderNo: order.order_no, provider: "wire", intentId: intent.id, sessionId: cs.id, amount: order.total }),
+    ]);
+    return { method: "wire", intentId: intent.id, sessionId: cs.id, checkoutUrl: cs.url };
+  } catch (err) {
+    const we = err instanceof WireError ? err : null;
+    const transient = we ? we.transient : true;
+    const msg = String((err as Error)?.message ?? err).slice(0, 200);
+    console.error(`[payments] Wire checkout for ${order.order_no} failed: ${msg}`);
+    await db.batch([
+      db
+        .prepare("UPDATE payments SET status = 'failed', data_json = ?2, updated_at = datetime('now') WHERE id = ?1 AND status = 'pending'")
+        .bind(paymentId, JSON.stringify({ error: msg, code: we?.code ?? null, transient, intentId: intent?.id ?? null })),
+      auditStatement(db, "system", "payment.error", "payment", paymentId, { orderNo: order.order_no, provider: "wire", code: we?.code ?? null, status: we?.status ?? null, transient }),
+    ]);
+    return null;
+  }
+}
+
+export type WireApplyResult = MarkPaidResult | "cancelled" | "failed" | "pending" | "ignored";
+
+/** Intent statuses in which the buyer can still pay (a failed attempt on the hosted page can be retried). */
+const WIRE_OPEN = new Set(["requires_payment_method", "requires_action", "requires_confirmation", "processing"]);
+
+/**
+ * Applies what Wire says about one of our intents (always a fresh GET, never a webhook body):
+ *   succeeded -> markPaid (same path as QPay: audit, order -> paid, reservations committed, once)
+ *   canceled  -> the pending payment row -> cancelled (the order keeps its hold; the sweep expires it)
+ *   any other final status after a `payment_failed` event -> the pending payment row -> failed
+ * `failedEvent` = this call follows a payment_intent.payment_failed event.
+ */
+export async function applyWireIntent(
+  env: Env,
+  order: OrderRow,
+  row: PaymentRow,
+  intent: WireIntent,
+  actor: Actor,
+  failedEvent = false,
+): Promise<WireApplyResult> {
+  const db = env.DB;
+  if (intent.id !== row.provider_ref || (intent.orderId && intent.orderId !== order.order_no) || intent.currency.toUpperCase() !== "MNT") {
+    console.error(`[payments] Wire intent ${intent.id} does not match payment ${row.id} of ${order.order_no}`);
+    return "ignored";
+  }
+  if (intent.status === "succeeded") {
+    return markPaid(env, order, { provider: "wire", amount: intent.amount, ref: intent.id, paymentId: intent.charge ?? intent.id }, actor);
+  }
+  if (row.status !== "pending") return "ignored";
+  const close = async (to: "cancelled" | "failed", action: string) => {
+    const res = await db.batch([
+      db.prepare("UPDATE payments SET status = ?2, updated_at = datetime('now') WHERE id = ?1 AND status = 'pending'").bind(row.id, to),
+      eventStatement(db, order.id, order.status, order.status, actor, `wire payment ${to} (${intent.status})`),
+      auditStatement(db, actor, action, "payment", row.id, { orderNo: order.order_no, provider: "wire", intentId: intent.id, status: intent.status }),
+    ]);
+    return (res[0]?.meta?.changes ?? 0) === 1 ? to : "ignored";
+  };
+  if (intent.status === "canceled" || intent.status === "cancelled") return close("cancelled", "payment.cancelled");
+  if (WIRE_OPEN.has(intent.status)) {
+    if (failedEvent) {
+      await db.batch([auditStatement(db, actor, "payment.attempt_failed", "payment", row.id, { orderNo: order.order_no, provider: "wire", intentId: intent.id, status: intent.status })]);
+    }
+    return "pending";
+  }
+  return failedEvent ? close("failed", "payment.failed") : "pending";
+}
+
+/** Asks Wire about every intent of the order that may have been paid and applies the answer. Throws when Wire is unreachable. */
+export async function refreshWire(env: Env, order: OrderRow, actor: Actor = "system"): Promise<WireApplyResult[]> {
+  if (!wireConfigured(env)) return [];
+  const rows = await env.DB.prepare(
+    `SELECT * FROM payments WHERE order_id = ?1 AND provider = 'wire' AND provider_ref IS NOT NULL
+        AND (status = 'pending' OR (status IN ('expired','cancelled','failed') AND provider_payment_id IS NULL))
+      ORDER BY id`,
+  )
+    .bind(order.id)
+    .all<PaymentRow>();
+  const out: WireApplyResult[] = [];
+  let current = order;
+  for (const row of rows.results ?? []) {
+    const intent = await fetchWireIntent(env, row.provider_ref!);
+    // a closed row only matters when the buyer paid it anyway (late payment, recorded for a refund)
+    if (row.status !== "pending" && intent.status !== "succeeded") continue;
+    out.push(await applyWireIntent(env, current, row, intent, actor));
+    current = (await loadOrder(env.DB, order.order_no)) ?? current;
+  }
+  return out;
+}
+
 /* ---------------- markPaid ---------------- */
 
 export interface PaidInput {
@@ -154,7 +320,7 @@ export async function markPaid(env: Env, order: OrderRow, p: PaidInput, actor: A
   if (ref) {
     row = await db.prepare("SELECT * FROM payments WHERE provider = ?1 AND provider_ref = ?2").bind(p.provider, ref).first<PaymentRow>();
     if (row && row.order_id !== order.id) return "duplicate_ref";
-    if (!row && p.provider === "qpay") return "unknown_ref";
+    if (!row && p.provider !== "bank") return "unknown_ref";
   }
   if (!row && p.provider === "bank") {
     row = await db

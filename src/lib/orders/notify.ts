@@ -38,7 +38,7 @@ export interface NotifyOrder {
   khoroo: string;
   address: string;
   note: string;
-  payment: "bank" | "qpay";
+  payment: "bank" | "qpay" | "wire";
   locale: string;
 }
 
@@ -66,7 +66,7 @@ export function telegramText(no: string, o: NotifyOrder, lines: OrderLine[], sub
     `Барааны дүн: ${money(subtotal)}`,
     `Хүргэлт: ${delivery ? money(delivery) : "Үнэгүй"}`,
     `Нийт: ${money(total)}`,
-    `Төлбөр: ${o.payment === "bank" ? "Банкны шилжүүлэг" : "QPay"}`,
+    `Төлбөр: ${o.payment === "bank" ? "Банкны шилжүүлэг" : o.payment === "wire" ? "Wire" : "QPay"}`,
     ...(holdExpiresAt ? [`Нөөц дуусах: ${holdExpiresAt} UTC`] : []),
     `Хэл: ${o.locale}`,
   ].join("\n");

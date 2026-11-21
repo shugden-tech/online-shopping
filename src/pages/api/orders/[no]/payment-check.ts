@@ -1,10 +1,10 @@
 // POST /api/orders/{no}/payment-check { phone } -> { ok, paymentStatus, status, payment }
-// The customer's "I have paid" button: re-checks QPay for this order (never trusting the browser) and applies a
+// The customer's "I have paid" button: re-checks QPay (or Wire: GET the PaymentIntent) for this order (never trusting the browser) and applies a
 // confirmed payment. If the QPay invoice could not be created when the order was placed, it is created here.
 // Needs the last 4–8 digits of the order's phone. Rate limited 10 / 10 min / ip.
 import type { APIRoute } from "astro";
 import { ORDER_NO_RE, loadOrder, normOrderNo, phoneMatches } from "../../../../lib/orders/types";
-import { ensureQpayInvoice, instructionsFor, qpayConfigured, refreshQpay } from "../../../../lib/payments";
+import { ensureQpayInvoice, ensureWireCheckout, instructionsFor, qpayConfigured, refreshQpay, refreshWire, wireConfigured } from "../../../../lib/payments";
 import { clientIp, fail, hitRateLimit, json, readJson } from "../../../../lib/server";
 
 export const prerender = false;
@@ -38,6 +38,19 @@ export const POST: APIRoute = async ({ request, locals, clientAddress, params })
       } catch (err) {
         console.error(`[payment-check] ${no}:`, String(err));
         paymentError = "qpay_unavailable";
+      }
+      order = (await loadOrder(env.DB, no)) ?? order;
+    } else if (order.payment === "wire" && order.payment_status !== "paid" && wireConfigured(env)) {
+      try {
+        await refreshWire(env, order);
+        order = (await loadOrder(env.DB, no)) ?? order;
+        // no open checkout (the first one failed, or Wire cancelled it): open a fresh one while the hold lasts
+        if ((order.status === "new" || order.status === "confirmed") && order.payment_status !== "paid") {
+          if (!(await ensureWireCheckout(env, order))) paymentError = "wire_unavailable";
+        }
+      } catch (err) {
+        console.error(`[payment-check] ${no}:`, String((err as Error)?.message ?? err));
+        paymentError = "wire_unavailable";
       }
       order = (await loadOrder(env.DB, no)) ?? order;
     }

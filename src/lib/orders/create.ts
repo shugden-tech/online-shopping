@@ -33,7 +33,9 @@ export function sqliteTime(ms: number): string {
 }
 
 export function holdMinutes(settings: Settings, payment: PaymentProvider): number {
-  const m = payment === "qpay" ? settings["holds.qpay_minutes"] : settings["holds.bank_minutes"];
+  const m = payment === "qpay" ? settings["holds.qpay_minutes"] : payment === "wire" ? settings["holds.wire_minutes"] : settings["holds.bank_minutes"];
+  // Wire: the hold is also the PaymentIntent's expires_at, which Wire allows 5 min – 24 h
+  if (payment === "wire") return Number.isInteger(m) && m >= 5 && m <= 1440 ? m : 30;
   return Number.isInteger(m) && m > 0 ? m : payment === "qpay" ? 30 : 1440;
 }
 

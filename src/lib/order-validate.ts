@@ -5,7 +5,7 @@ import { districts } from "../data/settings.json";
 export const PHONE_RE = /^[6-9]\d{7}$/;
 export const DISTRICT_IDS: readonly string[] = districts.map((d) => d.id);
 export const CITIES = ["ub", "countryside"] as const;
-export const PAYMENTS = ["bank", "qpay"] as const;
+export const PAYMENTS = ["bank", "qpay", "wire"] as const;
 export type City = (typeof CITIES)[number];
 export type Payment = (typeof PAYMENTS)[number];
 
