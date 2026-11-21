@@ -143,8 +143,22 @@ export const canPaymentTransition = (from: string, to: string) =>
 export type PaymentInstructions =
   | { method: "qpay"; invoiceId: string; qrImage: string | null; qrText: string | null; shortUrl: string | null; urls: { name: string; link: string; logo?: string }[] }
   | { method: "bank"; bank: string; account: string; holder: string; reference: string }
-  /** Wire hosted checkout (0008): the buyer is sent to `checkoutUrl` (https://pay.wire.mn/c/…). */
-  | { method: "wire"; intentId: string; sessionId: string; checkoutUrl: string };
+  /**
+   * Wire (0008, CONTRACTS §11). `mode`:
+   *   "qr"     direct QR mode: `qr.image` (server-rendered SVG data: URI of `qr.text`) + bank-app `qr.deeplinks`, shown on our page
+   *   "poll"   confirmed, Wire has no QR yet: the page keeps polling payment-check until it has one
+   *   "hosted" the buyer is sent to `checkoutUrl` (https://pay.wire.mn/c/…), also the fallback for next_action types we cannot show
+   *   "redirect" next_action redirect_to_url: the buyer is sent to `checkoutUrl` (Wire's https URL)
+   */
+  | {
+      method: "wire";
+      intentId: string;
+      mode: WireMode;
+      sessionId: string | null;
+      checkoutUrl: string | null;
+      qr: { text: string; image: string | null; deeplinks: { name: string; link: string }[] } | null;
+    };
+export type WireMode = "qr" | "poll" | "hosted" | "redirect";
 
 /* ---------------- delivery ---------------- */
 
@@ -179,6 +193,8 @@ export const SETTINGS = {
   "payments.bank.enabled": true as boolean,
   /** Wire hosted checkout (0008). Off until the owner has a live Wire project and both WIRE_* secrets. */
   "payments.wire.enabled": false as boolean,
+  /** Wire flow: "qr" = our own payment screen (confirm + QR on the order page), "hosted" = redirect to pay.wire.mn. */
+  "payments.wire.mode": "qr" as string,
   /** Minutes a 'new' order keeps its stock before it expires, per payment method. */
   "holds.qpay_minutes": 30 as number,
   "holds.bank_minutes": 1440 as number,

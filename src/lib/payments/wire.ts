@@ -1,9 +1,12 @@
 // Wire (https://docs.wire.mn/en/docs) client: hosted checkout + signed webhooks (CONTRACTS §11). Server-only.
 //   POST {WIRE_BASE_URL}/v1/payment_intents        { amount, currency:"MNT", description, metadata:{order_id}, expires_at } -> pi_…
 //   POST {WIRE_BASE_URL}/v1/checkout/sessions      { payment_intent, success_url, cancel_url } -> cs_…, url (pay.wire.mn/c/…)
+//   POST {WIRE_BASE_URL}/v1/payment_intents/{id}/confirm  {} -> requires_action + next_action (direct QR mode, "build your
+//        own payment screen": next_action.type "qr" -> qr.text + qr.deeplinks[{name, link}]; also redirect_to_url / poll / …)
 //   GET  {WIRE_BASE_URL}/v1/payment_intents/{id}   the source of truth before an order is marked paid
 // Auth: `Authorization: Bearer WIRE_API_KEY` (sk_live_ only; Wire has no sandbox). Every POST carries an
-// Idempotency-Key (≤ 255 chars) and a JSON body. Amounts are whole tögrög. Hosted mode never calls /confirm.
+// Idempotency-Key (≤ 255 chars) and a JSON body. Amounts are whole tögrög. Hosted mode never calls /confirm (the hosted
+// page confirms itself); direct QR mode never opens a checkout session unless the next_action is not one we can show.
 // Webhooks: `WirePayment-Signature: t=<unix>,v1=<hex HMAC-SHA256(WIRE_WEBHOOK_SECRET, t + "." + rawBody)>`.
 // Nothing about the customer is sent to Wire: only the order number and the amount.
 // The API key is never logged or returned; error messages carry Wire's code and request_id only.
@@ -120,7 +123,18 @@ export interface WireIntent {
   charge: string | null;
   orderId: string | null;
   expiresAt: number | null;
+  /** What the buyer must do next (after /confirm), or null. */
+  nextAction: WireNextAction | null;
 }
+export interface WireDeeplink {
+  name: string;
+  link: string;
+}
+/** Parsed `next_action`. Only `qr` and `redirect_to_url` carry data we use; other types keep their name only. */
+export type WireNextAction =
+  | { type: "qr"; qrText: string; deeplinks: WireDeeplink[] }
+  | { type: "redirect_to_url"; url: string | null }
+  | { type: string };
 export interface WireCheckout {
   id: string;
   url: string;
@@ -143,7 +157,40 @@ function toIntent(d: Record<string, unknown>): WireIntent {
     charge: ch && /^ch_[A-Za-z0-9]{1,64}$/.test(ch) ? ch : null,
     orderId: str(meta.order_id),
     expiresAt: Number.isInteger(d.expires_at) ? (d.expires_at as number) : null,
+    nextAction: parseNextAction(d.next_action),
   };
+}
+
+/** A bank-app deeplink may use the app's own scheme; never a script / data / file one. */
+const BAD_SCHEME = /^(javascript|data|vbscript|file|blob):/i;
+const QR_TEXT_RE = /^[^\x00-\x1f\x7f]{8,1500}$/u; // EMVCo payloads are ASCII, but a merchant name may be UTF-8
+
+/** Parses `next_action` defensively (the response is untrusted input: bounded sizes, safe links only). */
+export function parseNextAction(v: unknown): WireNextAction | null {
+  if (!v || typeof v !== "object") return null;
+  const na = v as Record<string, unknown>;
+  const type = str(na.type);
+  if (!type || !/^[a-z_]{1,40}$/.test(type)) return null;
+  if (type === "qr") {
+    const qr = na.qr && typeof na.qr === "object" ? (na.qr as Record<string, unknown>) : {};
+    const text = str(qr.text);
+    if (!text || !QR_TEXT_RE.test(text)) return { type: "qr_invalid" };
+    const deeplinks: WireDeeplink[] = [];
+    for (const x of Array.isArray(qr.deeplinks) ? qr.deeplinks.slice(0, 40) : []) {
+      const o = x && typeof x === "object" ? (x as Record<string, unknown>) : {};
+      const name = str(o.name)?.trim().slice(0, 80);
+      const link = str(o.link)?.trim();
+      if (!name || !link || link.length > 1000 || !/^[a-z][a-z0-9+.-]{1,30}:/i.test(link) || BAD_SCHEME.test(link)) continue;
+      deeplinks.push({ name, link });
+    }
+    return { type, qrText: text, deeplinks };
+  }
+  if (type === "redirect_to_url") {
+    const r = na.redirect_to_url && typeof na.redirect_to_url === "object" ? (na.redirect_to_url as Record<string, unknown>) : {};
+    const url = str(r.url) ?? str(na.url);
+    return { type, url: url && /^https:\/\/[^\s]{4,1000}$/.test(url) ? url : null };
+  }
+  return { type };
 }
 
 /** Clamps a wanted expiry (unix s) into Wire's window, measured from `nowS`. */
@@ -184,6 +231,20 @@ export async function createWireCheckout(
   const url = str(d.url);
   if (!id || !WIRE_SESSION_RE.test(id) || !url || !/^https:\/\//.test(url)) throw new WireError("no checkout url", undefined, "invalid_response");
   return { id, url, status: str(d.status) ?? "open", intentId: str(d.payment_intent) ?? p.intentId };
+}
+
+/**
+ * Direct QR mode: confirms the intent so Wire returns the `next_action` (usually a QR payload) for our own screen.
+ * A POST, so it always carries an Idempotency-Key (`<orderNo>-confirm`, `-confirm-2` … on fresh attempts). Body `{}`.
+ */
+export async function confirmWireIntent(env: Env, p: { intentId: string; idempotencyKey: string }): Promise<WireIntent> {
+  if (!WIRE_INTENT_RE.test(p.intentId)) throw new WireError("bad intent id", 400, "invalid_id");
+  const d = await wireCall(env, `/v1/payment_intents/${encodeURIComponent(p.intentId)}/confirm`, {
+    method: "POST",
+    idempotencyKey: p.idempotencyKey,
+    body: {},
+  });
+  return toIntent(d);
 }
 
 export async function fetchWireIntent(env: Env, id: string): Promise<WireIntent> {

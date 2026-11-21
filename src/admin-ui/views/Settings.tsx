@@ -107,6 +107,12 @@ export default function Settings() {
           {bool("payments.qpay.enabled", "QPay-ээр төлөх", "QPay-н нууц түлхүүрүүд серверт тохируулагдсан үед л ажиллана.")}
           {bool("payments.bank.enabled", "Банкны шилжүүлгээр төлөх", "Унтраавал банкаар төлөх сонголт харагдахгүй.")}
           {bool("payments.wire.enabled", "Wire-ээр төлөх", "WIRE_API_KEY ба WIRE_WEBHOOK_SECRET серверт тохируулагдсан үед л ажиллана. Эхлээд бага дүнгээр туршина уу.")}
+          <Field label={LABEL["payments.wire.mode"]} hint="QR: захиалгын хуудсанд QR код шууд гарна. Wire-ийн хуудас: pay.wire.mn руу шилжинэ.">
+            <select class="a-input" name="payments.wire.mode" value={form["payments.wire.mode"] as string} onChange={set("payments.wire.mode")}>
+              <option value="qr">QR код (манай хуудсанд)</option>
+              <option value="hosted">Wire-ийн төлбөрийн хуудас</option>
+            </select>
+          </Field>
         </fieldset>
         <fieldset disabled={!canWrite || busy} class="a-panel a-grid">
           <legend class="a-h2">Хүргэлтийн үнэ</legend>
@@ -192,6 +198,7 @@ const LABEL: Record<SettingKey, string> = {
   "payments.qpay.enabled": "QPay",
   "payments.bank.enabled": "Банкны шилжүүлэг",
   "payments.wire.enabled": "Wire",
+  "payments.wire.mode": "Wire-ийн төлбөрийн хэлбэр",
   "holds.wire_minutes": "Wire захиалгыг нөөцлөх хугацаа (минут)",
   "holds.qpay_minutes": "QPay захиалгыг нөөцлөх хугацаа (минут)",
   "holds.bank_minutes": "Банкны захиалгыг нөөцлөх хугацаа (минут)",

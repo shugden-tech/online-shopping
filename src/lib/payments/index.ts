@@ -7,7 +7,10 @@ import { commitReservations, errText, eventStatement, guard, guardOrderStatus, i
 import { loadOrder, type D1, type OrderRow, type PaymentRow, type Stmt } from "../orders/types";
 import { checkInvoice, createInvoice, qpayConfigured, type QpayInvoice } from "./qpay";
 import { emitStatement } from "../webhooks";
-import { createWireCheckout, createWireIntent, fetchWireIntent, WireError, wireConfigured, type WireIntent } from "./wire";
+import { confirmWireIntent, createWireCheckout, createWireIntent, fetchWireIntent, WireError, wireConfigured, type WireIntent, type WireNextAction } from "./wire";
+import { qrDataUri } from "./qr-svg";
+import { getSettings } from "../settings";
+import type { WireMode } from "../contracts";
 
 export { qpayConfigured, qpayEnabled } from "./qpay";
 export { wireConfigured, wireEnabled } from "./wire";
@@ -58,16 +61,41 @@ function qpayInstructions(row: Pick<PaymentRow, "provider_ref" | "data_json">): 
   };
 }
 
+/** What a Wire payment row keeps in data_json (no secrets: ids, Wire's public URLs and the QR payload only). */
+interface WireData {
+  mode?: WireMode;
+  sessionId?: string | null;
+  checkoutUrl?: string | null;
+  /** next_action.type from the confirm (or the latest read-back). */
+  action?: string | null;
+  qr?: { text: string; deeplinks: { name: string; link: string }[] } | null;
+  expiresAt?: number | null;
+}
+const readWireData = (json: string | null): WireData => {
+  try {
+    const d = JSON.parse(json ?? "{}") as WireData;
+    return d && typeof d === "object" ? d : {};
+  } catch {
+    return {};
+  }
+};
+
 function wireInstructions(row: Pick<PaymentRow, "provider_ref" | "data_json">): PaymentInstructions | null {
   if (!row.provider_ref) return null;
-  let d: { sessionId?: unknown; checkoutUrl?: unknown } = {};
-  try {
-    d = JSON.parse(row.data_json ?? "{}") as typeof d;
-  } catch {
-    /* empty */
+  const d = readWireData(row.data_json);
+  const url = typeof d.checkoutUrl === "string" ? d.checkoutUrl : null;
+  const session = typeof d.sessionId === "string" ? d.sessionId : null;
+  // rows from before direct QR mode have no `mode`: they are hosted checkouts
+  const mode: WireMode = d.mode === "qr" || d.mode === "poll" || d.mode === "redirect" ? d.mode : "hosted";
+  if (mode === "qr") {
+    const text = typeof d.qr?.text === "string" ? d.qr.text : null;
+    if (!text) return null;
+    // the QR image is drawn here from qr.text (an SVG data: URI), never stored and never from the browser
+    return { method: "wire", intentId: row.provider_ref, mode, sessionId: session, checkoutUrl: url, qr: { text, image: qrDataUri(text), deeplinks: Array.isArray(d.qr?.deeplinks) ? d.qr!.deeplinks : [] } };
   }
-  if (typeof d.checkoutUrl !== "string" || typeof d.sessionId !== "string") return null;
-  return { method: "wire", intentId: row.provider_ref, sessionId: d.sessionId, checkoutUrl: d.checkoutUrl };
+  if (mode === "poll") return { method: "wire", intentId: row.provider_ref, mode, sessionId: session, checkoutUrl: url, qr: null };
+  if (!url) return null;
+  return { method: "wire", intentId: row.provider_ref, mode, sessionId: session, checkoutUrl: url, qr: null };
 }
 
 /** The instructions a customer needs to pay this order now (null when nothing is payable / no invoice yet). */
@@ -146,9 +174,15 @@ export function wireReturnUrl(env: Env, order: Pick<OrderRow, "order_no" | "loca
 }
 
 /**
- * Makes sure a payable Wire order has one pending PaymentIntent + checkout session and returns the hosted URL.
- * Idempotency keys: `<orderNo>-pi` / `<orderNo>-cs` for the first attempt, `-pi-2` / `-cs-2`, … only after an attempt
- * that created an intent or failed for good (a transient failure retries with the same keys, so Wire replays).
+ * Makes sure a payable Wire order has one pending PaymentIntent and returns what the buyer needs to pay it.
+ * Setting `payments.wire.mode`:
+ *   "qr" (default, Wire's "build your own payment screen"): create the intent, POST /confirm, and keep the
+ *        next_action: `qr` -> the QR payload + bank-app deeplinks for our order page; `poll` -> the page polls until a QR
+ *        arrives (refreshWire stores it); `redirect_to_url` -> Wire's URL; any other type -> a hosted checkout session.
+ *   "hosted": create the intent + a checkout session on pay.wire.mn (never /confirm: the hosted page confirms).
+ * Idempotency keys: `<orderNo>-pi` / `-confirm` / `-cs` for the first attempt, `-pi-2` / `-confirm-2` / `-cs-2`, … only
+ * after an attempt that created an intent or failed for good (a transient failure retries with the same keys, so Wire
+ * replays). An intent that an earlier, interrupted attempt already confirmed is read back instead of confirmed again.
  * The intent expires with the order's stock hold. Returns null when Wire failed (the order stays; payment-check retries).
  */
 export async function ensureWireCheckout(env: Env, order: OrderRow): Promise<PaymentInstructions | null> {
@@ -184,20 +218,41 @@ export async function ensureWireCheckout(env: Env, order: OrderRow): Promise<Pay
   const suffix = (prior?.n ?? 0) > 0 ? `-${(prior?.n ?? 0) + 1}` : "";
   const hold = utcMs(order.hold_expires_at);
   const expiresAt = Math.floor((Number.isFinite(hold) ? hold : Date.now() + 60 * 60_000) / 1000);
+  const direct = (await getSettings(db))["payments.wire.mode"] !== "hosted";
   let intent: WireIntent | null = null;
   try {
     intent = await createWireIntent(env, { amount: order.total, orderNo: order.order_no, expiresAt, idempotencyKey: `${order.order_no}-pi${suffix}` });
-    const back = wireReturnUrl(env, order);
-    const cs = await createWireCheckout(env, { intentId: intent.id, successUrl: back, cancelUrl: back, idempotencyKey: `${order.order_no}-cs${suffix}` });
-    const data = { sessionId: cs.id, checkoutUrl: cs.url, expiresAt: intent.expiresAt };
+    let data: WireData;
+    let confirmed = false;
+    if (direct) {
+      // an earlier attempt with the same keys may have confirmed this intent and then failed (e.g. our write):
+      // read it back and only confirm when Wire still waits for it
+      const retried = await db
+        .prepare("SELECT 1 AS x FROM payments WHERE order_id = ?1 AND provider = 'wire' AND id < ?2 AND json_extract(data_json, '$.intentId') = ?3 LIMIT 1")
+        .bind(order.id, paymentId, intent.id)
+        .first<{ x: number }>();
+      let cur = retried ? await fetchWireIntent(env, intent.id) : intent;
+      if (cur.status === "requires_payment_method" || cur.status === "requires_confirmation") {
+        cur = await confirmWireIntent(env, { intentId: intent.id, idempotencyKey: `${order.order_no}-confirm${suffix}` });
+        confirmed = true;
+      }
+      intent = cur;
+      data = await directData(env, order, intent, suffix);
+    } else {
+      const back = wireReturnUrl(env, order);
+      const cs = await createWireCheckout(env, { intentId: intent.id, successUrl: back, cancelUrl: back, idempotencyKey: `${order.order_no}-cs${suffix}` });
+      data = { mode: "hosted", sessionId: cs.id, checkoutUrl: cs.url, expiresAt: intent.expiresAt };
+    }
+    const json = JSON.stringify(data);
     await db.batch([
-      db
-        .prepare("UPDATE payments SET provider_ref = ?2, data_json = ?3, updated_at = datetime('now') WHERE id = ?1")
-        .bind(paymentId, intent.id, JSON.stringify(data)),
+      db.prepare("UPDATE payments SET provider_ref = ?2, data_json = ?3, updated_at = datetime('now') WHERE id = ?1").bind(paymentId, intent.id, json),
       db.prepare("UPDATE orders SET payment_status = 'pending', updated_at = datetime('now') WHERE id = ?1 AND payment_status = 'unpaid'").bind(order.id),
-      auditStatement(db, "system", "payment.invoice", "payment", paymentId, { orderNo: order.order_no, provider: "wire", intentId: intent.id, sessionId: cs.id, amount: order.total }),
+      auditStatement(db, "system", "payment.invoice", "payment", paymentId, {
+        orderNo: order.order_no, provider: "wire", intentId: intent.id, mode: data.mode, action: data.action ?? null, confirmed,
+        sessionId: data.sessionId ?? null, amount: order.total,
+      }),
     ]);
-    return { method: "wire", intentId: intent.id, sessionId: cs.id, checkoutUrl: cs.url };
+    return wireInstructions({ provider_ref: intent.id, data_json: json });
   } catch (err) {
     const we = err instanceof WireError ? err : null;
     const transient = we ? we.transient : true;
@@ -211,6 +266,20 @@ export async function ensureWireCheckout(env: Env, order: OrderRow): Promise<Pay
     ]);
     return null;
   }
+}
+
+/** Direct mode: what to store for a confirmed intent, by its next_action (a hosted session only for types we cannot show). */
+async function directData(env: Env, order: OrderRow, intent: WireIntent, suffix: string): Promise<WireData> {
+  const na: WireNextAction | null = intent.nextAction;
+  const base = { action: na?.type ?? null, expiresAt: intent.expiresAt };
+  if (na?.type === "qr" && "qrText" in na) return { ...base, mode: "qr", qr: { text: na.qrText, deeplinks: na.deeplinks } };
+  if (na?.type === "redirect_to_url" && "url" in na && na.url) return { ...base, mode: "redirect", checkoutUrl: na.url };
+  // no QR yet (poll, or nothing at all while Wire is still working on it): the order page keeps polling
+  if (!na || na.type === "poll" || intent.status === "processing" || intent.status === "succeeded") return { ...base, mode: "poll" };
+  // loan_app, loan_credit_decision, a QR we could not read, …: Wire's own hosted page handles it
+  const back = wireReturnUrl(env, order);
+  const cs = await createWireCheckout(env, { intentId: intent.id, successUrl: back, cancelUrl: back, idempotencyKey: `${order.order_no}-cs${suffix}` });
+  return { ...base, mode: "hosted", sessionId: cs.id, checkoutUrl: cs.url };
 }
 
 export type WireApplyResult = MarkPaidResult | "cancelled" | "failed" | "pending" | "ignored";
@@ -251,6 +320,10 @@ export async function applyWireIntent(
     return (res[0]?.meta?.changes ?? 0) === 1 ? to : "ignored";
   };
   if (intent.status === "canceled" || intent.status === "cancelled") return close("cancelled", "payment.cancelled");
+  // direct QR mode: back at requires_payment_method means the confirmed attempt (its QR) is spent; the row is closed so
+  // payment-check opens a fresh intent + confirm (`-pi-2` / `-confirm-2`) and the order page shows the new QR
+  const mode = readWireData(row.data_json).mode;
+  if (intent.status === "requires_payment_method" && (mode === "qr" || mode === "poll" || mode === "redirect")) return close("failed", "payment.failed");
   if (WIRE_OPEN.has(intent.status)) {
     if (failedEvent) {
       await db.batch([auditStatement(db, actor, "payment.attempt_failed", "payment", row.id, { orderNo: order.order_no, provider: "wire", intentId: intent.id, status: intent.status })]);
@@ -276,10 +349,30 @@ export async function refreshWire(env: Env, order: OrderRow, actor: Actor = "sys
     const intent = await fetchWireIntent(env, row.provider_ref!);
     // a closed row only matters when the buyer paid it anyway (late payment, recorded for a refund)
     if (row.status !== "pending" && intent.status !== "succeeded") continue;
-    out.push(await applyWireIntent(env, current, row, intent, actor));
+    const r = await applyWireIntent(env, current, row, intent, actor);
+    if (r === "pending") await syncWireAction(env.DB, row, intent);
+    out.push(r);
     current = (await loadOrder(env.DB, order.order_no)) ?? current;
   }
   return out;
+}
+
+/**
+ * Direct mode: keeps the stored next_action in step with Wire (a `poll` that has become a QR, a QR Wire replaced), so the
+ * order page shows what Wire says now. Only ever stores Wire's public payload; never changes the payment status.
+ */
+async function syncWireAction(db: D1, row: PaymentRow, intent: WireIntent): Promise<void> {
+  const d = readWireData(row.data_json);
+  if (d.mode !== "qr" && d.mode !== "poll") return;
+  const na = intent.nextAction;
+  let next: WireData | null = null;
+  if (na?.type === "qr" && "qrText" in na && na.qrText !== d.qr?.text) next = { ...d, mode: "qr", action: "qr", qr: { text: na.qrText, deeplinks: na.deeplinks } };
+  else if (d.mode === "poll" && na?.type === "redirect_to_url" && "url" in na && na.url) next = { ...d, mode: "redirect", action: na.type, checkoutUrl: na.url };
+  if (!next) return;
+  await db
+    .prepare("UPDATE payments SET data_json = ?2, updated_at = datetime('now') WHERE id = ?1 AND status = 'pending' AND data_json = ?3")
+    .bind(row.id, JSON.stringify(next), row.data_json)
+    .run();
 }
 
 /* ---------------- markPaid ---------------- */
