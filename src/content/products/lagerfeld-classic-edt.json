@@ -1,0 +1,58 @@
+{
+  "slug": "lagerfeld-classic-edt",
+  "brand": "Karl Lagerfeld",
+  "name": "Lagerfeld Classic",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "aldehydes",
+      "clary-sage",
+      "bergamot",
+      "lemon",
+      "green-notes"
+    ],
+    "heart": [
+      "tobacco",
+      "sandalwood",
+      "iris",
+      "patchouli",
+      "rose",
+      "cedar",
+      "jasmine"
+    ],
+    "base": [
+      "amber",
+      "musk",
+      "vanilla",
+      "oakmoss",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Karl Lagerfeld брэндийн Lagerfeld Classic нь эрэгтэй хүмүүст зориулагдсан Модлог Дорнын ангилалын сүрчиг юм",
+    "en": "Karl Lagerfeld Lagerfeld Classic is an amber EDT for men. Notes include aldehydes, clary sage, bergamot, lemon, green notes, tobacco leaf."
+  },
+  "sizes": [
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/lagerfeld-classic-edt.webp"
+  }
+}

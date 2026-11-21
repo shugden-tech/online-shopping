@@ -1,0 +1,48 @@
+{
+  "slug": "moncler-pour-homme-edp",
+  "brand": "Moncler",
+  "name": "Pour Homme",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "clary-sage"
+    ],
+    "heart": [
+      "pine",
+      "cypress",
+      "cedar"
+    ],
+    "base": [
+      "vetiver",
+      "sandalwood",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "LED дэлгэц: Флакон буюу сав нь өөрчилж болох (customizable) мессеж, хөдөлгөөнт бичиг гаргах боломжтой LED дижитал дэлгэцтэй. Үүнийг зориулалтын аппликейшн эсвэл USB-C холболтоор тохируулж өөрийн хүссэн үг, текстийг бичих боломжтой. Голдуу 150 мл-ийн савлагаатай бөгөөд дахин дүүргэж (refillable) ашиглах зориулалттай.",
+    "en": "Moncler Pour Homme is a woody EDP for men. Notes include clary sage, pine, cypress, cedar, vetiver, sandalwood."
+  },
+  "sizes": [
+    {
+      "ml": 150,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/moncler-pour-homme-edp.webp"
+  }
+}

@@ -30,6 +30,11 @@
   },
   "sizes": [
     {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
       "ml": 5,
       "price": 55000,
       "inStock": false,
@@ -40,6 +45,12 @@
       "price": 80000,
       "inStock": false,
       "stock": 0
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
     }
   ],
   "bottleShape": "classic",
@@ -54,7 +65,7 @@
     "day"
   ],
   "photos": {
-    "front": "/product-photos/curated-016-front.webp",
+    "front": "/product-photos/store/emporio-armani-stronger-with-you-intensely-edp.webp",
     "back": "/product-photos/curated-016-back.webp"
   }
 }

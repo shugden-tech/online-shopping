@@ -1,0 +1,62 @@
+{
+  "slug": "ralph-lauren-polo-black-edt",
+  "brand": "Ralph Lauren",
+  "name": "Polo Black",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "sandalwood"
+    ],
+    "heart": [
+      "patchouli",
+      "tonka",
+      "sage"
+    ],
+    "base": [
+      "lemon",
+      "artemisia"
+    ]
+  },
+  "description": {
+    "mn": "Ralph Lauren брэндийн Polo Black нь эрэгтэй хүмүүст зориулагдсан Анхилуун Модлог ангилалын сүрчиг юм",
+    "en": "Ralph Lauren Polo Black is a woody EDT for men. Notes include sandalwood, patchouli, tonka bean, sage, lemon, artemisia."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 125,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/ralph-lauren-polo-black-edt.webp"
+  }
+}

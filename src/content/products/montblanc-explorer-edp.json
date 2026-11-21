@@ -26,6 +26,11 @@
   },
   "sizes": [
     {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
       "ml": 5,
       "price": 36500,
       "inStock": true,
@@ -56,7 +61,7 @@
     "day"
   ],
   "photos": {
-    "front": "/product-photos/curated-039-front.webp",
+    "front": "/product-photos/store/montblanc-explorer-edp.webp",
     "back": "/product-photos/curated-039-back.webp"
   }
 }

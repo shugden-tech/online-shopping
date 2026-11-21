@@ -52,8 +52,8 @@ const products = defineCollection({
         // `back` the bottle with its box. Either may be missing; never fill one with another product's photo.
         photos: z
           .object({
-            front: z.union([z.string().url().startsWith("https://"), z.string().regex(/^\/product-photos\/[a-z0-9-]+\.webp$/)]).optional(),
-            back: z.union([z.string().url().startsWith("https://"), z.string().regex(/^\/product-photos\/[a-z0-9-]+\.webp$/)]).optional(),
+            front: z.union([z.string().url().startsWith("https://"), z.string().regex(/^\/product-photos\/(?:store\/)?[a-z0-9-]+\.webp$/)]).optional(),
+            back: z.union([z.string().url().startsWith("https://"), z.string().regex(/^\/product-photos\/(?:store\/)?[a-z0-9-]+\.webp$/)]).optional(),
           })
           .strict()
           .optional(),

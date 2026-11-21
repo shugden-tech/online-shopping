@@ -1,0 +1,57 @@
+{
+  "slug": "mancera-intense-cedrat-boise-edp",
+  "brand": "Mancera",
+  "name": "Intense Cedrat Boise",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "citrus",
+      "blackcurrant"
+    ],
+    "heart": [
+      "leather",
+      "oud",
+      "sandalwood",
+      "patchouli",
+      "jasmine"
+    ],
+    "base": [
+      "ambergris",
+      "oakmoss",
+      "musk",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Mancera Intense Cedrat Boise нь Францын алдарт ниш (niche) үнэртэй усны Mancera брэндийн, анхны алдартай \"Cedrat Boise\" үнэртэй усны илүү гүнзгий, хүчтэй, баяжуулсан хувилбар юм. Маш өндөр тогтоцтой (арьс болон хувцас дээр 12-14 цаг түүнээс ч удаан ханхалдаг), орчиндоо үнэртэх чадвар сайтай.",
+    "en": "Mancera Intense Cedrat Boise is a woody EDP for men. Notes include citrus notes, blackcurrant, leather, oud, sandalwood, patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 120,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/mancera-intense-cedrat-boise-edp.webp"
+  }
+}

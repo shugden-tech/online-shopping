@@ -1,0 +1,60 @@
+{
+  "slug": "valentino-uomo-born-in-roma-purple-melancholia-edt",
+  "brand": "Valentino",
+  "name": "Uomo Born in Roma Purple Melancholia",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "cardamom"
+    ],
+    "heart": [
+      "coconut",
+      "lavender"
+    ],
+    "base": [
+      "amberwood"
+    ]
+  },
+  "description": {
+    "mn": "Шинэхэн бүтээгдсэн сүрчиг бөгөөд Valentino Uomo Born in Roma Purple Melancholia 2026 онд анх худалдаанд гарсан",
+    "en": "Valentino Uomo Born in Roma Purple Melancholia is a gourmand EDT for everyone. Notes include cardamom, coconut, lavender, amberwood."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/valentino-uomo-born-in-roma-purple-melancholia-edt.webp"
+  }
+}

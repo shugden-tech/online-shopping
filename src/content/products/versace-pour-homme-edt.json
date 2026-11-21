@@ -42,7 +42,7 @@
       "stock": 3
     },
     {
-      "ml": 100,
+      "ml": 200,
       "price": 0,
       "inStock": false,
       "full": true
@@ -60,7 +60,7 @@
     "day"
   ],
   "photos": {
-    "front": "/product-photos/curated-026-front.webp",
+    "front": "/product-photos/store/versace-pour-homme-edt.webp",
     "back": "/product-photos/curated-026-back.webp"
   }
 }

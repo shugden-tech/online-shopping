@@ -38,6 +38,12 @@
       "price": 80000,
       "inStock": true,
       "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
     }
   ],
   "bottleShape": "classic",
@@ -52,7 +58,7 @@
     "day"
   ],
   "photos": {
-    "front": "/product-photos/curated-089-front.webp",
+    "front": "/product-photos/store/maison-margiela-by-the-fireplace-edt.webp",
     "back": "/product-photos/curated-089-back.webp"
   }
 }

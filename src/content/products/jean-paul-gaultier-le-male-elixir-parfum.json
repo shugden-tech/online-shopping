@@ -26,6 +26,11 @@
   },
   "sizes": [
     {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
       "ml": 5,
       "price": 43500,
       "inStock": true,
@@ -36,6 +41,12 @@
       "price": 65500,
       "inStock": true,
       "stock": 4
+    },
+    {
+      "ml": 125,
+      "price": 0,
+      "inStock": false,
+      "full": true
     }
   ],
   "bottleShape": "classic",
@@ -51,7 +62,7 @@
     "day"
   ],
   "photos": {
-    "front": "/product-photos/curated-001-front.webp",
+    "front": "/product-photos/store/jean-paul-gaultier-le-male-elixir-parfum.webp",
     "back": "/product-photos/curated-001-back.webp"
   }
 }

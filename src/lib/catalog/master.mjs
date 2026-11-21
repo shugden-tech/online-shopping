@@ -36,7 +36,8 @@ export function validateMasterCatalog(value, mediaBase) {
 /** Stable IDs only. A different concentration is a different perfume. */
 export function catalogPhotos(product, catalogById) {
   const record = catalogById.get(product.slug);
-  if (!record || product.image) return product;
+  // the owner's own store photo (public/product-photos/store/) wins over the catalog photo
+  if (!record || product.image || product.photos?.front?.startsWith("/product-photos/store/")) return product;
   if (record.concentration !== null && record.concentration !== product.concentration) throw new Error(`Catalog concentration mismatch: ${product.slug}`);
   return {
     ...product,

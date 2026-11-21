@@ -1,0 +1,51 @@
+{
+  "slug": "french-avenue-liquid-brun-edp",
+  "brand": "French Avenue",
+  "name": "Liquid Brun",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "cinnamon",
+      "orange-blossom",
+      "cardamom",
+      "bergamot"
+    ],
+    "heart": [
+      "vanilla",
+      "elemi"
+    ],
+    "base": [
+      "praline",
+      "ambroxan",
+      "musk",
+      "guaiac-wood"
+    ]
+  },
+  "description": {
+    "mn": "French Avenue – Liquid Brun нь UAE (Арабын Нэгдсэн Эмират Улс)-ын олон улсад маш их шуугиан тарьж буй алдартай үнэртэн юм.",
+    "en": "French Avenue Liquid Brun is a gourmand EDP for men. Notes include cinnamon, orange blossom, cardamom, bergamot, vanilla, elemi."
+  },
+  "sizes": [
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/french-avenue-liquid-brun-edp.webp"
+  }
+}

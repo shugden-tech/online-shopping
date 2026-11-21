@@ -1,0 +1,66 @@
+{
+  "slug": "maison-margiela-sailing-day-edt",
+  "brand": "Maison Margiela",
+  "name": "Sailing Day",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "fresh",
+  "notes": {
+    "top": [
+      "marine",
+      "aldehydes",
+      "coriander",
+      "red-pepper"
+    ],
+    "heart": [
+      "juniper",
+      "iris",
+      "rose"
+    ],
+    "base": [
+      "ambergris",
+      "cedar",
+      "amberwood"
+    ]
+  },
+  "description": {
+    "mn": "Maison Martin Margiela брэндийн Sailing Day нь эрэгтэй эмэгтэй хүмүүст зориулагдсан ангилалын сүрчиг юм.",
+    "en": "Maison Margiela Sailing Day is a fresh EDT for everyone. Notes include marine notes, aldehydes, coriander, red pepper, juniper, iris."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/maison-margiela-sailing-day-edt.webp"
+  }
+}

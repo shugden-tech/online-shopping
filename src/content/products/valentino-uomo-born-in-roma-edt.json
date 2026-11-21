@@ -26,6 +26,11 @@
   },
   "sizes": [
     {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
       "ml": 5,
       "price": 51000,
       "inStock": true,
@@ -36,6 +41,12 @@
       "price": 73000,
       "inStock": true,
       "stock": 4
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
     }
   ],
   "bottleShape": "classic",
@@ -50,6 +61,6 @@
     "day"
   ],
   "photos": {
-    "front": "/product-photos/curated-021-front.webp"
+    "front": "/product-photos/store/valentino-uomo-born-in-roma-edt.webp"
   }
 }

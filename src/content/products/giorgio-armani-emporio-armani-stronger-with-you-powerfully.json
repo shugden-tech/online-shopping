@@ -1,0 +1,51 @@
+{
+  "slug": "giorgio-armani-emporio-armani-stronger-with-you-powerfully",
+  "brand": "Giorgio Armani",
+  "name": "Emporio Armani Stronger With You Powerfully",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "mandarin",
+      "black-cherry",
+      "bergamot"
+    ],
+    "heart": [
+      "lavender",
+      "cinnamon"
+    ],
+    "base": [
+      "sweet-notes",
+      "chestnut",
+      "vanilla",
+      "amber",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Stronger With You цувралын шинэ бөгөөд илүү эрчимтэй, дулаан, тамхилаг (smoky) болон амтлаг ноотуудыг хослуулсан эрэгтэй сүрчиг юм",
+    "en": "Giorgio Armani Emporio Armani Stronger With You Powerfully is an amber EDP for men. Notes include mandarin, black cherry, bergamot, lavender, cinnamon, sweet notes."
+  },
+  "sizes": [
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/giorgio-armani-emporio-armani-stronger-with-you-powerfully.webp"
+  }
+}

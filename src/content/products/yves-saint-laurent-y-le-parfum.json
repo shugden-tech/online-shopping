@@ -1,0 +1,67 @@
+{
+  "slug": "yves-saint-laurent-y-le-parfum",
+  "brand": "Yves Saint Laurent",
+  "name": "Y Le Parfum",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "apple",
+      "aldehydes",
+      "grapefruit",
+      "ginger"
+    ],
+    "heart": [
+      "lavender",
+      "sage",
+      "geranium"
+    ],
+    "base": [
+      "tonka",
+      "cedar",
+      "incense",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Yves Saint Laurent брэндийн Y Le Parfum нь эрэгтэй хүмүүст зориулагдсан Фюжер Дорнын ангилалын сүрчиг юм.",
+    "en": "Yves Saint Laurent Y Le Parfum is an aromatic Parfum for men. Notes include apple, aldehydes, grapefruit, ginger, lavender, sage."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/yves-saint-laurent-y-le-parfum.webp"
+  }
+}

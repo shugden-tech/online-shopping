@@ -1,0 +1,53 @@
+{
+  "slug": "montblanc-legend-edt",
+  "brand": "Montblanc",
+  "name": "Legend",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "lavender",
+      "pineapple",
+      "bergamot",
+      "verbena"
+    ],
+    "heart": [
+      "apple",
+      "dried-fruits",
+      "oakmoss",
+      "geranium",
+      "coumarin",
+      "rose"
+    ],
+    "base": [
+      "tonka",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Montblanc брэндийн Legend нь эрэгтэй хүмүүст зориулагдсан Анхилуун Фюжер ангилалын сүрчиг юм Өдөр тутмын ажил, оффис болон ямар ч нөхцөлд тохиромжтой универсал сонголт. Тогтоц (Longevity): Арьс болон хувцаснаас хамаарч дунджаар 5-6 цаг орчим үнэртдэг.",
+    "en": "Montblanc Legend is an aromatic EDT for men. Notes include lavender, pineapple, bergamot, verbena, apple, dried fruits."
+  },
+  "sizes": [
+    {
+      "ml": 200,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/montblanc-legend-edt.webp"
+  }
+}

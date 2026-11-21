@@ -1,0 +1,63 @@
+{
+  "slug": "versace-eros-najim-edp",
+  "brand": "Versace",
+  "name": "Eros Najim",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "caramel",
+      "mandarin"
+    ],
+    "heart": [
+      "cardamom",
+      "oud"
+    ],
+    "base": [
+      "incense",
+      "patchouli",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Versace брэндийн Eros Najim нь эрэгтэй хүмүүст зориулагдсан Модлог Дорнын ангилалын сүрчиг юм",
+    "en": "Versace Eros Najim is an amber EDP for men. Notes include caramel, mandarin, cardamom, oud, incense, patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/versace-eros-najim-edp.webp"
+  }
+}

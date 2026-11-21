@@ -1,0 +1,59 @@
+{
+  "slug": "dior-eau-sauvage-edt",
+  "brand": "Dior",
+  "name": "Eau Sauvage",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "lemon",
+      "bergamot",
+      "basil",
+      "rosemary",
+      "caraway",
+      "fruity-notes"
+    ],
+    "heart": [
+      "jasmine",
+      "coriander",
+      "carnation",
+      "patchouli",
+      "iris",
+      "sandalwood",
+      "rose",
+      "lavender"
+    ],
+    "base": [
+      "oakmoss",
+      "vetiver",
+      "musk",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Dior брэндийн Eau Sauvage нь эрэгтэй хүмүүст зориулагдсан Анхилуун Цитрус ангилалын сүрчиг юм. Eau Sauvage 1966 онд анх худалдаанд гарсан байна. Үнэртэн бүтээгч нь Edmond Roudnitska",
+    "en": "Dior Eau Sauvage is a citrus EDT for men. Notes include lemon, bergamot, basil, rosemary, caraway, fruity notes."
+  },
+  "sizes": [
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/dior-eau-sauvage-edt.webp"
+  }
+}

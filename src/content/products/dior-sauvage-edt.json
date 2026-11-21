@@ -1,0 +1,64 @@
+{
+  "slug": "dior-sauvage-edt",
+  "brand": "Dior",
+  "name": "Sauvage",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "bergamot",
+      "pepper"
+    ],
+    "heart": [
+      "lavender",
+      "sichuan-pepper",
+      "nutmeg"
+    ],
+    "base": [
+      "ambroxan",
+      "cedar",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Dior брэндийн эрэгтэй үнэртэн. 2015 онд гарснаас хойш хамгийн эрэлттэй үнэртэнүүдийн нэг одоо ч хэвээрээ байна.",
+    "en": "Dior Sauvage is an aromatic EDT for men. Notes include bergamot, black pepper, lavender, sichuan pepper, nutmeg, ambroxan."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 200,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/dior-sauvage-edt.webp"
+  }
+}

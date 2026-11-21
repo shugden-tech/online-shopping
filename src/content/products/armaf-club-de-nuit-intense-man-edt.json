@@ -31,6 +31,11 @@
   },
   "sizes": [
     {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
       "ml": 5,
       "price": 34500,
       "inStock": true,
@@ -61,7 +66,7 @@
     "day"
   ],
   "photos": {
-    "front": "/product-photos/curated-099-front.webp",
+    "front": "/product-photos/store/armaf-club-de-nuit-intense-man-edt.webp",
     "back": "/product-photos/curated-099-back.webp"
   }
 }
