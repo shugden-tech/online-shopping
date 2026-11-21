@@ -48,6 +48,7 @@
     "office"
   ],
   "photos": {
-    "front": "/product-photos/store/montblanc-legend-edt.webp"
+    "front": "/product-photos/store/montblanc-legend-edt.webp",
+    "back": "/product-photos/store/montblanc-legend-edt-back.webp"
   }
 }

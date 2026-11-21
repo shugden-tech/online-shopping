@@ -46,6 +46,7 @@
     "date"
   ],
   "photos": {
-    "front": "/product-photos/store/french-avenue-liquid-brun-edp.webp"
+    "front": "/product-photos/store/french-avenue-liquid-brun-edp.webp",
+    "back": "/product-photos/store/french-avenue-liquid-brun-edp-back.webp"
   }
 }

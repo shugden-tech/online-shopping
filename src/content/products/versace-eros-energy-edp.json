@@ -62,6 +62,7 @@
     "date"
   ],
   "photos": {
-    "front": "/product-photos/store/versace-eros-energy-edp.webp"
+    "front": "/product-photos/store/versace-eros-energy-edp.webp",
+    "back": "/product-photos/store/versace-eros-energy-edp-back.webp"
   }
 }

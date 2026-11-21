@@ -57,6 +57,7 @@
     "date"
   ],
   "photos": {
-    "front": "/product-photos/store/r-my-latour-cigar-edt.webp"
+    "front": "/product-photos/store/r-my-latour-cigar-edt.webp",
+    "back": "/product-photos/store/r-my-latour-cigar-edt-back.webp"
   }
 }

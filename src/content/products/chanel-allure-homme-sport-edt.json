@@ -48,6 +48,7 @@
     "office"
   ],
   "photos": {
-    "front": "/product-photos/store/chanel-allure-homme-sport-edt.webp"
+    "front": "/product-photos/store/chanel-allure-homme-sport-edt.webp",
+    "back": "/product-photos/store/chanel-allure-homme-sport-edt-back.webp"
   }
 }

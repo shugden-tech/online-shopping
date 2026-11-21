@@ -61,6 +61,7 @@
     "office"
   ],
   "photos": {
-    "front": "/product-photos/store/maison-margiela-sailing-day-edt.webp"
+    "front": "/product-photos/store/maison-margiela-sailing-day-edt.webp",
+    "back": "/product-photos/store/maison-margiela-sailing-day-edt-back.webp"
   }
 }

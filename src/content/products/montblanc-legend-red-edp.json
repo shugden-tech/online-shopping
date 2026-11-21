@@ -59,6 +59,7 @@
     "office"
   ],
   "photos": {
-    "front": "/product-photos/store/montblanc-legend-red-edp.webp"
+    "front": "/product-photos/store/montblanc-legend-red-edp.webp",
+    "back": "/product-photos/store/montblanc-legend-red-edp-back.webp"
   }
 }

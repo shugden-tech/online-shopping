@@ -64,6 +64,7 @@
     "office"
   ],
   "photos": {
-    "front": "/product-photos/store/jean-paul-gaultier-le-male-edt.webp"
+    "front": "/product-photos/store/jean-paul-gaultier-le-male-edt.webp",
+    "back": "/product-photos/store/jean-paul-gaultier-le-male-edt-back.webp"
   }
 }

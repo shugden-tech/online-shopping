@@ -53,6 +53,7 @@
     "date"
   ],
   "photos": {
-    "front": "/product-photos/store/lagerfeld-classic-edt.webp"
+    "front": "/product-photos/store/lagerfeld-classic-edt.webp",
+    "back": "/product-photos/store/lagerfeld-classic-edt-back.webp"
   }
 }

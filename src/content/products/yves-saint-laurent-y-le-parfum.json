@@ -62,6 +62,7 @@
     "date"
   ],
   "photos": {
-    "front": "/product-photos/store/yves-saint-laurent-y-le-parfum.webp"
+    "front": "/product-photos/store/yves-saint-laurent-y-le-parfum.webp",
+    "back": "/product-photos/store/yves-saint-laurent-y-le-parfum-back.webp"
   }
 }

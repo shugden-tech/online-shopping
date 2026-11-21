@@ -58,6 +58,7 @@
     "date"
   ],
   "photos": {
-    "front": "/product-photos/store/versace-eros-najim-edp.webp"
+    "front": "/product-photos/store/versace-eros-najim-edp.webp",
+    "back": "/product-photos/store/versace-eros-najim-edp-back.webp"
   }
 }

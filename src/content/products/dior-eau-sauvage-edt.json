@@ -54,6 +54,7 @@
     "office"
   ],
   "photos": {
-    "front": "/product-photos/store/dior-eau-sauvage-edt.webp"
+    "front": "/product-photos/store/dior-eau-sauvage-edt.webp",
+    "back": "/product-photos/store/dior-eau-sauvage-edt-back.webp"
   }
 }

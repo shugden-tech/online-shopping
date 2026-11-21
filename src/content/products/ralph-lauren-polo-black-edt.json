@@ -57,6 +57,7 @@
     "office"
   ],
   "photos": {
-    "front": "/product-photos/store/ralph-lauren-polo-black-edt.webp"
+    "front": "/product-photos/store/ralph-lauren-polo-black-edt.webp",
+    "back": "/product-photos/store/ralph-lauren-polo-black-edt-back.webp"
   }
 }

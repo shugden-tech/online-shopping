@@ -59,6 +59,7 @@
     "date"
   ],
   "photos": {
-    "front": "/product-photos/store/dior-sauvage-edt.webp"
+    "front": "/product-photos/store/dior-sauvage-edt.webp",
+    "back": "/product-photos/store/dior-sauvage-edt-back.webp"
   }
 }
