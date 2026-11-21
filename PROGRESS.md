@@ -608,5 +608,8 @@ checkout prefill, logout/login, 375 px without horizontal scroll, English page).
   loan_app / poll fallbacks, failed QR → `-confirm-2`, Playwright order page 1440 + 390 px (QR image, 3 deeplinks, note, no
   overflow, paid flip), checkout offers Wire only when enabled. Screens: `docs/screens/wire-qr-1440.png`, `wire-qr-390.png`,
   `wire-checkout-390.png`.
+- Regression: payments 45/45 (wrangler dev on :8788 = PUBLIC_SITE_URL, fresh `.wrangler/state-pay`), api 91/91 and storefront
+  61/61 (one earlier run had 4 checkout-error-message timeouts, clean on rerun) against the Wire server; `astro check` 0 errors,
+  `astro build` OK, `npm run budget` PASS (checkout 24.96 KB initial: about 40 bytes of headroom, finder 24.7, success page 13.7).
 - Open risk: Wire's real confirm / `next_action` fields are verified only against the docs and the mock until a first small
   `sk_live_` payment. `payments.wire.mode = hosted` reverts to the redirect flow without a deploy.
