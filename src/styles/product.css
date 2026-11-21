@@ -132,3 +132,7 @@
   .atc__btn { flex-basis: 100%; }
   .atc__chips { grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: 8px; }
 }
+
+/* Out-of-stock sizes: no strike-through or dashed frame; just dimmed. */
+.atc__chip[data-out] .atc__chip-box { border-style: solid; opacity: .45; }
+.atc__chip[data-out] .atc__ml { text-decoration: none; color: inherit; }

@@ -80,8 +80,34 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
     moved.current = true;
     setAdded(false);
     setStep(Math.max(0, Math.min(RESULT_STEP, n)));
+    // Entering a question clears its previous answer, so the choice is made again (the same option can be picked again).
+    const cleared: Record<number, Partial<Answers>> = {
+      1: { who: null }, 2: { when: null }, 3: { mood: null }, 4: { notes: [] }, 5: { intensity: EMPTY_ANSWERS.intensity },
+    };
+    if (cleared[n]) setA((prev) => ({ ...prev, ...cleared[n] }));
   };
   const set = (patch: Partial<Answers>) => setA((prev) => ({ ...prev, ...patch }));
+  /** Plays the line movement on a button, then runs the action once. Always clears its own state, so a reused button never stays stuck. */
+  const pressThen = (el: HTMLElement, action: () => void) => {
+    if (typeof window === "undefined" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      action();
+      return;
+    }
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      el.removeEventListener("animationend", onEnd);
+      el.classList.remove("is-leaving");
+      action();
+    };
+    const onEnd = (e: AnimationEvent) => {
+      if (e.animationName.startsWith("sf-line")) finish();
+    };
+    el.classList.add("is-leaving");
+    el.addEventListener("animationend", onEnd);
+    window.setTimeout(finish, 1500);
+  };
   const canNext = step >= 1 && step <= STEPS ? answered(step, a) : true;
   /** Scent notes: pick up to MAX_NOTES, then press next. */
   const toggleNote = (id: string) =>
@@ -179,7 +205,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
               ))}
             </h1>
             <p class="t-body t-dim">{tr.introText}</p>
-            <button type="button" class="btn btn--gold" onClick={() => go(1)}>
+            <button type="button" class="btn btn--gold" onClick={(e) => pressThen(e.currentTarget as HTMLElement, () => go(1))}>
               {tr.start}
             </button>
           </section>
@@ -241,7 +267,10 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                         <span class="sf__opt-hint">{familyLines[id]}</span>
                       </span>
                       <span class="sf__band-strip" aria-hidden="true">
-                        <img src={m.strip} alt="" width={m.w} height={m.h} loading="lazy" decoding="async" />
+                        <span class="sf__band-track">
+                          <img src={m.strip} alt="" width={m.w} height={m.h} loading="lazy" decoding="async" />
+                          <img src={m.strip} alt="" width={m.w} height={m.h} loading="lazy" decoding="async" />
+                        </span>
                       </span>
                     </span>
                   </label>
@@ -323,7 +352,6 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
             <ol class="sf__cards">
               {results.map((m, i) => (
                 <li class="sf__card" style={`--tint:var(--fam-${m.product.family});--delay:${i * 120}ms`}>
-                  <span class="sf__rank" aria-hidden="true">0{i + 1}</span>
                   <a class="sf__card-art" href={`${productBase}${m.product.slug}/`} tabIndex={-1} aria-hidden="true">
                     <Bottle shape={m.product.shape} family={m.product.family} initial={initialOf(m.product.brand)} img={m.product.img} />
                   </a>
@@ -337,7 +365,7 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
                     <span>{fromText(m.product.slug)}</span>
                   </p>
                   <p class="sf__why">{why(m)}</p>
-                  <a class="link-arrow" href={`${productBase}${m.product.slug}/`} aria-label={`${viewLabel}: ${m.product.name}`}>
+                  <a class="link-arrow" href={`${productBase}${m.product.slug}/`} aria-label={`${viewLabel}: ${m.product.name}`} onClick={(e) => { e.preventDefault(); const href = (e.currentTarget as HTMLAnchorElement).href; pressThen(e.currentTarget as HTMLElement, () => { window.location.href = href; }); }}>
                     {viewLabel}
                     <Arrow />
                   </a>
@@ -345,9 +373,6 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
               ))}
             </ol>
             <div class="sf__result-actions">
-              <button type="button" class="btn btn--gold" data-warm-cart onClick={addAll} disabled={added || !results.some((m) => buyable(m.product.slug).length)}>
-                {added ? tr.addedAll : tr.addAll}
-              </button>
               <button type="button" class="btn" onClick={() => go(STEPS)}>
                 {tr.edit}
               </button>
@@ -368,14 +393,14 @@ export default function ScentFinder({ tr, families, familyLines, intensityLevels
 
       {step >= 1 && step <= STEPS && (
         <nav class="sf__nav" aria-label={tr.progress}>
-          <button type="button" class="sf__navbtn" onClick={() => go(step - 1)}>
+          <button type="button" class="sf__navbtn" onClick={(e) => pressThen(e.currentTarget as HTMLElement, () => go(step - 1))}>
             <span class="sf__navlabel">{tr.back}</span>
           </button>
           <p class="sf__step" aria-hidden="true">
             {fill(tr.step, { n: `0${step}`, total: `0${STEPS}` })}
           </p>
           {(step === 4 || step === 5) && (
-            <button type="button" class="sf__navbtn sf__navbtn--next" onClick={() => go(step + 1)} disabled={!canNext}>
+            <button type="button" class="sf__navbtn sf__navbtn--next" onClick={(e) => pressThen(e.currentTarget as HTMLElement, () => go(step + 1))} disabled={!canNext}>
               {step === STEPS ? tr.finish : tr.next}
             </button>
           )}
