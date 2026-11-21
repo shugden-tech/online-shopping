@@ -9,7 +9,7 @@ import { Field, Loading, Msg, intOrNull, useMsg, useSession } from "../ui";
 type Form = Record<SettingKey, string | boolean>;
 const BOOL = (k: SettingKey) => typeof SETTINGS[k] === "boolean";
 const NULLABLE: SettingKey[] = ["delivery.fee_ub", "delivery.fee_countryside", "delivery.free_over"];
-const INT: SettingKey[] = ["holds.qpay_minutes", "holds.bank_minutes", ...NULLABLE];
+const INT: SettingKey[] = ["holds.qpay_minutes", "holds.bank_minutes", "holds.wire_minutes", ...NULLABLE];
 
 const toForm = (s: S): Form =>
   Object.fromEntries((Object.keys(SETTINGS) as SettingKey[]).map((k) => [k, BOOL(k) ? Boolean(s[k]) : s[k] === null || s[k] === undefined ? "" : String(s[k])])) as Form;
@@ -106,6 +106,7 @@ export default function Settings() {
           {bool("checkout.open", "Захиалга авах", "Унтраавал дэлгүүр шинэ захиалга авахгүй (бараа харагдсаар байна).")}
           {bool("payments.qpay.enabled", "QPay-ээр төлөх", "QPay-н нууц түлхүүрүүд серверт тохируулагдсан үед л ажиллана.")}
           {bool("payments.bank.enabled", "Банкны шилжүүлгээр төлөх", "Унтраавал банкаар төлөх сонголт харагдахгүй.")}
+          {bool("payments.wire.enabled", "Wire-ээр төлөх", "WIRE_API_KEY ба WIRE_WEBHOOK_SECRET серверт тохируулагдсан үед л ажиллана. Эхлээд бага дүнгээр туршина уу.")}
         </fieldset>
         <fieldset disabled={!canWrite || busy} class="a-panel a-grid">
           <legend class="a-h2">Хүргэлтийн үнэ</legend>
@@ -139,6 +140,7 @@ export default function Settings() {
           </Field>
           {input("holds.qpay_minutes", "5–10080 минут")}
           {input("holds.bank_minutes", "5–10080 минут")}
+          {input("holds.wire_minutes", "5–1440 минут (Wire-ийн төлбөрийн хугацаа мөн адил)")}
         </fieldset>
         {canWrite && <button class="a-btn a-btn--primary" type="submit" disabled={busy} data-testid="save-settings">{busy ? "Хадгалж байна…" : "Хадгалах"}</button>}
         {msg.node}
@@ -189,6 +191,8 @@ const LABEL: Record<SettingKey, string> = {
   "checkout.open": "Захиалга авах",
   "payments.qpay.enabled": "QPay",
   "payments.bank.enabled": "Банкны шилжүүлэг",
+  "payments.wire.enabled": "Wire",
+  "holds.wire_minutes": "Wire захиалгыг нөөцлөх хугацаа (минут)",
   "holds.qpay_minutes": "QPay захиалгыг нөөцлөх хугацаа (минут)",
   "holds.bank_minutes": "Банкны захиалгыг нөөцлөх хугацаа (минут)",
   "delivery.fee_ub": "Улаанбаатар доторх хүргэлт ₮",

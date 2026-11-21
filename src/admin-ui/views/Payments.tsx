@@ -52,6 +52,7 @@ export default function Payments(props: { status?: string; provider?: string }) 
             <td class="a-mono a-small">{when(p.paidAt || p.createdAt)}</td>
             <td>
               {p.provider === "qpay" && p.status === "pending" && can("payments.write") && <button type="button" class="a-btn a-btn--sm" data-testid="qpay-check" onClick={() => check(p.id)}><Icon name="qr" />QPay шалгах</button>}
+              {p.provider === "wire" && p.status === "pending" && can("payments.write") && <button type="button" class="a-btn a-btn--sm" data-testid="wire-check" onClick={() => check(p.id)}><Icon name="qr" />Wire шалгах</button>}
               {p.provider === "bank" && p.status === "pending" && can("payments.write") && p.orderNo && <a class="a-btn a-btn--sm" href={`#/orders/${enc(p.orderNo)}`}><Icon name="paid" />Төлбөр бүртгэх</a>}
             </td>
           </tr>

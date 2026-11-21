@@ -30,7 +30,7 @@ export const PAYMENT_STATUS: Record<string, string> = {
   cancelled: "Цуцлагдсан",
   refunded: "Буцаан олгосон",
 };
-export const PROVIDER: Record<string, string> = { qpay: "QPay", bank: "Банкны шилжүүлэг", manual: "Гараар", mock: "Туршилтын" };
+export const PROVIDER: Record<string, string> = { qpay: "QPay", bank: "Банкны шилжүүлэг", wire: "Wire", manual: "Гараар", mock: "Туршилтын" };
 export const SHIPMENT_STATUS: Record<string, string> = {
   pending: "Хүлээгдэж буй",
   created: "Үүссэн",
