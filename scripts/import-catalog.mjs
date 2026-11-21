@@ -13,6 +13,8 @@
 // brand, name, concentration, release_year, notes, descriptions, images (and gender/family when NULL) —
 // never status, sale_locked, sort, prices or stock — and never touches products created in the admin.
 // `--demo-prices` copies the build-time JSON prices into a SEPARATE file for a local dev database only.
+// The owner's own-store products (data/catalog/store-import-report.json, made by build-store-import.mjs) are
+// skipped by `--refresh`: their notes, descriptions and photos come from data/catalog/store-import.sql.
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -28,6 +30,8 @@ const CONTENT_DIR = join(ROOT, "src/content/products");
 const NOTES_FILE = join(ROOT, "src/data/notes.json");
 const ID_RE = /^[a-z0-9][a-z0-9-]{0,119}$/;
 const CONCENTRATIONS = new Set(["EDP", "EDT", "Parfum", "Extrait", "Cologne"]);
+const STORE_REPORT = join(OUT_DIR, "store-import-report.json");
+const STORE_IDS = new Set(existsSync(STORE_REPORT) ? JSON.parse(readFileSync(STORE_REPORT, "utf8")).map((r) => r.id) : []);
 
 /* ---------- args ---------- */
 const argv = process.argv.slice(2);
@@ -226,7 +230,7 @@ const mainBytes = writeSql(
     `Generated ${stamp}. Prices and stock are NULL on every SKU: nothing here is for sale until the owner sets a price.`,
     `Idempotent: safe to apply more than once. Apply: node node_modules/wrangler/bin/wrangler.js d1 execute ${args.db} --local|--remote --file ${mainFile.slice(ROOT.length + 1)}`,
   ],
-  [...r.products.map((p) => productSql(p, args.refresh)), ...r.skus.map(skuSql)],
+  [...r.products.filter((p) => !(args.refresh && STORE_IDS.has(p.id))).map((p) => productSql(p, args.refresh)), ...r.skus.map(skuSql)],
 );
 
 let demoFile = null;
