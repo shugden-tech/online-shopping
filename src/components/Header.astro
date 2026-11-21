@@ -378,6 +378,16 @@ const liveText = {
   .mmenu__nav a[aria-current] { color: inherit; }
   .mmenu__foot { margin-top: auto; padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 
+  /* small phones: the mark + wordmark + three icons must fit a 320 px row */
+  @media (max-width: 400px) {
+    .hdr__word { height: 20px; }
+    .hdr__logo { height: 30px; }
+    .hdr__cart { padding: 0 6px; }
+    .hdr__top { gap: 2px 4px; }
+  }
+  @media (max-width: 360px) {
+    .hdr__word { display: none; }
+  }
   @media (max-width: 900px) {
     .hdr__top { flex-wrap: wrap; height: auto; gap: 4px 8px; padding-block: 8px 10px; }
     .hdr__burger { display: inline-flex; }
