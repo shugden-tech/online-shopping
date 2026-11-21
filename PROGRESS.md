@@ -559,3 +559,23 @@ checkout prefill, logout/login, 375 px without horizontal scroll, English page).
   availability, sellable, imageFront); PDP checked in headless Chrome. `astro check` 0 errors, `astro build` OK.
 - Owner to confirm full-bottle sizes: Le Male Elixir 125, Le Male EDT 125, Y Le Parfum 100, SWY Parfum 100, Eros EDP 100 (photo
   box shows 200 ml) — see the report.
+
+## 2026-11-21 — Wire payment gateway (hosted checkout, migration 0008) — model: Opus
+- Third payment method next to bank transfer and QPay, per https://docs.wire.mn/en/docs (quickstart, authentication,
+  idempotency, money-and-time, errors, hosted-checkout, webhooks read on 2026-11-21). Contract: `docs/CONTRACTS.md` §11.
+- `src/lib/payments/wire.ts`: client (`createWireIntent`, `createWireCheckout`, `fetchWireIntent`; Bearer `WIRE_API_KEY`,
+  mandatory `Idempotency-Key` checked before sending, JSON, integer ₮, error envelope → code + request_id, transient vs final),
+  `verifyWireSignature` (WebCrypto HMAC-SHA256 over `t.rawBody`, ±300 s, constant time), `parseWireEvent`.
+- `src/lib/payments/index.ts`: `ensureWireCheckout` (keys `<orderNo>-pi` / `-cs`, intent `expires_at` = order hold),
+  `applyWireIntent` (succeeded → the existing `markPaid`), `refreshWire` (payment-check, hold sweep, admin check).
+- `POST /api/payments/wire/webhook`: raw body, signature, `wire_events` dedupe, GET intent read-back, 503 on read-back failure.
+- Migration `0008_wire.sql`: `payments` rebuilt for `provider = 'wire'` (rows copied with ids; checked on a populated copy),
+  `wire_events`. Settings `payments.wire.enabled` (default false, owner only) and `holds.wire_minutes` (30, 5–1440).
+- Storefront: `StoreState.payments.wire`; success page shows a «Төлөх» button to `pay.wire.mn` and polls (checked in headless
+  Chromium, 390 px). Strings are hard-coded in `src/scripts/order-status.ts` (i18n not touched). **The checkout form does not offer
+  Wire yet**: `src/islands/CheckoutForm.tsx` (`PAYS`) and i18n were out of scope.
+- Admin: Wire switch + hold minutes in Settings, «Wire шалгах» on pending Wire payments, provider label.
+- Tests: `scripts/mock-wire.mjs` + `npm run test:wire` 81/81 on a fresh local D1. Regression on the same server: payments 45/45,
+  api 91/91, storefront 61/61, admin-ui 96/96, admin-api 69/71 (facets + built-product redirect need the imported catalog).
+  `astro check` 0 errors, `astro build` OK, `npm run budget` PASS.
+- Not verified live: Wire has no sandbox; the field names follow the docs and are tested only against the mock.

@@ -41,7 +41,7 @@ machines, settings, roles = `src/lib/contracts.ts`.
 
 - **Product**: `status` draft | active | hidden (any → any, admin, `catalog.write`); `sale_locked` 0/1
   independent ("visible but cannot be bought"). Per-SKU `active` 0/1.
-- **Store switches** (`store_settings`): `checkout.open`, `payments.qpay.enabled`, `payments.bank.enabled`.
+- **Store switches** (`store_settings`): `checkout.open`, `payments.qpay.enabled`, `payments.bank.enabled`, `payments.wire.enabled` (0008, §11).
 - **Order**: new → confirmed | paid | cancelled; confirmed → paid | cancelled; paid → shipped | cancelled;
   shipped → done. done, cancelled terminal.
 - **Reservation**: held → committed (order paid) | released (order cancelled / hold expired).
@@ -78,6 +78,7 @@ All rows of one event go in one D1 batch.
 | `GET /api/orders/lookup?no=&phone=` | A2 | existing + `paymentStatus`, `holdExpiresAt`, `shipment: { status, trackingNo, trackingUrl } \| null`. |
 | `POST /api/orders/{no}/payment-check` `{ phone }` | A2 | Re-checks QPay for that order (rate limited 10/10 min/ip). `{ ok, paymentStatus, status }`. |
 | `GET\|POST /api/payments/qpay/callback?order=&sig=` | A2 | `sig` = hex HMAC-SHA256(`QPAY_CALLBACK_SECRET`, order no). Never trusts the body: calls QPay `POST /v2/payment/check` and marks paid only when `paid_amount ≥ amount`. Idempotent. Always 200 `SUCCESS` for a valid sig (so QPay stops retrying), 403 otherwise. |
+| `POST /api/payments/wire/webhook` | A2 | Wire events (0008): `WirePayment-Signature` HMAC over the raw body, ±300 s, de-duplicated by event id, intent read back before `markPaid`. 200 accepted, 400 bad signature, 503 retry. See §11. |
 | `POST /api/delivery/webhook/{provider}` | A3 | Header `X-Signature` = hex HMAC-SHA256(`DELIVERY_WEBHOOK_SECRET`, raw body). De-duplicated by `external_event_id`. 200 `{ ok }`, 401 bad sig, 404 unknown shipment. |
 
 ### Admin (Bearer; permission in brackets)
@@ -338,3 +339,69 @@ override the endpoints for tests and are honoured only for requests to localhost
 password, devices / sign out everywhere, Google link, delete). Other pages load account code only when `gz_in=1`: the header
 badge (avatar or initial), wishlist sync (merge once per tab session and on sign-in, then replace after each change) and the
 checkout prefill (name, phone, default address into empty fields).
+
+## 11. Wire payments (A2, 2026-11-21, migration 0008)
+
+Third payment method next to bank transfer and QPay, using Wire's **hosted checkout** (https://docs.wire.mn/en/docs).
+Code: `src/lib/payments/wire.ts` (client, signature, event parsing), `src/lib/payments/index.ts` (`ensureWireCheckout`,
+`applyWireIntent`, `refreshWire`), `src/pages/api/payments/wire/webhook.ts`. Mock: `scripts/mock-wire.mjs`; tests:
+`npm run test:wire` (81 checks).
+
+**Schema (0008).** `payments` rebuilt (every row copied with its id) so `provider` allows `'wire'`; `provider_ref` = `pi_…`,
+`provider_payment_id` = `ch_…` (or the `pi_…` when Wire gives no charge), `data_json` = `{ sessionId, checkoutUrl, expiresAt }`.
+New `wire_events(id evt_… PK, type, object_id, result, received_at)` de-duplicates webhook deliveries.
+
+**Config.** `WIRE_BASE_URL` (var, default `https://api.wire.mn`; `http://` only for localhost / 127.0.0.1), secrets
+`WIRE_API_KEY` (`sk_live_…`; Wire refuses `sk_test_` and has no sandbox) and `WIRE_WEBHOOK_SECRET` (`whsec_…`). Settings
+`payments.wire.enabled` (default **false**, owner only via `PUT /api/admin/settings`, audited) and `holds.wire_minutes`
+(default 30, 5–1440). Wire is offered (`StoreState.payments.wire`, `/api/store/bundles`, `POST /api/orders`) only when the
+setting is on **and** both secrets are set. `PAYMENT_PROVIDERS` / `PaymentInstructions` gain `wire`:
+`{ method: "wire", intentId, sessionId, checkoutUrl }`.
+
+**Outbound calls** (`Authorization: Bearer WIRE_API_KEY`, JSON bodies, integer ₮, 10 s timeout; the key is never logged):
+
+| Call | Body / rule |
+|---|---|
+| `POST /v1/payment_intents` | `{ amount: order.total, currency: "MNT", description: "GenZst <orderNo>", metadata: { order_id }, expires_at }`. `expires_at` = the order's `hold_expires_at` (clamped to now + 5.5 min … now + 23 h 59 min). `Idempotency-Key: <orderNo>-pi` |
+| `POST /v1/checkout/sessions` | `{ payment_intent, success_url, cancel_url }`, both = the order's success page (`/zahialga/amjilttai/?no=` or `/en/checkout/success/?no=` on `PUBLIC_SITE_URL`). `Idempotency-Key: <orderNo>-cs`. `/confirm` is never called. |
+| `GET /v1/payment_intents/{id}` | read-back before anything is applied; only `status: "succeeded"` marks an order paid |
+
+The client refuses a POST without an `Idempotency-Key` before sending anything. Errors keep Wire's `code` and `request_id`;
+network / 408 / 409 `idempotency_in_flight` / 424 / 429 / 5xx count as **transient**. Retry keys: a transient failure retries
+with the same keys (Wire replays); after an attempt that created an intent or failed for good, the next attempt uses
+`<orderNo>-pi-2` / `-cs-2`, then `-3`, …
+
+**Order flow.** `POST /api/orders` with `payment: "wire"` → same single D1 batch (order + reservations), hold =
+`holds.wire_minutes` → `ensureWireCheckout` (claims one pending `payments` row, creates intent + session, stores them,
+order `payment_status = pending`, audit `payment.invoice`). Response `payment` = the Wire instructions; on failure `payment: null,
+paymentError: "wire_unavailable"` (row `failed`, audit `payment.error`) and `POST /api/orders/{no}/payment-check` creates it later.
+The success page (`src/scripts/order-status.ts`) shows a **Төлөх** button to `checkoutUrl` (only `https://*.wire.mn`), then polls
+payment-check, which reads the intent back (`refreshWire`) and, when the order has no open checkout (cancelled / failed),
+opens a fresh one while the hold lasts. The hold sweep reads every expired Wire order's intent first (a paid order with a lost
+webhook is paid, not expired). Admin `POST /api/admin/payments/{id}/check` works for Wire rows.
+
+**Webhook** `POST /api/payments/wire/webhook` (public; Wire sends JSON from 65.109.117.186):
+
+1. Raw body ≤ 64 KB; `WirePayment-Signature: t=<unix>,v1=<hex>`; v1 = hex HMAC-SHA256(`WIRE_WEBHOOK_SECRET`, `t + "." + rawBody`),
+   compared in constant time; any of several `v1` may match; `|now − t| > 300 s` → reject. Bad / missing / stale → **400**
+   `{ errors: { signature: "mismatch" | "missing" | "malformed" | "stale" } }` (Wire drops it). Secret not set → 503.
+2. `endpoint.verification` → 200. Otherwise `INSERT OR IGNORE INTO wire_events`; an id seen before → 200 `{ duplicate: true }`.
+3. `payment_intent.*` → our payment row by `provider_ref`, then **GET the intent** (the body is never trusted) →
+   `applyWireIntent`: `succeeded` → `markPaid(provider "wire")` — the same path as QPay (one guarded batch: payment paid, other
+   pending payments cancelled, reservations committed, movement `sale`, order → paid, order event, audit `order.paid`,
+   outbound `order.paid`); a payment on an expired / cancelled row is recorded once for a refund (`payment.late`).
+   `canceled` → row `cancelled` (audit `payment.cancelled`; the order keeps its hold and the sweep expires it).
+   `payment_failed` while the intent is still payable (`requires_payment_method` / `requires_action` / `processing`: the buyer
+   can retry on the hosted page) → row stays pending, audit `payment.attempt_failed`; with a final intent status → row `failed`
+   (audit `payment.failed`). Unknown intents (another integration on the same Wire project) → 200 `unknown`.
+4. If the read-back fails, the `wire_events` row is deleted and the answer is **503**, so Wire retries. Otherwise **200**
+   `{ ok, result }`.
+
+`charge.refunded` → 200 and audit `payment.refund_event` (refund id, charge, amount) on the matching payment; no state change.
+
+**TODO (not built).** Refunds from the admin (Wire refund endpoint, `POST` with `Idempotency-Key`): today the owner refunds in
+the Wire dashboard and the `charge.refunded` event is only recorded. Cancelling the Wire intent when an order is cancelled
+(today the intent simply expires at the hold time; a payment after that is recorded for a refund). Optional IP allow-list
+(65.109.117.186) belongs in a Cloudflare WAF rule on `/api/payments/wire/webhook`. The checkout form
+(`src/islands/CheckoutForm.tsx`, `PAYS`) and `src/i18n/*.json` (Wire label/hint, success-page strings) still need the A5
+storefront change before customers can pick Wire; the API, success page and admin are ready.

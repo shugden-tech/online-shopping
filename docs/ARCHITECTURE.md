@@ -68,6 +68,7 @@ sequenceDiagram
   participant W as Worker
   participant D as D1
   participant Q as QPay
+  participant X as Wire
   participant L as Delivery
   C->>W: POST /api/orders (items sku+qty, Idempotency-Key, Turnstile token)
   W->>D: ONE batch: order + reserve stock (CHECK blocks oversell) + events
@@ -75,6 +76,10 @@ sequenceDiagram
   W-->>C: order no + QR / bank instructions + hold expiry
   Q->>W: callback (HMAC signed)
   W->>Q: payment/check (never trusts the callback body)
+  W->>X: Wire orders: PaymentIntent + checkout session (Idempotency-Key = order no)
+  C->>X: "Төлөх" → pay.wire.mn hosted page (QR / bank app)
+  X->>W: webhook (WirePayment-Signature, dedupe by event id)
+  W->>X: GET payment_intent (never trusts the webhook body)
   W->>D: paid → commit stock, movement "sale"
   Note over W,D: unpaid past hold → expired → stock released
   W->>L: owner creates shipment (order must be paid)
@@ -101,6 +106,10 @@ Last full run on one fresh local D1 (2026-11-19, after the security hardening): 
 admin UI 96, e2e commerce 43, e2e real browser 17 — all pass; 24 page loads with 0 CSP violations; `astro check` 0 errors;
 master-catalog unit test 3/3. Catalog suite (86) needs the now-tracked importer files: re-run it.
 
+Wire (2026-11-21, migration 0008): `npm run test:wire` 81/81 against a fresh local D1 + `scripts/mock-wire.mjs`; the same run
+re-passed payments 45, api 91, storefront 61, admin-ui 96 (admin-api 69/71: the 2 failures need the imported catalog, not
+present in a fresh D1). Wire itself is verified only against the mock: Wire has no sandbox.
+
 `npm run budget` passes again (2026-11-21: finder 24.6 KB, checkout 24.9 KB): the wishlist drawer and the Turnstile mount moved
 into lazy chunks. Accounts: `npm run test:accounts` 111 checks (incl. a mock Google).
 
@@ -124,12 +133,17 @@ Legend: 🔴 blocks launch · 🟠 should fix before real customers · 🟡 late
 - [ ] 🔴 `PUBLIC_SITE_URL` = the real domain (it is `http://localhost:8788` in `wrangler.jsonc`; QPay callbacks are built from it); custom domain.
 - [ ] 🔴 Cloudflare Access on `/admin/*` and `/api/admin/*` (free, email code).
 - [ ] 🟠 `QPAY_BASE_URL` sandbox → production; confirm QPay calls the callback with GET or JSON POST.
+- [ ] 🟡 Wire (optional, CONTRACTS §11): wire.mn account + DAN, project, operator, settlement account, API key →
+  `WIRE_API_KEY`; webhook endpoint `https://<domain>/api/payments/wire/webhook` → `WIRE_WEBHOOK_SECRET`; switch
+  `payments.wire.enabled` on; first real payment with a small amount. WAF rule: only 65.109.117.186 may POST the webhook.
 - [ ] 🟠 Custom domain for images (`r2.dev` is for testing only); WAF/rate-limit rules and Bot Fight Mode on `/api/orders`.
 - [ ] 🟠 D1 backups (Time Travel), error alerts, uptime check on `/api/health`.
 
 ### Code / quality
 - [ ] 🟠 npm audit: 10 findings (1 critical in `astro`, 8 high) — upgrade separately, with the full test run.
 - [ ] 🟠 QPay field names are verified only against a local mock: check against the official v2 docs.
+- [ ] 🟠 Wire: checkout form (`src/islands/CheckoutForm.tsx` `PAYS`) + i18n strings do not offer Wire yet (A5 change);
+  refunds from admin and intent cancel on order cancel are TODO (CONTRACTS §11).
 - [ ] 🟠 Hold times: bank 24 h lets anyone block stock; consider 2–4 h and a per-phone cap.
 - [ ] 🟡 No customer email/SMS confirmation; no order cancel/return flow for customers.
 - [ ] 🟡 Mongolian/English strings written by Opus (admin, payment instructions) were never copy-reviewed.
@@ -154,13 +168,13 @@ Backend suites (one fresh local database, three terminals):
 cp .dev.vars.example .dev.vars   # then point QPAY_BASE_URL=http://127.0.0.1:8892, QPAY_USERNAME=test, QPAY_PASSWORD=test,
                                  # QPAY_INVOICE_CODE=TEST_INVOICE, DELIVERY_BASE_URL=http://127.0.0.1:8893, DELIVERY_API_KEY=test-key
 npx wrangler d1 migrations apply genzst --local --persist-to .wrangler/state-lead
-node scripts/mock-qpay.mjs & node scripts/mock-delivery.mjs &
+node scripts/mock-qpay.mjs & node scripts/mock-delivery.mjs & node scripts/mock-wire.mjs &   # + the WIRE_* lines of .dev.vars.example
 npx wrangler dev --port 8788 --persist-to .wrangler/state-lead
 ```
 
 ```bash
 export BASE=http://localhost:8788 PERSIST=.wrangler/state-lead D1_PERSIST=.wrangler/state-lead
-npm run test:catalog test:api test:payments test:delivery test:admin-api test:storefront test:admin-ui test:e2e test:accounts
+npm run test:catalog test:api test:payments test:wire test:delivery test:admin-api test:storefront test:admin-ui test:e2e test:accounts
 ```
 
 Expected (2026-11-19): catalog 86 · api 85 · payments 45 · delivery 85 · storefront 57 · admin-ui 96 · e2e 43 + 17;

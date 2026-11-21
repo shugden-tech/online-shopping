@@ -26,3 +26,8 @@ STAFF_PASSWORD=demo-staff-pass-2026
 # GOOGLE_AUTH_URL=http://127.0.0.1:8894/auth
 # GOOGLE_TOKEN_URL=http://127.0.0.1:8894/token
 # GOOGLE_JWKS_URL=http://127.0.0.1:8894/jwks
+# Wire (0008): leave empty to disable Wire. Tests point WIRE_BASE_URL at scripts/mock-wire.mjs (port 8896); these two
+# values are fakes the mock accepts, NOT real keys. Production: `npx wrangler secret put WIRE_API_KEY` / `WIRE_WEBHOOK_SECRET`.
+# WIRE_BASE_URL=http://127.0.0.1:8896
+# WIRE_API_KEY=sk_live_mock_0123456789abcdef
+# WIRE_WEBHOOK_SECRET=whsec_mock_0123456789abcdef
