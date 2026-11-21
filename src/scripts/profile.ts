@@ -326,7 +326,7 @@ function renderAccount(root: HTMLElement, me: Me, flash: { text: string; bad: bo
     },
   });
   root.append(
-    h("div", "pf-head", h("div", "pf-head__who", av, h("h1", { class: "t-head pf-title", text: fill(t("hello"), { name: me.displayName || me.name || "" }) })), out),
+    h("div", "pf-head", h("div", "pf-head__who", av, h("h1", { class: "t-head pf-title", text: fill(t("hello"), { name: me.displayName || me.name || "" }) }))),
     flashEl(flash),
     claimedNote ? flashEl({ text: fill(t("claimed"), { n: claimedNote }), bad: false }) : "",
     me.mustChangePassword ? h("p", { class: "pf-flash is-bad", role: "alert", text: t("mustChange") }) : "",
@@ -336,6 +336,7 @@ function renderAccount(root: HTMLElement, me: Me, flash: { text: string; bad: bo
 
   const prof = section(t("profile"), "pf-h-profile");
   profileSection(prof.body, me);
+  prof.sec.append(h("div", "pf-logout", out));
   const orders = section(t("orders"), "pf-h-orders");
   ordersSection(orders.body);
   const wish = section(t("wishlist"), "pf-h-wish");
