@@ -46,7 +46,7 @@ async function fetchChunk(ids: string[], fresh: boolean): Promise<boolean> {
     });
     const data = (await res.json()) as Partial<StoreState> & { ok?: boolean };
     if (!res.ok || data.ok === false || !Array.isArray(data.products)) throw new Error(String(res.status));
-    meta = { checkoutOpen: data.checkoutOpen === true, payments: { qpay: data.payments?.qpay === true, bank: data.payments?.bank === true } };
+    meta = { checkoutOpen: data.checkoutOpen === true, payments: { qpay: data.payments?.qpay === true, bank: data.payments?.bank === true, wire: data.payments?.wire === true } };
     for (const id of ids) {
       known.set(id, null);
       failed.delete(id);

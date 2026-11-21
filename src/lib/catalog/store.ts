@@ -22,7 +22,7 @@ export async function getStoreState(
   db: D1,
   ids: string[],
   settings: Settings,
-  opts: { qpayConfigured?: boolean } = {},
+  opts: { qpayConfigured?: boolean; wireConfigured?: boolean } = {},
 ): Promise<StoreState> {
   const checkoutOpen = settings["checkout.open"] === true;
   const state: StoreState = {
@@ -30,6 +30,7 @@ export async function getStoreState(
     payments: {
       qpay: settings["payments.qpay.enabled"] === true && (opts.qpayConfigured ?? true),
       bank: settings["payments.bank.enabled"] === true,
+      wire: settings["payments.wire.enabled"] === true && (opts.wireConfigured ?? false),
     },
     products: [],
   };

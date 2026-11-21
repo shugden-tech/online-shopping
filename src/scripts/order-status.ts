@@ -1,6 +1,8 @@
 // Success / order-tracking page (loaded lazily by SuccessView): payment instructions from POST /api/orders
 // (QPay QR + links, or bank details), order lookup (POST /api/orders/lookup), the hold-expiry
 // countdown for unpaid orders, shipment tracking, and QPay payment polling (POST /api/orders/{no}/payment-check).
+// Wire (0008): a "Төлөх" button sends the buyer to Wire's hosted checkout (pay.wire.mn); back on this page the
+// order is polled the same way (the server reads the PaymentIntent back from Wire).
 import { clearCart } from "../lib/cart";
 import { formatPrice } from "../lib/price";
 import type { PaymentInstructions } from "../lib/contracts";
@@ -12,6 +14,20 @@ const LAST_PAY_SLOT = "gz-last-pay"; // LastPayment from cart-checkout.ts
 // (frequent first, while the customer is most likely paying) leave one for the manual "check" button.
 // The QPay callback normally marks the order paid long before polling would notice.
 const POLL_DELAYS_S = [5, 10, 15, 30, 45, 60, 90, 150, 195];
+// Wire strings live here until src/i18n gets them (the success page's i18n JSON has no Wire keys yet).
+const WIRE_TEXT = {
+  mn: { title: "Wire-ээр төлөх", pay: "Төлөх", note: "Wire-ийн төлбөрийн хуудас нээгдэнэ: QR уншуулах эсвэл банкны аппаар төлнө. Төлсний дараа энэ хуудас руу буцаж ирнэ.", error: "Wire төлбөрийн хуудсыг нээж чадсангүй." },
+  en: { title: "Pay with Wire", pay: "Pay", note: "Wire's payment page opens: scan the QR code or pay in your bank app. You come back to this page afterwards.", error: "Could not open the Wire payment page." },
+};
+/** Only Wire's own hosted checkout host is followed. */
+const wireUrl = (u: string | null | undefined): string | null => {
+  try {
+    const x = u ? new URL(u) : null;
+    return x && x.protocol === "https:" && (x.hostname === "pay.wire.mn" || x.hostname.endsWith(".wire.mn")) ? x.href : null;
+  } catch {
+    return null;
+  }
+};
 
 interface Lookup {
   ok: boolean;
@@ -315,9 +331,30 @@ export function init(root: HTMLElement): void {
     }
     payBox.replaceChildren(...parts);
   }
+  function wire(p: Extract<PaymentInstructions, { method: "wire" }>, total: number | null) {
+    const w = WIRE_TEXT[locale];
+    payBox.dataset.method = "wire";
+    const parts: Node[] = [el("h2", "t-title", w.title)];
+    const a = amountRow(total);
+    if (a) {
+      const dl = el("dl", "ok__rows");
+      dl.append(a);
+      parts.push(dl);
+    }
+    const href = wireUrl(p.checkoutUrl);
+    if (href) {
+      const l = el("a", "btn btn--gold ok__qlink", w.pay);
+      l.href = href;
+      l.rel = "noopener noreferrer";
+      l.dataset.wirePay = "";
+      parts.push(l, el("p", "t-small ok__note", w.note));
+    } else parts.push(el("p", "t-small ok__note", w.error));
+    payBox.replaceChildren(...parts);
+  }
   function show(p: PaymentInstructions | null, total: number | null) {
     if (p?.method === "bank") bank(p, total);
     else if (p?.method === "qpay") qpay(p, total);
+    else if (p?.method === "wire") wire(p, total);
     payBox.hidden = !p;
   }
 
@@ -366,7 +403,7 @@ export function init(root: HTMLElement): void {
     step(0);
   }
 
-  if (mine?.paymentError === "qpay_unavailable" || (mine && !mine.payment && mine.paymentError)) {
+  if (mine?.paymentError === "qpay_unavailable" || mine?.paymentError === "wire_unavailable" || (mine && !mine.payment && mine.paymentError)) {
     payBox.hidden = true;
     const retry = checkButton(t.retry, async () => {
       retry.disabled = true;
@@ -376,14 +413,14 @@ export function init(root: HTMLElement): void {
       if (r.paymentStatus === "paid" || r.status === "paid") return paid();
       if (r.payment) {
         show(r.payment, total);
-        if (r.payment.method === "qpay") poll();
+        if (r.payment.method === "qpay" || r.payment.method === "wire") poll();
         else payState.hidden = true;
       }
     });
-    say(t.qpayError, retry);
+    say(mine.paymentError === "wire_unavailable" ? WIRE_TEXT[locale].error : t.qpayError, retry);
   } else if (mine?.payment) {
     show(mine.payment, total);
-    if (mine.payment.method === "qpay") poll();
+    if (mine.payment.method === "qpay" || mine.payment.method === "wire") poll();
   }
   if (mine?.holdExpiresAt) {
     const h = el("p", "ok__hold");

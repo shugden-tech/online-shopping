@@ -67,7 +67,7 @@ async function place(
   if (!cartItems.value.length) return { form: "empty" };
   const meta = storeMeta();
   if (meta && !meta.checkoutOpen) return { form: "closed" };
-  if (meta && !meta.payments[v.payment as "qpay" | "bank"]) return { form: "paymentDisabled", fields: { payment: "paymentDisabled" } };
+  if (meta && !meta.payments[v.payment as "qpay" | "bank" | "wire"]) return { form: "paymentDisabled", fields: { payment: "paymentDisabled" } };
 
   const lines = cartItems.value;
   let res: Response;

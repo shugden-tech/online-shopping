@@ -17,10 +17,10 @@ async function loadBundles(ids: string[], fresh: boolean): Promise<Map<string, B
       headers: { Accept: "application/json" },
       cache: fresh ? "no-cache" : "default",
     });
-    const data = (await res.json()) as { ok?: boolean; bundles?: BundleState[]; checkoutOpen?: boolean; payments?: { qpay?: boolean; bank?: boolean } };
+    const data = (await res.json()) as { ok?: boolean; bundles?: BundleState[]; checkoutOpen?: boolean; payments?: { qpay?: boolean; bank?: boolean; wire?: boolean } };
     if (!res.ok || !data.ok || !Array.isArray(data.bundles)) return null;
     // a cart of bundles only loads no product state: take the store switches from here
-    if (fresh || !storeMeta()) setStoreMeta({ checkoutOpen: data.checkoutOpen === true, payments: { qpay: data.payments?.qpay === true, bank: data.payments?.bank === true } });
+    if (fresh || !storeMeta()) setStoreMeta({ checkoutOpen: data.checkoutOpen === true, payments: { qpay: data.payments?.qpay === true, bank: data.payments?.bank === true, wire: data.payments?.wire === true } });
     return new Map(data.bundles.map((b) => [b.id, b]));
   } catch {
     return null;
