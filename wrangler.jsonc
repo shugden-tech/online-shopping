@@ -15,7 +15,7 @@
   "vars": {
     // Public Turnstile site key. This is Cloudflare's official always-pass TEST key.
     // [[TODO owner]] replace with the real site key before deploying.
-    "PUBLIC_TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+    "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAGLqfDo1_tAN2tnM",
     // [[TODO owner]] the real site origin (payment callback URLs are built from it).
     "PUBLIC_SITE_URL": "http://localhost:8788",
     // QPay merchant API v2 base. Sandbox until the owner has a live merchant account.
