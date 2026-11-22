@@ -1,0 +1,17 @@
+[
+{"id":"abercrombie-and-fitch-away-man-edt","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"medium","source":"perfumedirect.com, lyko.com","note":"Retailer listings, not brand site"},
+{"id":"acqua-di-parma-blu-mediterraneo-mirto-di-panarea-edt","sizesMl":[30,50,100,180],"flagshipMl":100,"confidence":"medium","source":"acquadiparma.com","note":"Official pages disagree on 30 vs 50; 500 also listed (large format, excluded); 75/150 only at some retailers"},
+{"id":"acqua-di-parma-colonia-quercia-concentree-edp","sizesMl":[100,180],"flagshipMl":100,"confidence":"low","source":"selfridges.com, fragrancex.com","note":"Exact name matches Colonia Quercia Concentree (100/180); separate Signatures Quercia EDP is 20/50/100/180"},
+{"id":"acqua-di-parma-sakura-edp","sizesMl":[20,100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com","note":"Official size options 20/100/180"},
+{"id":"afnan-highness-ix-maroon-edp","sizesMl":[100],"flagshipMl":100,"confidence":"medium","source":"superdrug.com, fragrancenet.com","note":"Only 100 ml seen"},
+{"id":"afnan-supremacy-pink-edp","sizesMl":[100],"flagshipMl":100,"confidence":"medium","source":"lyko.com, cosmetify.com","note":"Only 100 ml seen"},
+{"id":"al-haramain-amber-oud-carbon-edition-edp","sizesMl":[60,100],"flagshipMl":100,"confidence":"medium","source":"superdrug.com, anabis.com","note":"One listing also mentions 200 ml, unconfirmed"},
+{"id":"bvlgari-man-in-black-edp","sizesMl":[60,100,150],"flagshipMl":100,"confidence":"high","source":"bulgari.com","note":"Official: 60/100/150 plus 200 ml refill"},
+{"id":"dior-miss-dior-edp","sizesMl":[30,50,100,150],"flagshipMl":100,"confidence":"high","source":"selfridges.com, sephora.co.uk","note":"2024 version"},
+{"id":"jean-paul-gaultier-le-beau-paradise-garden-edp","sizesMl":[40,75,125],"flagshipMl":125,"confidence":"low","source":"unverified","note":"Search budget exhausted; estimate from Le Beau line pattern"},
+{"id":"le-labo-santal-33-edp","sizesMl":[15,50,100],"flagshipMl":50,"confidence":"low","source":"unverified","note":"Search budget exhausted; from memory, 50 ml is the typical flagship"},
+{"id":"parfums-de-marly-delina-exclusif-edp","sizesMl":[75],"flagshipMl":75,"confidence":"low","source":"unverified","note":"Search budget exhausted; from memory, 75 ml; 125 ml possible"},
+{"id":"tom-ford-tobacco-vanille-edp","sizesMl":[50,100],"flagshipMl":50,"confidence":"low","source":"unverified","note":"Search budget exhausted; from memory (50/100, 250 also exists)"},
+{"id":"xerjoff-naxos-edp","sizesMl":[50,100],"flagshipMl":100,"confidence":"low","source":"unverified","note":"Search budget exhausted; from memory"},
+{"id":"dior-sauvage-edt","sizesMl":[60,100,200],"flagshipMl":100,"confidence":"low","source":"unverified","note":"Search budget exhausted; from memory"}
+]

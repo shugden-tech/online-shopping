@@ -1,0 +1,84 @@
+---
+// The four bottle silhouettes, defined once per page as SVG symbols.
+// Each <BottleArt> is just <use href="#gz-b-…"> plus a brand initial; the liquid colour
+// comes from the --tint custom property, which inherits into the <use> shadow tree.
+const label = `
+  <rect x="68" y="150" width="64" height="72" fill="#0a0908" opacity=".9"/>
+  <rect x="68.500" y="150.500" width="63" height="71" fill="none" stroke="#CC9E48" stroke-width="1"/>
+  <rect x="72" y="154" width="56" height="64" fill="none" stroke="#CC9E48" stroke-width=".5" opacity=".55"/>
+  <path d="M90 207h20" stroke="#CC9E48" stroke-width=".8" opacity=".8"/>
+  <circle cx="100" cy="212.500" r="1" fill="#CC9E48" opacity=".8"/>`;
+const floor = `<ellipse cx="100" cy="262" rx="78" ry="7" fill="url(#gz-floor)"/>`;
+const liquid = (shape: string) => `
+  <g>${shape.replace("/>", ' style="fill:var(--tint,#CC9E48)"/>')}${shape.replace("/>", ' fill="url(#gz-shade)"/>')}${shape.replace("/>", ' fill="url(#gz-depth)"/>')}</g>`;
+---
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gz-gold" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#6f5421"/><stop offset=".26" stop-color="#f2dca8"/><stop offset=".5" stop-color="#CC9E48"/><stop offset=".8" stop-color="#9c752d"/><stop offset="1" stop-color="#55401a"/>
+    </linearGradient>
+    <linearGradient id="gz-shade" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".2" stop-color="#fff" stop-opacity=".05"/><stop offset=".58" stop-color="#000" stop-opacity=".04"/><stop offset="1" stop-color="#000" stop-opacity=".58"/>
+    </linearGradient>
+    <linearGradient id="gz-depth" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/>
+    </linearGradient>
+    <linearGradient id="gz-glass" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".45" stop-color="#e9e7e3" stop-opacity=".35"/><stop offset="1" stop-color="#cfccc6" stop-opacity=".55"/>
+    </linearGradient>
+    <radialGradient id="gz-floor">
+      <stop offset="0" stop-color="#000" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <symbol id="gz-b-classic" viewBox="0 0 200 280">
+    <Fragment set:html={floor} />
+    <rect x="76" y="14" width="48" height="44" rx="3" fill="url(#gz-gold)"/>
+    <rect x="76" y="48" width="48" height="1.500" fill="#000" opacity=".3"/>
+    <rect x="86" y="58" width="28" height="17" fill="url(#gz-glass)" stroke="#000" stroke-opacity=".2"/>
+    <rect x="38" y="74" width="124" height="184" rx="12" fill="url(#gz-glass)" stroke="#000" stroke-opacity=".22" stroke-width="1.200"/>
+    <Fragment set:html={liquid('<rect x="47" y="100" width="106" height="149" rx="6"/>')} />
+    <rect x="47" y="100" width="106" height="2.500" rx="1.200" fill="#fff" opacity=".4"/>
+    <rect x="52" y="84" width="4.500" height="160" rx="2.200" fill="#fff" opacity=".24"/>
+    <rect x="145" y="90" width="2" height="150" rx="1" fill="#fff" opacity=".1"/>
+    <Fragment set:html={label} />
+  </symbol>
+
+  <symbol id="gz-b-tall" viewBox="0 0 200 280">
+    <Fragment set:html={floor.replace('rx="78"', 'rx="58"')} />
+    <rect x="84" y="4" width="32" height="50" rx="2" fill="url(#gz-gold)"/>
+    <rect x="79" y="54" width="42" height="7" rx="1" fill="url(#gz-gold)"/>
+    <rect x="79" y="60" width="42" height="1.200" fill="#000" opacity=".35"/>
+    <rect x="56" y="61" width="88" height="198" rx="7" fill="url(#gz-glass)" stroke="#000" stroke-opacity=".22" stroke-width="1.200"/>
+    <Fragment set:html={liquid('<rect x="63" y="88" width="74" height="163" rx="3"/>')} />
+    <rect x="63" y="88" width="74" height="2.500" rx="1.200" fill="#fff" opacity=".4"/>
+    <rect x="67" y="70" width="4" height="176" rx="2" fill="#fff" opacity=".26"/>
+    <rect x="131" y="76" width="1.800" height="166" rx=".9" fill="#fff" opacity=".1"/>
+    <Fragment set:html={label} />
+  </symbol>
+
+  <symbol id="gz-b-round" viewBox="0 0 200 280">
+    <Fragment set:html={floor} />
+    <rect x="82" y="16" width="36" height="34" rx="9" fill="url(#gz-gold)"/>
+    <rect x="86" y="50" width="28" height="6" fill="url(#gz-gold)"/>
+    <rect x="89" y="56" width="22" height="34" fill="url(#gz-glass)" stroke="#000" stroke-opacity=".2"/>
+    <circle cx="100" cy="174" r="85" fill="url(#gz-glass)" stroke="#000" stroke-opacity=".22" stroke-width="1.200"/>
+    <Fragment set:html={liquid('<path d="M47.200 122A76 76 0 1 0 152.800 122Z"/>')} />
+    <path d="M48 122h104" stroke="#fff" stroke-width="2.200" opacity=".38" stroke-linecap="round"/>
+    <path d="M38 150a70 70 0 0 0 4 62" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".22"/>
+    <Fragment set:html={label} />
+  </symbol>
+
+  <symbol id="gz-b-square" viewBox="0 0 200 280">
+    <Fragment set:html={floor.replace('rx="78"', 'rx="86"')} />
+    <rect x="68" y="30" width="64" height="38" rx="2" fill="url(#gz-gold)"/>
+    <rect x="68" y="60" width="64" height="1.500" fill="#000" opacity=".3"/>
+    <rect x="84" y="68" width="32" height="15" fill="url(#gz-glass)" stroke="#000" stroke-opacity=".2"/>
+    <rect x="29" y="82" width="142" height="176" rx="5" fill="url(#gz-glass)" stroke="#000" stroke-opacity=".22" stroke-width="1.200"/>
+    <Fragment set:html={liquid('<rect x="40" y="106" width="120" height="128" rx="2"/>')} />
+    <rect x="40" y="106" width="120" height="2.500" rx="1.200" fill="#fff" opacity=".4"/>
+    <rect x="34" y="92" width="4.500" height="158" rx="2.200" fill="#fff" opacity=".24"/>
+    <rect x="40" y="240" width="120" height="1" fill="#fff" opacity=".18"/>
+    <Fragment set:html={label} />
+  </symbol>
+</svg>

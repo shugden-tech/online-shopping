@@ -1,0 +1,34 @@
+/* Motion layer: blur-in reveals, banner entrance, podium rise, card hover.
+   Everything here is off under prefers-reduced-motion (see global.css and the guards below). */
+
+/* ---------- banner: blur-in on first paint ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .hb { animation: mo-blur-in 1s var(--ease-out) both; }
+  @keyframes mo-blur-in {
+    from { opacity: 0; filter: blur(14px); transform: scale(1.015); }
+    to { opacity: 1; filter: none; transform: none; }
+  }
+}
+
+/* ---------- Top 3: podium blocks rise one after another, rings pop ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .top3 .block { transform-origin: bottom; }
+  .top3 [data-reveal]:not(.is-in) .block { transform: scaleY(.15); opacity: 0; }
+  .top3 [data-reveal]:not(.is-in) .ring { transform: scale(.4); opacity: 0; }
+  .top3 [data-reveal].is-in .block { animation: mo-rise .9s var(--ease-out) both; }
+  .top3 [data-reveal].is-in .ring { animation: mo-pop .7s var(--ease-out) both; }
+  .top3 .podium__row > *:nth-child(1) .block, .top3 .podium__row > *:nth-child(1) .ring { animation-delay: .25s; }
+  .top3 .podium__row > *:nth-child(2) .block, .top3 .podium__row > *:nth-child(2) .ring { animation-delay: .05s; }
+  .top3 .podium__row > *:nth-child(3) .block, .top3 .podium__row > *:nth-child(3) .ring { animation-delay: .45s; }
+  @keyframes mo-rise { from { transform: scaleY(.15); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes mo-pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.08); opacity: 1; } 100% { transform: none; } }
+}
+
+/* ---------- cards: soft lift on hover ---------- */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .reviews__grid > *, .coll__item, .gtile {
+    transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out), opacity .7s var(--ease-sine) var(--delay, 0ms), filter .7s var(--ease-sine) var(--delay, 0ms);
+  }
+  .reviews__grid > *:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(88, 20, 24, .12); }
+  .gtile:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0, 0, 0, .16); }
+}

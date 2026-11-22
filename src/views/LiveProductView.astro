@@ -1,0 +1,121 @@
+---
+// On-demand product page (0004) for products that exist only in D1 (created in /admin/, not in the built
+// catalog). Rendered from the database on each request, cached 60 s at the edge. Built products redirect to
+// their static page. Prices, stock and the buy button come from the live store state, as on every page.
+import Base from "../layouts/Base.astro";
+import BottleArt from "../components/BottleArt.astro";
+import AddToCart from "../islands/AddToCart.tsx";
+import { getDict, route, productPath, type Locale } from "../i18n";
+import { FAMILIES } from "../lib/taxonomy";
+import type { AdminProduct } from "../lib/contracts";
+import "../styles/product.css";
+
+interface Props { locale: Locale; product: AdminProduct }
+const { locale, product: p } = Astro.props;
+const tr = getDict(locale);
+const family = (FAMILIES as readonly string[]).includes(p.family ?? "") ? (p.family as (typeof FAMILIES)[number]) : null;
+const sizes = p.skus.filter((s) => s.active).sort((a, b) => a.ml - b.ml);
+const photos = [p.imageFront, p.imageBack].filter((x, i, a): x is string => Boolean(x) && a.indexOf(x) === i);
+const base = {
+  slug: p.id, name: p.name, brand: p.brand, family: family ?? "woody", shape: "classic",
+  ...(p.imageFront ? { img: p.imageFront } : {}),
+};
+const description = (locale === "mn" ? p.descriptionMn : p.descriptionEn) ?? p.descriptionMn ?? p.descriptionEn ?? "";
+const notes = [...p.notes.top, ...p.notes.heart, ...p.notes.base];
+const title = `${p.name} — ${p.brand}`;
+const genderLabel = p.gender ? (tr.genders as Record<string, string>)[p.gender] : null;
+---
+<Base locale={locale} title={title} description={description.slice(0, 160) || title} current="shop" ogType="product">
+  <article class="pdp" style={family ? `--tint:var(--fam-${family})` : undefined}>
+    <div class="wrap pdp__top page-top">
+      {photos.length ? (
+        <div class="pdp__stage pdp__stage--photos" data-gallery data-gallery-pid={p.id}>
+          <div class="pdp__slides" data-slides tabindex="0" aria-label={`${p.brand} ${p.name}`}>
+            {photos.map((src, i) => (
+              <figure class="pdp__slide" data-slide={i}>
+                <img src={src} alt={`${p.brand} ${p.name} — ${i === 0 ? tr.common.photoFront : tr.common.photoBack}`} width="1200" height="1200"
+                  decoding="async" loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined} />
+              </figure>
+            ))}
+          </div>
+          {photos.length > 1 && (
+            <div class="pdp__thumbs" role="group" aria-label={tr.common.photoFront + " / " + tr.common.photoBack}>
+              {photos.map((src, i) => (
+                <button type="button" class="pdp__thumb" data-thumb={i} aria-pressed={i === 0 ? "true" : "false"} aria-label={i === 0 ? tr.common.photoFront : tr.common.photoBack}>
+                  <img src={src} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div class="pdp__stage" data-gallery-pid={p.id}>
+          <div class="pdp__glow" aria-hidden="true"></div>
+          <div class="pdp__float">
+            <BottleArt shape="classic" family={family ?? "woody"} initial={p.brand.trim().charAt(0).toUpperCase()} label={`${p.brand} ${p.name}`} eager />
+          </div>
+        </div>
+      )}
+
+      <div class="pdp__info">
+        <nav class="pdp__crumbs" aria-label="Breadcrumb">
+          <a href={route("shop", locale)}>{tr.product.back}</a>
+          {family && <><span aria-hidden="true">/</span><a href={`${route("shop", locale)}?family=${family}`}>{tr.families[family]}</a></>}
+        </nav>
+        <p class="t-title t-gold pdp__brand">{p.brand}</p>
+        <h1 class="pdp__name">{p.name}</h1>
+        <ul class="pdp__meta">
+          {p.concentration && <li>{p.concentration}</li>}
+          {genderLabel && <li>{genderLabel}</li>}
+          {family && <li><span class="chip chip--fam">{tr.families[family]}</span></li>}
+        </ul>
+        {description && <p class="t-body pdp__desc">{description}</p>}
+
+        {sizes.length > 0 ? (
+          <AddToCart
+            client:load
+            locale={locale}
+            pid={p.id}
+            base={base}
+            sizes={sizes.map((s) => ({ ml: s.ml, ...(s.kind === "full" ? { full: true } : {}) }))}
+            labels={{
+              chooseSize: tr.product.chooseSize, ml: tr.common.ml, qty: tr.common.qty, add: tr.common.add,
+              soldOut: tr.common.soldOut, allSoldOut: tr.product.allSoldOut, fullBottle: tr.store.fullBottle,
+              decrease: tr.product.decrease, increase: tr.product.increase, total: tr.product.total,
+              ...tr.live,
+            }}
+          />
+        ) : (
+          <p class="t-small t-dim" data-pid={p.id}>{tr.live.soon}</p>
+        )}
+        <p class="pdp__note t-small t-dim">{tr.product.decantNote} {tr.product.deliveryHint}</p>
+
+        {notes.length > 0 && (
+          <dl class="pdp__specs">
+            {(["top", "heart", "base"] as const).filter((k) => p.notes[k].length).map((k) => (
+              <div>
+                <dt>{tr.product[k]}</dt>
+                <dd>{p.notes[k].join(", ")}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+      </div>
+    </div>
+  </article>
+  <link rel="canonical" href={new URL(productPath(locale, p.id).replace(/\/([^/]+)\/?$/, "/p/$1"), Astro.site ?? "https://genzst.mn").href} slot="head" />
+</Base>
+
+<script>
+  // thumbnails scroll the photo strip (same behaviour as the built product page)
+  for (const g of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
+    const strip = g.querySelector<HTMLElement>("[data-slides]");
+    g.addEventListener("click", (e) => {
+      const t = (e.target as Element).closest<HTMLButtonElement>("[data-thumb]");
+      const s = t && g.querySelector<HTMLElement>(`[data-slide="${t.dataset.thumb}"]`);
+      if (!t || !s || !strip) return;
+      strip.scrollTo({ left: s.offsetLeft - strip.offsetLeft, behavior: "smooth" });
+      g.querySelectorAll("[data-thumb]").forEach((b) => b.setAttribute("aria-pressed", String(b === t)));
+    });
+  }
+</script>

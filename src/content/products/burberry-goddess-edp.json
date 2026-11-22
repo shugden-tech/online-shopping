@@ -1,0 +1,60 @@
+{
+  "slug": "burberry-goddess-edp",
+  "brand": "Burberry",
+  "name": "Goddess",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "vanilla",
+      "lavender",
+      "cacao",
+      "ginger"
+    ],
+    "heart": [
+      "vanilla"
+    ],
+    "base": [
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Burberry Goddess: Эмэгтэйчүүдэд зориулсан гурман үнэр (EDP). Эхний ноот: ваниль, лаванда, какао, цагаан гаа; зүрхний ноот: ваниль; суурь ноот: ваниль.",
+    "en": "Burberry Goddess is a gourmand fragrance in EDP concentration. Its listed notes include vanilla, lavender, cacao, ginger, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-050-front.webp"
+  }
+}

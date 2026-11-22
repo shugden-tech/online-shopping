@@ -1,0 +1,64 @@
+{
+  "slug": "afnan-souvenir-floral-bouquet-edp",
+  "brand": "Afnan",
+  "name": "Souvenir Floral Bouquet",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "lychee",
+      "rhubarb",
+      "bergamot"
+    ],
+    "heart": [
+      "rose",
+      "lily-of-the-valley",
+      "peony",
+      "vanilla"
+    ],
+    "base": [
+      "musk",
+      "cashmere-wood",
+      "amber"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Souvenir Floral Bouquet: Эмэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: личи, гишүүнэ, бергамот; зүрхний ноот: сарнай, хонхон цэцэг, цээнэ цэцэг, ваниль; суурь ноот: заар, кашмир мод, хув.",
+    "en": "Floral feminine perfume."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/f2804137-6a2e-46a0-84b5-7a77979080b1_9dd77bc4-92d2-4a28-93fd-f872843d9f2c.jpg?v=1683064958",
+    "back": "https://labelleperfumes.com/cdn/shop/files/AFNAN-SOUVENIR-FLORAL-BOUQUET-1_1080x.webp"
+  }
+}

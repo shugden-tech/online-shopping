@@ -1,0 +1,66 @@
+{
+  "slug": "byredo-bal-dafrique-edp",
+  "brand": "Byredo",
+  "name": "Bal d'Afrique",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "buchu",
+      "african-marigold",
+      "bergamot",
+      "blackcurrant"
+    ],
+    "heart": [
+      "cyclamen",
+      "jasmine",
+      "violet"
+    ],
+    "base": [
+      "tonka",
+      "cedar",
+      "musk",
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Byredo Bal d'Afrique: Unisex хув үнэр (EDP). Эхний ноот: бучу, африк хилэн цэцэг, бергамот, үхрийн нүд; зүрхний ноот: цикламен, жасмин, нил цэцэг; суурь ноот: тонка шош, хуш мод, заар, ветивер.",
+    "en": "Byredo Bal d'Afrique is a amber fragrance in EDP concentration. Its listed notes include buchu, african marigold, bergamot, blackcurrant, cyclamen."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 79500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 125500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-101-front.webp",
+    "back": "/product-photos/curated-101-back.webp"
+  }
+}

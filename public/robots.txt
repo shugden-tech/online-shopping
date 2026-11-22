@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /zahialga/
+Disallow: /en/checkout/
+
+Sitemap: https://genzst.mn/sitemap-index.xml

@@ -1,0 +1,17 @@
+[
+{"id":"abercrombie-and-fitch-authentic-man-edt","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"medium","source":"superdrug.com / lookfantastic.com","note":"50 and 100 confirmed; 30 seen on lookfantastic for Authentic for Men line"},
+{"id":"acqua-di-parma-blu-mediterraneo-chinotto-di-liguria-edt","sizesMl":[75,150],"flagshipMl":75,"confidence":"high","source":"selfridges.com / libertylondon.com","note":"30 ml discontinued per Lyko; minis exist"},
+{"id":"acqua-di-parma-colonia-mirra-cologne","sizesMl":[100,180],"flagshipMl":100,"confidence":"medium","source":"selfridges.com","note":"Eau de Cologne Concentree, Selfridges-exclusive style listing; 180 widely listed"},
+{"id":"acqua-di-parma-osmanthus-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search failed (rate limit/budget); not verified"},
+{"id":"afnan-9pm-elixir-intense-parfum","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"maxaroma.com / fragrancenet.com","note":"Only 100 ml found"},
+{"id":"afnan-supremacy-in-oud-extrait","sizesMl":[100],"flagshipMl":100,"confidence":"low","source":"","note":"Search failed; estimate from Afnan Supremacy line typically 100 ml; not verified"},
+{"id":"akro-night-edp","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search failed; unknown"},
+{"id":"azzaro-wanted-by-night-edp","sizesMl":[50,100],"flagshipMl":100,"confidence":"low","source":"","note":"Search failed; estimate from general knowledge, not verified"},
+{"id":"creed-aventus-edp","sizesMl":[50,100,250,500],"flagshipMl":100,"confidence":"high","source":"printemps.com / harveynichols.com","note":"250 and 500 are flacons without spray; 120 ml also exists but not seen in search"},
+{"id":"hermes-terre-dhermes-edt","sizesMl":[50,100,200],"flagshipMl":100,"confidence":"high","source":"selfridges.com / printemps.com","note":"Also 12.5 ml travel; 175 not found"},
+{"id":"lattafa-eclaire-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"perfumania.com / notino.co.uk","note":"12 ml only in gift set"},
+{"id":"mugler-alien-goddess-edp","sizesMl":[30,60,90],"flagshipMl":60,"confidence":"high","source":"lookfantastic.com","note":"Refillable 60 ml also common; 90 ml not stocked everywhere"},
+{"id":"ralph-lauren-polo-blue-edt","sizesMl":[40,75,125,200],"flagshipMl":125,"confidence":"medium","source":"macys.com / bloomingdales.com","note":"Oz sizes converted (1.4, 2.5, 4.2, 6.7 oz); 125 is most common"},
+{"id":"victorias-secret-bombshell-edp","sizesMl":[50,100],"flagshipMl":50,"confidence":"low","source":"","note":"Search budget exhausted; estimate from general knowledge (1.7 / 3.4 oz), not verified"},
+{"id":"lagerfeld-classic-edt","sizesMl":[],"flagshipMl":null,"confidence":"low","source":"","note":"Search budget exhausted; unknown"}
+]

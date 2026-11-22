@@ -1,0 +1,62 @@
+{
+  "slug": "rabanne-invictus-victory-elixir-parfum",
+  "brand": "Rabanne",
+  "name": "Invictus Victory Elixir",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "lavender",
+      "cardamom",
+      "pepper"
+    ],
+    "heart": [
+      "incense",
+      "patchouli"
+    ],
+    "base": [
+      "vanilla",
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Rabanne Invictus Victory Elixir: Эрэгтэйчүүдэд зориулсан гурман үнэр (Parfum). Эхний ноот: лаванда, кардамон, хар чинжүү; зүрхний ноот: хүж, пачули; суурь ноот: ваниль, тонка шош.",
+    "en": "Rabanne Invictus Victory Elixir is a gourmand fragrance in Parfum concentration. Its listed notes include lavender, cardamom, black pepper, incense, patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-029-front.webp",
+    "back": "/product-photos/curated-029-back.webp"
+  }
+}

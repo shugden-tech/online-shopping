@@ -1,0 +1,49 @@
+{
+  "slug": "louis-vuitton-afternoon-swim-edp",
+  "brand": "Louis Vuitton",
+  "name": "Afternoon Swim",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "fresh",
+  "notes": {
+    "top": [
+      "orange",
+      "bergamot",
+      "mandarin"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Louis Vuitton Afternoon Swim: Unisex сэрүүн үнэр (EDP). Эхний ноот: жүрж, бергамот, мандарин.",
+    "en": "Louis Vuitton Afternoon Swim is a fresh fragrance in EDP concentration. Its listed notes include orange, bergamot, mandarin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": false,
+      "stock": 0
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-082-front.webp"
+  }
+}

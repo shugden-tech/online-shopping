@@ -1,0 +1,65 @@
+{
+  "slug": "tom-ford-ombre-leather-edp",
+  "brand": "Tom Ford",
+  "name": "Ombre Leather",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "pepper",
+      "leather",
+      "jasmine"
+    ],
+    "heart": [
+      "cardamom",
+      "pepper",
+      "leather",
+      "jasmine"
+    ],
+    "base": [
+      "amber",
+      "moss",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Tom Ford Ombre Leather: Unisex цэцэгсийн үнэр (EDP). Эхний ноот: хар чинжүү, арьс, жасмин; зүрхний ноот: кардамон, хар чинжүү, арьс, жасмин; суурь ноот: хув, хөвд, пачули.",
+    "en": "Tom Ford Ombre Leather is a floral fragrance in EDP concentration. Its listed notes include black pepper, leather, jasmine, cardamom, black pepper."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-087-front.webp",
+    "back": "/product-photos/curated-087-back.webp"
+  }
+}

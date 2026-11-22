@@ -1,0 +1,59 @@
+{
+  "slug": "afnan-9pm-elixir-intense-parfum",
+  "brand": "Afnan",
+  "name": "9PM Elixir Intense",
+  "concentration": "Parfum",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "cardamom",
+      "nutmeg",
+      "elemi",
+      "pimento",
+      "leather",
+      "lavender"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Afnan 9PM Elixir Intense: Unisex хув үнэр (Parfum). Эхний ноот: кардамон, задийн самар, элеми давирхай, пимент, арьс, лаванда.",
+    "en": "9PM Elixir by Afnan is a captivating Oriental Spicy fragrance designed for both women and men. This fresh addition to the fragrance world was introduced in 2025, crafted by the talented nose of Imran Fazlani. The scent opens with enticing top notes of Cardamom, Nutmeg, and Elemi, leading into a heart that features Pimento, Leather, and Lavender. The fragrance concludes with a rich base of Vanilla, Patchouli, Labdanum, and Rock Rose."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/1357864.jpg?v=1760634248",
+    "back": "https://www.mystore.in/s/62ea2c599d1398fa16dbae0a/originals/g/69e0b3524400e80d5db5d21e/afnan-9pm-elixir-1-.jpeg"
+  }
+}

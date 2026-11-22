@@ -1,0 +1,64 @@
+{
+  "slug": "bvlgari-man-in-black-edp",
+  "brand": "Bvlgari",
+  "name": "Man In Black",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "pepper",
+      "rum",
+      "tobacco"
+    ],
+    "heart": [
+      "leather",
+      "iris",
+      "tuberose"
+    ],
+    "base": [
+      "tonka",
+      "guaiac-wood",
+      "benzoin"
+    ]
+  },
+  "description": {
+    "mn": "Bvlgari Man In Black: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDP). Эхний ноот: хар чинжүү, ром, тамхины навч; зүрхний ноот: арьс, цахилдаг, тубероз; суурь ноот: тонка шош, гваяк мод, бензойн.",
+    "en": "Bvlgari Man In Black is a woody fragrance in EDP concentration. Its listed notes include black pepper, rum, tobacco leaf, leather, iris."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-102-front.webp",
+    "back": "/product-photos/curated-102-back.webp"
+  }
+}

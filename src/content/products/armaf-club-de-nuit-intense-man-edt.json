@@ -1,0 +1,72 @@
+{
+  "slug": "armaf-club-de-nuit-intense-man-edt",
+  "brand": "Armaf",
+  "name": "Club de Nuit Intense Man",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "lemon",
+      "pineapple",
+      "bergamot",
+      "blackcurrant",
+      "apple"
+    ],
+    "heart": [
+      "birch",
+      "jasmine",
+      "rose"
+    ],
+    "base": [
+      "ambergris",
+      "musk",
+      "patchouli",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Armaf Club de Nuit Intense Man: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDT). Эхний ноот: нимбэг, хан боргоцой, бергамот, үхрийн нүд, алим; зүрхний ноот: хус мод, жасмин, сарнай; суурь ноот: амбра, заар, пачули, ваниль.",
+    "en": "Armaf Club de Nuit Intense Man is a citrus fragrance in EDT concentration. Its listed notes include lemon, pineapple, bergamot, blackcurrant, apple."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 34500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 52000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 105,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/store/armaf-club-de-nuit-intense-man-edt.webp",
+    "back": "/product-photos/store/armaf-club-de-nuit-intense-man-edt-back.webp"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "genzst-image-importer",
+  "main": "index.mjs",
+  "compatibility_date": "2026-11-16",
+  "workers_dev": true,
+  "vars": {
+    "PUBLIC_IMAGE_BASE_URL": "https://pub-83d529150bc84a489ddcb74b42624830.r2.dev"
+  },
+  "r2_buckets": [
+    { "binding": "IMAGES", "bucket_name": "genzst-images", "preview_bucket_name": "genzst-images" }
+  ]
+}

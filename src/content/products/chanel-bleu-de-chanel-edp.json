@@ -1,0 +1,73 @@
+{
+  "slug": "chanel-bleu-de-chanel-edp",
+  "brand": "Chanel",
+  "name": "Bleu de Chanel",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "grapefruit",
+      "lemon",
+      "mint",
+      "pink-pepper",
+      "bergamot",
+      "aldehydes",
+      "coriander"
+    ],
+    "heart": [
+      "ginger",
+      "nutmeg",
+      "jasmine",
+      "melon"
+    ],
+    "base": [
+      "incense",
+      "amber",
+      "cedar",
+      "sandalwood",
+      "patchouli",
+      "amberwood",
+      "labdanum"
+    ]
+  },
+  "description": {
+    "mn": "Chanel Bleu de Chanel: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDP). Эхний ноот: бэрсүүт жүрж, нимбэг, гаа, ягаан чинжүү, бергамот, альдегид, кориандр; зүрхний ноот: цагаан гаа, задийн самар, жасмин, амтат гуа; суурь ноот: хүж, хув, хуш мод, зандан мод, пачули, хув мод, лабданум.",
+    "en": "Chanel Bleu de Chanel is a citrus fragrance in EDP concentration. Its listed notes include grapefruit, lemon, mint, pink pepper, bergamot."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-009-front.webp"
+  },
+  "featured": true
+}

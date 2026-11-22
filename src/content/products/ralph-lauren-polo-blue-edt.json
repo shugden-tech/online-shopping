@@ -1,0 +1,64 @@
+{
+  "slug": "ralph-lauren-polo-blue-edt",
+  "brand": "Ralph Lauren",
+  "name": "Polo Blue",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "cucumber",
+      "melon",
+      "mandarin"
+    ],
+    "heart": [
+      "basil",
+      "sage",
+      "geranium"
+    ],
+    "base": [
+      "suede",
+      "woods",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Ralph Lauren Polo Blue: Эрэгтэйчүүдэд зориулсан өвслөг үнэр (EDT). Эхний ноот: өргөст хэмх, амтат гуа, мандарин; зүрхний ноот: базилик, мэргэн өвс, герань; суурь ноот: илгэ, модлог ноот, заар.",
+    "en": "Ralph Lauren Polo Blue is a aromatic fragrance in EDT concentration. Its listed notes include cucumber, melon, mandarin, basil, sage."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 56000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 125,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-107-front.webp",
+    "back": "/product-photos/curated-107-back.webp"
+  }
+}

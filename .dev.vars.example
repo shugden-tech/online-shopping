@@ -1,0 +1,33 @@
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+# DEV ONLY. Production: `npx wrangler secret put ADMIN_TOKEN` with a long random value (e.g. `openssl rand -hex 32`).
+ADMIN_TOKEN=dev-only-admin-token-not-for-production
+# DEV ONLY staff token (optional role with fewer permissions).
+STAFF_TOKEN=dev-only-staff-token-not-for-production
+# QPay: leave empty to disable QPay checkout. Tests point QPAY_BASE_URL at a local mock server.
+QPAY_USERNAME=
+QPAY_PASSWORD=
+QPAY_INVOICE_CODE=
+QPAY_CALLBACK_SECRET=dev-only-qpay-callback-secret-0123456789
+# Delivery company API (empty = manual delivery only).
+DELIVERY_BASE_URL=
+DELIVERY_API_KEY=
+DELIVERY_WEBHOOK_SECRET=dev-only-delivery-webhook-secret-0123456789
+# DEV/DEMO ONLY username + password logins for /admin/ (exchanged for the tokens above). Production: unset or use strong values.
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=demo-admin-pass-2026
+STAFF_USERNAME=staff
+STAFF_PASSWORD=demo-staff-pass-2026
+# Customer Google sign-in (optional). Leave GOOGLE_CLIENT_ID empty to turn it off. For scripts/test-accounts.mjs
+# (mock Google on 127.0.0.1:8894) uncomment these; the *_URL overrides only work for requests to localhost.
+# GOOGLE_CLIENT_ID=test-client.apps.googleusercontent.com
+# GOOGLE_CLIENT_SECRET=dev-only-google-client-secret-0123456789
+# GOOGLE_AUTH_URL=http://127.0.0.1:8894/auth
+# GOOGLE_TOKEN_URL=http://127.0.0.1:8894/token
+# GOOGLE_JWKS_URL=http://127.0.0.1:8894/jwks
+# Wire (0008): leave empty to disable Wire. Tests point WIRE_BASE_URL at scripts/mock-wire.mjs (port 8896); these two
+# values are fakes the mock accepts, NOT real keys. Production: `npx wrangler secret put WIRE_API_KEY` / `WIRE_WEBHOOK_SECRET`.
+# WIRE_BASE_URL=http://127.0.0.1:8896
+# WIRE_API_KEY=sk_live_mock_0123456789abcdef
+# WIRE_WEBHOOK_SECRET=whsec_mock_0123456789abcdef

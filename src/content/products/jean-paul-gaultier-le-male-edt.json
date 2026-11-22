@@ -1,0 +1,70 @@
+{
+  "slug": "jean-paul-gaultier-le-male-edt",
+  "brand": "Jean Paul Gaultier",
+  "name": "Le Male",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "lavender",
+      "mint",
+      "cardamom",
+      "bergamot",
+      "artemisia"
+    ],
+    "heart": [
+      "cinnamon",
+      "orange-blossom",
+      "caraway"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "amber",
+      "sandalwood",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Jean Paul Gaultier Le Male Eau de Toilette нь алдарт үнэртний мастер Francis Kurkdjian-ий бүтээсэн, эрчүүдийн сонгодог ба домогт үнэртэн юм. Далайн sailor болон эрэгтэй хүний биеийн хэлбэртэй саваараа алдартай.",
+    "en": "Jean Paul Gaultier Le Male is an aromatic EDT for men. Notes include lavender, mint, cardamom, bergamot, artemisia, cinnamon."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 125,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "office"
+  ],
+  "photos": {
+    "front": "/product-photos/store/jean-paul-gaultier-le-male-edt.webp",
+    "back": "/product-photos/store/jean-paul-gaultier-le-male-edt-back.webp"
+  }
+}

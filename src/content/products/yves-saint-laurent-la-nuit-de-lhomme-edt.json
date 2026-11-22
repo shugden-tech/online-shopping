@@ -1,0 +1,55 @@
+{
+  "slug": "yves-saint-laurent-la-nuit-de-lhomme-edt",
+  "brand": "Yves Saint Laurent",
+  "name": "La Nuit de L'Homme",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "cardamom"
+    ],
+    "heart": [
+      "lavender",
+      "cedar",
+      "bergamot"
+    ],
+    "base": [
+      "vetiver",
+      "caraway"
+    ]
+  },
+  "description": {
+    "mn": "Yves Saint Laurent La Nuit de L'Homme: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: кардамон; зүрхний ноот: лаванда, хуш мод, бергамот; суурь ноот: ветивер, гоньд.",
+    "en": "Yves Saint Laurent La Nuit de L'Homme is a woody fragrance in EDT concentration. Its listed notes include cardamom, lavender, cedar, bergamot, vetiver."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-014-front.webp",
+    "back": "/product-photos/curated-014-back.webp"
+  }
+}

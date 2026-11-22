@@ -1,0 +1,62 @@
+{
+  "slug": "jean-paul-gaultier-le-male-le-parfum-edp",
+  "brand": "Jean Paul Gaultier",
+  "name": "Le Male Le Parfum",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "cardamom"
+    ],
+    "heart": [
+      "lavender",
+      "iris"
+    ],
+    "base": [
+      "vanilla",
+      "oriental-notes",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Jean Paul Gaultier Le Male Le Parfum: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: кардамон; зүрхний ноот: лаванда, цахилдаг; суурь ноот: ваниль, дорно дахины ноот, модлог ноот.",
+    "en": "Jean Paul Gaultier Le Male Le Parfum is a amber fragrance in EDP concentration. Its listed notes include cardamom, lavender, iris, vanilla, oriental notes."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 51000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 73000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-002-front.webp",
+    "back": "/product-photos/curated-002-back.webp"
+  }
+}

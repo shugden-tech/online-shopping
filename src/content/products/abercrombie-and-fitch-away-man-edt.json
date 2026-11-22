@@ -1,0 +1,60 @@
+{
+  "slug": "abercrombie-and-fitch-away-man-edt",
+  "brand": "Abercrombie & Fitch",
+  "name": "Away Man",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "geranium",
+      "ginger",
+      "pepper",
+      "vetiver",
+      "woods",
+      "sandalwood"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch Away Man: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: герань, цагаан гаа, хар чинжүү, ветивер, модлог ноот, зандан мод.",
+    "en": "The new fragrance for men, Away Man by Abercrombie & Fitch, was released in 2021 and features an invigorating Woody Aromatic scent. Atop this base are Violet, Pineapple and Grapefruit top notes, and the depths are filled with Geranium, Ginger, Pepper, Vetiver, Woody Notes and Sandalwood middle and base notes."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/5c937cf3-4f45-4725-b5d5-28e1667eea4f.jpg?v=1692396807",
+    "back": "https://samawa.ae/cdn/shop/files/Abercrombie_FitchAwayMan_M_Edt100Ml_1200x1200.jpg?v=1692371876"
+  }
+}

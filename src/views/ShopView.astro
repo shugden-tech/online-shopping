@@ -1,0 +1,112 @@
+---
+import { getImage } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import ProductCard from "../components/ProductCard.astro";
+import ShopFilters from "../islands/ShopFilters.tsx";
+import { getDict, type Locale } from "../i18n";
+import { FAMILIES, GENDERS, SEASONS, OCCASIONS } from "../lib/taxonomy";
+import { NOTES, NOTE_GROUPS, allNotes, getProducts, noteGroups } from "../lib/products";
+import { noteImages } from "../lib/images";
+import { brandId, normalize, type ShopItem } from "../lib/filter";
+import "../styles/shop.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+const products = await getProducts();
+
+// default order = "featured" sort, so the page is already right before the island hydrates
+const ordered = [...products].sort(
+  (a, b) => Number(b.featured ?? false) - Number(a.featured ?? false) || Number(b.isNew ?? false) - Number(a.isNew ?? false) || a.name.localeCompare(b.name),
+);
+
+const data: ShopItem[] = products.map((p) => ({
+  s: p.slug,
+  nm: p.name,
+  h: normalize(
+    [
+      p.brand, p.name, p.concentration,
+      getDict("mn").families[p.family], getDict("en").families[p.family],
+      ...allNotes(p).flatMap((n) => [NOTES[n]?.mn ?? "", NOTES[n]?.en ?? ""]),
+      ...noteGroups(p).flatMap((n) => [NOTES[n]?.mn ?? "", NOTES[n]?.en ?? ""]),
+    ].join(" "),
+  ),
+  f: p.family,
+  b: brandId(p.brand),
+  g: p.gender,
+  n: noteGroups(p),
+  // sizes and prices come from the live store state (ShopFilters listens to `gz:live`); none are baked in
+  z: p.sizes.map((s) => s.ml),
+  se: p.season,
+  o: p.occasion,
+  p: 0,
+  ft: p.featured ? 1 : 0,
+  nw: p.isNew ? 1 : 0,
+}));
+
+const usedFamilies = FAMILIES.filter((f) => products.some((p) => p.family === f));
+// brands used in the catalog, most products first (then A–Z)
+const brandCounts = new Map<string, { label: string; count: number }>();
+for (const p of products) {
+  const id = brandId(p.brand);
+  const e = brandCounts.get(id) ?? { label: p.brand, count: 0 };
+  e.count += 1;
+  brandCounts.set(id, e);
+}
+const brandOptions = [...brandCounts]
+  .map(([id, e]) => ({ id, label: e.label, count: e.count }))
+  .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+const usedSizes = [...new Set(products.flatMap((p) => p.sizes.map((s) => s.ml)))].sort((a, b) => a - b);
+const noteOptions = await Promise.all(
+  NOTE_GROUPS.filter((g) => data.some((d) => d.n.includes(g))).map(async (g) => ({
+    id: g as string,
+    label: NOTES[g]![locale],
+    img: (await getImage({ src: noteImages[g]!, width: 48, height: 48, fit: "cover", format: "webp" })).src,
+  })),
+);
+
+const options = {
+  family: usedFamilies.map((id) => ({ id, label: tr.families[id] })),
+  brand: brandOptions,
+  gender: GENDERS.map((id) => ({ id, label: tr.genders[id] })),
+  notes: noteOptions,
+  size: usedSizes,
+  season: SEASONS.map((id) => ({ id, label: tr.seasons[id] })),
+  occasion: OCCASIONS.map((id) => ({ id, label: tr.occasions[id] })),
+};
+---
+<Base locale={locale} title={tr.shop.title} description={tr.shop.metaDescription} current="shop">
+  <section class="wrap page-top shop">
+    <header class="shop__head">
+      <p class="t-title t-gold">{tr.shop.sub}</p>
+      <h1 class="t-head">{tr.shop.title}</h1>
+    </header>
+
+    <div class="shop__layout">
+      <ShopFilters
+        client:load
+        tr={tr.shop}
+        closeLabel={tr.nav.close}
+        ml={tr.common.ml}
+        total={products.length}
+        options={options}
+      />
+
+      <div class="shop__main">
+        <ul class="shop__grid" id="shop-grid">
+          {ordered.map((p, i) => (
+            <li class="shop__cell" data-cell={p.slug}>
+              <ProductCard product={p} locale={locale} level={2} eager={i < 4} />
+            </li>
+          ))}
+        </ul>
+        <div class="shop__empty" id="shop-empty" hidden>
+          <p class="t-h2">{tr.shop.empty}</p>
+          <p class="t-dim">{tr.shop.emptySub}</p>
+          <button type="button" class="btn" data-clear-filters>{tr.shop.clear}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="application/json" id="shop-data" set:html={JSON.stringify(data).replace(/</g, "\\u003c")} />
+</Base>

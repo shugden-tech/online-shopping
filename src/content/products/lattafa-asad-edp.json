@@ -1,0 +1,65 @@
+{
+  "slug": "lattafa-asad-edp",
+  "brand": "Lattafa",
+  "name": "Asad",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pepper",
+      "tobacco",
+      "pineapple"
+    ],
+    "heart": [
+      "patchouli",
+      "coffee",
+      "iris"
+    ],
+    "base": [
+      "vanilla",
+      "amber",
+      "woods",
+      "benzoin",
+      "labdanum"
+    ]
+  },
+  "description": {
+    "mn": "Lattafa Asad: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: хар чинжүү, тамхины навч, хан боргоцой; зүрхний ноот: пачули, кофе, цахилдаг; суурь ноот: ваниль, хув, модлог ноот, бензойн, лабданум.",
+    "en": "Lattafa Asad is a amber fragrance in EDP concentration. Its listed notes include black pepper, tobacco leaf, pineapple, patchouli, coffee."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-093-front.webp"
+  }
+}

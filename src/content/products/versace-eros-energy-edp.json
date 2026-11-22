@@ -1,0 +1,68 @@
+{
+  "slug": "versace-eros-energy-edp",
+  "brand": "Versace",
+  "name": "Eros Energy",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "lemon",
+      "grapefruit",
+      "orange",
+      "bergamot",
+      "mandarin"
+    ],
+    "heart": [
+      "pink-pepper",
+      "amber",
+      "blackcurrant"
+    ],
+    "base": [
+      "musk",
+      "oakmoss",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Versace брэндийн Eros Energy нь эрэгтэй хүмүүст зориулагдсан Анхилуун Цитрус ангилалын сүрчиг юм",
+    "en": "Versace Eros Energy is a citrus EDP for men. Notes include lemon, grapefruit, orange, bergamot, mandarin, pink pepper."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/versace-eros-energy-edp.webp",
+    "back": "/product-photos/store/versace-eros-energy-edp-back.webp"
+  }
+}

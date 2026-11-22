@@ -1,0 +1,45 @@
+{
+  "slug": "acqua-di-parma-colonia-leather-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Leather",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Leather: Эрэгтэйчүүдэд зориулсан модлог үнэр (Cologne).",
+    "en": "Acqua Di Parma presents an original creation born from the unconventional pairing of fresh citrus notes from the iconic Colonia fragrance and the rich and sensual caress of aromatic leather. Colonia Leather Eau de Cologne Concentrée recalls the artistic luxury and traditions of handcrafted leather and accessories. Notes: Sicilian Lemon, Italian Orange, Raspberry, Honeysuckle, Petit Grain, Rose, Leather, Cedarwood, Birchwood, Gaiac Wood, Labdaum. Style: Stylish. Elegant. Masculine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/7f499bf1-7809-43a6-9f9b-3906be63a103_0ae6493f-a203-4d56-8278-882729fd9e01.jpg?v=1683062031",
+    "back": "https://cdn.shopify.com/s/files/1/0259/7733/products/acqua-di-parma-colonia-leather_grande.png?v=1569965025"
+  }
+}

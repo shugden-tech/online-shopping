@@ -1,0 +1,407 @@
+---
+import { Image } from "astro:assets";
+import mark from "../assets/brand/logo-mark.png";
+import wordmark from "../assets/brand/wordmark-block.png";
+import Icon from "./Icon.astro";
+import LangToggle from "./LangToggle.astro";
+import ThemeSwitch from "./ThemeSwitch.astro";
+import settings from "../data/settings.json";
+import { getDict, route, fill, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import { brandId } from "../lib/filter";
+import { getProducts, photosOf, type Product } from "../lib/products";
+import { FAMILIES, SEASONS, OCCASIONS } from "../lib/taxonomy";
+
+interface Props {
+  locale: Locale;
+  alternates: Record<Locale, string>;
+  /** Kept for compatibility with older pages; the light header is never transparent. */
+  overlay?: boolean;
+  current?: string;
+}
+const { locale, alternates, current = "" } = Astro.props;
+const tr = getDict(locale);
+const s = tr.store;
+const shop = route("shop", locale);
+const links = [
+  { key: "shop", href: shop, label: s.all },
+  { key: "women", href: `${shop}?gender=women`, label: tr.genders.women },
+  { key: "men", href: `${shop}?gender=men`, label: tr.genders.men },
+  { key: "unisex", href: `${shop}?gender=unisex`, label: tr.genders.unisex },
+  { key: "new", href: `${shop}?sort=newest`, label: s.newIn, badge: true },
+  { key: "finder", href: route("finder", locale), label: tr.nav.finder },
+  { key: "about", href: route("about", locale), label: tr.nav.about },
+  { key: "help", href: route("help", locale), label: tr.nav.help, mobileOnly: true },
+];
+// ---------- desktop mega-menus (Women / Men / Unisex) and the About dropdown ----------
+const m = s.mega;
+const products = await getProducts();
+const CONC_LABEL: Record<string, string> = { Cologne: "Eau de Cologne", EDT: "Eau de Toilette", EDP: "Eau de Parfum", Parfum: "Parfum", Extrait: "Extrait de Parfum" };
+const CONC_ORDER = ["Cologne", "EDT", "EDP", "Parfum", "Extrait"];
+const shuffle = <T,>(list: T[]) => list.map((v) => [Math.random(), v] as const).sort((a, b) => a[0] - b[0]).map(([, v]) => v);
+const megaFor = (g: Product["gender"]) => {
+  const list = products.filter((p) => p.gender === g);
+  const base = `${shop}?gender=${g}`;
+  const count = (key: (p: Product) => string) => {
+    const c = new Map<string, number>();
+    for (const p of list) c.set(key(p), (c.get(key(p)) ?? 0) + 1);
+    return c;
+  };
+  const brands = [...count((p) => p.brand)].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 6).map(([b]) => b);
+  const concs = CONC_ORDER.filter((c) => list.some((p) => p.concentration === c));
+  const fams = FAMILIES.filter((f) => list.some((p) => p.family === f));
+  // Le Male EDT is pinned as the first menu feature; the second is still picked at random.
+  const pinned = list.filter((p) => p.slug === "jean-paul-gaultier-le-male-edt" && photosOf(p).length);
+  const rest = shuffle(list.filter((p) => p.featured && photosOf(p).length)).concat(shuffle(list.filter((p) => !p.featured && photosOf(p).length)));
+  const featured = [...pinned, ...rest.filter((p) => !pinned.includes(p))].slice(0, 2);
+  const gl = tr.genders[g].toLowerCase();
+  return {
+    shop: [
+      { label: m.best, href: `${base}&sort=featured` },
+      { label: m.newest, href: `${base}&sort=newest` },
+      { label: m.az, href: `${base}&sort=az` },
+      { label: fill(m.allOf, { g: gl }), href: base },
+    ],
+    brands: brands.map((b) => ({ label: b, href: `${base}&brand=${brandId(b)}` })),
+    conc: concs.map((c) => ({ label: CONC_LABEL[c] ?? c, href: `${base}&q=${c}` })),
+    fams: fams.map((f) => ({ label: tr.families[f], href: `${base}&family=${f}`, tint: `var(--fam-${f})` })),
+    seasons: SEASONS.map((x) => ({ label: tr.seasons[x], href: `${base}&season=${x}` })),
+    occasions: OCCASIONS.map((x) => ({ label: tr.occasions[x], href: `${base}&occasion=${x}` })),
+    help: [
+      { label: m.finder, href: route("finder", locale) },
+      { label: m.notes, href: `${shop}#search` },
+      { label: m.cheap, href: `${base}&sort=price-asc` },
+      { label: m.lux, href: `${base}&sort=price-desc` },
+      { label: m.faq, href: route("help", locale) },
+    ],
+    featured: featured.map((p) => ({ id: p.slug, name: `${p.brand} ${p.name}`, href: `${shop}${p.slug}/`, photo: photosOf(p, 240)[0]! })),
+    title: fill(m.shop, { g: tr.genders[g] }),
+  };
+};
+const mega: Record<string, ReturnType<typeof megaFor>> = { women: megaFor("women"), men: megaFor("men"), unisex: megaFor("unisex") };
+const aboutMenu = [
+  { label: tr.nav.about, href: route("about", locale) },
+  { label: m.faq, href: route("help", locale) },
+  { label: m.delivery, href: `${route("help", locale)}#delivery` },
+  { label: m.finder, href: route("finder", locale) },
+  { label: m.contact, href: "#footer-contact" },
+];
+
+const announce = fill(s.announce, { price: formatPrice(settings.delivery.freeThreshold, locale) });
+// Strings for the live price updater (src/scripts/live-prices.ts), on every page.
+// «Захиалгаар» (by order) actions: only the contact channels the owner has really filled in (no empty / TODO / bare ones).
+const real = (v?: string) => Boolean(v) && !/TODO/i.test(v!);
+const realUrl = (v?: string) => {
+  if (!real(v)) return false;
+  try {
+    const u = new URL(v!);
+    return u.protocol === "https:" && u.pathname.replace(/\//g, "") !== "";
+  } catch {
+    return false;
+  }
+};
+const social = settings.contact.social as Record<string, string | undefined>;
+const phoneDigits = (settings.contact.phone ?? "").replace(/\D/g, "");
+const orderLinks = [
+  real(settings.contact.phone) && /[1-9]/.test(phoneDigits.replace(/^976/, "")) ? { k: "call", href: `tel:${settings.contact.phone.trim().startsWith("+") ? "+" : ""}${phoneDigits}` } : null,
+  realUrl(social.messenger) ? { k: "messenger", href: social.messenger } : null,
+  realUrl(social.instagram) ? { k: "instagram", href: social.instagram } : null,
+  realUrl(social.telegram) ? { k: "telegram", href: social.telegram } : null,
+].filter(Boolean).slice(0, 3);
+const liveText = {
+  ...tr.live, add: tr.common.add, soldOut: tr.common.soldOut, ml: tr.common.ml, decantsShort: tr.store.decantsShort, orderLinks,
+};
+---
+<!-- Announcement bar is hidden; remove the `hidden` attribute to re-enable it. -->
+<div class="ann" data-announce hidden>
+  <p>{announce}</p>
+</div>
+
+<header class="hdr" data-header>
+  <div class="wrap hdr__top">
+    <button
+      class="hdr__icon hdr__burger" type="button" data-menu-toggle
+      aria-expanded="false" aria-controls="mobile-menu"
+      aria-label={tr.nav.menu} data-open-label={tr.nav.menu} data-close-label={tr.nav.close}
+    >
+      <span class="hdr__burger-lines" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+
+    <a class="hdr__brand" href={route("home", locale)} aria-label={tr.nav.home}>
+      <Image src={mark} alt="" height={46} densities={[1, 2]} loading="eager" class="hdr__logo" />
+      <img class="hdr__xmas-logo" src={`${import.meta.env.BASE_URL}holiday/logo.webp`} alt="" height="46" loading="eager" decoding="async" />
+      <Image src={wordmark} alt="" height={34} densities={[1, 2]} loading="eager" class="hdr__word" />
+    </a>
+
+    <form class="hdr__search" action={shop} method="get" role="search">
+      <Icon name="search" size={18} />
+      <label class="sr-only" for="hdr-q">{tr.nav.search}</label>
+      <input id="hdr-q" name="q" type="search" placeholder={s.searchPlaceholder} autocomplete="off" enterkeyhint="search" />
+    </form>
+
+    <div class="hdr__tools">
+      <div class="hdr__lang"><LangToggle locale={locale} alternates={alternates} /></div>
+      <a class="hdr__acct" href={route("profile", locale)} aria-label={tr.account.account} title={tr.account.account}>
+        <span class="xmas-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg>
+          <img class="xmas-grinch" src={`${import.meta.env.BASE_URL}holiday/grinch.png`} alt="" width="28" height="28" loading="eager" decoding="async" />
+          <svg class="xmas-hat" viewBox="0 0 16 14" aria-hidden="true"><path d="M1 12 Q5 3 13 1 Q10 5 12 12 Z" fill="#b3202a" /><circle cx="13" cy="2" r="2" fill="#fff" /><rect x="0" y="10.5" width="16" height="3" rx="1.5" fill="#fff" /></svg>
+        </span>
+        <span class="hdr__avatar" data-acct-avatar aria-hidden="true"></span>
+        <span class="hdr__acct-name" data-acct-name></span>
+      </a>
+      <button class="hdr__wish" type="button" data-wish-open aria-label={tr.store.wishlist} aria-haspopup="dialog" title={tr.store.wishlist}>
+        <Icon name="heart" size={22} />
+        <svg class="xmas-heart" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 21 C5 15.5 2.5 12.5 2.5 8.6 C2.5 5.7 4.7 3.5 7.5 3.5 C9.4 3.5 11 4.6 12 6.2 C13 4.6 14.6 3.5 16.5 3.5 C19.3 3.5 21.5 5.7 21.5 8.6 C21.5 12.5 19 15.5 12 21 Z" fill="#b3202a" /><path d="M7.2 6.6 Q9 5.6 10.2 7" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".9" /></svg>
+        <span class="hdr__badge hdr__badge--wish" data-wish-count data-empty aria-hidden="true">0</span>
+      </button>
+      <button class="hdr__cart" type="button" data-cart-open data-label={tr.nav.cartCount} aria-label={tr.nav.cart} aria-haspopup="dialog">
+        <Icon name="bag" size={22} />
+        <img class="xmas-sack" src={`${import.meta.env.BASE_URL}holiday/sack.png`} alt="" width="26" height="31" loading="eager" decoding="async" />
+        <span class="hdr__cart-label">{tr.nav.cart}</span>
+        <span class="hdr__badge" data-cart-count data-empty aria-hidden="true">0</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="hdr__nav" aria-label={tr.nav.main}>
+    <div class="wrap hdr__nav-in">
+      {links.filter((l) => !l.mobileOnly).map((l) => {
+        const mm = mega[l.key];
+        const isAbout = l.key === "about";
+        return (
+          <div class:list={["hdr__item", { "hdr__item--mega": mm, "hdr__item--drop": isAbout }]}>
+            <a href={l.href} aria-current={current === l.key ? "page" : undefined}>
+              {l.label}{l.badge && <span class="hdr__new">NEW</span>}
+              {(mm || isAbout) && <svg class="hdr__caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>}
+            </a>
+            {mm && (
+              <div class="mega">
+                <div class="wrap mega__in">
+                  <div class="mega__col">
+                    <p class="mega__h">{mm.title}</p>
+                    <ul>{mm.shop.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                    <p class="mega__h">{m.conc}</p>
+                    <ul>{mm.conc.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col">
+                    <p class="mega__h">{m.brands}</p>
+                    <ul>{mm.brands.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                    <p class="mega__h">{m.season}</p>
+                    <ul>{mm.seasons.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col">
+                    <p class="mega__h">{m.family}</p>
+                    <ul>{mm.fams.map((x) => <li><a href={x.href} class="mega__fam" style={`--tint:${x.tint}`}>{x.label}</a></li>)}</ul>
+                    <p class="mega__h">{m.occasion}</p>
+                    <ul>{mm.occasions.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col">
+                    <p class="mega__h">{m.help}</p>
+                    <ul class="mega__caps">{mm.help.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+                  </div>
+                  <div class="mega__col mega__col--feat">
+                    <p class="mega__h">{m.featured}</p>
+                    <div class="mega__feat">
+                      {mm.featured.map((f) => (
+                        <a class="mega__prod" href={f.href}>
+                          <span class="mega__img"><img src={f.photo.src} alt="" width="240" height="240" loading="lazy" decoding="async" /></span>
+                          <span class="mega__pname">{f.name}</span>
+                          <span class="mega__price" data-sp-from={f.id}></span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {isAbout && (
+              <div class="drop">
+                <ul>{aboutMenu.map((x) => <li><a href={x.href}>{x.label}</a></li>)}</ul>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <div class="hdr__theme"><ThemeSwitch locale={locale} /></div>
+    </div>
+  </nav>
+</header>
+<script type="application/json" id="live-i18n" is:inline set:html={JSON.stringify(liveText).replace(/</g, "\\u003c")}></script>
+
+<button class="mmenu__backdrop" type="button" data-menu-close aria-label={tr.nav.close} tabindex="-1" inert></button>
+<div class="mmenu" id="mobile-menu" inert style={`--mmenu-bg:url('${import.meta.env.BASE_URL}menu-bg.webp')`}>
+  <nav class="mmenu__nav" aria-label={tr.nav.main}>
+    {links.map((l, i) => (
+      <a href={l.href} style={`--i:${i}`} aria-current={current === l.key ? "page" : undefined}>
+        <span class="mmenu__label">{l.label}</span>
+        <Icon name="arrow" size={16} />
+      </a>
+    ))}
+  </nav>
+  <div class="mmenu__foot" style={`--i:${links.length}`}>
+    <ThemeSwitch locale={locale} />
+    <LangToggle locale={locale} alternates={alternates} />
+  </div>
+</div>
+
+<style>
+  .ann { position: relative; z-index: 61; background: var(--gold); color: #fff; text-align: center; font-size: 12.5px; line-height: 1.4; padding: 9px var(--gutter); }
+
+  .hdr { position: sticky; top: 0; z-index: 60; background: #fff; transition: box-shadow .3s; }
+  .hdr:global([data-scrolled]) { box-shadow: 0 6px 24px rgba(0, 0, 0, .07); }
+
+  .hdr__top { display: flex; align-items: center; gap: 24px; height: 72px; }
+  .hdr__brand { display: inline-flex; align-items: center; gap: 10px; flex: none; min-height: 44px; }
+  .hdr__logo { width: auto; height: 46px; }
+  .hdr__word { width: auto; height: 34px; }
+
+  .hdr__search {
+    flex: 1; max-width: 560px; margin-inline: auto; display: flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 18px; border-radius: 999px; background: var(--soft); border: 1px solid transparent;
+    color: var(--text-dim); transition: border-color .2s, background-color .2s;
+  }
+  .hdr__search:focus-within { background: #fff; border-color: var(--black); }
+  .hdr__search input { flex: 1; min-width: 0; border: 0; background: transparent; outline: 0; font-size: 15px; color: var(--text); }
+  .hdr__search input::placeholder { color: #8f8c86; }
+  .hdr__search input::-webkit-search-cancel-button { display: none; }
+
+  .hdr__tools { display: flex; align-items: center; gap: 8px; flex: none; }
+  .hdr__lang { margin-inline: 4px; }
+  .hdr__wish { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; transition: background-color .2s; }
+  .hdr__wish:hover { background: var(--soft); }
+  .hdr__wish.is-glow { animation: hdr-wish-ring .9s var(--ease-out); }
+  .hdr__wish.is-glow svg { animation: hdr-wish-glow .9s var(--ease-sine); }
+  @keyframes hdr-wish-ring { from { box-shadow: 0 0 0 0 rgba(192, 57, 43, .4); } to { box-shadow: 0 0 0 14px rgba(192, 57, 43, 0); } }
+  @keyframes hdr-wish-glow { 0%, 100% { filter: none; } 35% { filter: drop-shadow(0 0 5px rgba(192, 57, 43, .9)); } }
+  .hdr__acct { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 44px; min-width: 44px; padding: 0 8px; border-radius: 999px; transition: background-color .2s; }
+  .hdr__acct:hover { background: var(--soft); }
+  .hdr__acct-name { font-size: 13px; font-weight: 500; max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hdr__acct-name:empty { display: none; }
+  .hdr__avatar { display: none; }
+  .hdr__acct[data-in] .hdr__avatar {
+    display: inline-grid; place-items: center; width: 28px; height: 28px; overflow: hidden; border-radius: 50%;
+    background: var(--black); color: #fff; font-size: 13px; font-weight: 600; line-height: 1;
+  }
+  .hdr__avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .hdr__acct[data-in] .xmas-ico { display: none; }
+  .hdr__badge--wish { position: absolute; top: 2px; right: 0; }
+  .hdr__cart {
+    position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px 0 10px;
+    border-radius: 999px; transition: background-color .2s;
+  }
+  .hdr__cart:hover { background: var(--soft); }
+  .hdr__cart-label { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .hdr__badge {
+    min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border-radius: 10px;
+    background: var(--black); color: #fff; font-size: 11px; font-weight: 600; line-height: 1;
+    transition: opacity .3s, transform .3s var(--ease-out);
+  }
+  .hdr__badge[data-empty] { opacity: 0; transform: scale(.4); }
+  .hdr__cart:global(.is-pulse) .hdr__badge { animation: gz-pop .6s var(--ease-out); }
+  @keyframes gz-pop { 40% { transform: scale(1.35); } }
+
+  .hdr__nav { position: relative; background: var(--black); }
+  .hdr__nav-in { display: flex; align-items: center; gap: 4px; height: 44px; }
+  .hdr__theme { margin-left: auto; padding-left: 12px; color: #fff; flex: none; }
+  .hdr__item { display: flex; align-items: center; height: 100%; }
+  .hdr__item--drop { position: relative; }
+  .hdr__caret { opacity: .7; margin-left: 2px; transition: transform .2s; }
+  .hdr__item:hover .hdr__caret, .hdr__item:focus-within .hdr__caret { transform: rotate(180deg); }
+
+  /* mega-menu: full-width white panel under the black bar (desktop only; the bar is hidden on phones) */
+  .mega, .drop {
+    position: absolute; top: 100%; z-index: 65; background: #fff; color: var(--text);
+    border-bottom: 1px solid var(--line); box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: opacity .18s, transform .18s, visibility 0s linear .18s;
+  }
+  .mega { left: 0; right: 0; }
+  .drop { left: auto; right: 0; min-width: 230px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; padding: 10px 0; }
+  .hdr__item:hover > .mega, .hdr__item:focus-within > .mega,
+  .hdr__item:hover > .drop, .hdr__item:focus-within > .drop { opacity: 1; visibility: visible; transform: none; transition-delay: .08s, .08s, 0s; }
+  .mega__in { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 28px; padding-block: 30px 34px; }
+  .mega__h { font-size: 12.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 10px; }
+  .mega__h:not(:first-child) { margin-top: 22px; }
+  .mega ul, .drop ul { list-style: none; margin: 0; padding: 0; }
+  .hdr__nav .mega a, .hdr__nav .drop a {
+    display: flex; align-items: center; gap: 8px; min-height: 30px; padding: 0 8px; margin-left: -8px; border-radius: 4px;
+    color: #3d3b38; font-size: 14px; font-weight: 400; letter-spacing: 0; text-transform: none; white-space: normal; background: none;
+  }
+  .hdr__nav .mega a:hover, .hdr__nav .drop a:hover { background: var(--soft); color: var(--text); }
+  .hdr__nav .mega__caps a { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+  .mega__fam::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--tint); flex: none; }
+  .hdr__nav .drop a { margin: 0; padding: 0 18px; min-height: 36px; border-radius: 0; }
+  .mega__feat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .hdr__nav .mega a.mega__prod { display: grid; gap: 4px; align-items: start; justify-items: stretch; padding: 0; margin: 0; }
+  .hdr__nav .mega a.mega__prod:hover { background: none; }
+  .mega__img { display: block; aspect-ratio: 1; border-radius: 6px; background: #f6f5f3; overflow: hidden; }
+  .mega__img img { width: 100%; height: 100%; object-fit: contain; transition: transform .4s; }
+  .mega__prod:hover .mega__img img { transform: scale(1.05); }
+  .mega__pname { font-size: 13.5px; line-height: 1.35; margin-top: 6px; }
+  .mega__price { font-size: 14px; font-weight: 700; }
+  .hdr__nav a {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px; border-radius: 4px; white-space: nowrap;
+    color: #fff; font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; transition: background-color .2s;
+  }
+  .hdr__item:first-child > a { margin-left: -14px; }
+  .hdr__nav a:hover, .hdr__nav a[aria-current] { background: rgba(255, 255, 255, .14); }
+  .hdr__new { font-size: 9px; font-weight: 700; letter-spacing: .06em; padding: 2px 5px; border-radius: 3px; background: #c9a24f; color: #141414; }
+
+  .hdr__icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; }
+  .hdr__burger { display: none; margin-left: -10px; }
+  .hdr__burger-lines { position: relative; width: 22px; height: 14px; display: block; }
+  .hdr__burger-lines i { position: absolute; left: 0; height: 1.6px; background: currentColor; border-radius: 1px; transition: transform .35s var(--ease-out), top .35s var(--ease-out), opacity .2s; }
+  .hdr__burger-lines i:nth-child(1) { top: 0; right: 0; }
+  .hdr__burger-lines i:nth-child(2) { top: 6px; right: 0; }
+  .hdr__burger-lines i:nth-child(3) { top: 12px; right: 9px; }
+  .hdr__burger[aria-expanded="true"] i:nth-child(1) { top: 6px; transform: rotate(45deg); }
+  .hdr__burger[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
+  .hdr__burger[aria-expanded="true"] i:nth-child(3) { top: 6px; right: 0; transform: rotate(-45deg); }
+
+  /* ---------- slide-in mobile menu ---------- */
+  .mmenu__backdrop { position: fixed; inset: 0; z-index: 65; background: rgba(0, 0, 0, .25); opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s linear .35s; }
+  :global(html[data-menu-open]) .mmenu__backdrop { opacity: 1; visibility: visible; transition-delay: 0s; }
+  .mmenu {
+    position: fixed; top: 0; bottom: 0; left: 0; z-index: 70; width: min(320px, 86vw); display: none; flex-direction: column;
+    padding: 72px 20px 24px; background: #efefef var(--mmenu-bg) center 76% / 200px auto no-repeat; box-shadow: 0 0 60px rgba(0, 0, 0, .2);
+    transform: translateX(-102%); visibility: hidden;
+    transition: transform .35s var(--ease-out), visibility 0s linear .35s;
+    overflow-y: auto;
+  }
+  :global(html[data-menu-open]) .mmenu { transform: none; visibility: visible; transition-delay: 0s; }
+  :global(html[data-menu-open]) { overflow: hidden; }
+  :global(html[data-menu-open]) .hdr__burger { position: relative; z-index: 80; }
+  .mmenu__nav { display: grid; }
+  .mmenu__nav a {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 0 4px;
+    border-bottom: 1px solid var(--line-soft); font-size: 15px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  }
+  .mmenu__nav a :global(svg) { color: var(--text-dim); }
+  .mmenu__nav a[aria-current] { color: inherit; }
+  .mmenu__foot { margin-top: auto; padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+  @media (max-width: 900px) {
+    .hdr__top { flex-wrap: wrap; height: auto; gap: 4px 8px; padding-block: 8px 10px; }
+    .hdr__burger { display: inline-flex; }
+    .hdr__brand { margin-right: auto; }
+    .hdr__word { height: 28px; }
+    .hdr__logo { height: 38px; }
+    .hdr__search { order: 5; flex-basis: 100%; max-width: none; height: 42px; }
+    .hdr__lang, .hdr__cart-label, .hdr__acct-name { display: none; }
+    .hdr__cart { padding: 0 10px; }
+    .hdr__badge { position: absolute; top: 2px; right: 0; }
+    .hdr__nav { display: none; }
+    .mmenu { display: flex; padding-top: 28px; }
+  }
+  /* small phones: the mark + wordmark + three icons must fit a 320 px row */
+  @media (max-width: 400px) {
+    .hdr__word { height: 20px; }
+    .hdr__logo { height: 30px; }
+    .hdr__cart { padding: 0 6px; }
+    .hdr__top { gap: 2px 4px; }
+  }
+  @media (max-width: 360px) {
+    .hdr__word { display: none; }
+  }
+</style>

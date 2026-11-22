@@ -1,0 +1,233 @@
+---
+import Base from "../layouts/Base.astro";
+import BottleArt from "../components/BottleArt.astro";
+import ProductCard from "../components/ProductCard.astro";
+import NotesPyramid from "../components/NotesPyramid.astro";
+import Icon from "../components/Icon.astro";
+import AddToCart from "../islands/AddToCart.tsx";
+import { getDict, route, productPath, fill, type Locale } from "../i18n";
+import { SEASONS, OCCASIONS } from "../lib/taxonomy";
+import { allNotes, cartBase, getProducts, initialOf, photosOf, similarTo, sortedSizes, type Product } from "../lib/products";
+import "../styles/product.css";
+
+interface Props { locale: Locale; product: Product }
+const { locale, product: p } = Astro.props;
+const tr = getDict(locale);
+const all = await getProducts();
+const similar = similarTo(p, all, 4);
+const sizes = sortedSizes(p);
+// prices and stock come from the live store state; the product file's demo stock is not used
+const { stock: _demoStock, ...base } = await cartBase(p);
+// Gallery: the owner's own photo (`image`) wins; otherwise linked remote photos, front first, then back.
+const photos = p.image ? [] : photosOf(p);
+const photoAlt = (kind: "front" | "back") => `${p.brand} ${p.name} — ${kind === "front" ? tr.common.photoFront : tr.common.photoBack}`;
+const site = Astro.site ?? new URL("https://genzst.mn");
+const url = new URL(productPath(locale, p.slug), site).href;
+const title = `${p.name} — ${p.brand}`;
+const description = fill(tr.product.metaDescription, {
+  brand: p.brand, name: p.name, conc: p.concentration, family: tr.families[p.family],
+});
+
+const seasonIcon = { spring: "flower", summer: "sun", autumn: "leaf", winter: "snow" } as const;
+const occasionIcon = { day: "sun", night: "moon", office: "briefcase", date: "heart" } as const;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: `${p.brand} ${p.name} ${p.concentration} (decant)`,
+  description: p.description[locale],
+  sku: p.slug,
+  category: tr.families[p.family],
+  brand: { "@type": "Brand", name: p.brand },
+  image: new URL("/og.jpg", site).href,
+  url,
+  // No offers: prices and stock live in the store database and are only known at runtime.
+};
+---
+<Base locale={locale} title={title} description={description} current="shop" ogType="product">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")} />
+
+  <article class="pdp" style={`--tint:var(--fam-${p.family})`}>
+    <div class="wrap pdp__top page-top">
+      {photos.length ? (
+        <div class="pdp__stage pdp__stage--photos" data-gallery data-gallery-pid={p.slug}>
+          <div class="pdp__slides" data-slides tabindex="0" aria-label={`${p.brand} ${p.name}`}>
+            {photos.map((ph, i) => (
+              <figure class="pdp__slide" data-slide={i}>
+                <img
+                  src={ph.src} srcset={ph.srcset} sizes={ph.srcset ? "(min-width: 860px) 46vw, 92vw" : undefined}
+                  alt={photoAlt(ph.kind)} width="1200" height="1200" decoding="async"
+                  loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : undefined}
+                  onerror="this.closest('[data-slide]').dataset.err=''; this.closest('[data-gallery]').dispatchEvent(new Event('gz:photoerror'))"
+                />
+              </figure>
+            ))}
+          </div>
+          {photos.length > 1 && (
+            <div class="pdp__thumbs" role="group" aria-label={tr.common.photoFront + " / " + tr.common.photoBack}>
+              {photos.map((ph, i) => (
+                <button type="button" class="pdp__thumb" data-thumb={i} aria-pressed={i === 0 ? "true" : "false"} aria-label={photoAlt(ph.kind)}>
+                  <img src={ph.srcset ? ph.src.replace(/width=\d+/, "width=240") : ph.src} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          )}
+          <div class="pdp__float pdp__fallback" hidden>
+            <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} label={`${p.brand} ${p.name}`} />
+          </div>
+        </div>
+      ) : (
+        <div class="pdp__stage" data-gallery-pid={p.slug}>
+          <div class="pdp__glow" aria-hidden="true"></div>
+          <div class="pdp__float">
+            <BottleArt
+              shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image}
+              label={`${p.brand} ${p.name}`} eager sizes="(min-width: 900px) 40vw, 80vw"
+            />
+          </div>
+          <p class="pdp__stage-cap t-small" aria-hidden="true">{p.concentration} · {sizes.map((s) => s.ml).join(" / ")} {tr.common.ml}</p>
+        </div>
+      )}
+
+      <div class="pdp__info">
+        <nav class="pdp__crumbs" aria-label="Breadcrumb">
+          <a href={route("shop", locale)}>{tr.product.back}</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${route("shop", locale)}?family=${p.family}`}>{tr.families[p.family]}</a>
+        </nav>
+
+        <p class="t-title t-gold pdp__brand">{p.brand}</p>
+        <h1 class="pdp__name">{p.name}</h1>
+
+        <ul class="pdp__meta">
+          <li>{p.concentration}</li>
+          <li>{tr.genders[p.gender]}</li>
+          <li><a class="chip chip--fam" href={`${route("shop", locale)}?family=${p.family}`}>{tr.families[p.family]}</a></li>
+          {p.isNew && <li><span class="chip is-on">{tr.common.new}</span></li>}
+        </ul>
+
+        <p class="t-body pdp__desc">{p.description[locale]}</p>
+
+        <AddToCart
+          client:load
+          locale={locale}
+          pid={p.slug}
+          base={base}
+          sizes={sizes.map((s) => ({ ml: s.ml, ...(s.full ? { full: true } : {}) }))}
+          labels={{
+            chooseSize: tr.product.chooseSize, ml: tr.common.ml, qty: tr.common.qty, add: tr.common.add,
+            soldOut: tr.common.soldOut, allSoldOut: tr.product.allSoldOut, fullBottle: tr.store.fullBottle,
+            decrease: tr.product.decrease, increase: tr.product.increase, total: tr.product.total,
+            ...tr.live,
+          }}
+        />
+
+        <p class="pdp__note t-small t-dim">{tr.product.decantNote} {tr.product.deliveryHint}</p>
+
+        <dl class="pdp__specs">
+          <div>
+            <dt>{tr.product.intensity}</dt>
+            <dd>
+              <span class="pdp__dots" role="img" aria-label={`${fill(tr.product.intensityOf, { n: p.intensity })} — ${tr.product.intensityLevels[p.intensity - 1]}`}>
+                {[1, 2, 3, 4, 5].map((n) => <i class:list={{ on: n <= p.intensity }}></i>)}
+              </span>
+              <span class="pdp__spec-text" aria-hidden="true">{tr.product.intensityLevels[p.intensity - 1]}</span>
+            </dd>
+          </div>
+          <div>
+            <dt>{tr.product.season}</dt>
+            <dd>
+              <ul class="pdp__icons">
+                {SEASONS.map((s) => {
+                  const on = p.season.includes(s);
+                  return (
+                    <li class:list={{ on }} aria-hidden={on ? undefined : "true"}>
+                      <Icon name={seasonIcon[s]} size={20} />
+                      <span>{tr.seasons[s]}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt>{tr.product.occasion}</dt>
+            <dd>
+              <ul class="pdp__icons">
+                {OCCASIONS.map((o) => {
+                  const on = p.occasion.includes(o);
+                  return (
+                    <li class:list={{ on }} aria-hidden={on ? undefined : "true"}>
+                      <Icon name={occasionIcon[o]} size={20} />
+                      <span>{tr.occasions[o]}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    {allNotes(p).length > 0 && (
+      <section class="wrap section pdp__pyramid" aria-labelledby="pyr-title">
+        <header class="sec-head sec-head--center">
+          <p class="t-title">{tr.product.pyramid}</p>
+          <h2 class="t-h2" id="pyr-title">{tr.product.pyramidSub}</h2>
+        </header>
+        <NotesPyramid product={p} locale={locale} />
+      </section>
+    )}
+
+    <section class="wrap pdp__similar" aria-labelledby="sim-title">
+      <header class="sec-head">
+        <p class="t-title">{tr.product.similarSub}</p>
+        <h2 class="t-h2" id="sim-title">{tr.product.similar}</h2>
+      </header>
+      <ul class="pdp__grid">
+        {similar.map((s, i) => (
+          <li data-reveal style={`--delay:${i * 80}ms`}>
+            <ProductCard product={s} locale={locale} level={3} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<script>
+  // Product photo gallery: thumbnails scroll the snap strip; a photo that fails to load is dropped,
+  // and if none are left the illustrated bottle is shown instead.
+  for (const g of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
+    const strip = g.querySelector<HTMLElement>("[data-slides]")!;
+    const slides = () => [...g.querySelectorAll<HTMLElement>("[data-slide]")];
+    const thumbs = () => [...g.querySelectorAll<HTMLButtonElement>("[data-thumb]")];
+    const mark = (i: number) => thumbs().forEach((t) => t.setAttribute("aria-pressed", String(+t.dataset.thumb! === i)));
+    const tidy = () => {
+      for (const s of slides()) {
+        if (s.dataset.err === undefined) continue;
+        g.querySelector(`[data-thumb="${s.dataset.slide}"]`)?.remove();
+        s.remove();
+      }
+      if (thumbs().length < 2) g.querySelector(".pdp__thumbs")?.remove();
+      if (!slides().length) { strip.remove(); g.querySelector<HTMLElement>(".pdp__fallback")!.hidden = false; }
+    };
+    g.addEventListener("gz:photoerror", tidy);
+    tidy(); // errors that happened before this script ran
+    g.addEventListener("click", (e) => {
+      const t = (e.target as Element).closest<HTMLButtonElement>("[data-thumb]");
+      if (!t) return;
+      const s = g.querySelector<HTMLElement>(`[data-slide="${t.dataset.thumb}"]`);
+      if (!s) return;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      strip.scrollTo({ left: s.offsetLeft - strip.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+      mark(+t.dataset.thumb!);
+    });
+    strip.addEventListener("scroll", () => {
+      const i = Math.round(strip.scrollLeft / Math.max(1, strip.clientWidth));
+      const s = slides()[i];
+      if (s) mark(+s.dataset.slide!);
+    }, { passive: true });
+  }
+</script>

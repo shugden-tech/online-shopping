@@ -1,0 +1,1404 @@
+[
+  {
+    "id": "versace-eros-najim-edp",
+    "storeId": "versace-eros-najim-edp",
+    "action": "new",
+    "brand": "Versace",
+    "name": "Eros Najim",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "amber",
+    "fullMl": 100,
+    "mlSource": "full-bottles.json flagship (medium)",
+    "price": 450000,
+    "quantity": 1,
+    "decantsEnabled": true,
+    "mlStock": 80,
+    "skus": [
+      {
+        "sku": "versace-eros-najim-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 40
+      },
+      {
+        "sku": "versace-eros-najim-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 30000,
+        "stock": 16
+      },
+      {
+        "sku": "versace-eros-najim-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 50000,
+        "stock": 8
+      },
+      {
+        "sku": "versace-eros-najim-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 450000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/versace-eros-najim-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "versace-eros-edp",
+    "storeId": "versace-eros-edt",
+    "action": "existing",
+    "brand": "Versace",
+    "name": "Eros",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "amber",
+    "fullMl": 200,
+    "mlSource": "store photo box reads 200 ml (6.7 oz)",
+    "price": 450000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 140,
+    "skus": [
+      {
+        "sku": "versace-eros-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 70
+      },
+      {
+        "sku": "versace-eros-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 20000,
+        "stock": 28
+      },
+      {
+        "sku": "versace-eros-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 35000,
+        "stock": 14
+      },
+      {
+        "sku": "versace-eros-edp:200",
+        "ml": 200,
+        "kind": "full",
+        "price": 450000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/versace-eros-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "versace-pour-homme-edt",
+    "storeId": "versace-pour-homme-edt",
+    "action": "existing",
+    "brand": "Versace",
+    "name": "Pour Homme",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 200,
+    "mlSource": "store name «Pour homme  edt 6.8oz» (6.8 oz)",
+    "price": 430000,
+    "quantity": 4,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "versace-pour-homme-edt:200",
+        "ml": 200,
+        "kind": "full",
+        "price": 430000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/versace-pour-homme-edt.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "armaf-club-de-nuit-intense-man-edt",
+    "storeId": "armaf-club-de-nuit-intense-man-edt",
+    "action": "existing",
+    "brand": "Armaf",
+    "name": "Club de Nuit Intense Man",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "citrus",
+    "fullMl": 105,
+    "mlSource": "full-bottles.json flagship (medium)",
+    "price": 239000,
+    "quantity": 40,
+    "decantsEnabled": true,
+    "mlStock": 100,
+    "skus": [
+      {
+        "sku": "armaf-club-de-nuit-intense-man-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 8000,
+        "stock": 50
+      },
+      {
+        "sku": "armaf-club-de-nuit-intense-man-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 20
+      },
+      {
+        "sku": "armaf-club-de-nuit-intense-man-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 25000,
+        "stock": 10
+      },
+      {
+        "sku": "armaf-club-de-nuit-intense-man-edt:105",
+        "ml": 105,
+        "kind": "full",
+        "price": 239000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/armaf-club-de-nuit-intense-man-edt.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "jean-paul-gaultier-le-male-elixir-parfum",
+    "storeId": "jean-paul-gaultier-le-male-elixir-parfum",
+    "action": "existing",
+    "brand": "Jean Paul Gaultier",
+    "name": "Le Male Elixir",
+    "concentration": "Parfum",
+    "concNote": "store says EDP, kept Parfum (id)",
+    "gender": "men",
+    "family": "gourmand",
+    "fullMl": 125,
+    "mlSource": "line is 75/125 ml (no 100 ml); 125 ml matches the 495,000₮ price",
+    "price": 495000,
+    "quantity": 2,
+    "decantsEnabled": true,
+    "mlStock": 95,
+    "skus": [
+      {
+        "sku": "jean-paul-gaultier-le-male-elixir-parfum:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 47
+      },
+      {
+        "sku": "jean-paul-gaultier-le-male-elixir-parfum:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 30000,
+        "stock": 19
+      },
+      {
+        "sku": "jean-paul-gaultier-le-male-elixir-parfum:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 50000,
+        "stock": 9
+      },
+      {
+        "sku": "jean-paul-gaultier-le-male-elixir-parfum:125",
+        "ml": 125,
+        "kind": "full",
+        "price": 495000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/jean-paul-gaultier-le-male-elixir-parfum.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "mancera-intense-cedrat-boise-edp",
+    "storeId": "mancera-intense-cedrat-boise-edp",
+    "action": "new",
+    "brand": "Mancera",
+    "name": "Intense Cedrat Boise",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 120,
+    "mlSource": "full-bottles.json flagship (medium)",
+    "price": 480000,
+    "quantity": 1,
+    "decantsEnabled": true,
+    "mlStock": 30,
+    "skus": [
+      {
+        "sku": "mancera-intense-cedrat-boise-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 50000,
+        "stock": 3
+      },
+      {
+        "sku": "mancera-intense-cedrat-boise-edp:120",
+        "ml": 120,
+        "kind": "full",
+        "price": 480000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/mancera-intense-cedrat-boise-edp.webp",
+    "unmappedNotes": [
+      "Халуун ногоонууд"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "emporio-armani-stronger-with-you-intensely-edp",
+    "storeId": "emporio-armani-stronger-with-you-intensely-edp",
+    "action": "existing",
+    "brand": "Emporio Armani",
+    "name": "Stronger With You Intensely",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "amber",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDP men); research also 100 (low)",
+    "price": 430000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 50,
+    "skus": [
+      {
+        "sku": "emporio-armani-stronger-with-you-intensely-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 25
+      },
+      {
+        "sku": "emporio-armani-stronger-with-you-intensely-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 30000,
+        "stock": 10
+      },
+      {
+        "sku": "emporio-armani-stronger-with-you-intensely-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 50000,
+        "stock": 5
+      },
+      {
+        "sku": "emporio-armani-stronger-with-you-intensely-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 430000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/emporio-armani-stronger-with-you-intensely-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "jean-paul-gaultier-le-male-edt",
+    "storeId": "jean-paul-gaultier-le-male-edt",
+    "action": "existing",
+    "brand": "Jean Paul Gaultier",
+    "name": "Le Male",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 125,
+    "mlSource": "line is 40/75/125/200 ml (no 100 ml); 125 ml matches the 490,000₮ price",
+    "price": 490000,
+    "quantity": 1,
+    "decantsEnabled": true,
+    "mlStock": 140,
+    "skus": [
+      {
+        "sku": "jean-paul-gaultier-le-male-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 70
+      },
+      {
+        "sku": "jean-paul-gaultier-le-male-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 20000,
+        "stock": 28
+      },
+      {
+        "sku": "jean-paul-gaultier-le-male-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 35000,
+        "stock": 14
+      },
+      {
+        "sku": "jean-paul-gaultier-le-male-edt:125",
+        "ml": 125,
+        "kind": "full",
+        "price": 490000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/jean-paul-gaultier-le-male-edt.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "montblanc-legend-red-edp",
+    "storeId": "montblanc-legend-red-edp",
+    "action": "new",
+    "brand": "Montblanc",
+    "name": "Legend Red",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 100,
+    "mlSource": "full-bottles.json flagship (high)",
+    "price": 249000,
+    "quantity": 9,
+    "decantsEnabled": true,
+    "mlStock": 100,
+    "skus": [
+      {
+        "sku": "montblanc-legend-red-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 50
+      },
+      {
+        "sku": "montblanc-legend-red-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 20
+      },
+      {
+        "sku": "montblanc-legend-red-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 30000,
+        "stock": 10
+      },
+      {
+        "sku": "montblanc-legend-red-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 249000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/montblanc-legend-red-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "lagerfeld-classic-edt",
+    "storeId": "lagerfeld-classic-edt",
+    "action": "new",
+    "brand": "Karl Lagerfeld",
+    "name": "Lagerfeld Classic",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "amber",
+    "fullMl": 100,
+    "mlSource": "store photo box reads 100 ml",
+    "price": 169000,
+    "quantity": 12,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "lagerfeld-classic-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 169000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/lagerfeld-classic-edt.webp",
+    "unmappedNotes": [
+      "Таррагон"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "valentino-uomo-born-in-roma-edt",
+    "storeId": "valentino-uomo-born-in-roma-edt",
+    "action": "existing",
+    "brand": "Valentino",
+    "name": "Uomo Born in Roma",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDT men)",
+    "price": 410000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 60,
+    "skus": [
+      {
+        "sku": "valentino-uomo-born-in-roma-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 30
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 25000,
+        "stock": 12
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 45000,
+        "stock": 6
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 410000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/valentino-uomo-born-in-roma-edt.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "french-avenue-liquid-brun-edp",
+    "storeId": "french-avenue-liquid-brun-edp",
+    "action": "new",
+    "brand": "French Avenue",
+    "name": "Liquid Brun",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "gourmand",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDP men); research also 100 (low)",
+    "price": 220000,
+    "quantity": 0,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "french-avenue-liquid-brun-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 220000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/french-avenue-liquid-brun-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "valentino-uomo-born-in-roma-coral-fantasy-edt",
+    "storeId": "valentino-uomo-born-in-roma-coral-fantasy-edt",
+    "action": "existing",
+    "brand": "Valentino",
+    "name": "Uomo Born In Roma Coral Fantasy",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDT men)",
+    "price": 430000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 60,
+    "skus": [
+      {
+        "sku": "valentino-uomo-born-in-roma-coral-fantasy-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 30
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-coral-fantasy-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 25000,
+        "stock": 12
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-coral-fantasy-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 45000,
+        "stock": 6
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-coral-fantasy-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 430000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/valentino-uomo-born-in-roma-coral-fantasy-edt.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "chanel-allure-homme-sport-edt",
+    "storeId": "chanel-allure-homme-sport-edt",
+    "action": "new",
+    "brand": "Chanel",
+    "name": "Allure Homme Sport",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "citrus",
+    "fullMl": 100,
+    "mlSource": "full-bottles.json flagship (high)",
+    "price": 750000,
+    "quantity": 1,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "chanel-allure-homme-sport-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 750000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/chanel-allure-homme-sport-edt.webp",
+    "unmappedNotes": [
+      "Хаймран Давирхай"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "maison-margiela-sailing-day-edt",
+    "storeId": "maison-margiela-sailing-day-edt",
+    "action": "new",
+    "brand": "Maison Margiela",
+    "name": "Sailing Day",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "unisex",
+    "family": "fresh",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDT unisex); research also 100 (low)",
+    "price": 480000,
+    "quantity": 1,
+    "decantsEnabled": true,
+    "mlStock": 80,
+    "skus": [
+      {
+        "sku": "maison-margiela-sailing-day-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 40
+      },
+      {
+        "sku": "maison-margiela-sailing-day-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 30000,
+        "stock": 16
+      },
+      {
+        "sku": "maison-margiela-sailing-day-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 55000,
+        "stock": 8
+      },
+      {
+        "sku": "maison-margiela-sailing-day-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 480000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/maison-margiela-sailing-day-edt.webp",
+    "unmappedNotes": [
+      "Далайн Замаг",
+      "Амил Салицилат"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "dior-sauvage-edt",
+    "storeId": "dior-sauvage-edt",
+    "action": "new",
+    "brand": "Dior",
+    "name": "Sauvage",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 200,
+    "mlSource": "store name «SAUVAGE edt 6.8oz» (6.8 oz)",
+    "price": 820000,
+    "quantity": 2,
+    "decantsEnabled": true,
+    "mlStock": 110,
+    "skus": [
+      {
+        "sku": "dior-sauvage-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 55
+      },
+      {
+        "sku": "dior-sauvage-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 25000,
+        "stock": 22
+      },
+      {
+        "sku": "dior-sauvage-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 45000,
+        "stock": 11
+      },
+      {
+        "sku": "dior-sauvage-edt:200",
+        "ml": 200,
+        "kind": "full",
+        "price": 820000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/dior-sauvage-edt.webp",
+    "unmappedNotes": [
+      "Одтой цэцэг"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "valentino-uomo-born-in-roma-purple-melancholia-edt",
+    "storeId": "valentino-uomo-born-in-roma-purple-melancholia-edt",
+    "action": "new",
+    "brand": "Valentino",
+    "name": "Uomo Born in Roma Purple Melancholia",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "unisex",
+    "family": "gourmand",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDT unisex); research also 100 (low)",
+    "price": 500000,
+    "quantity": 1,
+    "decantsEnabled": true,
+    "mlStock": 90,
+    "skus": [
+      {
+        "sku": "valentino-uomo-born-in-roma-purple-melancholia-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 45
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-purple-melancholia-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 35000,
+        "stock": 18
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-purple-melancholia-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 60000,
+        "stock": 9
+      },
+      {
+        "sku": "valentino-uomo-born-in-roma-purple-melancholia-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 500000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/valentino-uomo-born-in-roma-purple-melancholia-edt.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "versace-eros-flame-edp",
+    "storeId": "versace-eros-flame-edp",
+    "action": "existing",
+    "brand": "Versace",
+    "name": "Eros Flame",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 100,
+    "mlSource": "full-bottles.json flagship (high)",
+    "price": 350000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 80,
+    "skus": [
+      {
+        "sku": "versace-eros-flame-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 40
+      },
+      {
+        "sku": "versace-eros-flame-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 25000,
+        "stock": 16
+      },
+      {
+        "sku": "versace-eros-flame-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 40000,
+        "stock": 8
+      },
+      {
+        "sku": "versace-eros-flame-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 350000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/versace-eros-flame-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "yves-saint-laurent-y-le-parfum",
+    "storeId": "yves-saint-laurent-y-le-parfum",
+    "action": "existing",
+    "brand": "Yves Saint Laurent",
+    "name": "Y Le Parfum",
+    "concentration": "Parfum",
+    "concNote": "store says EDP, kept Parfum (id)",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 100,
+    "mlSource": "Parfum (store says EDP); line is 50/100 ml, 100 ml is the large bottle",
+    "price": 560000,
+    "quantity": 1,
+    "decantsEnabled": true,
+    "mlStock": 80,
+    "skus": [
+      {
+        "sku": "yves-saint-laurent-y-le-parfum:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 40
+      },
+      {
+        "sku": "yves-saint-laurent-y-le-parfum:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 35000,
+        "stock": 16
+      },
+      {
+        "sku": "yves-saint-laurent-y-le-parfum:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 60000,
+        "stock": 8
+      },
+      {
+        "sku": "yves-saint-laurent-y-le-parfum:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 560000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/yves-saint-laurent-y-le-parfum.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "montblanc-explorer-edp",
+    "storeId": "montblanc-explorer-edp",
+    "action": "existing",
+    "brand": "Montblanc",
+    "name": "Explorer",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 100,
+    "mlSource": "full-bottles.json flagship (high)",
+    "price": 359000,
+    "quantity": 8,
+    "decantsEnabled": true,
+    "mlStock": 100,
+    "skus": [
+      {
+        "sku": "montblanc-explorer-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 50
+      },
+      {
+        "sku": "montblanc-explorer-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 25000,
+        "stock": 20
+      },
+      {
+        "sku": "montblanc-explorer-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 40000,
+        "stock": 10
+      },
+      {
+        "sku": "montblanc-explorer-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 359000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/montblanc-explorer-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "maison-margiela-jazz-club-edt",
+    "storeId": "maison-margiela-jazz-club-edt",
+    "action": "new",
+    "brand": "Maison Margiela",
+    "name": "Jazz Club",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "amber",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDT men)",
+    "price": 480000,
+    "quantity": 0,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "maison-margiela-jazz-club-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 480000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/maison-margiela-jazz-club-edt.webp",
+    "unmappedNotes": [
+      "Стиракс"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "versace-eros-energy-edp",
+    "storeId": "versace-eros-energy-edp",
+    "action": "existing",
+    "brand": "Versace",
+    "name": "Eros Energy",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "citrus",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDP men)",
+    "price": 490000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 110,
+    "skus": [
+      {
+        "sku": "versace-eros-energy-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 55
+      },
+      {
+        "sku": "versace-eros-energy-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 25000,
+        "stock": 22
+      },
+      {
+        "sku": "versace-eros-energy-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 45000,
+        "stock": 11
+      },
+      {
+        "sku": "versace-eros-energy-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 490000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/versace-eros-energy-edp.webp",
+    "unmappedNotes": [
+      "Ногоон Нимбэг"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "giorgio-armani-emporio-armani-stronger-with-you-powerfully",
+    "storeId": "giorgio-armani-emporio-armani-stronger-with-you-powerfully",
+    "action": "existing",
+    "brand": "Giorgio Armani",
+    "name": "Emporio Armani Stronger With You Powerfully",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "amber",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDP men)",
+    "price": 450000,
+    "quantity": 0,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "giorgio-armani-emporio-armani-stronger-with-you-powerfully:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 450000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/giorgio-armani-emporio-armani-stronger-with-you-powerfully.webp",
+    "unmappedNotes": [
+      "Халуун ногоо"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "dior-eau-sauvage-edt",
+    "storeId": "dior-eau-sauvage-edt",
+    "action": "existing",
+    "brand": "Dior",
+    "name": "Eau Sauvage",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "citrus",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDT men)",
+    "price": 730000,
+    "quantity": 3,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "dior-eau-sauvage-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 730000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/dior-eau-sauvage-edt.webp",
+    "unmappedNotes": [
+      "Гедион"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "valentino-uomo-born-in-roma-extradose-edp",
+    "storeId": "valentino-uomo-born-in-roma-extradose-edp",
+    "action": "new",
+    "brand": "Valentino",
+    "name": "Uomo Born in Roma Extradose",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDP men)",
+    "price": 685000,
+    "quantity": 0,
+    "decantsEnabled": false,
+    "mlStock": 40,
+    "skus": [
+      {
+        "sku": "valentino-uomo-born-in-roma-extradose-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 685000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/valentino-uomo-born-in-roma-extradose-edp.webp",
+    "unmappedNotes": [
+      "Амтлагчтай Ноотууд"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "yves-saint-laurent-y-edp",
+    "storeId": "yves-saint-laurent-y-edp",
+    "action": "existing",
+    "brand": "Yves Saint Laurent",
+    "name": "Y",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDP men); research also 100 (low)",
+    "price": 510000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 40,
+    "skus": [
+      {
+        "sku": "yves-saint-laurent-y-edp:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 20
+      },
+      {
+        "sku": "yves-saint-laurent-y-edp:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 30000,
+        "stock": 8
+      },
+      {
+        "sku": "yves-saint-laurent-y-edp:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 55000,
+        "stock": 4
+      },
+      {
+        "sku": "yves-saint-laurent-y-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 510000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/yves-saint-laurent-y-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "montblanc-legend-edt",
+    "storeId": "montblanc-legend-edt",
+    "action": "existing",
+    "brand": "Montblanc",
+    "name": "Legend",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "aromatic",
+    "fullMl": 200,
+    "mlSource": "store name «Legend . 6.8oz» (6.8 oz)",
+    "price": 320000,
+    "quantity": 3,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "montblanc-legend-edt:200",
+        "ml": 200,
+        "kind": "full",
+        "price": 320000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/montblanc-legend-edt.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "valentino-uomo-born-in-roma-intense-edp",
+    "storeId": "valentino-uomo-born-in-roma-intense-edp",
+    "action": "existing",
+    "brand": "Valentino",
+    "name": "Uomo Born in Roma Intense",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "gourmand",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDP men); research also 100 (low)",
+    "price": 618000,
+    "quantity": 0,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "valentino-uomo-born-in-roma-intense-edp:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 618000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/valentino-uomo-born-in-roma-intense-edp.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum",
+    "storeId": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum",
+    "action": "new",
+    "brand": "Emporio Armani",
+    "name": "Stronger With You Parfum",
+    "concentration": "Parfum",
+    "concNote": "",
+    "gender": "men",
+    "family": "amber",
+    "fullMl": 100,
+    "mlSource": "Parfum; line is 50/100 ml, 100 ml is the large bottle",
+    "price": 410000,
+    "quantity": 0,
+    "decantsEnabled": true,
+    "mlStock": 60,
+    "skus": [
+      {
+        "sku": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 30
+      },
+      {
+        "sku": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 30000,
+        "stock": 12
+      },
+      {
+        "sku": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 50000,
+        "stock": 6
+      },
+      {
+        "sku": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 410000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum.webp",
+    "unmappedNotes": [],
+    "contentFile": "updated"
+  },
+  {
+    "id": "r-my-latour-cigar-edt",
+    "storeId": "r-my-latour-cigar-edt",
+    "action": "new",
+    "brand": "Rémy Latour",
+    "name": "Cigar",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 100,
+    "mlSource": "store photo box reads 100 ml",
+    "price": 129000,
+    "quantity": 27,
+    "decantsEnabled": true,
+    "mlStock": 100,
+    "skus": [
+      {
+        "sku": "r-my-latour-cigar-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 15000,
+        "stock": 10
+      },
+      {
+        "sku": "r-my-latour-cigar-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 129000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/r-my-latour-cigar-edt.webp",
+    "unmappedNotes": [
+      "Анхилуун амтлагч",
+      "Өвслөг үнэр",
+      "Үл ялиг чихэрлэг жимс"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "ralph-lauren-polo-black-edt",
+    "storeId": "ralph-lauren-polo-black-edt",
+    "action": "new",
+    "brand": "Ralph Lauren",
+    "name": "Polo Black",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 125,
+    "mlSource": "store photo box reads 125 ml",
+    "price": 350000,
+    "quantity": 7,
+    "decantsEnabled": true,
+    "mlStock": 100,
+    "skus": [
+      {
+        "sku": "ralph-lauren-polo-black-edt:2",
+        "ml": 2,
+        "kind": "decant",
+        "price": 10000,
+        "stock": 50
+      },
+      {
+        "sku": "ralph-lauren-polo-black-edt:5",
+        "ml": 5,
+        "kind": "decant",
+        "price": 20000,
+        "stock": 20
+      },
+      {
+        "sku": "ralph-lauren-polo-black-edt:10",
+        "ml": 10,
+        "kind": "decant",
+        "price": 35000,
+        "stock": 10
+      },
+      {
+        "sku": "ralph-lauren-polo-black-edt:125",
+        "ml": 125,
+        "kind": "full",
+        "price": 350000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/ralph-lauren-polo-black-edt.webp",
+    "unmappedNotes": [
+      "Манго",
+      "Танжерин"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "moncler-pour-homme-edp",
+    "storeId": "moncler-pour-homme-edp",
+    "action": "new",
+    "brand": "Moncler",
+    "name": "Pour Homme",
+    "concentration": "EDP",
+    "concNote": "",
+    "gender": "men",
+    "family": "woody",
+    "fullMl": 150,
+    "mlSource": "store description: «Голдуу 150 мл-ийн савлагаатай»",
+    "price": 360000,
+    "quantity": 1,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "moncler-pour-homme-edp:150",
+        "ml": 150,
+        "kind": "full",
+        "price": 360000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/moncler-pour-homme-edp.webp",
+    "unmappedNotes": [
+      "Альпийн ногоон аккорд"
+    ],
+    "contentFile": "updated"
+  },
+  {
+    "id": "maison-margiela-by-the-fireplace-edt",
+    "storeId": "maison-margiela-by-the-fireplace-edt",
+    "action": "existing",
+    "brand": "Maison Margiela",
+    "name": "By the Fireplace",
+    "concentration": "EDT",
+    "concNote": "",
+    "gender": "unisex",
+    "family": "woody",
+    "fullMl": 100,
+    "mlSource": "default 100 ml (EDT unisex); research also 100 (low)",
+    "price": 480000,
+    "quantity": 0,
+    "decantsEnabled": false,
+    "mlStock": 0,
+    "skus": [
+      {
+        "sku": "maison-margiela-by-the-fireplace-edt:100",
+        "ml": 100,
+        "kind": "full",
+        "price": 480000,
+        "stock": 5
+      }
+    ],
+    "image": "/product-photos/store/maison-margiela-by-the-fireplace-edt.webp",
+    "unmappedNotes": [
+      "Хатаасан Лиш"
+    ],
+    "contentFile": "updated"
+  }
+]

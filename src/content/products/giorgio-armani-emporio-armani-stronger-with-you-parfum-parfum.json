@@ -1,0 +1,65 @@
+{
+  "slug": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum",
+  "brand": "Emporio Armani",
+  "name": "Stronger With You Parfum",
+  "concentration": "Parfum",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pink-pepper",
+      "mandarin"
+    ],
+    "heart": [
+      "lavender",
+      "cinnamon",
+      "sage"
+    ],
+    "base": [
+      "vanilla",
+      "chestnut",
+      "leather"
+    ]
+  },
+  "description": {
+    "mn": "Giorgio Armani брэндийн Emporio Armani Stronger With You Parfum нь эрэгтэй хүмүүст зориулагдсан Фюжер Дорнын ангилалын сүрчиг юм",
+    "en": "Emporio Armani Stronger With You Parfum is an amber Parfum for men. Notes include pink pepper, mandarin, lavender, cinnamon, sage, vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 2,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 5,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 10,
+      "price": 0,
+      "inStock": false
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum.webp",
+    "back": "/product-photos/store/giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum-back.webp"
+  }
+}

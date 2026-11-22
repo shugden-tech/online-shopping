@@ -1,0 +1,68 @@
+{
+  "slug": "mancera-cedrat-boise-edp",
+  "brand": "Mancera",
+  "name": "Cedrat Boise",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "lemon",
+      "blackcurrant",
+      "bergamot",
+      "pepper"
+    ],
+    "heart": [
+      "fruity-notes",
+      "patchouli",
+      "jasmine"
+    ],
+    "base": [
+      "cedar",
+      "leather",
+      "sandalwood",
+      "vanilla",
+      "musk",
+      "moss"
+    ]
+  },
+  "description": {
+    "mn": "Mancera Cedrat Boise: Unisex модлог үнэр (EDP). Эхний ноот: нимбэг, үхрийн нүд, бергамот, хар чинжүү; зүрхний ноот: жимсний ноот, пачули, жасмин; суурь ноот: хуш мод, арьс, зандан мод, ваниль, заар, хөвд.",
+    "en": "Mancera Cedrat Boise is a woody fragrance in EDP concentration. Its listed notes include lemon, blackcurrant, bergamot, black pepper, fruity notes."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 120,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-040-front.webp",
+    "back": "/product-photos/curated-040-back.webp"
+  }
+}

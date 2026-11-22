@@ -1,0 +1,43 @@
+{
+  "slug": "valentino-uomo-born-in-roma-extradose-edp",
+  "brand": "Valentino",
+  "name": "Uomo Born in Roma Extradose",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "aromatic",
+  "notes": {
+    "top": [],
+    "heart": [
+      "wild-lavender"
+    ],
+    "base": [
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Valentino брэндийн Valentino Born in Roma Extradose Uomo нь эрэгтэй хүмүүст зориулагдсан ангилалын сүрчиг юм. Шинэхэн бүтээгдсэн сүрчиг",
+    "en": "Valentino Uomo Born in Roma Extradose is an aromatic EDP for men. Notes include wild lavender, woods."
+  },
+  "sizes": [
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/valentino-uomo-born-in-roma-extradose-edp.webp",
+    "back": "/product-photos/store/valentino-uomo-born-in-roma-extradose-edp-back.webp"
+  }
+}

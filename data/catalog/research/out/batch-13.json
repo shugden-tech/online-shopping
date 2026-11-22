@@ -1,0 +1,16 @@
+[
+{"id":"acqua-di-parma-blu-mediterraneo-arancia-di-capri-edt","sizesMl":[30,75,100,150],"flagshipMl":100,"confidence":"medium","source":"cultbeauty.co.uk, fragrancenet.com, davidjones.com","note":"Cult Beauty 75/150; FragranceNet 1oz/5oz; David Jones 100; regional variation"},
+{"id":"acqua-di-parma-colonia-il-profumo-edp","sizesMl":[50,100,180],"flagshipMl":100,"confidence":"high","source":"acquadiparma.com, harrods.com","note":"Harrods lists 50-180ml range"},
+{"id":"acqua-di-parma-note-di-colonia-i-cologne","sizesMl":[150],"flagshipMl":150,"confidence":"medium","source":"acquadiparma.com, selfridges.com","note":"Only 150ml found; 5ml is atomizer/promo, not counted"},
+{"id":"affinessence-collection-notes-de-tete-combava-cedrat-edp","sizesMl":[100],"flagshipMl":100,"confidence":"medium","source":"parfumo.com, fragrancenet.com","note":"Only 100ml found; 5ml atomizer sold separately"},
+{"id":"afnan-souvenir-floral-bouquet-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"notino.co.uk, fragrancenet.com","note":"Consistently 100ml"},
+{"id":"ajmal-evoke-gold-edp","sizesMl":[75],"flagshipMl":75,"confidence":"low","source":"galaxus.ch, fragrancex.com","note":"Women's Evoke Gold 75ml (2.5oz); separate men's Gold Edition Him is 90ml, ambiguous which is meant"},
+{"id":"armaf-club-de-nuit-intense-man-edt","sizesMl":[105],"flagshipMl":105,"confidence":"medium","source":"notino.co.uk, walmart.com","note":"105ml standard; 10ml travel; 200ml listings are EDP"},
+{"id":"chanel-chance-eau-tendre-edp","sizesMl":[35,50,100,150],"flagshipMl":100,"confidence":"medium","source":"chanel.com, sephora.com, macys.com","note":"Chanel shows 4 sizes; 35 (Sephora), 50, 100, 150 (5oz); not all regions"},
+{"id":"giorgio-armani-acqua-di-gio-parfum","sizesMl":[40,75,125],"flagshipMl":75,"confidence":"low","source":"sephora.com, chemistwarehouse.com.au","note":"Results were for Acqua di Gio EDP (40/75/125); Parfum assumed similar, unverified"},
+{"id":"lancome-la-vie-est-belle-edp","sizesMl":[30,50,75,100,150],"flagshipMl":100,"confidence":"high","source":"sephora.co.uk, brownthomas.com","note":"15ml mini also at some retailers"},
+{"id":"mancera-cedrat-boise-edp","sizesMl":[60,120],"flagshipMl":120,"confidence":"high","source":"parfuma.com, harrods.com","note":"Most retailers list only 120ml"},
+{"id":"rabanne-1-million-elixir-edp","sizesMl":[50,100,200],"flagshipMl":100,"confidence":"medium","source":"lookfantastic.com, sephora.co.uk","note":"US Sephora shows 50ml only; 100/200 in UK/EU"},
+{"id":"versace-eros-edt","sizesMl":[30,50,100,200],"flagshipMl":100,"confidence":"high","source":"versace.com, sephora.co.uk, lyko.com","note":"US site 50/100/200; 30ml in UK/EU"},
+{"id":"versace-eros-najim-edp","sizesMl":[50,100,200],"flagshipMl":100,"confidence":"medium","source":"adorebeauty.com.au, versace.com, woolworths.co.za","note":"Mostly marketed as Parfum; 10ml travel also exists"}
+]

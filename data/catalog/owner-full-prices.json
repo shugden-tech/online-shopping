@@ -1,0 +1,171 @@
+{
+ "_note": "Owner's full-bottle price list (2026-11-21). Applied by scripts/build-store-import.mjs: full-bottle price = this price, full-bottle stock = fullStock. Keyed by the store id (genzst-store.json d1Id).",
+ "fullStock": 5,
+ "items": [
+  {
+   "storeId": "versace-eros-najim-edp",
+   "name": "Versace Eros Najim Parfum",
+   "price": 450000
+  },
+  {
+   "storeId": "versace-eros-edt",
+   "name": "Versace Eros EDP",
+   "price": 450000
+  },
+  {
+   "storeId": "versace-pour-homme-edt",
+   "name": "Versace Pour Homme EDT",
+   "price": 430000
+  },
+  {
+   "storeId": "armaf-club-de-nuit-intense-man-edt",
+   "name": "Armaf Club de Nuit Intense Man EDT",
+   "price": 239000
+  },
+  {
+   "storeId": "jean-paul-gaultier-le-male-elixir-parfum",
+   "name": "JPG Le Male Elixir Parfum",
+   "price": 495000
+  },
+  {
+   "storeId": "mancera-intense-cedrat-boise-edp",
+   "name": "Mancera Intense Cedrat Boise Extrait",
+   "price": 480000
+  },
+  {
+   "storeId": "emporio-armani-stronger-with-you-intensely-edp",
+   "name": "EA SWY Intensely EDP",
+   "price": 430000
+  },
+  {
+   "storeId": "jean-paul-gaultier-le-male-edt",
+   "name": "JPG Le Male EDT",
+   "price": 490000
+  },
+  {
+   "storeId": "montblanc-legend-red-edp",
+   "name": "Montblanc Legend Red EDP",
+   "price": 249000
+  },
+  {
+   "storeId": "lagerfeld-classic-edt",
+   "name": "Lagerfeld Classic EDT",
+   "price": 169000
+  },
+  {
+   "storeId": "valentino-uomo-born-in-roma-edt",
+   "name": "Valentino Uomo Born in Roma EDT",
+   "price": 410000
+  },
+  {
+   "storeId": "french-avenue-liquid-brun-edp",
+   "name": "French Avenue Liquid Brun EDP",
+   "price": 220000
+  },
+  {
+   "storeId": "valentino-uomo-born-in-roma-coral-fantasy-edt",
+   "name": "Valentino Coral Fantasy EDT",
+   "price": 430000
+  },
+  {
+   "storeId": "chanel-allure-homme-sport-edt",
+   "name": "Chanel Allure Homme Sport EDT",
+   "price": 750000
+  },
+  {
+   "storeId": "maison-margiela-sailing-day-edt",
+   "name": "MM REPLICA Sailing Day EDT",
+   "price": 480000
+  },
+  {
+   "storeId": "dior-sauvage-edt",
+   "name": "Dior Sauvage EDT",
+   "price": 820000
+  },
+  {
+   "storeId": "valentino-uomo-born-in-roma-purple-melancholia-edt",
+   "name": "Valentino Purple Melancholia EDP",
+   "price": 500000
+  },
+  {
+   "storeId": "versace-eros-flame-edp",
+   "name": "Versace Eros Flame EDP",
+   "price": 350000
+  },
+  {
+   "storeId": "yves-saint-laurent-y-le-parfum",
+   "name": "YSL Y Le Parfum",
+   "price": 560000
+  },
+  {
+   "storeId": "montblanc-explorer-edp",
+   "name": "Montblanc Explorer EDP",
+   "price": 359000
+  },
+  {
+   "storeId": "maison-margiela-jazz-club-edt",
+   "name": "MM REPLICA Jazz Club EDT",
+   "price": 480000
+  },
+  {
+   "storeId": "versace-eros-energy-edp",
+   "name": "Versace Eros Energy EDP",
+   "price": 490000
+  },
+  {
+   "storeId": "giorgio-armani-emporio-armani-stronger-with-you-powerfully",
+   "name": "EA SWY Powerfully",
+   "price": 450000
+  },
+  {
+   "storeId": "dior-eau-sauvage-edt",
+   "name": "Dior Eau Sauvage EDT",
+   "price": 730000
+  },
+  {
+   "storeId": "valentino-uomo-born-in-roma-extradose-edp",
+   "name": "Valentino Extradose Parfum",
+   "price": 685000
+  },
+  {
+   "storeId": "yves-saint-laurent-y-edp",
+   "name": "YSL Y EDP",
+   "price": 510000
+  },
+  {
+   "storeId": "montblanc-legend-edt",
+   "name": "Montblanc Legend EDT",
+   "price": 320000
+  },
+  {
+   "storeId": "valentino-uomo-born-in-roma-intense-edp",
+   "name": "Valentino Intense EDP",
+   "price": 618000
+  },
+  {
+   "storeId": "giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum",
+   "name": "EA SWY Parfum",
+   "price": 410000
+  },
+  {
+   "storeId": "r-my-latour-cigar-edt",
+   "name": "Rémy Latour Cigar EDT",
+   "price": 129000
+  },
+  {
+   "storeId": "ralph-lauren-polo-black-edt",
+   "name": "Ralph Lauren Polo Black EDT",
+   "price": 350000
+  },
+  {
+   "storeId": "moncler-pour-homme-edp",
+   "name": "Moncler Pour Homme EDP",
+   "price": 360000
+  },
+  {
+   "storeId": "maison-margiela-by-the-fireplace-edt",
+   "name": "MM REPLICA By The Fireplace EDT",
+   "price": 480000
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+  "slug": "jean-paul-gaultier-le-beau-le-parfum-edp",
+  "brand": "Jean Paul Gaultier",
+  "name": "Le Beau Le Parfum",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "bergamot"
+    ],
+    "heart": [
+      "coconut"
+    ],
+    "base": [
+      "tonka"
+    ]
+  },
+  "description": {
+    "mn": "Jean Paul Gaultier Le Beau Le Parfum: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDP). Эхний ноот: бергамот; зүрхний ноот: кокос; суурь ноот: тонка шош.",
+    "en": "Jean Paul Gaultier Le Beau Le Parfum is a citrus fragrance in EDP concentration. Its listed notes include bergamot, coconut, tonka bean."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-004-front.webp",
+    "back": "/product-photos/curated-004-back.webp"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "slug": "viktor-and-rolf-spicebomb-extreme-edp",
+  "brand": "Viktor&Rolf",
+  "name": "Spicebomb Extreme",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pepper",
+      "pimento",
+      "grapefruit"
+    ],
+    "heart": [
+      "cinnamon",
+      "cumin",
+      "saffron"
+    ],
+    "base": [
+      "vanilla",
+      "tobacco",
+      "amber",
+      "cistus"
+    ]
+  },
+  "description": {
+    "mn": "Viktor&Rolf Spicebomb Extreme: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: хар чинжүү, пимент, бэрсүүт жүрж; зүрхний ноот: шанцай, зира, гүргэм; суурь ноот: ваниль, тамхины навч, хув, ладан бут.",
+    "en": "Viktor&Rolf Spicebomb Extreme is a amber fragrance in EDP concentration. Its listed notes include black pepper, pimento, grapefruit, cinnamon, cumin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 90,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-031-front.webp",
+    "back": "/product-photos/curated-031-back.webp"
+  }
+}

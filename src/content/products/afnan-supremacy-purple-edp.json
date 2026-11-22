@@ -1,0 +1,65 @@
+{
+  "slug": "afnan-supremacy-purple-edp",
+  "brand": "Afnan",
+  "name": "Supremacy Purple",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "fruity-notes",
+      "citrus",
+      "musk",
+      "amber",
+      "vanilla"
+    ],
+    "heart": [
+      "musk",
+      "amber",
+      "vanilla"
+    ],
+    "base": [
+      "musk",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy Purple: Эмэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: жимсний ноот, цитрусын ноот, заар, хув, ваниль; зүрхний ноот: заар, хув, ваниль; суурь ноот: заар, ваниль.",
+    "en": "Afnan's Supremacy Purple is an Amber-scented perfume for women, featuring top notes of Fruits and Citruses, middle notes of Musk and Amber, and base notes of Musk and Vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/aa9ec4d8-f148-4de1-ac37-a537acad8ca2_eac3b094-538c-43d2-bf4c-cf1ee6352233.jpg?v=1759467099",
+    "back": "https://fragrancebaba.com/cdn/shop/files/GUEST_210991ba-e1b3-4cf1-8b51-ecb95ee96525.jpg?v=1762777872&width=1946"
+  }
+}

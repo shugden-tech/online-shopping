@@ -1,0 +1,57 @@
+{
+  "slug": "le-labo-santal-33-edp",
+  "brand": "Le Labo",
+  "name": "Santal 33",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "violet",
+      "cardamom"
+    ],
+    "heart": [
+      "iris",
+      "papyrus",
+      "ambroxan"
+    ],
+    "base": [
+      "cedar",
+      "leather",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Le Labo Santal 33: Unisex модлог үнэр (EDP). Эхний ноот: нил цэцэг, кардамон; зүрхний ноот: цахилдаг, папирус, амброксан; суурь ноот: хуш мод, арьс, зандан мод.",
+    "en": "Le Labo Santal 33 is a woody fragrance in EDP concentration. Its listed notes include violet, cardamom, iris, papyrus, ambroxan."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 94500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 160500,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-090-front.webp",
+    "back": "/product-photos/curated-090-back.webp"
+  }
+}

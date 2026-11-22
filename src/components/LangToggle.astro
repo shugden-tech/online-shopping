@@ -1,0 +1,26 @@
+---
+import { getDict, type Locale } from "../i18n";
+interface Props {
+  locale: Locale;
+  alternates: Record<Locale, string>;
+}
+const { locale, alternates } = Astro.props;
+const tr = getDict(locale);
+---
+<div class="lang" role="group" aria-label={tr.nav.langLabel}>
+  <a href={alternates.mn} lang="mn" hreflang="mn" aria-current={locale === "mn" ? "true" : undefined} aria-label="Монгол" data-lang-link>MN</a>
+  <span aria-hidden="true"></span>
+  <a href={alternates.en} lang="en" hreflang="en" aria-current={locale === "en" ? "true" : undefined} aria-label="English" data-lang-link>EN</a>
+</div>
+
+<style>
+  .lang { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: .16em; }
+  .lang a {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 34px; min-height: 44px; padding: 0 4px;
+    color: var(--text-dim); transition: color .3s;
+  }
+  .lang a:hover { color: var(--text); }
+  .lang a[aria-current] { color: var(--gold); }
+  .lang span { width: 1px; height: 12px; background: var(--line); }
+</style>

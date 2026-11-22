@@ -1,0 +1,50 @@
+{
+  "slug": "maison-margiela-jazz-club-edt",
+  "brand": "Maison Margiela",
+  "name": "Jazz Club",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pink-pepper",
+      "neroli",
+      "lemon"
+    ],
+    "heart": [
+      "rum",
+      "vetiver",
+      "clary-sage"
+    ],
+    "base": [
+      "tobacco",
+      "vanilla"
+    ]
+  },
+  "description": {
+    "mn": "Maison Martin Margiela брэндийн Jazz Club нь эрэгтэй хүмүүст зориулагдсан Савхи ангилалын сүрчиг юм",
+    "en": "Maison Margiela Jazz Club is an amber EDT for men. Notes include pink pepper, neroli, lemon, rum, vetiver, clary sage."
+  },
+  "sizes": [
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 4,
+  "season": [
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "night",
+    "date"
+  ],
+  "photos": {
+    "front": "/product-photos/store/maison-margiela-jazz-club-edt.webp",
+    "back": "/product-photos/store/maison-margiela-jazz-club-edt-back.webp"
+  }
+}

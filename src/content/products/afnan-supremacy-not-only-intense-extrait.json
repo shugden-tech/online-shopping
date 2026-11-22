@@ -1,0 +1,64 @@
+{
+  "slug": "afnan-supremacy-not-only-intense-extrait",
+  "brand": "Afnan",
+  "name": "Supremacy Not Only Intense",
+  "concentration": "Extrait",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "blackcurrant",
+      "bergamot",
+      "apple"
+    ],
+    "heart": [
+      "oakmoss",
+      "patchouli",
+      "lavender"
+    ],
+    "base": [
+      "ambergris",
+      "saffron",
+      "musk"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy Not Only Intense: Эрэгтэйчүүдэд зориулсан хув үнэр (Extrait). Эхний ноот: үхрийн нүд, бергамот, алим; зүрхний ноот: царсны хөвд, пачули, лаванда; суурь ноот: амбра, гүргэм, заар.",
+    "en": "Supremacy Not Only Intense by Afnan Perfumes is a Amber Spicy fragrance for men. This is a new fragrance. Supremacy Not Only Intense was launched in 2021. Top notes are Black Currant, Bergamot and Apple; middle notes are Oakmoss, Patchouli and Lavender; base notes are Ambergris, Saffron and Musk."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 5,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/7677ccc8-e679-40f9-b7a4-5d9897761f92.jpg?v=1683065512",
+    "back": "https://beautyhouse.com/cdn/shop/files/03nrkucifi.png?v=1723878835&width=1600"
+  }
+}

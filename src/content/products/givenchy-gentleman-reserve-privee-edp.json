@@ -1,0 +1,61 @@
+{
+  "slug": "givenchy-gentleman-reserve-privee-edp",
+  "brand": "Givenchy",
+  "name": "Gentleman Reserve Privee",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot"
+    ],
+    "heart": [
+      "iris",
+      "chestnut"
+    ],
+    "base": [
+      "whisky",
+      "amber",
+      "woods"
+    ]
+  },
+  "description": {
+    "mn": "Givenchy Gentleman Reserve Privee: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: бергамот; зүрхний ноот: цахилдаг, туулайн бөөр; суурь ноот: виски, хув, модлог ноот.",
+    "en": "Givenchy Gentleman Reserve Privee is a amber fragrance in EDP concentration. Its listed notes include bergamot, iris, chestnut, whisky, amber."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-037-front.webp",
+    "back": "/product-photos/curated-037-back.webp"
+  }
+}

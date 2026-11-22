@@ -1,0 +1,46 @@
+{
+  "slug": "afnan-tobacco-rush-edp",
+  "brand": "Afnan",
+  "name": "Tobacco Rush",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Afnan Tobacco Rush: Unisex модлог үнэр (EDP).",
+    "en": "A new addition to the world of fragrances, Tobacco Rush by Afnan was released in 2022. Described as a Leather scent, it is suitable for both women and men. Its fragrance notes are comprised of a heady mix of Tobacco, Spicy Notes, Woody Notes, Sweet Notes, Lavender, Agarwood (Oud), Amber and Cedar."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/3b985421-4422-499a-b851-28f1cb1d6dfa.jpg?v=1759467103",
+    "back": "https://www.navishperfume.com/cdn/shop/files/IMG-5061.jpg?v=1757607397&width=1445"
+  }
+}

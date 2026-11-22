@@ -1,0 +1,56 @@
+{
+  "slug": "lattafa-yara-edp",
+  "brand": "Lattafa",
+  "name": "Yara",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "orchid",
+      "heliotrope",
+      "mandarin"
+    ],
+    "heart": [
+      "gourmand-accord",
+      "tropical"
+    ],
+    "base": [
+      "vanilla",
+      "musk",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Lattafa Yara: Эмэгтэйчүүдэд зориулсан гурман үнэр (EDP). Эхний ноот: цахирмаа, гелиотроп, мандарин; зүрхний ноот: амттаны аккорд, халуун орны жимс; суурь ноот: ваниль, заар, зандан мод.",
+    "en": "Lattafa Yara is a gourmand fragrance in EDP concentration. Its listed notes include orchid, heliotrope, mandarin, gourmand accord, tropical fruits."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-094-front.webp"
+  }
+}

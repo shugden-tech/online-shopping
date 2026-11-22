@@ -1,0 +1,33 @@
+---
+// Owner/staff admin. One Preact island; views load lazily. Not linked anywhere, noindex, no storefront
+// chrome, excluded from the sitemap (astro.config.mjs filters /admin/). Every action calls /api/admin/* with
+// the bearer token kept in this tab's sessionStorage. Branded like the storefront: same self-hosted fonts,
+// logo and favicon; the admin uses the storefront's light tokens (white, #f5f4f2, plum accent) and the red S mark; see admin.css.
+import { getImage } from "astro:assets";
+import "../../styles/fonts.css";
+import "../../styles/admin.css";
+import logoSrc from "../../assets/brand/logo-s.png";
+import wordmarkSrc from "../../assets/brand/wordmark-genzst.png";
+import App from "../../admin-ui/App";
+
+const logo = await getImage({ src: logoSrc, width: 192, format: "webp" });
+const wordmark = await getImage({ src: wordmarkSrc, width: 392, format: "webp" });
+---
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Gen'Z Street</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body class="a-body">
+    <App client:only="preact" logo={logo.src} wordmark={wordmark.src} />
+    <noscript><p class="a-msg a-msg--err">Админ хэсэг JavaScript шаарддаг.</p></noscript>
+  </body>
+</html>

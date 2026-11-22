@@ -1,0 +1,283 @@
+---
+import BottleArt from "./BottleArt.astro";
+import { getDict, productPath, fill, type Locale } from "../i18n";
+import { cartBase, decantSizes, defaultSize, fullBottle, initialOf, photosOf, type Product } from "../lib/products";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  /** Heading level for the product name. */
+  level?: 2 | 3;
+  eager?: boolean;
+  class?: string;
+}
+const { product: p, locale, level = 3, eager = false, class: cls } = Astro.props;
+const tr = getDict(locale);
+const href = productPath(locale, p.slug);
+const full = fullBottle(p);
+const decants = decantSizes(p);
+const start = defaultSize(p);
+// Prices, stock and what can be bought come from the live store state (src/scripts/live-prices.ts);
+// the page is built without any number. The main button buys the full bottle when the shop sells one,
+// otherwise the smallest decant that can be bought; until the state loads every button is disabled.
+const main_ = full ?? decants[0] ?? start;
+const sku = (ml: number) => `${p.slug}:${ml}`;
+// the product file's demo stock never reaches the cart: the live state sets it per size
+const { stock: _demoStock, ...base } = await cartBase(p);
+const H = `h${level}` as "h2" | "h3";
+// The owner's own photo (`image`) wins; otherwise the linked remote photos (front first, then back).
+const photos = p.image ? [] : photosOf(p, 800);
+const [main, alt] = photos;
+const altText = (kind: "front" | "back") => `${p.brand} ${p.name} — ${kind === "front" ? tr.common.photoFront : tr.common.photoBack}`;
+const imgSizes = "(min-width: 1100px) 280px, (min-width: 700px) 30vw, 46vw";
+const item = JSON.stringify(base);
+// What the wishlist keeps for this card (see src/scripts/wishlist.ts). No price: the drawer shows the live one.
+const wishItem = JSON.stringify({
+  slug: p.slug, brand: p.brand, name: p.name, href,
+  ...(main ? { img: main.src } : {}),
+  ml: main_.ml, cart: base,
+});
+---
+<article class:list={["pcard", cls]} data-card data-slug={p.slug} data-pid={p.slug} data-full-ml={full?.ml} style={`--tint:var(--fam-${p.family})`}>
+  <a class="pcard__media" href={href} tabindex="-1" aria-hidden="true">
+    {main ? (
+      <span class="pcard__photos" data-photos>
+        <span class="pcard__ph" aria-hidden="true"><BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} /></span>
+        <img
+          class="pcard__img pcard__img--main" src={main.src} srcset={main.srcset} sizes={main.srcset ? imgSizes : undefined}
+          alt={altText(main.kind)} width="800" height="800" decoding="async"
+          loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined}
+          onerror="this.parentNode.dataset.main='err'"
+        />
+        {alt && (
+          <img
+            class="pcard__img pcard__img--alt" src={alt.src} srcset={alt.srcset} sizes={alt.srcset ? imgSizes : undefined}
+            alt={altText(alt.kind)} width="800" height="800" decoding="async" loading="lazy"
+            onload="this.dataset.ok=''" onerror="this.parentNode.dataset.alt='err'"
+          />
+        )}
+      </span>
+    ) : (
+      <BottleArt shape={p.bottleShape} family={p.family} initial={initialOf(p)} image={p.image} eager={eager} />
+    )}
+  </a>
+  {p.isNew && <span class="pcard__flag" data-flag-new>{tr.common.new}</span>}
+  <span class="pcard__flag pcard__flag--out" data-flag hidden></span>
+  <button
+    type="button"
+    class="pcard__wish"
+    data-wish-toggle
+    data-wish-item={wishItem}
+    data-label-add={tr.store.wishAdd}
+    data-label-remove={tr.store.wishRemove}
+    aria-label={tr.store.wishAdd}
+    aria-pressed="false"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.2 4.2 0 0112 7.6 4.2 4.2 0 0119.5 10c0 5.4-7.5 10-7.5 10z"/></svg>
+  </button>
+
+  <div class="pcard__body">
+    <p class="pcard__brand">{p.brand}</p>
+    <H class="pcard__name"><a href={href}>{p.name}</a></H>
+    <p class="pcard__meta">
+      <span class="pcard__fam">{tr.families[p.family]}</span>
+      <span aria-hidden="true">·</span>
+      <span>{p.concentration}</span>
+    </p>
+
+    <p class="pcard__price">
+      <span class="pcard__price-k" data-price-k>
+        {full ? `${tr.store.fullBottle} · ${full.ml} ${tr.common.ml}` : `${tr.store.decantsShort} · ${main_.ml} ${tr.common.ml}`}
+      </span>
+      <span data-price-v><i class="live-ph" aria-hidden="true"></i><span class="sr-only">{tr.live.loading}</span></span>
+    </p>
+
+    <div class="pcard__foot">
+      <button
+        type="button"
+        class="pcard__add"
+        data-add
+        data-main
+        data-wait
+        data-item={item}
+        data-ml={main_.ml}
+        data-sku={sku(main_.ml)}
+        data-label-tpl={full ? undefined : `${p.name}: ${tr.common.addSize}`}
+        aria-label={full ? `${p.name}: ${tr.store.addFull}` : `${p.name}: ${fill(tr.common.addSize, { ml: main_.ml })}`}
+        disabled
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12.5H6L5 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></svg>
+        <span data-add-label>{tr.common.add}</span>
+      </button>
+
+      {decants.length > 0 && (
+        <div class="pcard__dec" data-decants>
+          <button type="button" class="pcard__dec-btn" data-decant-toggle data-open-label={tr.store.decants} data-close-label={tr.nav.close} aria-expanded="false" aria-label={tr.store.decants} title={tr.store.decants}>
+            <svg class="pcard__dec-bottle" width="18" height="22" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
+              <rect x="6" y="1" width="6" height="4" rx="1" /><path d="M7 5v2M11 5v2" /><rect x="3.5" y="7" width="11" height="14" rx="2.5" /><path d="M3.5 13h11" />
+            </svg>
+            <span class="pcard__dec-n">{decants.map((d) => d.ml).join("·")}</span>
+            <svg class="pcard__dec-back" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>
+          </button>
+          <div class="pcard__dec-opts" role="group" aria-label={tr.store.decants}>
+            {decants.map((d) => (
+              <button
+                type="button"
+                class="pcard__dec-opt"
+                data-add
+                data-item={item}
+                data-ml={d.ml}
+                data-sku={sku(d.ml)}
+                aria-label={`${p.name}: ${fill(tr.store.addDecant, { ml: d.ml })}`}
+                disabled
+              >
+                <b>{d.ml}<small> {tr.common.ml}</small></b>
+                <span data-opt-v><i class="live-ph live-ph--sm" aria-hidden="true"></i></span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .pcard { position: relative; display: flex; flex-direction: column; min-width: 0; width: 100%; }
+
+  .pcard__media {
+    position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; padding: 10% 26% 6%;
+    border-radius: 8px; overflow: hidden;
+    background:
+      radial-gradient(60% 50% at 50% 62%, color-mix(in srgb, var(--tint) 22%, transparent), transparent 100%),
+      linear-gradient(180deg, #faf9f7, #f1efec);
+  }
+  .pcard__media :global(.bottle) { transition: transform .7s var(--ease-out); will-change: transform; }
+  .pcard:hover .pcard__media :global(.bottle) { transform: translateY(-6px) scale(1.04) rotate(-2deg); }
+  .pcard__media :global(.bottle-photo) { position: absolute; inset: 0; object-fit: cover; }
+
+  /* Remote photos: front and back stacked in one fixed box, so hovering never moves the layout. */
+  .pcard__photos { position: absolute; inset: 0; display: block; background: #fff; }
+  .pcard__img, .pcard__ph {
+    position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain;
+    transition: opacity .25s ease;
+  }
+  .pcard__ph { display: grid; place-items: center; padding: 4% 20% 0; visibility: hidden; }
+  .pcard__img--alt { opacity: 0; }
+  /* Front failed: show the back instead (if it loaded), else the illustrated bottle. */
+  [data-main="err"] .pcard__img--main { display: none; }
+  [data-main="err"] .pcard__img--alt[data-ok] { opacity: 1; }
+  [data-main="err"]:not(:has(.pcard__img--alt[data-ok])) .pcard__ph { visibility: visible; }
+  [data-alt="err"] .pcard__img--alt { display: none; }
+
+  /* Crossfade to the back photo: pointer hover on devices that hover, or keyboard focus on the card link.
+     Only when the back photo actually loaded, so a missing/broken one leaves the front in place. */
+  @media (hover: hover) and (pointer: fine) {
+    .pcard:hover [data-photos]:not([data-main="err"]):has(.pcard__img--alt[data-ok]) .pcard__img--main { opacity: 0; }
+    .pcard:hover [data-photos]:not([data-main="err"]) .pcard__img--alt[data-ok] { opacity: 1; }
+  }
+  .pcard:has(.pcard__name a:focus-visible) [data-photos]:not([data-main="err"]):has(.pcard__img--alt[data-ok]) .pcard__img--main { opacity: 0; }
+  .pcard:has(.pcard__name a:focus-visible) [data-photos]:not([data-main="err"]) .pcard__img--alt[data-ok] { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .pcard__img, .pcard__ph { transition: none; }
+  }
+
+  .pcard__flag {
+    position: absolute; top: 10px; left: 10px; z-index: 1; padding: 3px 8px; border-radius: 3px;
+    background: var(--gold); color: #fff;
+    font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1.4;
+  }
+  .pcard__flag--out { background: #8f8c86; }
+
+  /* wishlist heart, top-right of the photo; a sibling of the link so it is not inside it */
+  .pcard__wish {
+    position: absolute; top: 10px; right: 10px; z-index: 2; width: 36px; height: 36px; display: grid; place-items: center;
+    color: var(--text); transition: color .2s, transform .15s;
+  }
+  .pcard__wish::before { content: ""; position: absolute; inset: -4px; border-radius: 50%; }
+  .pcard__wish svg { width: 18px; height: 18px; transition: fill .2s, stroke .2s; }
+  .pcard__wish:active { transform: scale(.94); }
+  .pcard__wish:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+  .pcard__wish[aria-pressed="true"] { color: #c0392b; }
+  .pcard__wish[aria-pressed="true"] svg { fill: #c0392b; stroke: #c0392b; }
+
+  .pcard__body { display: flex; flex-direction: column; flex: 1; padding-top: 14px; }
+  .pcard__brand {
+    font-size: 11.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); line-height: 1.5;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pcard__name { font-family: var(--font-sans); font-weight: 600; font-size: 15.5px; line-height: 1.3; margin-top: 2px; }
+  .pcard__name a { display: block; transition: color .2s; }
+  .pcard__name a:hover { color: var(--gold); }
+  .pcard__meta { display: flex; align-items: center; gap: 7px; margin-top: 4px; font-size: 12.5px; color: var(--text-dim); line-height: 1.4; }
+  .pcard__fam { display: inline-flex; align-items: center; gap: 6px; }
+  .pcard__fam::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--tint); }
+
+  .pcard__price { margin-top: 8px; margin-bottom: 12px; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pcard__price-k { display: block; font-size: 11.5px; font-weight: 500; color: var(--text-dim); letter-spacing: .03em; }
+  /* the live price: a quiet bar while it loads, then the server price (and the old one, struck through) */
+  .pcard__price [data-price-v] { display: block; min-height: 1.5em; }
+
+  /* main button + the small square sample picker that opens over it */
+  .pcard__foot { position: relative; display: flex; gap: 8px; margin-top: auto; }
+  .pcard__add {
+    flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 12px;
+    border-radius: 6px; background: var(--black); color: #fff;
+    font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    transition: background-color .2s, transform .15s;
+  }
+  .pcard__add:hover:not(:disabled) { background: #3a3a3a; }
+  .pcard__add:active:not(:disabled) { transform: scale(.98); }
+  .pcard__add:disabled { background: #e4e2de; color: #8f8c86; cursor: not-allowed; }
+  .pcard__add:disabled svg { display: none; }
+  /* still loading the live state: keep the button's look, just quieter */
+  .pcard__add[data-wait]:disabled { background: var(--black); color: #fff; opacity: .4; }
+
+  .pcard__dec {
+    position: absolute; top: 0; right: 0; z-index: 2; display: flex; justify-content: flex-end;
+    width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 6px; background: #fff; overflow: hidden;
+    transition: width .32s var(--ease-out), border-color .2s, box-shadow .32s;
+  }
+  .pcard__foot:has(.pcard__dec:not([hidden])) .pcard__add { margin-right: 52px; }
+  .pcard__dec[hidden] { display: none; }
+  /* «Захиалгаар»: an enabled, quieter button that opens the order popover instead of adding to the cart */
+  .pcard__add[data-order] { background: #fff; color: var(--black); box-shadow: inset 0 0 0 1.5px var(--black); }
+  .pcard__add[data-order]:hover { background: var(--black); color: #fff; }
+  .pcard__dec-btn {
+    position: relative; flex: none; width: 42px; height: 42px; display: grid; place-items: center; align-content: center; gap: 1px;
+    border-radius: 5px; background: var(--black); color: #fff;
+  }
+  .pcard__dec-btn svg { width: 15px; height: 18px; }
+  .pcard__dec-bottle, .pcard__dec-n { transition: opacity .2s, transform .2s; }
+  .pcard__dec-btn .pcard__dec-back { position: absolute; width: 22px; height: 22px; inset: 0; margin: auto; opacity: 0; transform: translateX(8px); transition: opacity .2s, transform .2s; }
+  .is-open .pcard__dec-bottle, .is-open .pcard__dec-n { opacity: 0; transform: translateX(-8px); }
+  .is-open .pcard__dec-back { opacity: 1; transform: translateX(0); }
+  .pcard__dec-n { font-size: 8.5px; font-weight: 600; line-height: 1; color: inherit; }
+  .pcard__dec-btn { order: 2; }
+  .pcard__dec-opts { flex: 1; display: flex; gap: 4px; padding: 4px 0 4px 4px; min-width: 0; opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s linear .2s; }
+  .pcard__dec-opt {
+    flex: 1; min-width: 0; display: grid; place-items: center; align-content: center; gap: 1px; border-radius: 4px; background: var(--soft);
+    font-size: 11px; line-height: 1.1; color: var(--text-dim); white-space: nowrap; transition: background-color .15s, color .15s;
+  }
+  .pcard__dec-opt b { font-size: 13px; font-weight: 700; color: var(--text); }
+  .pcard__dec-opt b small { font-size: 10px; font-weight: 500; }
+  .pcard__dec-opt:hover:not(:disabled), .pcard__dec-opt:focus-visible { background: var(--black); color: #fff; }
+  .pcard__dec-opt:hover:not(:disabled) b, .pcard__dec-opt:focus-visible b { color: #fff; }
+  .pcard__dec-opt:disabled { opacity: .45; text-decoration: line-through; cursor: not-allowed; }
+  .pcard__dec-opt:disabled:has(.live-ph), .pcard__dec-opt[data-soft]:disabled { opacity: .7; text-decoration: none; }
+
+  /* A single explicit state lets touch and keyboard users close while retaining focus. */
+  .pcard__dec.is-open { width: 100%; border-color: var(--black); box-shadow: 0 8px 22px rgba(0, 0, 0, .12); }
+  .pcard__dec.is-open .pcard__dec-opts { opacity: 1; visibility: visible; transition-delay: .08s, 0s; }
+  @media (prefers-reduced-motion: reduce) {
+    .pcard__dec, .pcard__dec-opts, .pcard__dec-bottle, .pcard__dec-n, .pcard__dec-btn .pcard__dec-back { transition: none; }
+  }
+
+  @media (max-width: 480px) {
+    .pcard__name { font-size: 14px; }
+    .pcard__add { font-size: 11.5px; letter-spacing: .04em; padding: 0 6px; }
+    .pcard__add svg { display: none; }
+    .pcard__dec-opt span { font-size: 10px; }
+  }
+</style>
+

@@ -1,0 +1,66 @@
+{
+  "slug": "acqua-di-parma-colonia-intensa-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Intensa",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "citrus",
+      "bergamot",
+      "cardamom",
+      "ginger"
+    ],
+    "heart": [
+      "neroli",
+      "cedar",
+      "myrrh",
+      "guaiac-wood"
+    ],
+    "base": [
+      "leather",
+      "benzoin",
+      "musk",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Intensa: Эрэгтэйчүүдэд зориулсан модлог үнэр (Cologne). Эхний ноот: цитрусын ноот, бергамот, кардамон, цагаан гаа; зүрхний ноот: нероли, хуш мод, мирра, гваяк мод; суурь ноот: арьс, бензойн, заар, пачули.",
+    "en": "Colonia Intensa by Acqua di Parma is a Woody fragrance for men. Colonia Intensa was launched in 2007. Colonia Intensa was created by Alberto Morillas and Francois Demachy. Top notes are Citruses, Bergamot, Cardamom, Ginger and Sicilian Lemon; Middle notes are Neroli, Cedar, Myrhh, Guaiac Wood and Artemisia; Base notes are Leather, Benzoin, Musk and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 72000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 110500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "autumn",
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/dac65d26-eeda-4cf8-b868-323c87998495_ad7315aa-d9a3-4b2f-90e9-4c3f4ca12754.jpg?v=1683061952",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/acqua-di-parma-colonia-intensa-100ml_1200x1200.png?v=1573005939"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "slug": "acqua-di-parma-colonia-quercia-cologne",
+  "brand": "Acqua di Parma",
+  "name": "Colonia Quercia",
+  "concentration": "Cologne",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "bergamot",
+      "lemon",
+      "petitgrain",
+      "pink-pepper"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Colonia Quercia: Эрэгтэйчүүдэд зориулсан цитрус үнэр (Cologne). Эхний ноот: бергамот, нимбэг, петигрейн, ягаан чинжүү.",
+    "en": "Colonia Quercia, crafted by Acqua di Parma, is an amber-spicy fragrance designed for men. Introduced in 2016, this scent opens with lively top notes of Bergamot, Lemon, Petitgrain, and Pink Pepper. The heart reveals a captivating blend of Geranium, Cedar, and Cardamom, while the base features deep, earthy notes of Oakmoss, Tonka Bean, and Patchouli."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 65000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 101000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 1,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/files/666480.jpg?v=1745437407",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/acqua-di-parma-colonia-quercia-180ml_1024x1024.png?v=1569966495"
+  }
+}

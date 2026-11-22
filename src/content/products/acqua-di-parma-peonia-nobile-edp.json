@@ -1,0 +1,52 @@
+{
+  "slug": "acqua-di-parma-peonia-nobile-edp",
+  "brand": "Acqua di Parma",
+  "name": "Peonia Nobile",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Acqua di Parma Peonia Nobile: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP).",
+    "en": "Peonia Nobile by Acqua di Parma is a Floral fragrance for women. Peonia Nobile was launched in 2016."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": false,
+      "stock": 0
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/7e1c87f3-8769-4054-b050-a4f4b8752ea6.jpg?v=1683063363",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/acqua-di-parma-peonia-nobile_1200x1200.png?v=1573420108"
+  }
+}

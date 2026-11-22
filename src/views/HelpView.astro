@@ -1,0 +1,198 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { getDict, fill, pick, type Locale } from "../i18n";
+import { formatPrice } from "../lib/price";
+import settings from "../data/settings.json";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = getDict(locale);
+
+const faq = tr.help.faq;
+const phoneHref = `tel:${settings.contact.phone.replace(/[^\d+]/g, "")}`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+<Base locale={locale} title={tr.help.title} description={tr.help.metaDescription} current="help">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")} />
+
+  <section class="wrap page-top help">
+    <header class="help__head">
+      <p class="t-title t-gold" data-reveal>{tr.help.eyebrow}</p>
+      <h1 class="t-head" data-reveal style="--delay:80ms">{tr.help.heading}</h1>
+    </header>
+
+    <div class="help__grid">
+      <div class="help__faq" data-reveal>
+        {faq.map((item, i) => (
+          <details class="faq" open={i === 0}>
+            <summary class="faq__sum">
+              <span class="faq__q">{item.q}</span>
+              <span class="faq__icon" aria-hidden="true"><Icon name="plus" size={16} /></span>
+            </summary>
+            <p class="t-body t-dim faq__a">{item.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <aside class="help__side">
+        <article class="card" id="delivery" data-reveal style="--delay:80ms">
+          <h2 class="t-title t-gold">{tr.help.deliveryTitle}</h2>
+          <dl class="rows">
+            <div class="row">
+              <dt>{tr.help.deliveryFee}</dt>
+              <dd>{formatPrice(settings.delivery.fee, locale)}</dd>
+            </div>
+          </dl>
+          <p class="card__note">{fill(tr.help.deliveryFree, { amount: formatPrice(settings.delivery.freeThreshold, locale) })}</p>
+          <p class="card__note">{pick(settings.payment.bankNote, locale)}</p>
+          <p class="card__note">{pick(settings.payment.qpayNote, locale)}</p>
+        </article>
+
+        <article class="card" data-reveal style="--delay:160ms">
+          <h2 class="t-title t-gold">{tr.help.contactTitle}</h2>
+          <p class="t-body t-dim">{tr.help.contactText}</p>
+          <a class="card__phone" href={phoneHref}>{settings.contact.phone}</a>
+          <p class="card__note">{pick(settings.contact.hours, locale)}</p>
+        </article>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .help { padding-bottom: var(--section); }
+
+  .help__head {
+    display: grid;
+    gap: 22px;
+    margin-bottom: clamp(56px, 8vw, 110px);
+  }
+  .help__head h1 { max-width: 18ch; }
+
+  .help__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(48px, 6vw, 96px);
+    align-items: start;
+  }
+
+  /* accordion */
+  .faq { border-bottom: 1px solid var(--line-soft); }
+  .faq:first-child { border-top: 1px solid var(--line-soft); }
+
+  .faq__sum {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 56px;
+    padding: 18px 0;
+    cursor: pointer;
+    list-style: none;
+    border-radius: var(--radius);
+  }
+  .faq__sum::-webkit-details-marker { display: none; }
+  .faq__sum:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+  .faq__sum:hover .faq__q { color: var(--gold-soft); }
+
+  .faq__q {
+    font-family: var(--font-head);
+    font-weight: 300;
+    font-size: clamp(21px, 1vw + 18px, 24px);
+    line-height: 1.25;
+    transition: color .3s;
+  }
+
+  .faq__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--gold);
+    transition: transform .45s var(--ease-out), background-color .3s;
+  }
+  .faq[open] .faq__icon {
+    transform: rotate(45deg);
+    background: rgba(204, 158, 72, .12);
+  }
+
+  .faq__a {
+    max-width: 60ch;
+    padding: 0 0 28px;
+  }
+
+  /* cards */
+  .help__side { display: grid; gap: 24px; }
+
+  .card {
+    display: grid;
+    gap: 18px;
+    padding: clamp(24px, 3vw, 36px);
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+
+  .rows { display: grid; }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding-block: 14px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .row dt {
+    font-size: var(--fs-small);
+    color: var(--text-dim);
+  }
+  .row dd {
+    font-family: var(--font-head);
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--text);
+    text-align: right;
+  }
+
+  .card__note {
+    font-size: var(--fs-small);
+    line-height: 1.6;
+    color: var(--text-dim);
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .card__phone {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    min-height: 44px;
+    font-family: var(--font-head);
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--gold-soft);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 6px;
+    transition: text-decoration-color .3s;
+  }
+  .card__phone:hover { text-decoration-color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .help__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

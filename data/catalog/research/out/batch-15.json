@@ -1,0 +1,16 @@
+[
+{"id":"acqua-di-parma-blu-mediterraneo-cedro-di-taormina-edt","sizesMl":[75,150],"flagshipMl":75,"confidence":"medium","source":"selfridges.com / parfumo.com","note":"75 and 150 ml listed; line reportedly discontinued"},
+{"id":"acqua-di-parma-colonia-leather-cologne","sizesMl":[100,180],"flagshipMl":100,"confidence":"low","source":"airpointsstore.co.nz","note":"180 ml confirmed; 100 ml (and possibly 20 ml) not verified for EDC"},
+{"id":"acqua-di-parma-note-di-colonia-iv-cologne","sizesMl":[150],"flagshipMl":150,"confidence":"high","source":"acquadiparma.com","note":"Official page lists only 150 ml"},
+{"id":"afnan-9-pm-rebel-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"lyko.com / justmylook.com","note":"Only 100 ml found"},
+{"id":"afnan-supremacy-in-heaven-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"superdrug.com / lyko.com","note":"Only 100 ml found"},
+{"id":"akro-malt-edp","sizesMl":[30,100],"flagshipMl":100,"confidence":"high","source":"lookfantastic.com","note":"30 and 100 ml listed"},
+{"id":"azzaro-the-most-wanted-parfum","sizesMl":[50,100],"flagshipMl":100,"confidence":"high","source":"sephora.com / mynavyexchange.com","note":"50 and 100 ml; FragranceNet also shows a larger ~156 ml, not confirmed"},
+{"id":"coach-for-men-edt","sizesMl":[40,60,100],"flagshipMl":100,"confidence":"high","source":"coach.com / rustans.com","note":"40, 60, 100 ml"},
+{"id":"gucci-flora-gorgeous-gardenia-edp","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"high","source":"sephora.co.uk / woolworths.co.za","note":"One listing showed 90 ml, likely regional variant"},
+{"id":"lattafa-badee-al-oud-honor-and-glory-edp","sizesMl":[100],"flagshipMl":100,"confidence":"high","source":"emiratesoud.co.uk / walmart.com","note":"Only 100 ml found"},
+{"id":"mugler-alien-edp","sizesMl":[30,60,90],"flagshipMl":60,"confidence":"high","source":"mugler.com / superdrug.com","note":"Refillable 30/60/90; minis 10/15 ml exist"},
+{"id":"rabanne-phantom-parfum","sizesMl":[50,100,150],"flagshipMl":100,"confidence":"medium","source":"sephora.co.uk / adorebeauty.com.au","note":"150 is refillable; 200 ml refill-only exists; 15 ml travel"},
+{"id":"versace-pour-homme-edt","sizesMl":[30,50,100,200],"flagshipMl":100,"confidence":"high","source":"sephora.com / macys.com","note":"Plus 10 ml travel"},
+{"id":"montblanc-legend-red-edp","sizesMl":[30,50,100],"flagshipMl":100,"confidence":"high","source":"montblanc.com","note":"Official regional sites"}
+]

@@ -1,0 +1,64 @@
+{
+  "slug": "abercrombie-and-fitch-authentic-night-edt",
+  "brand": "Abercrombie & Fitch",
+  "name": "Authentic Night",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "apple",
+      "rhubarb",
+      "lotus"
+    ],
+    "heart": [
+      "vanilla",
+      "lavender",
+      "clary-sage"
+    ],
+    "base": [
+      "tonka",
+      "leather",
+      "oakmoss"
+    ]
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch Authentic Night: Эрэгтэйчүүдэд зориулсан хув үнэр (EDT). Эхний ноот: алим, гишүүнэ, бадамлянхуа; зүрхний ноот: ваниль, лаванда, мускат хашхираа; суурь ноот: тонка шош, арьс, царсны хөвд.",
+    "en": "Authentic Night Homme by Abercrombie & Fitch is a Amber Fougere fragrance for men. This is a new fragrance. Authentic Night Homme was launched in 2020. Top notes are Apple, Rhubarb and Lotus; middle notes are Vanilla, Lavender and Clary Sage; base notes are Tonka Bean, Leather and Oakmoss."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 2,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/8a77d633-f859-4f17-94db-e5150d53451d_17afdba4-dde9-4351-8bc1-557a31108d7f.jpg?v=1683060481",
+    "back": "https://cdn11.bigcommerce.com/s-2vt02okold/images/stencil/1280x1280/products/2660/5943/HAFAN__74697.1731099884.jpg?c=1"
+  }
+}

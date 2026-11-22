@@ -1,0 +1,63 @@
+{
+  "slug": "gucci-flora-gorgeous-gardenia-edp",
+  "brand": "Gucci",
+  "name": "Flora Gorgeous Gardenia",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "pear",
+      "red-berries",
+      "mandarin"
+    ],
+    "heart": [
+      "gardenia",
+      "jasmine",
+      "frangipani"
+    ],
+    "base": [
+      "brown-sugar",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Gucci Flora Gorgeous Gardenia: Эмэгтэйчүүдэд зориулсан цитрус үнэр (EDP). Эхний ноот: лийр, улаан жимсгэнэ, мандарин; зүрхний ноот: гардения, жасмин, франжипани; суурь ноот: бор сахар, пачули.",
+    "en": "Gucci Flora Gorgeous Gardenia is a citrus fragrance in EDP concentration. Its listed notes include pear, red berries, mandarin, gardenia, jasmine."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-065-front.webp",
+    "back": "/product-photos/curated-065-back.webp"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "slug": "afnan-supremacy-incense-edp",
+  "brand": "Afnan",
+  "name": "Supremacy Incense",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "bergamot",
+      "oregano"
+    ],
+    "heart": [
+      "amber",
+      "labdanum",
+      "opoponax"
+    ],
+    "base": [
+      "leather",
+      "smoky",
+      "patchouli",
+      "oud"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Supremacy Incense: Эрэгтэйчүүдэд зориулсан хув үнэр (EDP). Эхний ноот: бергамот, орегано; зүрхний ноот: хув, лабданум, опопонакс; суурь ноот: арьс, утаат ноот, пачули, агар мод.",
+    "en": "Supremacy Incense - is a burning heat, embracing passion and alluring sensuality. The warm spice at the beginning shows a spicy oregano combined with a slightly bitter bergamot, into which the majestic, velvety ambergris melts the honey heat. Crispy green apple and seductive blackcurrant stalked with delicious pineapple are added. The softness of the trees embraces and attracts, but at the same time deepens the aroma especially with the touches of oud oil, whose chords are smooth in this composition. The echoes of flowers, headed by roses and Moroccan jasmine, float to the trees. Smoke from smoldering rare trees, skin with undertones of apricots and a sensual musk charge, accompanied by a few nuances of vanilla pods, enters the scene. The final parade shows earthy shades of oak moss, herbal spice patchouli with bitterly leathery labdan, whose interconnected smell will make a special touch of mystery."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 2
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "autumn",
+    "spring",
+    "winter"
+  ],
+  "occasion": [
+    "day",
+    "night"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/6efd2439-edcd-482c-ac9d-4cf821e82d67_f596abe7-9cf0-4b50-8218-77c88af464d0.jpg?v=1683065115",
+    "back": "https://cdn.fragrancenet.com/images/photos/900x900/377335.jpg"
+  }
+}

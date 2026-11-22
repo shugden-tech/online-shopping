@@ -1,0 +1,59 @@
+{
+  "slug": "afnan-highness-x-brown-edp",
+  "brand": "Afnan",
+  "name": "Highness X Brown",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "aromatic",
+  "notes": {
+    "top": [
+      "cypress",
+      "bergamot",
+      "lavender"
+    ],
+    "heart": [
+      "cedar",
+      "galbanum",
+      "pepper",
+      "petitgrain"
+    ],
+    "base": [
+      "oud",
+      "oakmoss",
+      "leather"
+    ]
+  },
+  "description": {
+    "mn": "Afnan Highness X Brown: Unisex өвслөг үнэр (EDP). Эхний ноот: кипарис, бергамот, лаванда; зүрхний ноот: хуш мод, гальбанум, хар чинжүү, петигрейн; суурь ноот: агар мод, царсны хөвд, арьс.",
+    "en": "His Highness Green by Afnan is a Aromatic Spicy fragrance for men. This is a new fragrance. His Highness Green was launched in 2020. Top notes are Cypress, Bergamot and Lavender; middle notes are Cedar, Galbanum, Black Pepper and Petitgrain; base notes are Agarwood (Oud), Oakmoss and Leather."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 40000,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 62000,
+      "inStock": true,
+      "stock": 1
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/2e26c965-0f52-44f1-b8fa-87603b76313c_6d316122-d57c-4108-aeb6-8c17e3edb752.jpg?v=1683064188",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/afnan-highness-x_grande.png?v=1669000590"
+  }
+}

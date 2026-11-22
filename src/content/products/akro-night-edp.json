@@ -1,0 +1,46 @@
+{
+  "slug": "akro-night-edp",
+  "brand": "Akro",
+  "name": "Night",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "amber",
+  "notes": {
+    "top": [],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Akro Night: Unisex хув үнэр (EDP).",
+    "en": "Akro's Smoke, created by nose Olivier Cresp and released in 2018, is a unisex fragrance with an Amber Woody scent."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/02efa5f9-b421-429a-addb-4ebc62aa4161.jpg?v=1695315915",
+    "back": "https://beautyhouse.com/cdn/shop/files/02pf74gb08.png?v=1762196762&width=951"
+  }
+}

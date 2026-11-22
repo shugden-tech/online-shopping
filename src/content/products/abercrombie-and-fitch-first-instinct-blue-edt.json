@@ -1,0 +1,59 @@
+{
+  "slug": "abercrombie-and-fitch-first-instinct-blue-edt",
+  "brand": "Abercrombie & Fitch",
+  "name": "First Instinct Blue",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [],
+    "heart": [
+      "lavender",
+      "rosemary",
+      "pepper"
+    ],
+    "base": [
+      "amber",
+      "tonka",
+      "sandalwood"
+    ]
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch First Instinct Blue: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Зүрхний ноот: лаванда, розмарин, хар чинжүү; суурь ноот: хув, тонка шош, зандан мод.",
+    "en": "The scent balances an energetic opening, a spicy development and an addictive trail. Frozen apple, combined with juicy bergamot and aromatic cardamom, gives an exciting first impression. A mix of pepper, rosemary and crisp lavender brightens up the heart while giving it an effortless flair. At the base, addictive amber, supported by rich Sandalwood and Tonka Beans, leaves a deeper trail of unexpected tones. It is Abercrombie’s fragrant interpretation of the moment of exhilaration when you feel the sky’s the limit. A fresh, one-of-a-kind Fougere scent for the adventurous man whose lives by his First Instinct. Head Notes: Frozen Apple, Cardamom, Bergamot Heart Notes: Crisp Lavender, Rosemary, Pepper Base Notes: Addictive Amber, Tonka Beans, Sandalwood"
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 34500,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 10,
+      "price": 49000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/4d92e9f7-0531-488c-b15d-1d23b14b0feb.jpg?v=1683060641",
+    "back": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/4915e1bb-09ef-40ec-b771-001cca6d6256_0fe5a9a6-c487-407a-9c22-976066dc4b86.jpg?v=1683060641"
+  }
+}

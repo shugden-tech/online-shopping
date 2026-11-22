@@ -1,0 +1,64 @@
+{
+  "slug": "maison-margiela-by-the-fireplace-edt",
+  "brand": "Maison Margiela",
+  "name": "By the Fireplace",
+  "concentration": "EDT",
+  "gender": "unisex",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "clove",
+      "pink-pepper",
+      "orange-blossom"
+    ],
+    "heart": [
+      "chestnut",
+      "guaiac-wood",
+      "juniper"
+    ],
+    "base": [
+      "vanilla",
+      "peru-balsam",
+      "cashmeran"
+    ]
+  },
+  "description": {
+    "mn": "Maison Margiela By the Fireplace: Unisex модлог үнэр (EDT). Эхний ноот: гвоздик, ягаан чинжүү, жүржийн цэцэг; зүрхний ноот: туулайн бөөр, гваяк мод, арц; суурь ноот: ваниль, перу бальзам, кашмеран.",
+    "en": "Maison Margiela By the Fireplace is a woody fragrance in EDT concentration. Its listed notes include clove, pink pepper, orange blossom, chestnut, guaiac wood."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 5
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/store/maison-margiela-by-the-fireplace-edt.webp",
+    "back": "/product-photos/store/maison-margiela-by-the-fireplace-edt-back.webp"
+  }
+}

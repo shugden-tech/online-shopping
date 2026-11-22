@@ -1,0 +1,62 @@
+{
+  "slug": "jean-paul-gaultier-ultra-male-edt",
+  "brand": "Jean Paul Gaultier",
+  "name": "Ultra Male",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "amber",
+  "notes": {
+    "top": [
+      "pear",
+      "lavender",
+      "mint",
+      "bergamot",
+      "lemon"
+    ],
+    "heart": [
+      "cinnamon",
+      "clary-sage",
+      "caraway"
+    ],
+    "base": [
+      "vanilla",
+      "amber",
+      "patchouli",
+      "cedar"
+    ]
+  },
+  "description": {
+    "mn": "Jean Paul Gaultier Ultra Male: Эрэгтэйчүүдэд зориулсан хув үнэр (EDT). Эхний ноот: лийр, лаванда, гаа, бергамот, нимбэг; зүрхний ноот: шанцай, мускат хашхираа, гоньд; суурь ноот: ваниль, хув, пачули, хуш мод.",
+    "en": "Jean Paul Gaultier Ultra Male is a amber fragrance in EDT concentration. Its listed notes include pear, lavender, mint, bergamot, lemon."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 55000,
+      "inStock": true,
+      "stock": 2
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 4
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-003-front.webp",
+    "back": "/product-photos/curated-003-back.webp"
+  }
+}

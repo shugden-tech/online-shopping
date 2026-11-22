@@ -1,0 +1,59 @@
+{
+  "slug": "afnan-9-pm-edp",
+  "brand": "Afnan",
+  "name": "9 PM",
+  "concentration": "EDP",
+  "gender": "men",
+  "family": "citrus",
+  "notes": {
+    "top": [
+      "apple",
+      "cinnamon",
+      "wild-lavender",
+      "bergamot"
+    ],
+    "heart": [
+      "orange-blossom",
+      "lily-of-the-valley"
+    ],
+    "base": [
+      "vanilla",
+      "tonka",
+      "amber",
+      "patchouli"
+    ]
+  },
+  "description": {
+    "mn": "Afnan 9 PM: Эрэгтэйчүүдэд зориулсан цитрус үнэр (EDP). Эхний ноот: алим, шанцай, зэрлэг лаванда, бергамот; зүрхний ноот: жүржийн цэцэг, хонхон цэцэг; суурь ноот: ваниль, тонка шош, хув, пачули.",
+    "en": "Afnan 9 PM is a citrus fragrance in EDP concentration. Its listed notes include apple, cinnamon, wild lavender, bergamot, orange blossom."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 34500,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 49000,
+      "inStock": true,
+      "stock": 3
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-097-front.webp",
+    "back": "/product-photos/curated-097-back.webp"
+  }
+}

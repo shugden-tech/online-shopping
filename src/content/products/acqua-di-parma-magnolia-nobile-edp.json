@@ -1,0 +1,61 @@
+{
+  "slug": "acqua-di-parma-magnolia-nobile-edp",
+  "brand": "Acqua di Parma",
+  "name": "Magnolia Nobile",
+  "concentration": "EDP",
+  "gender": "women",
+  "family": "floral",
+  "notes": {
+    "top": [
+      "citron",
+      "lemon",
+      "bergamot"
+    ],
+    "heart": [
+      "magnolia",
+      "jasmine",
+      "rose",
+      "tuberose"
+    ],
+    "base": [
+      "vetiver"
+    ]
+  },
+  "description": {
+    "mn": "Acqua di Parma Magnolia Nobile: Эмэгтэйчүүдэд зориулсан цэцэгсийн үнэр (EDP). Эхний ноот: цитрон, нимбэг, бергамот; зүрхний ноот: магнолия, жасмин, сарнай, тубероз; суурь ноот: ветивер.",
+    "en": "Acqua di Parma Magnolia Nobile by Acqua di Parma is a Floral Fruity fragrance for women. Acqua di Parma Magnolia Nobile was launched in 2009. The nose behind this fragrance is Antoine Maisondieu. Top notes are Citron, Lemon and Bergamot; middle notes are Magnolia, Jasmine, Rose and Tuberose; base notes are Vetiver, Sandalwood, Patchouli and Vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 60500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 90500,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/68a152c1-62ac-445d-83d5-9a7522eff88c.jpg?v=1683062776",
+    "back": "https://www.perfumenz.co.nz/cdn/shop/products/acqua-di-parma-magnolia-nobile_1421x1421.png?v=1570582273"
+  }
+}

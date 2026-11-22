@@ -1,0 +1,64 @@
+{
+  "slug": "lattafa-badee-al-oud-honor-and-glory-edp",
+  "brand": "Lattafa",
+  "name": "Bade'e Al Oud Honor & Glory",
+  "concentration": "EDP",
+  "gender": "unisex",
+  "family": "gourmand",
+  "notes": {
+    "top": [
+      "pineapple",
+      "creme-brulee"
+    ],
+    "heart": [
+      "cinnamon",
+      "turmeric",
+      "benzoin",
+      "pepper"
+    ],
+    "base": [
+      "vanilla",
+      "sandalwood",
+      "cashmeran",
+      "moss"
+    ]
+  },
+  "description": {
+    "mn": "Lattafa Bade'e Al Oud Honor & Glory: Unisex гурман үнэр (EDP). Эхний ноот: хан боргоцой, крем брюле; зүрхний ноот: шанцай, куркума, бензойн, хар чинжүү; суурь ноот: ваниль, зандан мод, кашмеран, хөвд.",
+    "en": "Lattafa Bade'e Al Oud Honor & Glory is a gourmand fragrance in EDP concentration. Its listed notes include pineapple, creme brulee, cinnamon, turmeric, benzoin."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 45000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 10,
+      "price": 80000,
+      "inStock": true,
+      "stock": 3
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "intensity": 3,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "/product-photos/curated-096-front.webp"
+  }
+}

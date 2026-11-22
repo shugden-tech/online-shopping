@@ -1,0 +1,62 @@
+{
+  "slug": "abercrombie-and-fitch-authentic-moment-edt",
+  "brand": "Abercrombie & Fitch",
+  "name": "Authentic Moment",
+  "concentration": "EDT",
+  "gender": "men",
+  "family": "woody",
+  "notes": {
+    "top": [
+      "cinnamon",
+      "apple",
+      "cypress",
+      "bergamot",
+      "neroli",
+      "amberwood",
+      "sandalwood",
+      "musk"
+    ],
+    "heart": [],
+    "base": []
+  },
+  "description": {
+    "mn": "Abercrombie & Fitch Authentic Moment: Эрэгтэйчүүдэд зориулсан модлог үнэр (EDT). Эхний ноот: шанцай, алим, кипарис, бергамот, нероли, хув мод, зандан мод, заар.",
+    "en": "Abercrombie & Fitch's Authentic Moment Man perfume for men is the latest scent in the market. Launched in 2022, the fragrance was created by the expert nose of Yves Cassar. Its top notes are Cinnamon, Apple, Cypress, and Bergamot, complemented by Neroli as its middle note, and a base of Amberwood, Sandalwood, Musk, and Vanilla."
+  },
+  "sizes": [
+    {
+      "ml": 5,
+      "price": 36500,
+      "inStock": true,
+      "stock": 4
+    },
+    {
+      "ml": 10,
+      "price": 55000,
+      "inStock": true,
+      "stock": 1
+    },
+    {
+      "ml": 100,
+      "price": 0,
+      "inStock": false,
+      "full": true
+    }
+  ],
+  "bottleShape": "classic",
+  "featured": false,
+  "intensity": 2,
+  "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "occasion": [
+    "day"
+  ],
+  "photos": {
+    "front": "https://cdn.shopify.com/s/files/1/0288/9875/4698/products/40068b52-ecfe-4067-94a7-e15efb7ba4e1.jpg?v=1692396599",
+    "back": "https://cdn.notinoimg.com/detail_main_hq/abercrombie-fitch-copy/85715169525_03-o/authentic-moment-men___240904.jpg"
+  }
+}
