@@ -613,3 +613,20 @@ checkout prefill, logout/login, 375 px without horizontal scroll, English page).
   `astro build` OK, `npm run budget` PASS (checkout 24.96 KB initial: about 40 bytes of headroom, finder 24.7, success page 13.7).
 - Open risk: Wire's real confirm / `next_action` fields are verified only against the docs and the mock until a first small
   `sk_live_` payment. `payments.wire.mode = hosted` reverts to the redirect flow without a deploy.
+
+## 2026-11-21 — Owner's full-bottle price list: 33 store perfumes for sale, 5 each — model: Opus
+- Source: the owner's list (chat, 2026-11-21) saved as `data/catalog/owner-full-prices.json` (store id → full-bottle price,
+  `fullStock: 5`). `scripts/build-store-import.mjs` now takes the full-bottle price and stock from it (decant prices and stock
+  still come from `genzst-store.json`). New prices for the three that had none: French Avenue Liquid Brun 220,000₮, Born in Roma
+  Extradose 685,000₮, Born in Roma Intense 618,000₮. The other 30 match the store.
+- Full-bottle sizes checked against each line's sizes and the price: Le Male Elixir 125, Le Male EDT 125, Y Le Parfum 100,
+  SWY Parfum 100 (no longer "owner to confirm"). **Versace Eros EDP 100 → 200 ml** (the store photo box reads 200 ml / 6.7 oz);
+  the old `versace-eros-edp:100` SKU is set `active = 0` (generic rule: a full SKU whose ml is not the current full size stops selling).
+- Stock history: a full SKU that already exists gets one `correction` movement (`note = 'owner-full-prices 2026-11-21'`, delta =
+  5 − old stock); the opening `import` movement skips SKUs that have it, so nothing is counted twice.
+- Tests (local D1): fresh (migrations → new SQL ×2) and upgrade (migrations → previous SQL → new SQL ×2): 33 active full SKUs
+  priced with stock 5, 0 SKUs whose stock ≠ sum of movements. `wrangler dev` `/api/store/catalog-state`: 33/33 products visible,
+  unlocked, exactly one sellable full SKU with 5 available. PDP checked in headless Chromium (Eros: «200 мл бүтэн шил 450,000₮»,
+  «5 ширхэг үлдсэн», Сагслах enabled; Liquid Brun 220,000₮; Intense 618,000₮), 0 page errors. `astro build` OK.
+- **Owner TODO (production):** `npx wrangler d1 execute genzst --remote --file data/catalog/store-import.sql`, then deploy
+  (the Eros EDP content file changed to 200 ml).

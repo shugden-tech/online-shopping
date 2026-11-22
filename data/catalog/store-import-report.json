@@ -42,7 +42,7 @@
         "ml": 100,
         "kind": "full",
         "price": 450000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/versace-eros-najim-edp.webp",
@@ -59,8 +59,8 @@
     "concNote": "",
     "gender": "men",
     "family": "amber",
-    "fullMl": 100,
-    "mlSource": "default 100 ml (EDP men)",
+    "fullMl": 200,
+    "mlSource": "store photo box reads 200 ml (6.7 oz)",
     "price": 450000,
     "quantity": 0,
     "decantsEnabled": true,
@@ -88,11 +88,11 @@
         "stock": 14
       },
       {
-        "sku": "versace-eros-edp:100",
-        "ml": 100,
+        "sku": "versace-eros-edp:200",
+        "ml": 200,
         "kind": "full",
         "price": 450000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/versace-eros-edp.webp",
@@ -121,7 +121,7 @@
         "ml": 200,
         "kind": "full",
         "price": 430000,
-        "stock": 4
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/versace-pour-homme-edt.webp",
@@ -171,7 +171,7 @@
         "ml": 105,
         "kind": "full",
         "price": 239000,
-        "stock": 40
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/armaf-club-de-nuit-intense-man-edt.webp",
@@ -189,7 +189,7 @@
     "gender": "men",
     "family": "gourmand",
     "fullMl": 125,
-    "mlSource": "line is 75/125 ml (no 100 ml); 125 = researched flagship (low confidence) — owner to confirm",
+    "mlSource": "line is 75/125 ml (no 100 ml); 125 ml matches the 495,000₮ price",
     "price": 495000,
     "quantity": 2,
     "decantsEnabled": true,
@@ -221,7 +221,7 @@
         "ml": 125,
         "kind": "full",
         "price": 495000,
-        "stock": 2
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/jean-paul-gaultier-le-male-elixir-parfum.webp",
@@ -257,7 +257,7 @@
         "ml": 120,
         "kind": "full",
         "price": 480000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/mancera-intense-cedrat-boise-edp.webp",
@@ -309,7 +309,7 @@
         "ml": 100,
         "kind": "full",
         "price": 430000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/emporio-armani-stronger-with-you-intensely-edp.webp",
@@ -327,7 +327,7 @@
     "gender": "men",
     "family": "aromatic",
     "fullMl": 125,
-    "mlSource": "line is 40/75/125/200 ml (no 100 ml); 125 assumed — owner to confirm",
+    "mlSource": "line is 40/75/125/200 ml (no 100 ml); 125 ml matches the 490,000₮ price",
     "price": 490000,
     "quantity": 1,
     "decantsEnabled": true,
@@ -359,7 +359,7 @@
         "ml": 125,
         "kind": "full",
         "price": 490000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/jean-paul-gaultier-le-male-edt.webp",
@@ -409,7 +409,7 @@
         "ml": 100,
         "kind": "full",
         "price": 249000,
-        "stock": 9
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/montblanc-legend-red-edp.webp",
@@ -438,7 +438,7 @@
         "ml": 100,
         "kind": "full",
         "price": 169000,
-        "stock": 12
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/lagerfeld-classic-edt.webp",
@@ -490,7 +490,7 @@
         "ml": 100,
         "kind": "full",
         "price": 410000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/valentino-uomo-born-in-roma-edt.webp",
@@ -509,7 +509,7 @@
     "family": "gourmand",
     "fullMl": 100,
     "mlSource": "default 100 ml (EDP men); research also 100 (low)",
-    "price": null,
+    "price": 220000,
     "quantity": 0,
     "decantsEnabled": false,
     "mlStock": 0,
@@ -518,8 +518,8 @@
         "sku": "french-avenue-liquid-brun-edp:100",
         "ml": 100,
         "kind": "full",
-        "price": null,
-        "stock": 0
+        "price": 220000,
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/french-avenue-liquid-brun-edp.webp",
@@ -569,7 +569,7 @@
         "ml": 100,
         "kind": "full",
         "price": 430000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/valentino-uomo-born-in-roma-coral-fantasy-edt.webp",
@@ -598,7 +598,7 @@
         "ml": 100,
         "kind": "full",
         "price": 750000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/chanel-allure-homme-sport-edt.webp",
@@ -650,7 +650,7 @@
         "ml": 100,
         "kind": "full",
         "price": 480000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/maison-margiela-sailing-day-edt.webp",
@@ -703,7 +703,7 @@
         "ml": 200,
         "kind": "full",
         "price": 820000,
-        "stock": 2
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/dior-sauvage-edt.webp",
@@ -755,7 +755,7 @@
         "ml": 100,
         "kind": "full",
         "price": 500000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/valentino-uomo-born-in-roma-purple-melancholia-edt.webp",
@@ -805,7 +805,7 @@
         "ml": 100,
         "kind": "full",
         "price": 350000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/versace-eros-flame-edp.webp",
@@ -823,7 +823,7 @@
     "gender": "men",
     "family": "aromatic",
     "fullMl": 100,
-    "mlSource": "Parfum (store says EDP); 100 ml assumed — owner to confirm",
+    "mlSource": "Parfum (store says EDP); line is 50/100 ml, 100 ml is the large bottle",
     "price": 560000,
     "quantity": 1,
     "decantsEnabled": true,
@@ -855,7 +855,7 @@
         "ml": 100,
         "kind": "full",
         "price": 560000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/yves-saint-laurent-y-le-parfum.webp",
@@ -905,7 +905,7 @@
         "ml": 100,
         "kind": "full",
         "price": 359000,
-        "stock": 8
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/montblanc-explorer-edp.webp",
@@ -934,7 +934,7 @@
         "ml": 100,
         "kind": "full",
         "price": 480000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/maison-margiela-jazz-club-edt.webp",
@@ -986,7 +986,7 @@
         "ml": 100,
         "kind": "full",
         "price": 490000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/versace-eros-energy-edp.webp",
@@ -1017,7 +1017,7 @@
         "ml": 100,
         "kind": "full",
         "price": 450000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/giorgio-armani-emporio-armani-stronger-with-you-powerfully.webp",
@@ -1048,7 +1048,7 @@
         "ml": 100,
         "kind": "full",
         "price": 730000,
-        "stock": 3
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/dior-eau-sauvage-edt.webp",
@@ -1069,7 +1069,7 @@
     "family": "aromatic",
     "fullMl": 100,
     "mlSource": "default 100 ml (EDP men)",
-    "price": null,
+    "price": 685000,
     "quantity": 0,
     "decantsEnabled": false,
     "mlStock": 40,
@@ -1078,8 +1078,8 @@
         "sku": "valentino-uomo-born-in-roma-extradose-edp:100",
         "ml": 100,
         "kind": "full",
-        "price": null,
-        "stock": 0
+        "price": 685000,
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/valentino-uomo-born-in-roma-extradose-edp.webp",
@@ -1131,7 +1131,7 @@
         "ml": 100,
         "kind": "full",
         "price": 510000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/yves-saint-laurent-y-edp.webp",
@@ -1160,7 +1160,7 @@
         "ml": 200,
         "kind": "full",
         "price": 320000,
-        "stock": 3
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/montblanc-legend-edt.webp",
@@ -1179,7 +1179,7 @@
     "family": "gourmand",
     "fullMl": 100,
     "mlSource": "default 100 ml (EDP men); research also 100 (low)",
-    "price": null,
+    "price": 618000,
     "quantity": 0,
     "decantsEnabled": false,
     "mlStock": 0,
@@ -1188,8 +1188,8 @@
         "sku": "valentino-uomo-born-in-roma-intense-edp:100",
         "ml": 100,
         "kind": "full",
-        "price": null,
-        "stock": 0
+        "price": 618000,
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/valentino-uomo-born-in-roma-intense-edp.webp",
@@ -1207,7 +1207,7 @@
     "gender": "men",
     "family": "amber",
     "fullMl": 100,
-    "mlSource": "Parfum; 100 ml assumed (line 50/100) — owner to confirm",
+    "mlSource": "Parfum; line is 50/100 ml, 100 ml is the large bottle",
     "price": 410000,
     "quantity": 0,
     "decantsEnabled": true,
@@ -1239,7 +1239,7 @@
         "ml": 100,
         "kind": "full",
         "price": 410000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/giorgio-armani-emporio-armani-stronger-with-you-parfum-parfum.webp",
@@ -1275,7 +1275,7 @@
         "ml": 100,
         "kind": "full",
         "price": 129000,
-        "stock": 27
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/r-my-latour-cigar-edt.webp",
@@ -1329,7 +1329,7 @@
         "ml": 125,
         "kind": "full",
         "price": 350000,
-        "stock": 7
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/ralph-lauren-polo-black-edt.webp",
@@ -1361,7 +1361,7 @@
         "ml": 150,
         "kind": "full",
         "price": 360000,
-        "stock": 1
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/moncler-pour-homme-edp.webp",
@@ -1392,7 +1392,7 @@
         "ml": 100,
         "kind": "full",
         "price": 480000,
-        "stock": 0
+        "stock": 5
       }
     ],
     "image": "/product-photos/store/maison-margiela-by-the-fireplace-edt.webp",
