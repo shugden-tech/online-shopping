@@ -391,4 +391,14 @@ const liveText = {
     .hdr__nav { display: none; }
     .mmenu { display: flex; padding-top: 28px; }
   }
+  /* small phones: the mark + wordmark + three icons must fit a 320 px row */
+  @media (max-width: 400px) {
+    .hdr__word { height: 20px; }
+    .hdr__logo { height: 30px; }
+    .hdr__cart { padding: 0 6px; }
+    .hdr__top { gap: 2px 4px; }
+  }
+  @media (max-width: 360px) {
+    .hdr__word { display: none; }
+  }
 </style>
