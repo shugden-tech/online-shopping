@@ -32,10 +32,12 @@ export interface FilterState {
   min: number | null;
   max: number | null;
   sort: SortKey;
+  /** only products with at least one size in stock right now (live state) */
+  ready: boolean;
 }
 
 export const EMPTY_FILTERS: FilterState = {
-  q: "", family: [], brand: [], gender: [], notes: [], size: [], season: [], occasion: [], min: null, max: null, sort: "featured",
+  q: "", family: [], brand: [], gender: [], notes: [], size: [], season: [], occasion: [], min: null, max: null, sort: "featured", ready: false,
 };
 
 const LIST_KEYS = ["family", "brand", "gender", "notes", "season", "occasion"] as const;
@@ -80,6 +82,7 @@ export function parseQuery(search: string): FilterState {
     min: num("min"),
     max: num("max"),
     sort: sort && (SORTS as readonly string[]).includes(sort) ? sort : "featured",
+    ready: sp.get("ready") === "1",
   };
 }
 
@@ -91,6 +94,7 @@ export function toQuery(state: FilterState): string {
   if (state.min !== null) sp.set("min", String(state.min));
   if (state.max !== null) sp.set("max", String(state.max));
   if (state.sort !== "featured") sp.set("sort", state.sort);
+  if (state.ready) sp.set("ready", "1");
   const s = sp.toString().replace(/%2C/g, ",");
   return s ? `?${s}` : "";
 }
@@ -98,12 +102,13 @@ export function toQuery(state: FilterState): string {
 export function activeCount(state: FilterState): number {
   return (
     (state.q.trim() ? 1 : 0) + state.family.length + state.brand.length + state.gender.length + state.notes.length + state.size.length +
-    state.season.length + state.occasion.length + (state.min !== null ? 1 : 0) + (state.max !== null ? 1 : 0)
+    state.season.length + state.occasion.length + (state.min !== null ? 1 : 0) + (state.max !== null ? 1 : 0) + (state.ready ? 1 : 0)
   );
 }
 
 /** Groups are AND-ed together. Inside a group any value may match — except notes, which narrow (all must match). */
 export function matches(item: ShopItem, state: FilterState, tokens = normalize(state.q).split(" ").filter(Boolean)): boolean {
+  if (state.ready && item.z.length === 0) return false;
   if (state.family.length && !state.family.includes(item.f)) return false;
   if (state.brand.length && !state.brand.includes(item.b)) return false;
   if (state.gender.length && !state.gender.includes(item.g)) return false;

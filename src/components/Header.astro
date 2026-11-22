@@ -50,7 +50,10 @@ const megaFor = (g: Product["gender"]) => {
   const brands = [...count((p) => p.brand)].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 6).map(([b]) => b);
   const concs = CONC_ORDER.filter((c) => list.some((p) => p.concentration === c));
   const fams = FAMILIES.filter((f) => list.some((p) => p.family === f));
-  const featured = shuffle(list.filter((p) => p.featured && photosOf(p).length)).concat(shuffle(list.filter((p) => !p.featured && photosOf(p).length))).slice(0, 2);
+  // Le Male EDT is pinned as the first menu feature; the second is still picked at random.
+  const pinned = list.filter((p) => p.slug === "jean-paul-gaultier-le-male-edt" && photosOf(p).length);
+  const rest = shuffle(list.filter((p) => p.featured && photosOf(p).length)).concat(shuffle(list.filter((p) => !p.featured && photosOf(p).length)));
+  const featured = [...pinned, ...rest.filter((p) => !pinned.includes(p))].slice(0, 2);
   const gl = tr.genders[g].toLowerCase();
   return {
     shop: [

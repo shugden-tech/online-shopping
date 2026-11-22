@@ -272,6 +272,9 @@ export default function ShopFilters({ tr, closeLabel, ml, total, options }: Prop
         <p class="flt__count" role="status" aria-live="polite">
           {fill(tr.results, { n: count })}
         </p>
+        <button type="button" class="chip" aria-pressed={state.ready} onClick={() => update({ ...state, ready: !state.ready })}>
+          {tr.readyOnly}
+        </button>
         <div class="flt__sort">
           <label for="flt-sort">{tr.sort}</label>
           <select id="flt-sort" class="select" value={state.sort} onChange={(e) => update({ ...state, sort: (e.currentTarget as HTMLSelectElement).value as SortKey })}>

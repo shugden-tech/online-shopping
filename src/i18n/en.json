@@ -192,7 +192,8 @@
     "empty": "No matching scents",
     "emptySub": "Try loosening the filters or searching for something else.",
     "show": "Show {n} fragrances",
-    "active": "Active filters: {n}"
+    "active": "Active filters: {n}",
+    "readyOnly": "In stock"
   },
   "product": {
     "back": "Shop",
