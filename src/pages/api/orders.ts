@@ -103,7 +103,10 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
 
     if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {
       background(
-        sendTelegram(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_CHAT_ID, telegramText(placed.orderNo, o, priced.lines, priced.subtotal, priced.delivery, priced.total, placed.holdExpiresAt)),
+        sendTelegram(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_CHAT_ID, telegramText(placed.orderNo, o, priced.lines, priced.subtotal, priced.delivery, priced.total, placed.holdExpiresAt, {
+          paymentStatus: fresh.payment_status,
+          site: env.PUBLIC_SITE_URL,
+        })),
       );
     } else {
       console.log(`[orders] ${placed.orderNo}: Telegram notification skipped (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set)`);
